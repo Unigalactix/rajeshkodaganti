@@ -4,22 +4,35 @@ document.addEventListener('DOMContentLoaded', function() {
     const gameModal = document.getElementById('gameModal');
     const openGameBtn = document.getElementById('gamesButton');
     const closeGameBtn = gameModal.querySelector('.game-close-btn');
+    const fullscreenCloseBtn = document.getElementById('fullscreenCloseBtn');
     const gameSelection = document.getElementById('gameSelection');
+    const gameInstructionsScreen = document.getElementById('gameInstructionsScreen');
     const gameContainer = document.getElementById('gameContainer');
     const backToMenu = document.getElementById('backToMenu');
     const currentGameTitle = document.getElementById('currentGameTitle');
+    
+    // Instruction screen elements
+    const instructionGameTitle = document.getElementById('instructionGameTitle');
+    const instructionGameIcon = document.getElementById('instructionGameIcon');
+    const instructionText = document.getElementById('instructionText');
+    const backToGamesBtn = document.getElementById('backToGamesBtn');
+    const startGameBtn = document.getElementById('startGameBtn');
+    const difficultyButtons = document.querySelectorAll('.difficulty-btn');
     
     // Game elements
     const gameCanvas = document.getElementById('gameCanvas');
     const ctx = gameCanvas.getContext('2d');
     const gameScore = document.getElementById('gameScore');
     const gameInstructions = document.getElementById('gameInstructions');
-    const gameOverMessage = document.getElementById('gameOverMessage');
+    const gameOverOverlay = document.getElementById('gameOverOverlay');
+    const finalScore = document.getElementById('finalScore');
     const restartGameBtn = document.getElementById('restartGameBtn');
     
     // Game state
     let currentGame = null;
     let gameRunning = false;
+    let selectedDifficulty = null;
+    let gameSpeeds = { slow: 0.5, normal: 1, fast: 1.5 };
     let animationId;
     let gameData = {};
     let playerScore = 0;
@@ -28,32 +41,74 @@ document.addEventListener('DOMContentLoaded', function() {
     const gameConfigs = {
         dino: {
             title: 'Dino Jump',
-            instructions: 'Press SPACE or click to jump over obstacles',
+            icon: '🦕',
+            instructions: 'Help the dinosaur survive by jumping over obstacles!',
+            detailedInstructions: [
+                '🎯 Objective: Jump over cacti and birds to survive as long as possible',
+                '⌨️ Controls: Press SPACEBAR or CLICK to make the dino jump',
+                '🏃 Speed: The game gets faster as you progress',
+                '⭐ Scoring: Points increase the longer you survive'
+            ],
             colors: { bg: '#87CEEB', ground: '#90EE90', player: '#2ecc71', obstacle: '#e74c3c' }
         },
         snake: {
             title: 'Snake',
-            instructions: 'Use ARROW KEYS to move and eat red apples',
+            icon: '🐍',
+            instructions: 'Control the snake to eat apples and grow longer!',
+            detailedInstructions: [
+                '🎯 Objective: Eat red apples to grow your snake and score points',
+                '⌨️ Controls: Use ARROW KEYS (↑↓←→) to change direction',
+                '🚫 Avoid: Don\'t hit walls or your own body',
+                '⭐ Scoring: Each apple gives you points and makes you longer'
+            ],
             colors: { bg: '#000', snake: '#0f0', food: '#f00', wall: '#fff' }
         },
         tetris: {
             title: 'Tetris',
-            instructions: 'Arrow keys to move, UP to rotate, DOWN to drop faster',
+            icon: '🧱',
+            instructions: 'Stack falling blocks to complete horizontal lines!',
+            detailedInstructions: [
+                '🎯 Objective: Clear horizontal lines by filling them completely',
+                '⌨️ Controls: ← → to move, ↑ to rotate, ↓ to drop faster',
+                '🧩 Strategy: Plan ahead to avoid stacking too high',
+                '⭐ Scoring: More points for clearing multiple lines at once'
+            ],
             colors: { bg: '#000', blocks: ['#ff0', '#f0f', '#0ff', '#0f0', '#f80', '#00f', '#f00'] }
         },
         pong: {
             title: 'Pong',
-            instructions: 'UP/DOWN arrow keys to move paddle, first to 10 points wins',
+            icon: '🏓',
+            instructions: 'Classic paddle ball game - first to 10 points wins!',
+            detailedInstructions: [
+                '🎯 Objective: Hit the ball with your paddle to score against the computer',
+                '⌨️ Controls: Use ↑ and ↓ arrow keys to move your paddle',
+                '🏆 Win Condition: First player to reach 10 points wins',
+                '⭐ Strategy: Try to hit the ball at different angles'
+            ],
             colors: { bg: '#000', paddle: '#fff', ball: '#fff', text: '#fff' }
         },
         breakout: {
             title: 'Breakout',
-            instructions: 'LEFT/RIGHT arrow keys to move paddle and break all bricks',
+            icon: '⚡',
+            instructions: 'Use your paddle to break all the bricks!',
+            detailedInstructions: [
+                '🎯 Objective: Break all colored bricks by bouncing the ball',
+                '⌨️ Controls: Use ← and → arrow keys to move your paddle',
+                '🎱 Keep the ball in play by catching it with your paddle',
+                '⭐ Scoring: Different colored bricks give different points'
+            ],
             colors: { bg: '#000', paddle: '#fff', ball: '#fff', brick: '#f80' }
         },
         space: {
             title: 'Space Shooter',
-            instructions: 'Arrow keys to move, SPACE to shoot asteroids',
+            icon: '🚀',
+            instructions: 'Pilot your spaceship and shoot down asteroids!',
+            detailedInstructions: [
+                '🎯 Objective: Destroy asteroids before they hit your spaceship',
+                '⌨️ Controls: Arrow keys to move, SPACEBAR to shoot',
+                '🛸 Avoid: Don\'t let asteroids crash into your ship',
+                '⭐ Scoring: Larger asteroids give more points when destroyed'
+            ],
             colors: { bg: '#000', player: '#0ff', bullet: '#ff0', enemy: '#f00' }
         }
     };
@@ -69,6 +124,38 @@ document.addEventListener('DOMContentLoaded', function() {
     closeGameBtn?.addEventListener('click', closeGameModal);
     backToMenu?.addEventListener('click', showGameSelection);
     restartGameBtn?.addEventListener('click', restartCurrentGame);
+    fullscreenCloseBtn?.addEventListener('click', showGameSelection);
+    backToGamesBtn?.addEventListener('click', showGameSelection);
+    startGameBtn?.addEventListener('click', startSelectedGame);
+    
+    // Game over overlay click to dismiss
+    gameOverOverlay?.addEventListener('click', (e) => {
+        if (e.target === gameOverOverlay) {
+            gameOverOverlay.style.display = 'none';
+        }
+    });
+    
+    // Difficulty selection event listeners
+    difficultyButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove selected class from all buttons
+            difficultyButtons.forEach(b => b.classList.remove('selected'));
+            // Add selected class to clicked button
+            btn.classList.add('selected');
+            selectedDifficulty = btn.dataset.speed;
+            startGameBtn.disabled = false;
+        });
+    });
+    
+    // Handle ESC key for full-screen mode
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const modalBody = document.querySelector('.game-modal-body');
+            if (modalBody && modalBody.classList.contains('game-active')) {
+                showGameSelection();
+            }
+        }
+    });
     
     // Game selection - Handle both card and button clicks
     document.querySelectorAll('.game-card').forEach(card => {
@@ -76,8 +163,8 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             e.stopPropagation();
             const gameType = card.dataset.game;
-            console.log('Starting game:', gameType);
-            startGame(gameType);
+            console.log('Showing instructions for game:', gameType);
+            showGameInstructions(gameType);
         });
     });
     
@@ -88,8 +175,8 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
             const gameCard = btn.closest('.game-card');
             const gameType = gameCard.dataset.game;
-            console.log('Starting game via button:', gameType);
-            startGame(gameType);
+            console.log('Showing instructions for game via button:', gameType);
+            showGameInstructions(gameType);
         });
     });
     
@@ -127,30 +214,91 @@ document.addEventListener('DOMContentLoaded', function() {
     function showGameSelection() {
         console.log('Showing game selection menu...');
         
+        // Remove game-active class from modal body
+        const modalBody = document.querySelector('.game-modal-body');
+        if (modalBody) {
+            modalBody.classList.remove('game-active');
+        }
+        
         // Stop current game first
         stopGame();
         
-        // Hide game container with animation
-        if (gameContainer) {
-            gameContainer.style.opacity = '0';
-            gameContainer.style.pointerEvents = 'none';
-            setTimeout(() => {
-                gameContainer.style.display = 'none';
-            }, 300);
-            console.log('Game container hidden');
+        // Remove side-by-side layout class
+        const layoutContainer = document.querySelector('.game-layout-container');
+        if (layoutContainer) {
+            layoutContainer.classList.remove('show-instructions');
+            layoutContainer.style.display = 'flex'; // Show the layout container
         }
         
-        // Show game selection menu with animation
+        // Hide all other screens immediately
+        if (gameContainer) {
+            gameContainer.style.display = 'none';
+        }
+        
+        if (gameInstructionsScreen) {
+            gameInstructionsScreen.style.display = 'none';
+        }
+        
+        // Show game selection menu immediately
         if (gameSelection) {
             gameSelection.style.display = 'block';
-            setTimeout(() => {
-                gameSelection.style.opacity = '1';
-                gameSelection.style.pointerEvents = 'auto';
-            }, 50);
+            gameSelection.style.opacity = '1';
+            gameSelection.style.pointerEvents = 'auto';
             console.log('Game selection display set to block');
         } else {
             console.error('Game selection element not found');
         }
+        
+        // Reset game state
+        currentGame = null;
+        selectedDifficulty = null;
+    }
+    
+    function showGameInstructions(gameType) {
+        console.log('Showing instructions for game:', gameType);
+        currentGame = gameType;
+        const config = gameConfigs[gameType];
+        
+        // Reset difficulty selection
+        selectedDifficulty = null;
+        startGameBtn.disabled = true;
+        difficultyButtons.forEach(btn => btn.classList.remove('selected'));
+        
+        // Update instruction screen content
+        instructionGameTitle.textContent = config.title;
+        instructionGameIcon.textContent = config.icon;
+        instructionText.innerHTML = config.detailedInstructions.map(instruction => 
+            `<div class="instruction-item">${instruction}</div>`
+        ).join('');
+        
+        // Add the show-instructions class to enable side-by-side layout
+        const layoutContainer = document.querySelector('.game-layout-container');
+        if (layoutContainer) {
+            layoutContainer.classList.add('show-instructions');
+        }
+        
+        // Show instructions screen
+        if (gameInstructionsScreen) {
+            gameInstructionsScreen.style.display = 'block';
+        }
+    }
+    
+    function startSelectedGame() {
+        console.log('Starting game with difficulty:', selectedDifficulty);
+        
+        // Immediate transition: hide instructions and start game
+        if (gameInstructionsScreen) {
+            gameInstructionsScreen.style.display = 'none';
+        }
+        
+        // Start the actual game immediately
+        startGame(currentGame);
+    }
+    
+    function getDifficultyMultiplier() {
+        const multiplier = gameSpeeds[selectedDifficulty] || 1;
+        console.log(`Difficulty: ${selectedDifficulty}, Speed multiplier: ${multiplier}`);
+        return multiplier;
     }
     
     function startGame(gameType) {
@@ -158,24 +306,33 @@ document.addEventListener('DOMContentLoaded', function() {
         currentGame = gameType;
         const config = gameConfigs[gameType];
         
-        // Hide game selection menu with animation
-        if (gameSelection) {
-            gameSelection.style.opacity = '0';
-            gameSelection.style.pointerEvents = 'none';
-            setTimeout(() => {
-                gameSelection.style.display = 'none';
-            }, 300);
-            console.log('Game selection menu hidden');
+        // Add game-active class to modal body
+        const modalBody = document.querySelector('.game-modal-body');
+        if (modalBody) {
+            modalBody.classList.add('game-active');
         }
         
-        // Show game container with animation
+        // Remove side-by-side layout class when starting game
+        const layoutContainer = document.querySelector('.game-layout-container');
+        if (layoutContainer) {
+            layoutContainer.classList.remove('show-instructions');
+            layoutContainer.style.display = 'none';
+        }
+        
+        // Ensure all previous screens are hidden
+        if (gameSelection) {
+            gameSelection.style.display = 'none';
+        }
+        if (gameInstructionsScreen) {
+            gameInstructionsScreen.style.display = 'none';
+        }
+        
+        // Show game container immediately
         if (gameContainer) {
             gameContainer.style.display = 'flex';
-            setTimeout(() => {
-                gameContainer.style.opacity = '1';
-                gameContainer.style.pointerEvents = 'auto';
-            }, 50);
-            console.log('Game container shown');
+            gameContainer.style.opacity = '1';
+            gameContainer.style.pointerEvents = 'auto';
+            console.log('Game container shown immediately');
         }
         
         // Update game UI
@@ -190,8 +347,8 @@ document.addEventListener('DOMContentLoaded', function() {
         playerScore = 0;
         updateScore();
         
-        if (gameOverMessage) {
-            gameOverMessage.style.display = 'none';
+        if (gameOverOverlay) {
+            gameOverOverlay.style.display = 'none';
         }
         if (restartGameBtn) {
             restartGameBtn.style.display = 'none';
@@ -207,9 +364,26 @@ document.addEventListener('DOMContentLoaded', function() {
         gameRunning = true;
         gameData = {};
         
-        // Set canvas size
-        gameCanvas.width = gameCanvas.offsetWidth;
-        gameCanvas.height = gameCanvas.offsetHeight;
+        // Ensure proper canvas sizing after modal transition
+        setTimeout(() => {
+            if (gameCanvas) {
+                // Force recalculate canvas dimensions
+                const canvasContainer = gameCanvas.parentElement;
+                const containerWidth = canvasContainer.offsetWidth - 10; // Account for margin
+                const containerHeight = canvasContainer.offsetHeight - 130; // Account for header and controls
+                
+                gameCanvas.width = Math.max(containerWidth, 600);
+                gameCanvas.height = Math.max(containerHeight, 400);
+                
+                console.log(`Canvas resized to: ${gameCanvas.width}x${gameCanvas.height}`);
+            }
+        }, 150);
+        
+        // Set initial canvas size
+        if (gameCanvas) {
+            gameCanvas.width = gameCanvas.offsetWidth || 600;
+            gameCanvas.height = gameCanvas.offsetHeight || 400;
+        }
         
         switch(gameType) {
             case 'dino':
@@ -237,12 +411,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // DINO GAME
     function initDinoGame() {
+        const speedMultiplier = getDifficultyMultiplier();
         gameData = {
             dino: { x: 50, y: gameCanvas.height - 100, width: 40, height: 40, velocityY: 0, jumping: false },
             obstacles: [],
             clouds: [],
-            speed: 3,
-            spawnRate: 0.008
+            speed: 3 * speedMultiplier,
+            spawnRate: 0.008 * (speedMultiplier > 1 ? speedMultiplier * 0.8 : speedMultiplier)
         };
         
         // Add clouds
@@ -252,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 y: Math.random() * (gameCanvas.height * 0.3),
                 width: 30 + Math.random() * 20,
                 height: 15 + Math.random() * 10,
-                speed: 0.5 + Math.random() * 0.5
+                speed: (0.5 + Math.random() * 0.5) * speedMultiplier
             });
         }
     }
@@ -465,10 +640,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // PONG GAME
     function initPongGame() {
+        const speedMultiplier = getDifficultyMultiplier();
         gameData = {
-            leftPaddle: { x: 20, y: gameCanvas.height / 2 - 50, width: 10, height: 100, speed: 5 },
-            rightPaddle: { x: gameCanvas.width - 30, y: gameCanvas.height / 2 - 50, width: 10, height: 100, speed: 5 },
-            ball: { x: gameCanvas.width / 2, y: gameCanvas.height / 2, dx: 5, dy: 3, radius: 8 },
+            leftPaddle: { x: 20, y: gameCanvas.height / 2 - 50, width: 10, height: 100, speed: 5 * speedMultiplier },
+            rightPaddle: { x: gameCanvas.width - 30, y: gameCanvas.height / 2 - 50, width: 10, height: 100, speed: 5 * speedMultiplier },
+            ball: { x: gameCanvas.width / 2, y: gameCanvas.height / 2, dx: 5 * speedMultiplier, dy: 3 * speedMultiplier, radius: 8 },
             leftScore: 0,
             rightScore: 0
         };
@@ -559,6 +735,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // BREAKOUT GAME
     function initBreakoutGame() {
+        const speedMultiplier = getDifficultyMultiplier();
         const bricks = [];
         for (let row = 0; row < 5; row++) {
             for (let col = 0; col < 10; col++) {
@@ -573,8 +750,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         gameData = {
-            paddle: { x: gameCanvas.width / 2 - 50, y: gameCanvas.height - 30, width: 100, height: 10, speed: 8 },
-            ball: { x: gameCanvas.width / 2, y: gameCanvas.height - 50, dx: 4, dy: -4, radius: 8 },
+            paddle: { x: gameCanvas.width / 2 - 50, y: gameCanvas.height - 30, width: 100, height: 10, speed: 8 * speedMultiplier },
+            ball: { x: gameCanvas.width / 2, y: gameCanvas.height - 50, dx: 4 * speedMultiplier, dy: -4 * speedMultiplier, radius: 8 },
             bricks: bricks
         };
     }
@@ -651,12 +828,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // SPACE SHOOTER GAME
     function initSpaceGame() {
+        const speedMultiplier = getDifficultyMultiplier();
         gameData = {
-            player: { x: gameCanvas.width / 2 - 15, y: gameCanvas.height - 50, width: 30, height: 30, speed: 6 },
+            player: { x: gameCanvas.width / 2 - 15, y: gameCanvas.height - 50, width: 30, height: 30, speed: 6 * speedMultiplier },
             bullets: [],
             enemies: [],
             stars: [],
-            enemySpawnRate: 0.02
+            enemySpawnRate: 0.02 * (speedMultiplier > 1 ? speedMultiplier * 0.8 : speedMultiplier)
         };
         
         // Generate stars
@@ -664,7 +842,7 @@ document.addEventListener('DOMContentLoaded', function() {
             gameData.stars.push({
                 x: Math.random() * gameCanvas.width,
                 y: Math.random() * gameCanvas.height,
-                speed: Math.random() * 2 + 1
+                speed: (Math.random() * 2 + 1) * speedMultiplier
             });
         }
     }
@@ -695,7 +873,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 y: -30,
                 width: 30,
                 height: 30,
-                speed: Math.random() * 3 + 2
+                speed: (Math.random() * 3 + 2) * getDifficultyMultiplier()
             });
         }
         
@@ -819,8 +997,21 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function endGame() {
         gameRunning = false;
-        gameOverMessage.style.display = 'block';
-        restartGameBtn.style.display = 'block';
+        
+        // Show game over overlay
+        if (gameOverOverlay) {
+            gameOverOverlay.style.display = 'flex';
+        }
+        
+        // Update final score in the overlay
+        if (finalScore) {
+            finalScore.textContent = `Score: ${Math.floor(playerScore)}`;
+        }
+        
+        // Show restart button in controls
+        if (restartGameBtn) {
+            restartGameBtn.style.display = 'block';
+        }
         
         // Save score (simplified)
         console.log(`Game Over! Final Score: ${Math.floor(playerScore)} in ${currentGame}`);
