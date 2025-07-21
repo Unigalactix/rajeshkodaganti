@@ -5845,3 +5845,50 @@ h2.heading:after {
     50% { box-shadow: 0 8px 25px rgba(155, 89, 182, 0.6), 0 0 20px rgba(255, 255, 255, 0.2); }
     100% { box-shadow: 0 10px 25px rgba(155, 89, 182, 0.5); }
 }
+
+/*
+    ---------------------------------------
+    ----- Name Transition Animation -----
+    ---------------------------------------
+*/
+
+#nameTransition {
+    position: relative;
+    display: inline-block;
+}
+
+#nameTransition .name-english,
+#nameTransition .name-telugu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateZ(0); /* Hardware acceleration for smoother transitions */
+    backface-visibility: hidden;
+}
+
+#nameTransition .name-english.active,
+#nameTransition .name-telugu.active {
+    opacity: 1;
+}
+
+/* Ensure the Telugu font renders properly */
+#nameTransition .name-telugu {
+    font-family: 'Noto Sans Telugu', 'Telugu Sangam MN', 'Gautami', 'Latha', Arial, sans-serif;
+    font-weight: 500;
+}
+
+/* Mobile responsiveness for name transition */
+@media only screen and (max-width: 768px) {
+    #nameTransition {
+        font-size: 2em;
+        line-height: 1.2;
+    }
+    
+    #nameTransition .name-english,
+    #nameTransition .name-telugu {
+        text-align: center;
+    }
+}
