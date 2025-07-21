@@ -1789,7 +1789,7 @@ h2.heading:after {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.9);
     animation: fadeIn 0.3s ease-out;
 }
 
@@ -1797,12 +1797,15 @@ h2.heading:after {
 .game-modal-content {
     position: relative;
     margin: 2% auto;
-    max-width: 800px;
-    background-color: #fff;
+    max-width: 1000px;
+    width: 95%;
+    background-color: var(--background-light);
     border-radius: 15px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     overflow: hidden;
     animation: slideIn 0.4s ease-out;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 @keyframes slideIn {
@@ -1812,8 +1815,8 @@ h2.heading:after {
 
 /* Modal Header */
 .game-modal-header {
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-    color: white;
+    background: var(--primary-color);
+    color: var(--text-light);
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -1824,6 +1827,7 @@ h2.heading:after {
     margin: 0;
     font-size: 1.8em;
     font-weight: 600;
+    color: var(--text-light);
 }
 
 .game-close-btn {
@@ -1832,7 +1836,8 @@ h2.heading:after {
     cursor: pointer;
     padding: 5px 10px;
     border-radius: 50%;
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
+    color: var(--text-light);
 }
 
 .game-close-btn:hover {
@@ -1843,7 +1848,216 @@ h2.heading:after {
 /* Modal Body */
 .game-modal-body {
     padding: 0;
-    background-color: #f7f7f7;
+    background-color: var(--background-light);
+}
+
+/*
+    ------------------------------------
+    ----- Game Selection Menu -----
+    ------------------------------------
+*/
+
+.game-selection-menu {
+    padding: 40px;
+    text-align: center;
+    display: block !important;
+}
+
+.game-selection-menu h3 {
+    color: var(--text-primary);
+    font-size: 2.2em;
+    margin-bottom: 40px;
+    font-weight: 700;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.game-card {
+    background: var(--background-light);
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: var(--transition-smooth);
+}
+
+.game-card:hover::before {
+    left: 100%;
+}
+
+.game-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent-color);
+    box-shadow: 0 15px 40px var(--shadow-medium);
+}
+
+.game-icon {
+    font-size: 3.5em;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.game-card h4 {
+    color: var(--text-primary);
+    font-size: 1.4em;
+    margin: 15px 0 10px 0;
+    font-weight: 600;
+}
+
+.game-card p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+.select-game-btn {
+    background: var(--accent-color);
+    color: var(--text-light);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.select-game-btn:hover {
+    background: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 105, 0, 0.4);
+}
+
+/*
+    ------------------------------------
+    ----- Game Container Styles -----
+    ------------------------------------
+*/
+
+.game-area {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    height: 500px;
+    background-color: var(--background-light);
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: var(--background-gray);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.back-btn {
+    background: var(--text-secondary);
+    color: var(--text-light);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.back-btn:hover {
+    background: var(--primary-color);
+    transform: translateX(-2px);
+}
+
+#currentGameTitle {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.game-score {
+    font-weight: 600;
+    color: var(--accent-color);
+    font-size: 1.1em;
+}
+
+#gameCanvas {
+    display: block;
+    background-color: #f0f0f0;
+    width: 100%;
+    flex: 1;
+    border: none;
+}
+
+#gameControls {
+    padding: 15px;
+    background: var(--background-gray);
+    text-align: center;
+}
+
+.game-instructions {
+    color: var(--text-secondary);
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+#gameOverMessage {
+    color: var(--accent-color);
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.leaderboard-tabs {
+    display: flex;
+    margin-bottom: 15px;
+    background: var(--background-gray);
+    border-radius: 8px;
+    padding: 3px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: var(--transition-fast);
+    font-size: 0.8em;
+    font-weight: 500;
+}
+
+.tab-btn.active {
+    background: var(--accent-color);
+    color: var(--text-light);
+}
+
+.tab-btn:hover:not(.active) {
+    background: var(--border-color);
 }
 
 /* Game Styles (adapted for modal) */

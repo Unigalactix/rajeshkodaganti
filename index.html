@@ -54,17 +54,17 @@
             <h1>Rajesh Kodaganti</h1>
             <h2>Master's Student in Computer Engineering | Software Intern</h2>
             <p style="color: #a2d9f7; margin-top: 15px; font-size: 1.1em; font-weight: 600; background: rgba(255,255,255,0.1); padding: 8px 20px; border-radius: 25px; display: inline-block;">
-                🔍 #OPEN_TO_WORK
+                🔍 OPEN TO WORK
             </p>
             <p style="color: #ffffff; margin-top: 10px; font-size: 1.0em; opacity: 0.9;">
                 Specializing in Machine Learning, Data Engineering & Cybersecurity
             </p>
             <div style="margin-top: 25px;">
-                <a href="resume/Rajesh_Kodaganti_Resume.pdf" download class="btn-rounded-white" style="margin-right: 15px;">
+                <a href="resume/Rajesh_Kodaganti_Resume.pdf" download class="btn-rounded-white" style="margin-right: 15px; padding: 18px 30px; min-width: 180px; text-align: center;">
                     <i class="fa fa-download" aria-hidden="true"></i> Download Resume
                 </a>
-                <a href="#contact" class="btn-rounded-white" style="margin-right: 15px;">Get In Touch</a>
-                <button id="gamesButton" class="btn-rounded-white" style="background: #e74c3c; border: 2px solid #e74c3c;">
+                <a href="#contact" class="btn-rounded-white" style="margin-right: 15px; padding: 18px 30px; min-width: 180px; text-align: center;">Get In Touch</a>
+                <button id="gamesButton" class="btn-rounded-white" style="background: #e74c3c; border: 2px solid #e74c3c; padding: 18px 30px; min-width: 180px; text-align: center;">
                     <i class="fa fa-gamepad" aria-hidden="true"></i> Play Games
                 </button>
             </div>
@@ -103,7 +103,7 @@
                             </ul>
                         </div>
                         <div class="career-objective">
-                            <h4>💼 Career Objective</h4>
+                            <h4 style="color: #FF6900;">💼 Career Objective</h4>
                             <p>Seeking opportunities in <strong>Machine Learning Engineering</strong>, <strong>Data Science</strong>, <strong>Software Development</strong>, and <strong>Cybersecurity</strong> roles where I can apply my technical expertise and analytical skills to drive innovation and create impactful solutions.</p>
                         </div>
                     </div>
@@ -657,48 +657,89 @@
     <div id="gameModal" class="game-modal">
         <div class="game-modal-content">
             <div class="game-modal-header">
-                <h2>🦕 Dino Game</h2>
+                <h2>🎮 Game Center</h2>
                 <span class="game-close-btn">&times;</span>
             </div>
             <div class="game-modal-body">
-                <div class="game-wrapper">
-                    <div class="game-container">
-                        <canvas id="gameCanvas" width="450" height="350"></canvas>
-                        <div id="gameControls">
-                            <div id="scoreDisplay">Score: 0</div>
-                            <div id="gameOverMessage">GAME OVER!</div>
-                            <button id="restartButton" class="game-button">Restart</button>
+                <!-- Game Selection Menu -->
+                <div id="gameSelection" class="game-selection-menu">
+                    <h3>Choose Your Game</h3>
+                    <div class="games-grid">
+                        <div class="game-card" data-game="dino">
+                            <div class="game-icon">🦕</div>
+                            <h4>Dino Jump</h4>
+                            <p>Classic Chrome Dino game with obstacles</p>
+                            <button class="select-game-btn">Play Now</button>
                         </div>
+                        <div class="game-card" data-game="snake">
+                            <div class="game-icon">🐍</div>
+                            <h4>Snake</h4>
+                            <p>Eat apples and grow your snake</p>
+                            <button class="select-game-btn">Play Now</button>
+                        </div>
+                        <div class="game-card" data-game="tetris">
+                            <div class="game-icon">🧱</div>
+                            <h4>Tetris</h4>
+                            <p>Stack blocks and clear lines</p>
+                            <button class="select-game-btn">Play Now</button>
+                        </div>
+                        <div class="game-card" data-game="pong">
+                            <div class="game-icon">🏓</div>
+                            <h4>Pong</h4>
+                            <p>Classic paddle ball game</p>
+                            <button class="select-game-btn">Play Now</button>
+                        </div>
+                        <div class="game-card" data-game="breakout">
+                            <div class="game-icon">⚡</div>
+                            <h4>Breakout</h4>
+                            <p>Break all the bricks with your paddle</p>
+                            <button class="select-game-btn">Play Now</button>
+                        </div>
+                        <div class="game-card" data-game="space">
+                            <div class="game-icon">🚀</div>
+                            <h4>Space Shooter</h4>
+                            <p>Shoot asteroids in space</p>
+                            <button class="select-game-btn">Play Now</button>
+                        </div>
+                    </div>
+                </div>
 
-                        <!-- Game Start Menu -->
-                        <div id="gameMenu" class="game-menu">
-                            <h2>Dino Game</h2>
-                            <label for="playerNameInput">Enter Your Name:</label>
-                            <input type="text" id="playerNameInput" placeholder="Player 1" maxlength="10">
-                            <label for="levelSelect">Select Level:</label>
-                            <select id="levelSelect">
-                                <option value="easy">Easy</option>
-                                <option value="medium" selected>Medium</option>
-                                <option value="hard">Hard</option>
-                            </select>
-                            <button id="startButton" class="game-button" disabled>Start Game</button>
+                <!-- Game Container -->
+                <div id="gameContainer" class="game-wrapper" style="display: none;">
+                    <div class="game-area">
+                        <div class="game-header">
+                            <button id="backToMenu" class="back-btn">← Back to Games</button>
+                            <h3 id="currentGameTitle">Game</h3>
+                            <div id="gameScore" class="game-score">Score: 0</div>
+                        </div>
+                        <canvas id="gameCanvas" width="600" height="400"></canvas>
+                        <div id="gameControls">
+                            <div id="gameInstructions" class="game-instructions"></div>
+                            <div id="gameOverMessage" style="display: none;">Game Over!</div>
+                            <button id="restartGameBtn" class="game-button" style="display: none;">Restart</button>
                         </div>
                     </div>
 
                     <div class="leaderboard-container">
-                        <h3>Leaderboard</h3>
+                        <h3>🏆 Leaderboard</h3>
+                        <div class="leaderboard-tabs">
+                            <button class="tab-btn active" data-game="all">All Games</button>
+                            <button class="tab-btn" data-game="current">Current Game</button>
+                        </div>
                         <ul id="leaderboardList" class="leaderboard-list">
                             <!-- Leaderboard entries will be dynamically inserted here -->
                         </ul>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/scripts.min.js"></script>
-    <script src="js/game.js"></script>
+    <script src="js/multi-games.js"></script>
 </body>
 
 </html>
