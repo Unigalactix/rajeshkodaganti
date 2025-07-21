@@ -1,32 +1,48 @@
 # Rajesh Kodaganti - Portfolio
 
-This is a professional portfolio website for Rajesh Kodaganti, showcasing his experience as a Software Engineer and Data Engineer.
+This is a professional portfolio website for Rajesh Kodaganti, showcasing his experience as a Software Engineer and Computer Engineering graduate student with expertise in AI, Machine Learning, and Modern Development Technologies.
 
 ## Features
 
 - **Responsive Design**: Fully responsive layout that works on all devices
-- **Modern Styling**: Clean, professional design with smooth animations
-- **Interactive Timeline**: Experience section with visual timeline
+- **Nike-Inspired Styling**: Modern, professional design with smooth animations and Nike color palette
+- **Interactive Timeline**: Experience and Education sections with visual timeline and detailed modal popups
+- **Multi-Game Center**: Complete game collection with 6 interactive games (Dino, Snake, Tetris, Pong, Breakout, Space Shooter)
 - **Contact Form**: Integrated contact form using Formspree
 - **Social Links**: Direct links to professional profiles
+- **Comprehensive Certifications**: 29+ professional certifications in AI/ML, Azure, GitHub, Docker, and Python
 
 ## Sections
 
 1. **About**: Professional summary and background
-2. **Experience**: Work history with detailed descriptions
-3. **Education**: Academic qualifications and achievements
+2. **Experience**: Interactive timeline with modal popups for detailed work history
+3. **Education**: Timeline-based education section with comprehensive academic details
 4. **Projects**: Showcase of key projects and accomplishments
-5. **Skills**: Technical skills and certifications
-6. **Contact**: Contact form and social media links
+5. **Skills**: Technical skills and programming languages
+6. **Game Center**: Interactive multi-game platform with 6 classic games
+7. **Certifications**: Comprehensive list of 29+ licenses and certifications
+8. **Contact**: Contact form and social media links
 
 ## Technologies Used
 
 - HTML5
-- CSS3 (with CSS Variables)
-- JavaScript (jQuery)
+- CSS3 (with CSS Variables and Nike-inspired design system)
+- JavaScript (Vanilla JS + jQuery)
 - Bootstrap Grid System
 - Font Awesome Icons
+- Canvas API for game development
+- Intersection Observer API for timeline animations
+- CSS Animations and Transitions
 - Formspree for contact form
+
+## Games Included
+
+- 🦕 **Dino Jump**: Classic Chrome Dino game with obstacles
+- 🐍 **Snake**: Eat apples and grow your snake
+- 🧱 **Tetris**: Stack blocks and clear lines
+- 🏓 **Pong**: Classic paddle ball game
+- ⚡ **Breakout**: Break all the bricks with your paddle  
+- 🚀 **Space Shooter**: Shoot asteroids in space
 
 ## Setup
 
