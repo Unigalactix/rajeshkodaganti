@@ -1278,16 +1278,32 @@ document.addEventListener('DOMContentLoaded', function() {
                                     background: linear-gradient(45deg, #9b59b6, #8e44ad);
                                     color: white;
                                     border: none;
-                                    padding: 15px 30px;
-                                    border-radius: 25px;
-                                    font-size: 16px;
+                                    padding: 18px 35px;
+                                    border-radius: 30px;
+                                    font-size: 18px;
                                     font-weight: bold;
                                     cursor: pointer;
-                                    box-shadow: 0 6px 20px rgba(155, 89, 182, 0.3);
+                                    box-shadow: 0 8px 25px rgba(155, 89, 182, 0.4);
                                     transition: all 0.3s ease;
-                                ">
-                                    🎮 Play ETA: Echoes of Rebirth
+                                    border: 2px solid transparent;
+                                    position: relative;
+                                    overflow: hidden;
+                                " 
+                                onmouseover="this.style.background='linear-gradient(45deg, #a569bd, #9b59b6)'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 30px rgba(155, 89, 182, 0.6)'; this.style.borderColor='rgba(255, 255, 255, 0.4)';"
+                                onmouseout="this.style.background='linear-gradient(45deg, #9b59b6, #8e44ad)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(155, 89, 182, 0.4)'; this.style.borderColor='transparent';">
+                                    🌙 Enter the World of ETA
                                 </button>
+                                
+                                <!-- Quick Start Guide -->
+                                <div style="background: rgba(155, 89, 182, 0.1); border: 1px solid rgba(155, 89, 182, 0.3); border-radius: 15px; padding: 15px; margin-top: 20px;">
+                                    <h5 style="color: #9b59b6; margin-bottom: 10px; font-size: 14px;">🎯 Quick Start Guide:</h5>
+                                    <div style="font-size: 12px; color: #666; line-height: 1.4;">
+                                        • <strong>Character Creation:</strong> Roll 4d6 drop lowest for stats<br>
+                                        • <strong>Reincarnation:</strong> Keep memories across lives<br>
+                                        • <strong>D&D Mechanics:</strong> Full skill checks & combat system<br>
+                                        • <strong>Lunar Eclipse:</strong> Trigger to break the curse
+                                    </div>
+                                </div>
                             </div>
                             
                             <!-- Coming Soon Section -->
@@ -1323,10 +1339,28 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         
                         <!-- Back Button for ETA Game -->
-                        <div id="eta-back-controls" style="display: none; margin-top: 15px;">
-                            <button class="eta-choice-btn" onclick="returnToKruraSelection()">
-                                ← Back to KRURA Games
+                        <div id="eta-back-controls" style="display: none; margin-top: 20px; text-align: center;">
+                            <button class="eta-choice-btn" onclick="returnToKruraSelection()" style="
+                                background: linear-gradient(45deg, #2c3e50, #34495e);
+                                color: white;
+                                border: none;
+                                padding: 15px 25px;
+                                border-radius: 25px;
+                                font-size: 16px;
+                                font-weight: bold;
+                                cursor: pointer;
+                                box-shadow: 0 6px 20px rgba(52, 73, 94, 0.3);
+                                transition: all 0.3s ease;
+                                border: 2px solid transparent;
+                            " 
+                            onmouseover="this.style.background='linear-gradient(45deg, #34495e, #2c3e50)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(52, 73, 94, 0.5)'; this.style.borderColor='rgba(255, 255, 255, 0.3)';"
+                            onmouseout="this.style.background='linear-gradient(45deg, #2c3e50, #34495e)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(52, 73, 94, 0.3)'; this.style.borderColor='transparent';">
+                                🎮 ← Back to KRURA Games
                             </button>
+                            
+                            <div style="margin-top: 15px; padding: 12px; background: rgba(0, 0, 0, 0.3); border-radius: 12px; font-size: 12px; color: #bbb; max-width: 400px; margin-left: auto; margin-right: auto;">
+                                💡 <strong>Tip:</strong> Your game progress is automatically saved. You can return anytime to continue your eternal journey.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1360,6 +1394,31 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Global functions for ETA game integration
     window.startETAGame = function() {
+        // Show loading indicator
+        const etaContainer = document.getElementById('eta-game-container');
+        etaContainer.innerHTML = `
+            <div class="eta-loading" style="
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 400px;
+                color: #ffd700;
+            ">
+                <div class="eta-spinner" style="
+                    width: 50px;
+                    height: 50px;
+                    border: 4px solid rgba(255, 215, 0, 0.3);
+                    border-top: 4px solid #ffd700;
+                    border-radius: 50%;
+                    animation: spin 1s linear infinite;
+                    margin-bottom: 20px;
+                "></div>
+                <h3>🌙 Loading ETA: Echoes of Rebirth</h3>
+                <p style="margin-top: 10px; opacity: 0.8;">Preparing the mystical realm...</p>
+            </div>
+        `;
+        
         // Load ETA game CSS if not already loaded
         if (!document.querySelector('link[href*="eta-game.css"]')) {
             const cssLink = document.createElement('link');
@@ -1373,37 +1432,181 @@ document.addEventListener('DOMContentLoaded', function() {
             const script = document.createElement('script');
             script.src = 'js/eta-game.js';
             script.onload = function() {
-                initializeETAGame();
+                setTimeout(initializeETAGame, 800); // Small delay for dramatic effect
+            };
+            script.onerror = function() {
+                etaContainer.innerHTML = `
+                    <div style="text-align: center; color: #ff6b6b; padding: 40px;">
+                        <h3>⚠️ Loading Error</h3>
+                        <p>Unable to load ETA game. Please try again.</p>
+                        <button onclick="returnToKruraSelection()" style="
+                            background: #9b59b6;
+                            color: white;
+                            border: none;
+                            padding: 12px 20px;
+                            border-radius: 20px;
+                            cursor: pointer;
+                            margin-top: 15px;
+                        ">← Back to Games</button>
+                    </div>
+                `;
             };
             document.head.appendChild(script);
         } else if (window.etaGame) {
-            initializeETAGame();
+            setTimeout(initializeETAGame, 500);
         } else {
             // Script is loading, wait for it
-            setTimeout(() => {
+            let attempts = 0;
+            const checkForGame = setInterval(() => {
+                attempts++;
                 if (window.etaGame) {
-                    initializeETAGame();
+                    clearInterval(checkForGame);
+                    setTimeout(initializeETAGame, 300);
+                } else if (attempts > 50) { // 5 seconds timeout
+                    clearInterval(checkForGame);
+                    etaContainer.innerHTML = `
+                        <div style="text-align: center; color: #ff6b6b; padding: 40px;">
+                            <h3>⏰ Timeout</h3>
+                            <p>Game loading took too long. Please try again.</p>
+                            <button onclick="returnToKruraSelection()" style="
+                                background: #9b59b6;
+                                color: white;
+                                border: none;
+                                padding: 12px 20px;
+                                border-radius: 20px;
+                                cursor: pointer;
+                                margin-top: 15px;
+                            ">← Back to Games</button>
+                        </div>
+                    `;
                 }
             }, 100);
         }
     };
     
     function initializeETAGame() {
-        // Hide selection screen and show game
+        // Hide selection screen and show game with smooth transition
         document.getElementById('krura-game-selection').style.display = 'none';
         document.getElementById('eta-game-container').style.display = 'block';
         document.getElementById('eta-back-controls').style.display = 'block';
         
+        // Clear loading indicator
+        document.getElementById('eta-game-container').innerHTML = '';
+        
         // Initialize and start the game
         if (typeof initETAGame === 'function') {
-            initETAGame();
+            try {
+                initETAGame();
+                
+                // Add welcome message overlay
+                setTimeout(() => {
+                    const gameContainer = document.getElementById('eta-game-container');
+                    if (gameContainer && !gameContainer.querySelector('.eta-welcome-overlay')) {
+                        const welcomeOverlay = document.createElement('div');
+                        welcomeOverlay.className = 'eta-welcome-overlay';
+                        welcomeOverlay.innerHTML = `
+                            <div style="
+                                position: absolute;
+                                top: 20px;
+                                right: 20px;
+                                background: rgba(0, 0, 0, 0.8);
+                                color: #ffd700;
+                                padding: 15px 20px;
+                                border-radius: 15px;
+                                border: 1px solid rgba(255, 215, 0, 0.3);
+                                font-size: 14px;
+                                max-width: 300px;
+                                animation: slideInRight 1s ease-out;
+                                z-index: 1000;
+                            ">
+                                <h4 style="margin: 0 0 8px 0; color: #ffd700;">🌙 Welcome to ETA!</h4>
+                                <p style="margin: 0; line-height: 1.4; color: #e1bee7;">
+                                    Your journey through countless lives begins now. 
+                                    Make choices wisely - they echo through eternity.
+                                </p>
+                                <button onclick="this.parentElement.parentElement.remove()" style="
+                                    background: transparent;
+                                    color: #ffd700;
+                                    border: 1px solid rgba(255, 215, 0, 0.5);
+                                    padding: 8px 15px;
+                                    border-radius: 12px;
+                                    cursor: pointer;
+                                    font-size: 12px;
+                                    margin-top: 10px;
+                                    transition: all 0.2s ease;
+                                " onmouseover="this.style.background='rgba(255, 215, 0, 0.1)'" 
+                                   onmouseout="this.style.background='transparent'">
+                                    Begin Adventure ✨
+                                </button>
+                            </div>
+                            <style>
+                                @keyframes slideInRight {
+                                    from { transform: translateX(100%); opacity: 0; }
+                                    to { transform: translateX(0); opacity: 1; }
+                                }
+                            </style>
+                        `;
+                        gameContainer.appendChild(welcomeOverlay);
+                        
+                        // Auto-remove after 10 seconds
+                        setTimeout(() => {
+                            if (welcomeOverlay.parentElement) {
+                                welcomeOverlay.remove();
+                            }
+                        }, 10000);
+                    }
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Error initializing ETA game:', error);
+                document.getElementById('eta-game-container').innerHTML = `
+                    <div style="text-align: center; color: #ff6b6b; padding: 40px;">
+                        <h3>🚨 Game Error</h3>
+                        <p>An error occurred while starting the game.</p>
+                        <button onclick="returnToKruraSelection()" style="
+                            background: #9b59b6;
+                            color: white;
+                            border: none;
+                            padding: 12px 20px;
+                            border-radius: 20px;
+                            cursor: pointer;
+                            margin-top: 15px;
+                        ">← Back to Games</button>
+                    </div>
+                `;
+            }
+        } else {
+            document.getElementById('eta-game-container').innerHTML = `
+                <div style="text-align: center; color: #ff9800; padding: 40px;">
+                    <h3>🔧 Game Not Ready</h3>
+                    <p>Game initialization function not found.</p>
+                    <button onclick="returnToKruraSelection()" style="
+                        background: #9b59b6;
+                        color: white;
+                        border: none;
+                        padding: 12px 20px;
+                        border-radius: 20px;
+                        cursor: pointer;
+                        margin-top: 15px;
+                    ">← Back to Games</button>
+                </div>
+            `;
         }
     }
     
     window.returnToKruraSelection = function() {
-        document.getElementById('krura-game-selection').style.display = 'block';
-        document.getElementById('eta-game-container').style.display = 'none';
-        document.getElementById('eta-back-controls').style.display = 'none';
+        // Smooth transition back to selection
+        const etaContainer = document.getElementById('eta-game-container');
+        etaContainer.style.transition = 'opacity 0.3s ease';
+        etaContainer.style.opacity = '0';
+        
+        setTimeout(() => {
+            document.getElementById('krura-game-selection').style.display = 'block';
+            etaContainer.style.display = 'none';
+            document.getElementById('eta-back-controls').style.display = 'none';
+            etaContainer.style.opacity = '1';
+            etaContainer.style.transition = '';
+        }, 300);
     };
     
     window.closeKruraGames = function() {

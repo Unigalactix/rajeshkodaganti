@@ -512,6 +512,57 @@ footer {
     color: var(--accent-color);
 }
 
+/* LinkedIn Follow Button - Styled to match other buttons */
+.libutton {
+    display: inline-block;
+    color: #0A66C2 !important;
+    padding: 18px 35px;
+    border: 2px solid #0A66C2;
+    border-radius: 50px;
+    text-decoration: none !important;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    min-height: 44px;
+    box-sizing: border-box;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.libutton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: #0A66C2;
+    transition: var(--transition-smooth);
+    z-index: -1;
+}
+
+.libutton:hover {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(10, 102, 194, 0.3);
+}
+
+.libutton:hover::before {
+    left: 0;
+}
+
+.libutton:active {
+    transform: translateY(-1px);
+}
+
 .shadow {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
@@ -1254,6 +1305,21 @@ footer {
         font-size: 0.9em;
         padding: 5px 10px;
     }
+    
+    /* LinkedIn button mobile optimization - matches other buttons */
+    .libutton {
+        padding: 15px 25px;
+        font-size: 12px;
+        min-width: 140px;
+        letter-spacing: 0.5px;
+    }
+    
+    /* Hero section button layout for mobile */
+    #lead div[style*="display: flex"] {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 10px !important;
+    }
 }
 
 /*
@@ -1895,6 +1961,16 @@ h2.heading:after {
     .btn-contact-submit {
         padding: 12px 30px;
         font-size: 1em;
+    }
+    
+    /* Additional LinkedIn button mobile styles - consistent with other buttons */
+    .libutton {
+        padding: 15px 25px;
+        font-size: 12px;
+    }
+    
+    .libutton i {
+        font-size: 14px;
     }
 }
 
@@ -5140,4 +5216,684 @@ h2.heading:after {
     .skill-header h3 {
         font-size: 1.1em;
     }
+}
+
+/*
+    --------------------------------
+    ----- ETA: Echoes of Rebirth -----
+    --------------------------------
+*/
+
+/* Enhanced ETA Game Container for Better Playability */
+.eta-game-container {
+    width: 100%;
+    max-width: 1200px;
+    height: 700px;
+    margin: 20px auto;
+    border-radius: 20px;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+    border: 3px solid #ffd700;
+    position: relative;
+}
+
+.eta-game-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 215, 0, 0.05) 50%, transparent 70%);
+    pointer-events: none;
+    animation: subtleShimmer 8s linear infinite;
+}
+
+@keyframes subtleShimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Game Screen Base */
+.eta-game-screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    color: white;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    position: relative;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ffd700 rgba(255, 255, 255, 0.1);
+}
+
+.eta-game-screen::-webkit-scrollbar {
+    width: 8px;
+}
+
+.eta-game-screen::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.eta-game-screen::-webkit-scrollbar-thumb {
+    background: #ffd700;
+    border-radius: 4px;
+}
+
+/* Enhanced D&D Interface */
+.eta-dnd-interface {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 30px;
+    width: 100%;
+    max-width: 1100px;
+    height: 100%;
+    align-items: start;
+}
+
+.eta-dm-section {
+    background: linear-gradient(135deg, #1a0033 0%, #2d1b4e 50%, #0f001a 100%);
+    border: 2px solid #ffd700;
+    border-radius: 20px;
+    padding: 25px;
+    backdrop-filter: blur(15px);
+    box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.1);
+}
+
+.dm-avatar {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.dm-avatar .moon-icon {
+    font-size: 40px;
+    animation: moonPulse 4s ease-in-out infinite;
+}
+
+@keyframes moonPulse {
+    0%, 100% { 
+        transform: scale(1);
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    }
+    50% { 
+        transform: scale(1.1);
+        text-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 40px rgba(255, 255, 255, 0.6);
+    }
+}
+
+.dm-label {
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.dm-mood-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: auto;
+    animation: moodPulse 2s ease-in-out infinite;
+}
+
+.dm-mood-indicator.neutral { background: #4caf50; }
+.dm-mood-indicator.concerned { background: #ff9800; }
+.dm-mood-indicator.encouraging { background: #2196f3; }
+.dm-mood-indicator.ominous { background: #f44336; }
+
+@keyframes moodPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.8); }
+}
+
+.dm-narration h3 {
+    color: #ffd700;
+    font-size: 22px;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.dm-voice {
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #e1bee7;
+    margin-bottom: 10px;
+}
+
+.dm-additional-context {
+    color: #b39ddb;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Enhanced Player Section */
+.eta-player-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+}
+
+.eta-dice-area {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+}
+
+.dice-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.dice-icon {
+    font-size: 24px;
+    animation: diceRoll 2s ease-in-out infinite;
+}
+
+@keyframes diceRoll {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(90deg); }
+    50% { transform: rotate(180deg); }
+    75% { transform: rotate(270deg); }
+}
+
+.roll-dice-btn {
+    background: linear-gradient(45deg, #ff6900, #ff8533);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 105, 0, 0.4);
+}
+
+.roll-dice-btn:hover {
+    background: linear-gradient(45deg, #ff8533, #ff6900);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 105, 0, 0.6);
+}
+
+.last-roll {
+    font-size: 14px;
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.dice-history h5 {
+    color: #ffd700;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.recent-rolls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.roll-result {
+    background: rgba(255, 215, 0, 0.2);
+    border: 1px solid #ffd700;
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 12px;
+    color: #ffd700;
+}
+
+.no-rolls {
+    color: #999;
+    font-style: italic;
+    font-size: 12px;
+}
+
+/* Enhanced Choice Buttons */
+.eta-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.eta-choice-btn {
+    background: linear-gradient(45deg, #9b59b6, #8e44ad);
+    color: white;
+    border: none;
+    padding: 18px 25px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(155, 89, 182, 0.3);
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.eta-choice-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.eta-choice-btn:hover::before {
+    left: 100%;
+}
+
+.eta-choice-btn:hover {
+    background: linear-gradient(45deg, #a569bd, #9b59b6);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(155, 89, 182, 0.5);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.eta-choice-btn:active {
+    transform: translateY(-1px);
+}
+
+.dnd-action-btn {
+    background: linear-gradient(45deg, #ff6900, #ff8533);
+}
+
+.dnd-action-btn:hover {
+    background: linear-gradient(45deg, #ff8533, #ff6900);
+}
+
+/* Game State Display */
+.eta-game-state {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.eta-fragmented-memories h4 {
+    color: #e1bee7;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.memories-list {
+    max-height: 200px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.memory-echo {
+    background: rgba(155, 89, 182, 0.2);
+    border-left: 3px solid #9b59b6;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #e1bee7;
+}
+
+.no-memories {
+    color: #999;
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+}
+
+.eta-curse-status h4 {
+    color: #ffd700;
+    margin-bottom: 15px;
+}
+
+.curse-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+}
+
+.curse-info > div {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.current-life {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.lives-remaining {
+    color: #ff9800;
+}
+
+.lunar-eclipse {
+    color: #e1bee7;
+}
+
+/* Enhanced Character Selection */
+.eta-character-select {
+    padding: 30px 20px;
+}
+
+.character-sheet {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.dm-character-intro {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255, 215, 0, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.dm-intro-text .dm-voice {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #e1bee7;
+    margin: 15px 0;
+}
+
+.character-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.character-stats h3 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.stat-block {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    color: #ffd700;
+    font-size: 14px;
+}
+
+.character-abilities h3 {
+    color: #e1bee7;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.abilities-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.ability-tag {
+    background: linear-gradient(45deg, #9b59b6, #8e44ad);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.special-ability {
+    background: rgba(155, 89, 182, 0.2);
+    border: 1px solid #9b59b6;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.special-ability h4 {
+    color: #e1bee7;
+    margin-bottom: 8px;
+}
+
+/* Adventure Module Preview */
+.adventure-module-preview {
+    background: linear-gradient(135deg, #2d1b4e 0%, #4a148c 50%, #1a0033 100%);
+    border: 2px solid #9c27b0;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 30px 0;
+    text-align: center;
+}
+
+.adventure-module-preview h3 {
+    color: #e1bee7;
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.module-description {
+    color: #d1c4e9;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.module-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    text-align: left;
+}
+
+.module-details p {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 3px solid #9c27b0;
+    margin: 0;
+}
+
+/* Eclipse Bonus Display */
+.eclipse-bonus {
+    background: linear-gradient(45deg, #1565c0, #1976d2);
+    border: 2px solid #64b5f6;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(100, 181, 246, 0.3);
+}
+
+.eclipse-bonus h4 {
+    color: #e3f2fd;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+/* Character Action Buttons */
+.character-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.dnd-ready-btn {
+    background: linear-gradient(45deg, #4caf50, #66bb6a);
+    font-size: 18px;
+    padding: 20px 25px;
+}
+
+.dnd-info-btn {
+    background: linear-gradient(45deg, #2196f3, #42a5f5);
+}
+
+.eclipse-trigger-btn {
+    background: linear-gradient(45deg, #673ab7, #7986cb);
+}
+
+.dice-test-btn {
+    background: linear-gradient(45deg, #ff9800, #ffb74d);
+}
+
+/* Responsive Design for ETA Game */
+@media (max-width: 1024px) {
+    .eta-dnd-interface {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .eta-game-container {
+        height: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+    .eta-game-container {
+        height: 500px;
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    .eta-game-screen {
+        padding: 20px 15px;
+    }
+    
+    .character-details {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .stat-block {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .character-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .eta-choice-btn {
+        padding: 15px 20px;
+        font-size: 15px;
+    }
+    
+    .dm-avatar {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .eta-game-container {
+        height: 450px;
+        margin: 5px;
+    }
+    
+    .dm-avatar .moon-icon {
+        font-size: 32px;
+    }
+    
+    .dm-narration h3 {
+        font-size: 18px;
+    }
+    
+    .dm-voice {
+        font-size: 14px;
+    }
+    
+    .stat-block {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .stat {
+        padding: 8px;
+        font-size: 12px;
+    }
+}
+
+/* Loading and Transition Effects */
+.eta-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.eta-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 215, 0, 0.3);
+    border-top: 4px solid #ffd700;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Fade In Animations */
+.eta-game-screen {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Button Hover Sound Effect Simulation */
+.eta-choice-btn:hover {
+    animation: buttonGlow 0.3s ease-in-out;
+}
+
+@keyframes buttonGlow {
+    0% { box-shadow: 0 6px 20px rgba(155, 89, 182, 0.3); }
+    50% { box-shadow: 0 8px 25px rgba(155, 89, 182, 0.6), 0 0 20px rgba(255, 255, 255, 0.2); }
+    100% { box-shadow: 0 10px 25px rgba(155, 89, 182, 0.5); }
 }
