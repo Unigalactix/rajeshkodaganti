@@ -1,0 +1,807 @@
+/* ETA: Echoes of Rebirth - Game Styling */
+
+.eta-game-container {
+    width: 100%;
+    height: 600px;
+    border-radius: 15px;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.eta-game-screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    overflow-y: auto;
+}
+
+.eta-moon-narrator {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 90%;
+}
+
+.moon-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    animation: moonGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes moonGlow {
+    0% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+    100% { text-shadow: 0 0 30px rgba(255, 255, 255, 1), 0 0 40px rgba(200, 200, 255, 0.6); }
+}
+
+.narrator-text h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #ffd700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.moon-speech {
+    font-size: 16px;
+    line-height: 1.6;
+    font-style: italic;
+    color: #e8e8e8;
+    margin: 0;
+}
+
+.eta-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.eta-choice-btn {
+    background: linear-gradient(45deg, #9b59b6, #8e44ad);
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(155, 89, 182, 0.3);
+    border: 2px solid transparent;
+}
+
+.eta-choice-btn:hover {
+    background: linear-gradient(45deg, #a569bd, #9b59b6);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(155, 89, 182, 0.4);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.eta-choice-btn:active {
+    transform: translateY(0);
+}
+
+.eta-stats {
+    display: flex;
+    justify-content: space-around;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-top: auto;
+    width: 100%;
+    max-width: 400px;
+}
+
+.stat {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffd700;
+}
+
+/* Battle Screens */
+.eta-battle-screen {
+    background: radial-gradient(circle, #2c1810 0%, #1a0f0a 100%);
+}
+
+.guardian-encounter h3 {
+    font-size: 28px;
+    color: #ff6b6b;
+    text-shadow: 2px 2px 8px rgba(255, 107, 107, 0.5);
+    margin-bottom: 20px;
+}
+
+.guardian-description {
+    background: rgba(139, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border-left: 4px solid #ff6b6b;
+}
+
+.battle-challenge p {
+    font-size: 18px;
+    color: #ffcc02;
+    margin-bottom: 20px;
+}
+
+.combat-interface,
+.magic-interface,
+.stealth-interface,
+.wisdom-interface {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+}
+
+.challenge-btn {
+    background: linear-gradient(45deg, #c0392b, #e74c3c);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.challenge-btn:hover {
+    background: linear-gradient(45deg, #e74c3c, #ec7063);
+    transform: scale(1.05);
+}
+
+/* Success/Failure Screens */
+.eta-success-screen {
+    background: radial-gradient(circle, #27ae60 0%, #1e8449 100%);
+}
+
+.eta-failure-screen {
+    background: radial-gradient(circle, #8b0000 0%, #4a0000 100%);
+}
+
+.eta-sorrow-screen {
+    background: linear-gradient(45deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+}
+
+/* Special Screens */
+.eta-victory-screen {
+    background: radial-gradient(circle, #f39c12 0%, #d68910 50%, #b7950b 100%);
+}
+
+.eta-liberation-screen {
+    background: linear-gradient(45deg, #ffffff 0%, #f8f9fa 25%, #e9ecef 50%, #dee2e6 75%, #adb5bd 100%);
+    color: #2c3e50;
+}
+
+.eta-liberation-screen .moon-icon {
+    color: #ffd700;
+}
+
+.eta-curse-continues {
+    background: radial-gradient(circle, #000000 0%, #1a1a1a 100%);
+}
+
+.eta-rebirth-screen {
+    background: linear-gradient(45deg, #6a4c93 0%, #9b59b6 50%, #6a4c93 100%);
+}
+
+.eta-eternal-curse {
+    background: radial-gradient(circle, #0f0f0f 0%, #1a0000 100%);
+}
+
+/* Curse Info Screen */
+.eta-curse-info {
+    max-width: 600px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.curse-explanation {
+    text-align: left;
+    margin: 20px 0;
+}
+
+.curse-explanation p {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(155, 89, 182, 0.2);
+    border-radius: 8px;
+    border-left: 3px solid #9b59b6;
+}
+
+/* Special Buttons */
+.eta-destroy-btn {
+    background: linear-gradient(45deg, #27ae60, #2ecc71);
+}
+
+.eta-destroy-btn:hover {
+    background: linear-gradient(45deg, #2ecc71, #58d68d);
+}
+
+.eta-claim-btn {
+    background: linear-gradient(45deg, #c0392b, #e74c3c);
+}
+
+.eta-claim-btn:hover {
+    background: linear-gradient(45deg, #e74c3c, #ec7063);
+}
+
+/* Final Speech Styling */
+.moon-final-speech {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.final-stats {
+    background: rgba(255, 215, 0, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px 0;
+    border: 2px solid #ffd700;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .eta-game-container {
+        height: 500px;
+    }
+    
+    .eta-game-screen {
+        padding: 15px;
+    }
+    
+    .eta-moon-narrator {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .narrator-text h3 {
+        font-size: 20px;
+    }
+    
+    .moon-speech {
+        font-size: 14px;
+    }
+    
+    .eta-choice-btn {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+    
+    .eta-choices {
+        max-width: 100%;
+    }
+}
+
+/* Animation for scene transitions */
+.eta-game-screen {
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Treasure chamber special effects */
+.treasure-chamber {
+    position: relative;
+}
+
+.treasure-chamber::before {
+    content: '💎';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 60px;
+    animation: treasureGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes treasureGlow {
+    0% { 
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        transform: translateX(-50%) scale(1);
+    }
+    100% { 
+        text-shadow: 0 0 40px rgba(255, 215, 0, 1), 0 0 60px rgba(255, 255, 255, 0.6);
+        transform: translateX(-50%) scale(1.1);
+    }
+}
+
+/* Sorrowful Bond manifestation effects */
+.sorrow-manifestation {
+    background: rgba(139, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+    border: 2px dashed #ff6b6b;
+    position: relative;
+    overflow: hidden;
+}
+
+.sorrow-manifestation::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 107, 107, 0.1), transparent);
+    animation: sorrowWave 3s linear infinite;
+}
+
+@keyframes sorrowWave {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(0deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(360deg); }
+}
+
+/* D&D Adventure Interface Styles */
+.adventure-interface {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.dm-panel {
+    background: linear-gradient(135deg, #1a0033 0%, #2d1b4e 50%, #0f001a 100%);
+    border: 2px solid #ffd700;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.dm-panel h3 {
+    color: #ffd700;
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+.dm-commentary {
+    color: #e6ccff;
+    font-style: italic;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.lunar-phase {
+    color: #b3d9ff;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.module-panel {
+    background: linear-gradient(135deg, #2d1b4e 0%, #4a148c 50%, #1a0033 100%);
+    border: 2px solid #9c27b0;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.module-panel h2 {
+    color: #e1bee7;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.module-description {
+    color: #d1c4e9;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.encounters-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.encounter-card {
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #7b1fa2;
+    border-radius: 10px;
+    padding: 15px;
+    transition: all 0.3s ease;
+}
+
+.encounter-card.completed {
+    border-color: #4caf50;
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.encounter-card.available:hover {
+    border-color: #ffd700;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+}
+
+.encounter-card h4 {
+    color: #ffd700;
+    margin: 0 0 10px 0;
+    font-size: 16px;
+}
+
+.encounter-card p {
+    color: #e1bee7;
+    margin: 0 0 15px 0;
+    line-height: 1.4;
+}
+
+.encounter-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.encounter-info {
+    color: #b39ddb;
+    font-size: 14px;
+    text-align: center;
+}
+
+.character-status {
+    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #0d2818 100%);
+    border: 2px solid #4caf50;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.character-status h3 {
+    color: #81c784;
+    margin: 0 0 15px 0;
+    text-align: center;
+}
+
+.character-stats h4 {
+    color: #c8e6c9;
+    margin: 0 0 10px 0;
+}
+
+.ability-scores {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.ability {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px;
+    border-radius: 5px;
+    text-align: center;
+    color: #e8f5e8;
+    font-size: 14px;
+    border: 1px solid #4caf50;
+}
+
+/* Combat Interface Styles */
+.combat-interface {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.dm-combat-panel {
+    background: linear-gradient(135deg, #b71c1c 0%, #d32f2f 50%, #8a0000 100%);
+    border: 2px solid #ff9800;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+}
+
+.combat-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid #795548;
+}
+
+.combatant {
+    flex: 1;
+    text-align: center;
+}
+
+.combatant h3 {
+    color: #ffd700;
+    margin: 0 0 15px 0;
+}
+
+.health-bar {
+    width: 100%;
+    height: 20px;
+    background: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    border: 2px solid #666;
+}
+
+.health-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4caf50 0%, #8bc34a 100%);
+    transition: width 0.3s ease;
+}
+
+.health-bar.enemy .health-fill {
+    background: linear-gradient(90deg, #f44336 0%, #ff5722 100%);
+}
+
+.health-bar span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    text-shadow: 1px 1px 2px black;
+}
+
+.vs-indicator {
+    color: #ffd700;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px black;
+    white-space: nowrap;
+}
+
+.combat-actions {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid #607d8b;
+}
+
+.combat-actions h3 {
+    color: #90a4ae;
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.btn-combat {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-combat.attack {
+    background: linear-gradient(135deg, #d32f2f 0%, #f44336 100%);
+    color: white;
+}
+
+.btn-combat.defend {
+    background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
+    color: white;
+}
+
+.btn-combat.special {
+    background: linear-gradient(135deg, #7b1fa2 0%, #9c27b0 100%);
+    color: white;
+}
+
+.btn-combat.spell {
+    background: linear-gradient(135deg, #303f9f 0%, #3f51b5 100%);
+    color: white;
+}
+
+.btn-combat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.combat-log {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    padding: 15px;
+    border: 2px solid #424242;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.combat-log h4 {
+    color: #bdbdbd;
+    margin: 0 0 10px 0;
+}
+
+#combat-log-content {
+    color: #e0e0e0;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Skill Check Interface Styles */
+.skill-check-result {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+}
+
+.skill-roll-display {
+    background: linear-gradient(135deg, #1a237e 0%, #3949ab 50%, #0d1653 100%);
+    border: 3px solid #ffd700;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+}
+
+.skill-roll-display h2 {
+    color: #e8eaf6;
+    margin: 0 0 20px 0;
+}
+
+.dice-result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.dice-roll {
+    color: #ff4081;
+    font-size: 32px;
+}
+
+.modifier {
+    color: #4fc3f7;
+}
+
+.equals {
+    color: #fff;
+}
+
+.total.success {
+    color: #4caf50;
+    font-size: 36px;
+    text-shadow: 0 0 15px rgba(76, 175, 80, 0.8);
+}
+
+.total.failure {
+    color: #f44336;
+    font-size: 36px;
+    text-shadow: 0 0 15px rgba(244, 67, 54, 0.8);
+}
+
+.dc-info {
+    color: #b39ddb;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.result-status.success {
+    color: #4caf50;
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+}
+
+.result-status.failure {
+    color: #f44336;
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(244, 67, 54, 0.6);
+}
+
+.check-details {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    padding: 15px;
+    color: #e1bee7;
+    border: 1px solid #7b1fa2;
+}
+
+.check-details p {
+    margin: 5px 0;
+}
+
+/* Combat Result Styles */
+.combat-result {
+    text-align: center;
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.combat-result.victory {
+    background: linear-gradient(135deg, #2e7d32 0%, #4caf50 50%, #1b5e20 100%);
+    border: 3px solid #81c784;
+    box-shadow: 0 0 30px rgba(76, 175, 80, 0.4);
+}
+
+.combat-result.defeat {
+    background: linear-gradient(135deg, #c62828 0%, #f44336 50%, #8e0000 100%);
+    border: 3px solid #ef5350;
+    box-shadow: 0 0 30px rgba(244, 67, 54, 0.4);
+}
+
+.combat-result h2 {
+    color: white;
+    margin: 0 0 20px 0;
+    font-size: 32px;
+    text-shadow: 2px 2px 4px black;
+}
+
+.rewards {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.rewards h3 {
+    color: #ffd700;
+    margin: 0 0 15px 0;
+}
+
+.rewards p {
+    color: #e8f5e8;
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.resurrection {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 2px solid #9c27b0;
+}
+
+.resurrection p {
+    color: #e1bee7;
+    font-style: italic;
+    margin: 0 0 20px 0;
+    line-height: 1.6;
+}

@@ -111,33 +111,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 '⭐ Scoring: Larger asteroids give more points when destroyed'
             ],
             colors: { bg: '#000', player: '#0ff', bullet: '#ff0', enemy: '#f00' }
-        },
-        snakesladders: {
-            title: 'Snakes & Ladders',
-            icon: '🐍🪜',
-            instructions: 'Race against the computer to reach square 100!',
-            detailedInstructions: [
-                '🎯 Objective: Be the first to reach square 100 on the board',
-                '🎲 Gameplay: Click "Roll Dice" to move your piece',
-                '🪜 Ladders: Climb up when you land on the bottom of a ladder',
-                '🐍 Snakes: Slide down when you land on a snake\'s head',
-                '🏆 Win Condition: First player to reach or pass square 100 wins!'
-            ],
-            colors: { bg: '#8B4513', board: '#F5E6D3', player1: '#FF6900', player2: '#2196F3', snake: '#e74c3c', ladder: '#8B4513' }
-        },
-        ludo: {
-            title: 'Ludo',
-            icon: '🎯',
-            instructions: 'Move all your pieces home before the computer does!',
-            detailedInstructions: [
-                '🎯 Objective: Move all 4 of your pieces to the center home area',
-                '🎲 Rules: Roll a 6 to start moving pieces from your base',
-                '🏃 Movement: Move pieces clockwise around the board',
-                '⚔️ Capture: Land on opponent pieces to send them back to base',
-                '🏠 Safe Zones: Colored squares are safe from capture',
-                '🏆 Win Condition: First to get all pieces home wins!'
-            ],
-            colors: { bg: '#2E7D32', board: '#FFF', player1: '#FF6900', player2: '#2196F3', safe: '#FFEB3B', home: '#4CAF50' }
         }
     };
     
@@ -446,12 +419,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
             case 'space':
                 initSpaceGame();
-                break;
-            case 'snakesladders':
-                initSnakesLaddersGame();
-                break;
-            case 'ludo':
-                initLudoGame();
                 break;
         }
         
@@ -986,966 +953,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // SNAKES & LADDERS GAME
-    function initSnakesLaddersGame() {
-        gameData = {
-            board: createSnakesLaddersBoard(),
-            players: [
-                { position: 0, color: gameConfigs.snakesladders.colors.player1, name: 'You' },
-                { position: 0, color: gameConfigs.snakesladders.colors.player2, name: 'Computer' }
-            ],
-            currentPlayer: 0,
-            diceValue: 0,
-            gameOver: false,
-            winner: null,
-            message: 'Your turn! Click "Roll Dice"',
-            showDice: true
-        };
-        
-        createSnakesLaddersUI();
-        drawSnakesLaddersGame();
-    }
-    
-    function createSnakesLaddersBoard() {
-        const snakes = {
-            16: 6, 47: 26, 49: 11, 56: 53, 62: 19, 64: 60, 87: 24, 93: 73, 95: 75, 98: 78
-        };
-        const ladders = {
-            1: 38, 4: 14, 9: 21, 21: 42, 28: 84, 36: 44, 51: 67, 71: 91, 80: 100
-        };
-        return { snakes, ladders };
-    }
-    
-    function createSnakesLaddersUI() {
-        const gameArea = document.querySelector('.game-area');
-        if (gameArea) {
-            gameArea.innerHTML = `
-                <div style="text-align: center; margin: 20px 0;">
-                    <div id="snl-message" style="font-size: 18px; margin-bottom: 15px; color: #FF6900; font-weight: bold;">${gameData.message}</div>
-                    <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 15px;">
-                        <div style="background: linear-gradient(45deg, #FF6900, #ff8533); padding: 10px 15px; border-radius: 15px; color: white; font-weight: bold;">
-                            You: Position ${gameData.players[0].position}
-                        </div>
-                        <div style="background: linear-gradient(45deg, #2196F3, #4FC3F7); padding: 10px 15px; border-radius: 15px; color: white; font-weight: bold;">
-                            Computer: Position ${gameData.players[1].position}
-                        </div>
-                    </div>
-                    <button id="snl-roll-dice" onclick="rollDiceSnakesLadders()" style="
-                        background: linear-gradient(45deg, #FF6900, #ff8533);
-                        color: white;
-                        border: none;
-                        padding: 15px 30px;
-                        border-radius: 25px;
-                        font-size: 18px;
-                        font-weight: bold;
-                        cursor: pointer;
-                        box-shadow: 0 6px 20px rgba(255, 105, 0, 0.3);
-                        margin-bottom: 15px;
-                        transition: all 0.3s ease;
-                        ${gameData.currentPlayer === 1 || gameData.gameOver ? 'opacity: 0.5; cursor: not-allowed;' : ''}
-                    " ${gameData.currentPlayer === 1 || gameData.gameOver ? 'disabled' : ''}>
-                        🎲 Roll Dice
-                    </button>
-                    <div id="snl-dice" style="font-size: 50px; margin: 15px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">🎲</div>
-                    <div id="game-tips" style="font-size: 12px; color: #666; margin-top: 10px;">
-                        🐍 Red squares have snakes • 🪜 Green squares have ladders • 👑 Reach 100 to win!
-                    </div>
-                </div>
-            `;
-        }
-    }
-    
-    function rollDiceSnakesLadders() {
-        if (gameData.gameOver) return;
-        
-        gameData.diceValue = Math.floor(Math.random() * 6) + 1;
-        document.getElementById('snl-dice').textContent = getDiceEmoji(gameData.diceValue);
-        
-        setTimeout(() => {
-            movePlayerSnakesLadders(gameData.currentPlayer, gameData.diceValue);
-        }, 1000);
-    }
-    
-    function getDiceEmoji(value) {
-        const diceEmojis = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
-        return diceEmojis[value - 1];
-    }
-    
-    function movePlayerSnakesLadders(playerIndex, steps) {
-        const player = gameData.players[playerIndex];
-        const newPosition = Math.min(player.position + steps, 100);
-        player.position = newPosition;
-        
-        // Check for snakes and ladders
-        if (gameData.board.snakes[newPosition]) {
-            setTimeout(() => {
-                player.position = gameData.board.snakes[newPosition];
-                gameData.message = `${player.name} hit a snake! Sliding down to ${player.position}`;
-                updateSnakesLaddersUI();
-                drawSnakesLaddersGame();
-            }, 1000);
-        } else if (gameData.board.ladders[newPosition]) {
-            setTimeout(() => {
-                player.position = gameData.board.ladders[newPosition];
-                gameData.message = `${player.name} found a ladder! Climbing up to ${player.position}`;
-                updateSnakesLaddersUI();
-                drawSnakesLaddersGame();
-            }, 1000);
-        }
-        
-        // Check for win
-        if (player.position >= 100) {
-            gameData.gameOver = true;
-            gameData.winner = playerIndex;
-            gameData.message = `${player.name} wins! 🎉`;
-            updateSnakesLaddersUI();
-            setTimeout(() => endGame(), 2000);
-            return;
-        }
-        
-        // Switch players
-        gameData.currentPlayer = (gameData.currentPlayer + 1) % 2;
-        gameData.message = gameData.currentPlayer === 0 ? 'Your turn! Click "Roll Dice"' : 'Computer\'s turn...';
-        updateSnakesLaddersUI();
-        drawSnakesLaddersGame();
-        
-        // Computer turn
-        if (gameData.currentPlayer === 1 && !gameData.gameOver) {
-            setTimeout(() => {
-                rollDiceSnakesLadders();
-            }, 1500);
-        }
-    }
-    
-    function updateSnakesLaddersUI() {
-        const messageEl = document.getElementById('snl-message');
-        const rollBtn = document.getElementById('snl-roll-dice');
-        
-        if (messageEl) messageEl.textContent = gameData.message;
-        if (rollBtn) {
-            rollBtn.disabled = gameData.currentPlayer === 1 || gameData.gameOver;
-            rollBtn.style.opacity = rollBtn.disabled ? '0.5' : '1';
-            rollBtn.style.cursor = rollBtn.disabled ? 'not-allowed' : 'pointer';
-        }
-        
-        // Update position displays
-        const playerPositions = document.querySelectorAll('[style*="You: Position"], [style*="Computer: Position"]');
-        playerPositions.forEach((el, index) => {
-            const position = gameData.players[index].position;
-            el.innerHTML = `${index === 0 ? 'You' : 'Computer'}: Position ${position}`;
-        });
-    }
-    
-    function drawSnakesLaddersGame() {
-        const config = gameConfigs.snakesladders;
-        
-        // Enhanced background with gradient
-        const gradient = ctx.createLinearGradient(0, 0, gameCanvas.width, gameCanvas.height);
-        gradient.addColorStop(0, '#1a1a1a');
-        gradient.addColorStop(1, '#2d2d2d');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
-        
-        const boardSize = 10;
-        const cellSize = Math.min(gameCanvas.width * 0.85, gameCanvas.height * 0.85) / boardSize;
-        const startX = (gameCanvas.width - cellSize * boardSize) / 2;
-        const startY = (gameCanvas.height - cellSize * boardSize) / 2;
-        
-        // Draw board with enhanced styling
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-        ctx.shadowBlur = 10;
-        ctx.shadowOffsetX = 2;
-        ctx.shadowOffsetY = 2;
-        
-        for (let row = 0; row < boardSize; row++) {
-            for (let col = 0; col < boardSize; col++) {
-                const x = startX + col * cellSize;
-                const y = startY + (boardSize - 1 - row) * cellSize;
-                
-                // Enhanced checkerboard pattern with gradients
-                const cellGradient = ctx.createRadialGradient(
-                    x + cellSize/2, y + cellSize/2, 0,
-                    x + cellSize/2, y + cellSize/2, cellSize/2
-                );
-                if ((row + col) % 2 === 0) {
-                    cellGradient.addColorStop(0, '#FFE4B5');
-                    cellGradient.addColorStop(1, '#DEB887');
-                } else {
-                    cellGradient.addColorStop(0, '#F0E68C');
-                    cellGradient.addColorStop(1, '#DAA520');
-                }
-                ctx.fillStyle = cellGradient;
-                ctx.fillRect(x, y, cellSize, cellSize);
-                
-                // Cell border
-                ctx.strokeStyle = '#8B4513';
-                ctx.lineWidth = 1;
-                ctx.strokeRect(x, y, cellSize, cellSize);
-                
-                // Square number with enhanced styling
-                const squareNum = row % 2 === 0 ? 
-                    row * boardSize + col + 1 : 
-                    row * boardSize + (boardSize - col);
-                
-                // Number background circle
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-                ctx.beginPath();
-                ctx.arc(x + cellSize * 0.85, y + cellSize * 0.15, cellSize * 0.12, 0, 2 * Math.PI);
-                ctx.fill();
-                
-                // Number text
-                ctx.fillStyle = '#000';
-                ctx.font = `bold ${cellSize * 0.12}px Arial`;
-                ctx.textAlign = 'center';
-                ctx.fillText(squareNum, x + cellSize * 0.85, y + cellSize * 0.19);
-                
-                // Special square highlights
-                if (gameData.board.snakes[squareNum]) {
-                    // Snake head square - red glow
-                    ctx.fillStyle = 'rgba(231, 76, 60, 0.3)';
-                    ctx.fillRect(x, y, cellSize, cellSize);
-                }
-                if (gameData.board.ladders[squareNum]) {
-                    // Ladder start square - green glow
-                    ctx.fillStyle = 'rgba(46, 204, 113, 0.3)';
-                    ctx.fillRect(x, y, cellSize, cellSize);
-                }
-                if (squareNum === 100) {
-                    // Victory square - gold glow
-                    ctx.fillStyle = 'rgba(241, 196, 15, 0.4)';
-                    ctx.fillRect(x, y, cellSize, cellSize);
-                    // Crown emoji for finish
-                    ctx.font = `${cellSize * 0.4}px Arial`;
-                    ctx.fillText('👑', x + cellSize/2, y + cellSize/2);
-                }
-            }
-        }
-        
-        // Reset shadow for snakes and ladders
-        ctx.shadowColor = 'transparent';
-        ctx.shadowBlur = 0;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 0;
-        
-        // Draw snakes and ladders with enhanced visuals
-        Object.entries(gameData.board.snakes).forEach(([start, end]) => {
-            drawEnhancedSnake(parseInt(start), parseInt(end), startX, startY, cellSize, boardSize);
-        });
-        
-        Object.entries(gameData.board.ladders).forEach(([start, end]) => {
-            drawEnhancedLadder(parseInt(start), parseInt(end), startX, startY, cellSize, boardSize);
-        });
-        
-        // Draw players with enhanced pieces
-        gameData.players.forEach((player, index) => {
-            if (player.position > 0) {
-                drawEnhancedPlayerPiece(player.position, player.color, startX, startY, cellSize, boardSize, index, player.name);
-            }
-        });
-        
-        // Draw board title
-        ctx.fillStyle = '#FF6900';
-        ctx.font = 'bold 24px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('🐍🪜 SNAKES & LADDERS 🪜🐍', gameCanvas.width/2, 30);
-    }
-    
-    function drawEnhancedSnake(start, end, startX, startY, cellSize, boardSize) {
-        const startPos = getPositionCoords(start, startX, startY, cellSize, boardSize);
-        const endPos = getPositionCoords(end, startX, startY, cellSize, boardSize);
-        
-        // Draw snake body with curves
-        const controlX = (startPos.x + endPos.x) / 2 + (Math.random() - 0.5) * 50;
-        const controlY = (startPos.y + endPos.y) / 2 + (Math.random() - 0.5) * 50;
-        
-        // Snake body gradient
-        const gradient = ctx.createLinearGradient(startPos.x, startPos.y, endPos.x, endPos.y);
-        gradient.addColorStop(0, '#e74c3c');
-        gradient.addColorStop(0.5, '#c0392b');
-        gradient.addColorStop(1, '#a93226');
-        
-        ctx.strokeStyle = gradient;
-        ctx.lineWidth = 8;
-        ctx.lineCap = 'round';
-        ctx.beginPath();
-        ctx.moveTo(startPos.x, startPos.y);
-        ctx.quadraticCurveTo(controlX, controlY, endPos.x, endPos.y);
-        ctx.stroke();
-        
-        // Snake pattern (scales)
-        const segments = 6;
-        for (let i = 0; i <= segments; i++) {
-            const t = i / segments;
-            const x = startPos.x * (1-t) * (1-t) + 2 * controlX * (1-t) * t + endPos.x * t * t;
-            const y = startPos.y * (1-t) * (1-t) + 2 * controlY * (1-t) * t + endPos.y * t * t;
-            
-            ctx.fillStyle = i % 2 === 0 ? '#2c3e50' : '#34495e';
-            ctx.beginPath();
-            ctx.arc(x, y, 3, 0, 2 * Math.PI);
-            ctx.fill();
-        }
-        
-        // Enhanced snake head
-        ctx.fillStyle = '#e74c3c';
-        ctx.beginPath();
-        ctx.arc(startPos.x, startPos.y, 12, 0, 2 * Math.PI);
-        ctx.fill();
-        
-        // Snake eyes
-        ctx.fillStyle = '#fff';
-        ctx.beginPath();
-        ctx.arc(startPos.x - 4, startPos.y - 4, 3, 0, 2 * Math.PI);
-        ctx.arc(startPos.x + 4, startPos.y - 4, 3, 0, 2 * Math.PI);
-        ctx.fill();
-        
-        ctx.fillStyle = '#000';
-        ctx.beginPath();
-        ctx.arc(startPos.x - 4, startPos.y - 4, 1.5, 0, 2 * Math.PI);
-        ctx.arc(startPos.x + 4, startPos.y - 4, 1.5, 0, 2 * Math.PI);
-        ctx.fill();
-        
-        // Snake tail
-        ctx.fillStyle = '#a93226';
-        ctx.beginPath();
-        ctx.arc(endPos.x, endPos.y, 6, 0, 2 * Math.PI);
-        ctx.fill();
-        
-        // Add snake emoji near head
-        ctx.font = '16px Arial';
-        ctx.fillText('🐍', startPos.x - 20, startPos.y - 20);
-    }
-    
-    function drawEnhancedLadder(start, end, startX, startY, cellSize, boardSize) {
-        const startPos = getPositionCoords(start, startX, startY, cellSize, boardSize);
-        const endPos = getPositionCoords(end, startX, startY, cellSize, boardSize);
-        
-        // Ladder sides with 3D effect
-        const sideGradient = ctx.createLinearGradient(startPos.x - 8, startPos.y, startPos.x + 8, startPos.y);
-        sideGradient.addColorStop(0, '#8B4513');
-        sideGradient.addColorStop(0.5, '#D2691E');
-        sideGradient.addColorStop(1, '#A0522D');
-        
-        ctx.fillStyle = sideGradient;
-        ctx.fillRect(startPos.x - 8, startPos.y, 6, endPos.y - startPos.y);
-        ctx.fillRect(startPos.x + 8, startPos.y, 6, endPos.y - startPos.y);
-        
-        // Ladder rungs with enhanced 3D effect
-        const rungGradient = ctx.createLinearGradient(startPos.x - 10, 0, startPos.x + 10, 0);
-        rungGradient.addColorStop(0, '#CD853F');
-        rungGradient.addColorStop(0.5, '#DEB887');
-        rungGradient.addColorStop(1, '#D2B48C');
-        
-        const rungs = Math.ceil(Math.abs(endPos.y - startPos.y) / 25);
-        for (let i = 0; i <= rungs; i++) {
-            const progress = i / rungs;
-            const y = startPos.y + (endPos.y - startPos.y) * progress;
-            
-            // Rung shadow
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-            ctx.fillRect(startPos.x - 10, y + 2, 20, 6);
-            
-            // Rung
-            ctx.fillStyle = rungGradient;
-            ctx.fillRect(startPos.x - 10, y, 20, 5);
-            
-            // Rung highlight
-            ctx.fillStyle = '#F5DEB3';
-            ctx.fillRect(startPos.x - 10, y, 20, 1);
-        }
-        
-        // Ladder sides outline
-        ctx.strokeStyle = '#654321';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(startPos.x - 8, Math.min(startPos.y, endPos.y), 6, Math.abs(endPos.y - startPos.y));
-        ctx.strokeRect(startPos.x + 8, Math.min(startPos.y, endPos.y), 6, Math.abs(endPos.y - startPos.y));
-        
-        // Add ladder emoji near bottom
-        ctx.font = '16px Arial';
-        ctx.fillText('🪜', startPos.x - 20, startPos.y + 20);
-    }
-    
-    function drawEnhancedPlayerPiece(position, color, startX, startY, cellSize, boardSize, playerIndex, playerName) {
-        const coords = getPositionCoords(position, startX, startY, cellSize, boardSize);
-        const offset = playerIndex * 20 - 10;
-        
-        // Player piece shadow
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-        ctx.beginPath();
-        ctx.arc(coords.x + offset + 2, coords.y + 2, 16, 0, 2 * Math.PI);
-        ctx.fill();
-        
-        // Player piece gradient
-        const pieceGradient = ctx.createRadialGradient(
-            coords.x + offset - 3, coords.y - 3, 0,
-            coords.x + offset, coords.y, 15
-        );
-        pieceGradient.addColorStop(0, color === '#FF6900' ? '#FFB366' : '#66B3FF');
-        pieceGradient.addColorStop(1, color);
-        
-        ctx.fillStyle = pieceGradient;
-        ctx.beginPath();
-        ctx.arc(coords.x + offset, coords.y, 15, 0, 2 * Math.PI);
-        ctx.fill();
-        
-        // Player piece border
-        ctx.strokeStyle = '#000';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        
-        // Player piece highlight
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-        ctx.beginPath();
-        ctx.arc(coords.x + offset - 4, coords.y - 4, 5, 0, 2 * Math.PI);
-        ctx.fill();
-        
-        // Player initial in piece
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 12px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText(playerName[0], coords.x + offset, coords.y + 4);
-        
-        // Player name label
-        ctx.fillStyle = color;
-        ctx.font = 'bold 10px Arial';
-        ctx.fillText(playerName, coords.x + offset, coords.y + 30);
-    }
-    
-    function getPositionCoords(position, startX, startY, cellSize, boardSize) {
-        const row = Math.floor((position - 1) / boardSize);
-        const col = (position - 1) % boardSize;
-        
-        const actualCol = row % 2 === 0 ? col : (boardSize - 1 - col);
-        const actualRow = boardSize - 1 - row;
-        
-        return {
-            x: startX + actualCol * cellSize + cellSize / 2,
-            y: startY + actualRow * cellSize + cellSize / 2
-        };
-    }
-
-    // LUDO GAME
-    function initLudoGame() {
-        gameData = {
-            players: [
-                { 
-                    pieces: [{pos: -1}, {pos: -1}, {pos: -1}, {pos: -1}], 
-                    color: gameConfigs.ludo.colors.player1, 
-                    name: 'You',
-                    home: 0
-                },
-                { 
-                    pieces: [{pos: -1}, {pos: -1}, {pos: -1}, {pos: -1}], 
-                    color: gameConfigs.ludo.colors.player2, 
-                    name: 'Computer',
-                    home: 0
-                }
-            ],
-            currentPlayer: 0,
-            diceValue: 0,
-            gameOver: false,
-            winner: null,
-            message: 'Your turn! Roll the dice to start',
-            selectedPiece: -1,
-            canMove: false
-        };
-        
-        createLudoUI();
-        drawLudoGame();
-    }
-    
-    function createLudoUI() {
-        const gameArea = document.querySelector('.game-area');
-        if (gameArea) {
-            gameArea.innerHTML = `
-                <div style="text-align: center; margin: 20px 0;">
-                    <div id="ludo-message" style="font-size: 18px; margin-bottom: 15px; color: #FF6900; font-weight: bold;">${gameData.message}</div>
-                    <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 15px;">
-                        <div style="background: linear-gradient(45deg, #FF6900, #ff8533); padding: 10px 15px; border-radius: 15px; color: white; font-weight: bold;">
-                            🎯 You: <span id="your-home">0</span>/4 home
-                        </div>
-                        <div style="background: linear-gradient(45deg, #2196F3, #4FC3F7); padding: 10px 15px; border-radius: 15px; color: white; font-weight: bold;">
-                            🤖 Computer: <span id="comp-home">0</span>/4 home
-                        </div>
-                    </div>
-                    <button id="ludo-roll-dice" onclick="rollDiceLudo()" style="
-                        background: linear-gradient(45deg, #FF6900, #ff8533);
-                        color: white;
-                        border: none;
-                        padding: 15px 30px;
-                        border-radius: 25px;
-                        font-size: 18px;
-                        font-weight: bold;
-                        cursor: pointer;
-                        box-shadow: 0 6px 20px rgba(255, 105, 0, 0.3);
-                        margin-bottom: 15px;
-                        transition: all 0.3s ease;
-                        ${gameData.currentPlayer === 1 || gameData.gameOver || gameData.canMove ? 'opacity: 0.5; cursor: not-allowed;' : ''}
-                    " ${gameData.currentPlayer === 1 || gameData.gameOver || gameData.canMove ? 'disabled' : ''}>
-                        🎲 Roll Dice
-                    </button>
-                    <div id="ludo-dice" style="font-size: 50px; margin: 15px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">🎲</div>
-                    <div id="game-tips" style="font-size: 12px; color: #666; margin-top: 10px;">
-                        🎯 Click pieces to move them • 🎲 Roll 6 to start or get extra turn • ⭐ Get all pieces to center to win!
-                    </div>
-                </div>
-            `;
-        }
-    }
-    
-    function rollDiceLudo() {
-        if (gameData.gameOver || gameData.canMove) return;
-        
-        gameData.diceValue = Math.floor(Math.random() * 6) + 1;
-        document.getElementById('ludo-dice').textContent = getDiceEmoji(gameData.diceValue);
-        
-        setTimeout(() => {
-            processLudoTurn();
-        }, 1000);
-    }
-    
-    function processLudoTurn() {
-        const player = gameData.players[gameData.currentPlayer];
-        const movablePieces = getMovablePieces(gameData.currentPlayer);
-        
-        if (movablePieces.length === 0) {
-            gameData.message = `${player.name} has no valid moves. Switching turns...`;
-            updateLudoUI();
-            setTimeout(() => switchPlayerLudo(), 1500);
-            return;
-        }
-        
-        if (gameData.currentPlayer === 0) {
-            // Human player - allow piece selection
-            gameData.canMove = true;
-            gameData.message = 'Click on a piece to move it!';
-            updateLudoUI();
-            drawLudoGame();
-        } else {
-            // Computer player - auto move
-            setTimeout(() => {
-                const pieceIndex = movablePieces[Math.floor(Math.random() * movablePieces.length)];
-                movePieceLudo(1, pieceIndex);
-            }, 1000);
-        }
-    }
-    
-    function getMovablePieces(playerIndex) {
-        const player = gameData.players[playerIndex];
-        const movable = [];
-        
-        player.pieces.forEach((piece, index) => {
-            if (piece.pos === -1 && gameData.diceValue === 6) {
-                movable.push(index); // Can start
-            } else if (piece.pos >= 0 && piece.pos < 56) {
-                const newPos = piece.pos + gameData.diceValue;
-                if (newPos <= 56) {
-                    movable.push(index); // Can move
-                }
-            }
-        });
-        
-        return movable;
-    }
-    
-    function movePieceLudo(playerIndex, pieceIndex) {
-        const player = gameData.players[playerIndex];
-        const piece = player.pieces[pieceIndex];
-        
-        if (piece.pos === -1) {
-            // Starting piece
-            piece.pos = playerIndex * 14; // Each player starts at different positions
-        } else {
-            // Moving piece
-            piece.pos = Math.min(piece.pos + gameData.diceValue, 56);
-            
-            // Check if reached home
-            if (piece.pos === 56) {
-                player.home++;
-                piece.pos = 100; // Mark as home
-                gameData.message = `${player.name} got a piece home! 🏠`;
-            }
-        }
-        
-        // Check for win
-        if (player.home === 4) {
-            gameData.gameOver = true;
-            gameData.winner = playerIndex;
-            gameData.message = `${player.name} wins! All pieces home! 🎉`;
-            updateLudoUI();
-            setTimeout(() => endGame(), 2000);
-            return;
-        }
-        
-        updateLudoUI();
-        drawLudoGame();
-        
-        // Continue turn if rolled 6, otherwise switch
-        if (gameData.diceValue === 6 && !gameData.gameOver) {
-            gameData.message = `${player.name} rolled a 6! Roll again!`;
-            gameData.canMove = false;
-        } else {
-            switchPlayerLudo();
-        }
-    }
-    
-    function switchPlayerLudo() {
-        gameData.currentPlayer = (gameData.currentPlayer + 1) % 2;
-        gameData.canMove = false;
-        gameData.selectedPiece = -1;
-        gameData.message = gameData.currentPlayer === 0 ? 'Your turn! Roll the dice' : 'Computer\'s turn...';
-        updateLudoUI();
-        
-        if (gameData.currentPlayer === 1 && !gameData.gameOver) {
-            setTimeout(() => {
-                rollDiceLudo();
-            }, 1500);
-        }
-    }
-    
-    function updateLudoUI() {
-        const messageEl = document.getElementById('ludo-message');
-        const rollBtn = document.getElementById('ludo-roll-dice');
-        const yourHome = document.getElementById('your-home');
-        const compHome = document.getElementById('comp-home');
-        
-        if (messageEl) messageEl.textContent = gameData.message;
-        if (rollBtn) rollBtn.disabled = gameData.currentPlayer === 1 || gameData.gameOver || gameData.canMove;
-        if (yourHome) yourHome.textContent = gameData.players[0].home;
-        if (compHome) compHome.textContent = gameData.players[1].home;
-    }
-    
-    function drawLudoGame() {
-        const config = gameConfigs.ludo;
-        
-        // Enhanced background with gradient
-        const gradient = ctx.createLinearGradient(0, 0, gameCanvas.width, gameCanvas.height);
-        gradient.addColorStop(0, '#1a1a1a');
-        gradient.addColorStop(1, '#2d2d2d');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
-        
-        const boardSize = Math.min(gameCanvas.width, gameCanvas.height) * 0.9;
-        const startX = (gameCanvas.width - boardSize) / 2;
-        const startY = (gameCanvas.height - boardSize) / 2;
-        
-        // Draw board background with shadow
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-        ctx.shadowBlur = 15;
-        ctx.shadowOffsetX = 5;
-        ctx.shadowOffsetY = 5;
-        
-        // Main board background
-        const boardGradient = ctx.createRadialGradient(
-            startX + boardSize/2, startY + boardSize/2, 0,
-            startX + boardSize/2, startY + boardSize/2, boardSize/2
-        );
-        boardGradient.addColorStop(0, '#F5F5DC');
-        boardGradient.addColorStop(1, '#DDD8C7');
-        ctx.fillStyle = boardGradient;
-        ctx.fillRect(startX, startY, boardSize, boardSize);
-        
-        // Board border
-        ctx.strokeStyle = '#8B4513';
-        ctx.lineWidth = 4;
-        ctx.strokeRect(startX, startY, boardSize, boardSize);
-        
-        // Reset shadow for internal elements
-        ctx.shadowColor = 'transparent';
-        ctx.shadowBlur = 0;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 0;
-        
-        // Draw the classic Ludo cross pattern
-        const center = boardSize / 2;
-        const armWidth = boardSize / 6;
-        const pathWidth = armWidth / 3;
-        
-        // Draw colored home triangles in corners
-        const homeSize = (boardSize - 2 * armWidth) / 2;
-        
-        // Player 1 home area (bottom-left) - Orange
-        const p1Gradient = ctx.createRadialGradient(
-            startX + homeSize/2, startY + boardSize - homeSize/2, 0,
-            startX + homeSize/2, startY + boardSize - homeSize/2, homeSize/2
-        );
-        p1Gradient.addColorStop(0, '#FFB366');
-        p1Gradient.addColorStop(1, config.colors.player1);
-        ctx.fillStyle = p1Gradient;
-        ctx.fillRect(startX, startY + armWidth + pathWidth, homeSize, homeSize);
-        
-        // Player 2 home area (top-right) - Blue  
-        const p2Gradient = ctx.createRadialGradient(
-            startX + boardSize - homeSize/2, startY + homeSize/2, 0,
-            startX + boardSize - homeSize/2, startY + homeSize/2, homeSize/2
-        );
-        p2Gradient.addColorStop(0, '#66B3FF');
-        p2Gradient.addColorStop(1, config.colors.player2);
-        ctx.fillStyle = p2Gradient;
-        ctx.fillRect(startX + armWidth + pathWidth, startY, homeSize, homeSize);
-        
-        // Player 3 home area (top-left) - Green (inactive)
-        ctx.fillStyle = '#90EE90';
-        ctx.fillRect(startX, startY, homeSize, homeSize);
-        
-        // Player 4 home area (bottom-right) - Red (inactive)
-        ctx.fillStyle = '#FFB6C1';
-        ctx.fillRect(startX + armWidth + pathWidth, startY + armWidth + pathWidth, homeSize, homeSize);
-        
-        // Draw paths (the cross arms)
-        // Vertical path
-        ctx.fillStyle = '#FFFACD';
-        ctx.fillRect(startX + homeSize, startY, armWidth, boardSize);
-        
-        // Horizontal path  
-        ctx.fillRect(startX, startY + homeSize, boardSize, armWidth);
-        
-        // Draw safe zones (colored paths leading to center)
-        const safeZoneGradient1 = ctx.createLinearGradient(
-            startX + homeSize, startY + homeSize,
-            startX + homeSize + pathWidth, startY + homeSize + pathWidth
-        );
-        safeZoneGradient1.addColorStop(0, config.colors.player1);
-        safeZoneGradient1.addColorStop(1, '#FFE4B5');
-        ctx.fillStyle = safeZoneGradient1;
-        ctx.fillRect(startX + homeSize, startY + homeSize + pathWidth, pathWidth, armWidth - pathWidth);
-        
-        const safeZoneGradient2 = ctx.createLinearGradient(
-            startX + homeSize, startY + homeSize,
-            startX + homeSize + pathWidth, startY + homeSize + pathWidth
-        );
-        safeZoneGradient2.addColorStop(0, config.colors.player2);
-        safeZoneGradient2.addColorStop(1, '#E6F3FF');
-        ctx.fillStyle = safeZoneGradient2;
-        ctx.fillRect(startX + homeSize + pathWidth, startY + homeSize, armWidth - pathWidth, pathWidth);
-        
-        // Draw the center home area (victory zone)
-        const centerSize = pathWidth * 1.5;
-        const centerX = startX + center - centerSize/2;
-        const centerY = startY + center - centerSize/2;
-        
-        const centerGradient = ctx.createRadialGradient(
-            centerX + centerSize/2, centerY + centerSize/2, 0,
-            centerX + centerSize/2, centerY + centerSize/2, centerSize/2
-        );
-        centerGradient.addColorStop(0, '#FFD700');
-        centerGradient.addColorStop(1, '#FFA500');
-        ctx.fillStyle = centerGradient;
-        ctx.fillRect(centerX, centerY, centerSize, centerSize);
-        
-        // Center star
-        ctx.fillStyle = '#FF6900';
-        ctx.font = '24px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('⭐', centerX + centerSize/2, centerY + centerSize/2 + 8);
-        
-        // Draw path squares/positions
-        const squareSize = armWidth / 6;
-        drawLudoPathSquares(startX, startY, boardSize, homeSize, armWidth, pathWidth, squareSize);
-        
-        // Draw starting positions
-        drawLudoStartingPositions(startX, startY, homeSize, armWidth, pathWidth);
-        
-        // Draw home areas with pieces waiting
-        drawLudoHomePieces(startX, startY, homeSize, armWidth, pathWidth);
-        
-        // Draw pieces on the board
-        gameData.players.forEach((player, playerIndex) => {
-            player.pieces.forEach((piece, pieceIndex) => {
-                if (piece.pos >= 0 && piece.pos < 100) {
-                    const coords = getEnhancedLudoPieceCoords(piece.pos, playerIndex, startX, startY, boardSize, homeSize, armWidth, pathWidth);
-                    drawEnhancedLudoPiece(coords.x, coords.y, player.color, pieceIndex, player.name);
-                }
-            });
-        });
-        
-        // Draw board title
-        ctx.fillStyle = '#FF6900';
-        ctx.font = 'bold 20px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('🎯 LUDO CHAMPIONSHIP 🎯', gameCanvas.width/2, 25);
-        
-        // Draw player indicators
-        ctx.font = 'bold 12px Arial';
-        ctx.fillStyle = config.colors.player1;
-        ctx.fillText('YOU', startX + homeSize/2, startY + boardSize + 15);
-        
-        ctx.fillStyle = config.colors.player2;
-        ctx.fillText('COMPUTER', startX + boardSize - homeSize/2, startY - 5);
-    }
-    
-    function drawLudoPathSquares(startX, startY, boardSize, homeSize, armWidth, pathWidth, squareSize) {
-        const positions = [];
-        const sqSize = squareSize * 0.8;
-        
-        // Create path positions around the board
-        // Bottom horizontal path (left to right)
-        for (let i = 0; i < 6; i++) {
-            const x = startX + homeSize + (armWidth/6) * i;
-            const y = startY + homeSize + armWidth - sqSize;
-            drawPathSquare(x, y, sqSize, i === 0 ? '#90EE90' : '#FFFACD'); // First square is green (safe)
-        }
-        
-        // Right vertical path (bottom to top)
-        for (let i = 0; i < 6; i++) {
-            const x = startX + homeSize + armWidth;
-            const y = startY + homeSize + armWidth - (armWidth/6) * (i + 1);
-            drawPathSquare(x, y, sqSize, i === 5 ? '#2196F3' : '#FFFACD'); // Last square is blue (safe)
-        }
-        
-        // Top horizontal path (right to left)
-        for (let i = 0; i < 6; i++) {
-            const x = startX + homeSize + armWidth - (armWidth/6) * (i + 1);
-            const y = startY + homeSize - sqSize;
-            drawPathSquare(x, y, sqSize, '#FFFACD');
-        }
-        
-        // Left vertical path (top to bottom)
-        for (let i = 0; i < 6; i++) {
-            const x = startX + homeSize - sqSize;
-            const y = startY + homeSize + (armWidth/6) * i;
-            drawPathSquare(x, y, sqSize, '#FFFACD');
-        }
-    }
-    
-    function drawPathSquare(x, y, size, color) {
-        // Square background
-        ctx.fillStyle = color;
-        ctx.fillRect(x, y, size, size);
-        
-        // Square border
-        ctx.strokeStyle = '#8B4513';
-        ctx.lineWidth = 1;
-        ctx.strokeRect(x, y, size, size);
-    }
-    
-    function drawLudoStartingPositions(startX, startY, homeSize, armWidth, pathWidth) {
-        // Player 1 starting position (orange arrow from bottom-left)
-        ctx.fillStyle = '#FF6900';
-        ctx.font = '16px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('🏠', startX + homeSize + armWidth/12, startY + homeSize + armWidth - 10);
-        
-        // Player 2 starting position (blue arrow from top-right)  
-        ctx.fillStyle = '#2196F3';
-        ctx.fillText('🏠', startX + homeSize + armWidth - 10, startY + homeSize + armWidth/12);
-    }
-    
-    function drawLudoHomePieces(startX, startY, homeSize, armWidth, pathWidth) {
-        const pieceRadius = 8;
-        const spacing = 25;
-        
-        // Player 1 waiting pieces (in home area)
-        gameData.players[0].pieces.forEach((piece, index) => {
-            if (piece.pos === -1) { // Piece is at home
-                const x = startX + 20 + (index % 2) * spacing;
-                const y = startY + homeSize + armWidth - 30 + Math.floor(index / 2) * spacing;
-                drawEnhancedLudoPiece(x, y, gameData.players[0].color, index, 'Y');
-            }
-        });
-        
-        // Player 2 waiting pieces (in home area)
-        gameData.players[1].pieces.forEach((piece, index) => {
-            if (piece.pos === -1) { // Piece is at home
-                const x = startX + homeSize + armWidth + 20 + (index % 2) * spacing;
-                const y = startY + 20 + Math.floor(index / 2) * spacing;
-                drawEnhancedLudoPiece(x, y, gameData.players[1].color, index, 'C');
-            }
-        });
-    }
-    
-    function drawEnhancedLudoPiece(x, y, color, pieceIndex, initial) {
-        const radius = 12;
-        
-        // Piece shadow
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-        ctx.beginPath();
-        ctx.arc(x + 2, y + 2, radius, 0, 2 * Math.PI);
-        ctx.fill();
-        
-        // Piece gradient
-        const pieceGradient = ctx.createRadialGradient(x - 3, y - 3, 0, x, y, radius);
-        pieceGradient.addColorStop(0, color === '#FF6900' ? '#FFB366' : '#66B3FF');
-        pieceGradient.addColorStop(1, color);
-        
-        ctx.fillStyle = pieceGradient;
-        ctx.beginPath();
-        ctx.arc(x, y, radius, 0, 2 * Math.PI);
-        ctx.fill();
-        
-        // Piece border
-        ctx.strokeStyle = '#000';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        
-        // Piece highlight
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-        ctx.beginPath();
-        ctx.arc(x - 3, y - 3, 4, 0, 2 * Math.PI);
-        ctx.fill();
-        
-        // Piece number/initial
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 10px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText(initial, x, y + 3);
-    }
-    
-    function getEnhancedLudoPieceCoords(position, playerIndex, startX, startY, boardSize, homeSize, armWidth, pathWidth) {
-        // Enhanced positioning system for Ludo pieces
-        // This creates a proper path around the board
-        
-        const squareSize = armWidth / 6;
-        const offset = squareSize / 2;
-        
-        // Define the path coordinates
-        const pathCoords = [];
-        
-        // Bottom row (positions 0-5 for player 1, different for player 2)
-        for (let i = 0; i < 6; i++) {
-            pathCoords.push({
-                x: startX + homeSize + offset + (squareSize * i),
-                y: startX + homeSize + armWidth - offset
-            });
-        }
-        
-        // Right column (positions 6-11)
-        for (let i = 0; i < 6; i++) {
-            pathCoords.push({
-                x: startX + homeSize + armWidth + offset,
-                y: startY + homeSize + armWidth - offset - (squareSize * (i + 1))
-            });
-        }
-        
-        // Top row (positions 12-17)
-        for (let i = 0; i < 6; i++) {
-            pathCoords.push({
-                x: startX + homeSize + armWidth + offset - (squareSize * (i + 1)),
-                y: startY + homeSize - offset
-            });
-        }
-        
-        // Left column (positions 18-23)
-        for (let i = 0; i < 6; i++) {
-            pathCoords.push({
-                x: startX + homeSize - offset,
-                y: startY + homeSize - offset + (squareSize * i)
-            });
-        }
-        
-        // Cycle through positions
-        const adjustedPos = position % 24;
-        
-        if (pathCoords[adjustedPos]) {
-            return pathCoords[adjustedPos];
-        }
-        
-        // Default fallback position
-        return {
-            x: startX + boardSize/2,
-            y: startY + boardSize/2
-        };
-    }
-
     // UTILITY FUNCTIONS
     function gameLoop() {
         if (!gameRunning) return;
@@ -1975,12 +982,6 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'space':
                 updateSpaceGame();
                 drawSpaceGame();
-                break;
-            case 'snakesladders':
-                // Turn-based game, no continuous updates needed
-                break;
-            case 'ludo':
-                // Turn-based game, no continuous updates needed
                 break;
         }
         
@@ -2122,60 +1123,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('keyup', (e) => {
         keys[e.key] = false;
     });
-
-    // CANVAS CLICK HANDLER (for Ludo piece selection)
-    gameCanvas?.addEventListener('click', (e) => {
-        if (currentGame === 'ludo' && gameData.canMove && gameData.currentPlayer === 0) {
-            const rect = gameCanvas.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const clickY = e.clientY - rect.top;
-            
-            // Check if clicked on a movable piece
-            const player = gameData.players[0];
-            const movablePieces = getMovablePieces(0);
-            
-            // Check pieces on the board
-            for (let i = 0; i < player.pieces.length; i++) {
-                if (movablePieces.includes(i) && player.pieces[i].pos >= 0 && player.pieces[i].pos < 100) {
-                    const boardSize = Math.min(gameCanvas.width, gameCanvas.height) * 0.9;
-                    const startX = (gameCanvas.width - boardSize) / 2;
-                    const startY = (gameCanvas.height - boardSize) / 2;
-                    const homeSize = (boardSize - 2 * (boardSize / 6)) / 2;
-                    const armWidth = boardSize / 6;
-                    const pathWidth = armWidth / 3;
-                    
-                    const coords = getEnhancedLudoPieceCoords(player.pieces[i].pos, 0, startX, startY, boardSize, homeSize, armWidth, pathWidth);
-                    
-                    const distance = Math.sqrt(Math.pow(clickX - coords.x, 2) + Math.pow(clickY - coords.y, 2));
-                    if (distance <= 15) {
-                        movePieceLudo(0, i);
-                        return;
-                    }
-                }
-            }
-            
-            // Check pieces in home area (waiting to start)
-            for (let i = 0; i < player.pieces.length; i++) {
-                if (movablePieces.includes(i) && player.pieces[i].pos === -1) {
-                    const boardSize = Math.min(gameCanvas.width, gameCanvas.height) * 0.9;
-                    const startX = (gameCanvas.width - boardSize) / 2;
-                    const startY = (gameCanvas.height - boardSize) / 2;
-                    const homeSize = (boardSize - 2 * (boardSize / 6)) / 2;
-                    const armWidth = boardSize / 6;
-                    const spacing = 25;
-                    
-                    const x = startX + 20 + (i % 2) * spacing;
-                    const y = startY + homeSize + armWidth - 30 + Math.floor(i / 2) * spacing;
-                    
-                    const distance = Math.sqrt(Math.pow(clickX - x, 2) + Math.pow(clickY - y, 2));
-                    if (distance <= 15) {
-                        movePieceLudo(0, i);
-                        return;
-                    }
-                }
-            }
-        }
-    });
     
     // ADDITIONAL HELPER FUNCTIONS
     function resetBall() {
@@ -2269,33 +1216,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return gameData.board[0].some(cell => cell !== 0);
     }
     
-    // Global functions for board games (accessible from HTML)
-    window.rollDiceSnakesLadders = function() {
-        if (currentGame === 'snakesladders') {
-            if (gameData.gameOver || gameData.currentPlayer !== 0) return;
-            
-            gameData.diceValue = Math.floor(Math.random() * 6) + 1;
-            document.getElementById('snl-dice').textContent = getDiceEmoji(gameData.diceValue);
-            
-            setTimeout(() => {
-                movePlayerSnakesLadders(gameData.currentPlayer, gameData.diceValue);
-            }, 1000);
-        }
-    };
-    
-    window.rollDiceLudo = function() {
-        if (currentGame === 'ludo') {
-            if (gameData.gameOver || gameData.canMove || gameData.currentPlayer !== 0) return;
-            
-            gameData.diceValue = Math.floor(Math.random() * 6) + 1;
-            document.getElementById('ludo-dice').textContent = getDiceEmoji(gameData.diceValue);
-            
-            setTimeout(() => {
-                processLudoTurn();
-            }, 1000);
-        }
-    };
-    
     // KRURA Games Coming Soon Modal
     function showKruraGamesComingSoon() {
         // Create modal if it doesn't exist
@@ -2306,41 +1226,108 @@ document.addEventListener('DOMContentLoaded', function() {
             kruraModal.className = 'game-modal';
             kruraModal.style.display = 'none';
             kruraModal.innerHTML = `
-                <div class="game-modal-content" style="max-width: 500px;">
+                <div class="game-modal-content" style="max-width: 900px;">
                     <div class="game-modal-header" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">
                         <h2 style="color: white;">🧪 KRURA Games Lab</h2>
                         <span class="krura-close-btn" style="color: white; cursor: pointer; font-size: 24px;">&times;</span>
                     </div>
-                    <div class="game-modal-body" style="text-align: center; padding: 40px 20px;">
-                        <div style="font-size: 80px; margin-bottom: 20px;">🚀</div>
-                        <h3 style="color: #9b59b6; margin-bottom: 15px;">Coming Soon!</h3>
-                        <p style="color: #666; font-size: 16px; margin-bottom: 25px;">
-                            KRURA Games are currently in development and testing phase.
-                        </p>
-                        <div style="background: linear-gradient(45deg, #f8f9fa, #e9ecef); padding: 20px; border-radius: 15px; margin-bottom: 25px;">
-                            <h4 style="color: #9b59b6; margin-bottom: 15px;">🎮 What's Coming:</h4>
-                            <ul style="text-align: left; color: #666; list-style: none; padding: 0;">
-                                <li style="margin-bottom: 8px;">🎯 Advanced AI-powered games</li>
-                                <li style="margin-bottom: 8px;">🌟 Multiplayer online challenges</li>
-                                <li style="margin-bottom: 8px;">🏆 Progressive difficulty systems</li>
-                                <li style="margin-bottom: 8px;">📊 Detailed analytics & scoring</li>
-                                <li style="margin-bottom: 8px;">🎨 Immersive 3D experiences</li>
-                            </ul>
+                    <div class="game-modal-body" style="text-align: center; padding: 20px;">
+                        
+                        <!-- Game Selection Screen -->
+                        <div id="krura-game-selection" class="krura-selection">
+                            <div style="font-size: 60px; margin-bottom: 20px;">🚀</div>
+                            <h3 style="color: #9b59b6; margin-bottom: 15px;">Experimental Games Laboratory</h3>
+                            <p style="color: #666; font-size: 16px; margin-bottom: 30px;">
+                                Welcome to KRURA Games - where cutting-edge narratives meet interactive experiences
+                            </p>
+                            
+                            <!-- Featured Game -->
+                            <div class="featured-game-card" style="
+                                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+                                border-radius: 15px;
+                                padding: 30px;
+                                margin: 20px 0;
+                                color: white;
+                                border: 2px solid #9b59b6;
+                                position: relative;
+                                overflow: hidden;
+                            ">
+                                <div style="position: absolute; top: 10px; right: 10px; background: #e74c3c; color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold;">
+                                    ✨ NEW
+                                </div>
+                                
+                                <div class="game-icon" style="font-size: 48px; margin-bottom: 15px;">🌙</div>
+                                <h3 style="color: #ffd700; margin-bottom: 10px;">ETA: Echoes of Rebirth</h3>
+                                <p style="color: #ccc; font-size: 14px; margin-bottom: 15px; font-style: italic;">
+                                    A narrative-driven adventure through cycles of reincarnation
+                                </p>
+                                <p style="color: #aaa; font-size: 13px; margin-bottom: 20px; line-height: 1.4;">
+                                    🎭 Experience four interconnected lives<br/>
+                                    🌙 Guided by the Moon as narrator<br/>
+                                    ⚔️ Face guardians and inner demons<br/>
+                                    🔄 Break the curse of eternal rebirth
+                                </p>
+                                
+                                <div style="margin-bottom: 20px;">
+                                    <span style="color: #9b59b6; font-size: 12px; font-weight: bold;">
+                                        🎮 Genre: Narrative RPG | ⏱️ Duration: 20-45 mins | 🎯 Difficulty: Medium
+                                    </span>
+                                </div>
+                                
+                                <button class="play-eta-btn" onclick="startETAGame()" style="
+                                    background: linear-gradient(45deg, #9b59b6, #8e44ad);
+                                    color: white;
+                                    border: none;
+                                    padding: 15px 30px;
+                                    border-radius: 25px;
+                                    font-size: 16px;
+                                    font-weight: bold;
+                                    cursor: pointer;
+                                    box-shadow: 0 6px 20px rgba(155, 89, 182, 0.3);
+                                    transition: all 0.3s ease;
+                                ">
+                                    🎮 Play ETA: Echoes of Rebirth
+                                </button>
+                            </div>
+                            
+                            <!-- Coming Soon Section -->
+                            <div style="background: linear-gradient(45deg, #f8f9fa, #e9ecef); padding: 20px; border-radius: 15px; margin: 20px 0;">
+                                <h4 style="color: #9b59b6; margin-bottom: 15px;">🚧 More Games in Development</h4>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                                    <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #ddd;">
+                                        <div style="font-size: 24px; margin-bottom: 5px;">🎯</div>
+                                        <h5 style="margin: 0; color: #666;">Quantum Chess</h5>
+                                        <p style="font-size: 12px; color: #999; margin: 5px 0;">AI-powered strategic gameplay</p>
+                                    </div>
+                                    <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #ddd;">
+                                        <div style="font-size: 24px; margin-bottom: 5px;">🌟</div>
+                                        <h5 style="margin: 0; color: #666;">Neural Networks</h5>
+                                        <p style="font-size: 12px; color: #999; margin: 5px 0;">Train your own AI models</p>
+                                    </div>
+                                    <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #ddd;">
+                                        <div style="font-size: 24px; margin-bottom: 5px;">🏆</div>
+                                        <h5 style="margin: 0; color: #666;">Code Battles</h5>
+                                        <p style="font-size: 12px; color: #999; margin: 5px 0;">Multiplayer programming duels</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p style="color: #999; font-size: 14px; margin-top: 20px;">
+                                🔬 KRURA Games pushes the boundaries of interactive entertainment
+                            </p>
                         </div>
-                        <p style="color: #999; font-size: 14px; margin-bottom: 25px;">
-                            Stay tuned for updates! In the meantime, enjoy our <strong>Tech Games</strong> and <strong>Play Games</strong> collections.
-                        </p>
-                        <button class="krura-close-btn" style="
-                            background: linear-gradient(45deg, #9b59b6, #8e44ad);
-                            color: white;
-                            border: none;
-                            padding: 12px 25px;
-                            border-radius: 25px;
-                            font-size: 16px;
-                            font-weight: bold;
-                            cursor: pointer;
-                            box-shadow: 0 6px 20px rgba(155, 89, 182, 0.3);
-                        ">Got It! 👍</button>
+                        
+                        <!-- ETA Game Container -->
+                        <div id="eta-game-container" class="eta-game-container" style="display: none;">
+                            <!-- Game will be loaded here -->
+                        </div>
+                        
+                        <!-- Back Button for ETA Game -->
+                        <div id="eta-back-controls" style="display: none; margin-top: 15px;">
+                            <button class="eta-choice-btn" onclick="returnToKruraSelection()">
+                                ← Back to KRURA Games
+                            </button>
+                        </div>
                     </div>
                 </div>
             `;
@@ -2364,7 +1351,67 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Show the modal
         kruraModal.style.display = 'flex';
+        
+        // Reset to selection screen
+        document.getElementById('krura-game-selection').style.display = 'block';
+        document.getElementById('eta-game-container').style.display = 'none';
+        document.getElementById('eta-back-controls').style.display = 'none';
     }
+    
+    // Global functions for ETA game integration
+    window.startETAGame = function() {
+        // Load ETA game CSS if not already loaded
+        if (!document.querySelector('link[href*="eta-game.css"]')) {
+            const cssLink = document.createElement('link');
+            cssLink.rel = 'stylesheet';
+            cssLink.href = 'css/eta-game.css';
+            document.head.appendChild(cssLink);
+        }
+        
+        // Load ETA game JS if not already loaded
+        if (!window.etaGame && !document.querySelector('script[src*="eta-game.js"]')) {
+            const script = document.createElement('script');
+            script.src = 'js/eta-game.js';
+            script.onload = function() {
+                initializeETAGame();
+            };
+            document.head.appendChild(script);
+        } else if (window.etaGame) {
+            initializeETAGame();
+        } else {
+            // Script is loading, wait for it
+            setTimeout(() => {
+                if (window.etaGame) {
+                    initializeETAGame();
+                }
+            }, 100);
+        }
+    };
+    
+    function initializeETAGame() {
+        // Hide selection screen and show game
+        document.getElementById('krura-game-selection').style.display = 'none';
+        document.getElementById('eta-game-container').style.display = 'block';
+        document.getElementById('eta-back-controls').style.display = 'block';
+        
+        // Initialize and start the game
+        if (typeof initETAGame === 'function') {
+            initETAGame();
+        }
+    }
+    
+    window.returnToKruraSelection = function() {
+        document.getElementById('krura-game-selection').style.display = 'block';
+        document.getElementById('eta-game-container').style.display = 'none';
+        document.getElementById('eta-back-controls').style.display = 'none';
+    };
+    
+    window.closeKruraGames = function() {
+        const kruraModal = document.getElementById('kruraGamesModal');
+        if (kruraModal) {
+            kruraModal.style.display = 'none';
+        }
+    };
     
     // Initialize game modal on page load
     console.log('Multi-Game Center initialized successfully!');
