@@ -1,9 +1,9 @@
 /*!
-    Title: Dev Portfolio Template
-    Version: 1.2.2
+    Title: Nike-Inspired Minimal Portfolio
+    Version: 2.0.0
     Last Change: 07/20/2025
     Author: Rajesh Kodaganti
-    Description: Portfolio styles for Rajesh Kodaganti
+    Description: Clean, minimal portfolio with Nike-inspired aesthetics
 */
 
 /*
@@ -13,13 +13,33 @@
 */
 
 :root {
-    --base-color: #3498db;
-    --base-color-hover: #2980b9;
-    --background: #fff;
-    --background-alt: #f2f2f5;
-    --border: #dcd9d9;
-    --heading: #374054;
-    --text: #74808a;
+    /* Nike-Inspired Color Palette */
+    --primary-color: #000000;          /* Deep Black */
+    --secondary-color: #FFFFFF;        /* Pure White */
+    --accent-color: #FF6900;          /* Nike Orange */
+    --text-primary: #000000;          /* Black text */
+    --text-secondary: #707070;        /* Medium gray */
+    --text-light: #FFFFFF;           /* White text */
+    --background-light: #FFFFFF;     /* White background */
+    --background-dark: #000000;      /* Black background */
+    --background-gray: #F7F7F7;     /* Light gray */
+    --border-color: #E5E5E5;        /* Subtle border */
+    --shadow-light: rgba(0,0,0,0.08); /* Minimal shadow */
+    --shadow-medium: rgba(0,0,0,0.15);
+    
+    /* Legacy variables for compatibility */
+    --base-color: #000000;
+    --base-color-hover: #FF6900;
+    --background: #FFFFFF;
+    --background-alt: #F7F7F7;
+    --border: #E5E5E5;
+    --heading: #000000;
+    --text: #707070;
+    
+    /* Smooth transitions */
+    --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /*
@@ -29,13 +49,133 @@
 */
 
 body {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
     font-size: 16px;
+    font-weight: 400;
+    color: var(--text-primary);
+    background-color: var(--background-light);
+    line-height: 1.6;
+    transition: var(--transition-smooth);
+    overflow-x: hidden;
 }
 
 body.active {
     overflow: hidden;
     z-index: -1;
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Typography improvements */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    transition: var(--transition-fast);
+}
+
+p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    transition: var(--transition-fast);
+}
+
+/* 
+    ----------------------------------
+    ----- 3. Smooth Transitions -----
+    ----------------------------------
+*/
+
+/* Page fade-in animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Apply animations to sections */
+#lead {
+    animation: fadeIn 1s ease-out;
+}
+
+#about {
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+#experience {
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+#education {
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+#projects {
+    animation: fadeInUp 0.8s ease-out 0.8s both;
+}
+
+#skills {
+    animation: fadeInUp 0.8s ease-out 1s both;
+}
+
+#contact {
+    animation: fadeInUp 0.8s ease-out 1.2s both;
+}
+
+/* Hover transitions for interactive elements */
+a, button, .btn {
+    transition: var(--transition-fast);
+}
+
+a:hover, button:hover, .btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Card hover effects */
+.project, .education-block, .certification-block {
+    transition: var(--transition-smooth);
+}
+
+.project:hover, .education-block:hover, .certification-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px var(--shadow-medium);
 }
 
 .no-js #experience-timeline > div {
@@ -91,16 +231,18 @@ header {
     animation-iteration-count: 1;
     animation-timing-function: ease;
     animation-duration: 0.75s;
+    backdrop-filter: blur(10px);
 }
 
 header ul {
     display: inline-block;
-    background: var(--background);
+    background: rgba(255, 255, 255, 0.95);
     text-align: center;
-    padding: 10px;
+    padding: 15px 25px;
     margin: 0;
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
+    border-radius: 25px;
+    box-shadow: 0 4px 20px var(--shadow-light);
+    border: 1px solid var(--border-color);
 }
 
 header li {
@@ -109,22 +251,28 @@ header li {
 
 header a {
     display: block;
-    color: var(--base-color);
-    padding: 10px;
+    color: var(--text-primary);
+    padding: 12px 20px;
     text-decoration: none;
-    transition: 0.5s ease all;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-radius: 20px;
+    transition: var(--transition-fast);
 }
 
 header a:hover {
-    color: var(--base-color-hover);
+    color: var(--text-light);
     text-decoration: none;
-    background: #eee;
-    border-radius: 4px;
+    background: var(--primary-color);
+    transform: translateY(-2px);
 }
 
 header a:focus {
-    color: var(--base-color);
+    color: var(--text-primary);
     text-decoration: none;
+    outline: none;
 }
 
 header.active {
@@ -134,6 +282,12 @@ header.active {
 header.sticky {
     position: fixed;
     z-index: 999;
+    top: 20px;
+}
+
+header.sticky ul {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 8px 32px var(--shadow-medium);
 }
 
 #menu.active {
@@ -236,18 +390,57 @@ footer {
 
 .btn-rounded-white {
     display: inline-block;
-    color: #fff;
-    padding: 15px 25px;
-    border: 3px solid #fff;
-    border-radius: 30px;
+    color: var(--text-light);
+    padding: 18px 35px;
+    border: 2px solid var(--text-light);
+    border-radius: 50px;
     text-decoration: none;
-    transition: 0.5s ease all;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+}
+
+.btn-rounded-white::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--text-light);
+    transition: var(--transition-smooth);
+    z-index: -1;
 }
 
 .btn-rounded-white:hover {
-    color: var(--base-color);
-    background: #fff;
+    color: var(--text-primary);
     text-decoration: none;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+}
+
+.btn-rounded-white:hover::before {
+    left: 0;
+}
+
+/* Special styling for games button */
+.btn-rounded-white:last-child {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--text-light);
+}
+
+.btn-rounded-white:last-child::before {
+    background: var(--text-light);
+}
+
+.btn-rounded-white:last-child:hover {
+    color: var(--accent-color);
 }
 
 .shadow {
@@ -293,19 +486,22 @@ footer {
     height: 100vh;
     min-height: 500px;
     max-height: 1080px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #000000 0%, #333333 50%, #000000 100%);
     background-size: cover;
     padding: 15px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #lead-content {
-    position: absolute;
+    position: relative;
     z-index: 10;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeInUp 1s ease-out 0.5s both;
 }
 
 #lead-content h1,
@@ -314,19 +510,21 @@ footer {
 }
 
 #lead-content h1 {
-    color: #fff;
-    font-weight: 900;
-    font-size: 5em;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    line-height: 0.9em;
+    color: var(--text-light);
+    font-weight: 700;
+    font-size: 4.5em;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
 #lead-content h2 {
-    color: #a2d9f7;
-    font-weight: 500;
-    font-size: 2.25em;
-    margin-bottom: 15px;
+    color: #CCCCCC;
+    font-weight: 400;
+    font-size: 1.5em;
+    margin-bottom: 30px;
+    opacity: 0.9;
 }
 
 #lead-overlay {
@@ -337,7 +535,7 @@ footer {
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(52, 152, 219, 0.8);
+    background: linear-gradient(45deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 100%);
     z-index: 1;
 }
 
