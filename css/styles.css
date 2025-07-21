@@ -5855,18 +5855,23 @@ h2.heading:after {
 #nameTransition {
     position: relative;
     display: inline-block;
+    height: 1.2em; /* Set fixed height to prevent layout shift */
+    width: 100%;
+    text-align: center;
 }
 
 #nameTransition .name-english,
 #nameTransition .name-telugu {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
     opacity: 0;
     transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-    transform: translateZ(0); /* Hardware acceleration for smoother transitions */
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    white-space: nowrap;
 }
 
 #nameTransition .name-english.active,
@@ -5885,10 +5890,12 @@ h2.heading:after {
     #nameTransition {
         font-size: 2em;
         line-height: 1.2;
+        height: 1.5em;
     }
     
     #nameTransition .name-english,
     #nameTransition .name-telugu {
         text-align: center;
+        white-space: normal;
     }
 }

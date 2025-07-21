@@ -19,6 +19,11 @@
         }
         
         let isEnglishActive = true;
+        let transitionInterval;
+        
+        // Ensure initial state is correct
+        englishName.classList.add('active');
+        teluguName.classList.remove('active');
         
         function switchNames() {
             if (isEnglishActive) {
@@ -26,16 +31,18 @@
                 englishName.classList.remove('active');
                 teluguName.classList.add('active');
                 isEnglishActive = false;
+                console.log('Switched to Telugu');
             } else {
                 // Switch to English
                 teluguName.classList.remove('active');
                 englishName.classList.add('active');
                 isEnglishActive = true;
+                console.log('Switched to English');
             }
         }
         
         // Start the transition cycle
-        const transitionInterval = setInterval(switchNames, 10000); // 10 seconds
+        transitionInterval = setInterval(switchNames, 10000); // 10 seconds
         
         // Optional: Pause transitions when user hovers over the name
         let isPaused = false;
@@ -45,13 +52,15 @@
             if (!isPaused) {
                 clearInterval(transitionInterval);
                 isPaused = true;
+                console.log('Transition paused');
             }
         });
         
         nameContainer.addEventListener('mouseleave', () => {
             if (isPaused) {
-                pausedInterval = setInterval(switchNames, 10000);
+                transitionInterval = setInterval(switchNames, 10000);
                 isPaused = false;
+                console.log('Transition resumed');
             }
         });
         
