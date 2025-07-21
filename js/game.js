@@ -393,9 +393,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function getMockLeaderboard() {
         return [
             { name: 'CodeMaster', score: 850, difficulty: 'hard' },
-            { name: 'DinoHunter', score: 720, difficulty: 'normal' },
+            { name: 'DinoHunter', score: 720, difficulty: 'medium' },
             { name: 'JumpKing', score: 680, difficulty: 'hard' },
-            { name: 'Player1', score: 450, difficulty: 'normal' },
+            { name: 'Player1', score: 450, difficulty: 'medium' },
             { name: 'Rookie', score: 320, difficulty: 'easy' }
         ];
     }
