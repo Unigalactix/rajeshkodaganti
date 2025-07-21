@@ -2,12 +2,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Modal functionality
     const gameModal = document.getElementById('gameModal');
-    const openGameBtn = document.getElementById('openGameBtn');
+    const openGameBtn = document.getElementById('gamesButton');
     const closeGameBtn = gameModal.querySelector('.game-close-btn');
     const gameMenu = document.getElementById('gameMenu');
-    const startGameBtn = document.getElementById('startGameBtn');
-    const playerNameInput = document.getElementById('playerName');
-    const difficultySelect = document.getElementById('difficulty');
+    const startGameBtn = document.getElementById('startButton');
+    const playerNameInput = document.getElementById('playerNameInput');
+    const difficultySelect = document.getElementById('levelSelect');
     
     // Game elements
     const gameCanvas = document.getElementById('gameCanvas');
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let isGameRunning = false;
     let gameInitialized = false;
     let playerName = '';
-    let difficulty = 'normal';
+    let difficulty = 'medium';
     let animationId;
     
     // Game objects
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Difficulty settings
     const difficultySettings = {
         easy: { speed: 1.5, spawnRate: 0.003, jumpPower: 14 },
-        normal: { speed: 2, spawnRate: 0.005, jumpPower: 12 },
+        medium: { speed: 2, spawnRate: 0.005, jumpPower: 12 },
         hard: { speed: 3, spawnRate: 0.008, jumpPower: 10 }
     };
     
@@ -103,6 +103,15 @@ document.addEventListener('DOMContentLoaded', function() {
             pauseGame();
         }
     }
+    
+    // Enable start button when name is entered
+    playerNameInput.addEventListener('input', function() {
+        if (playerNameInput.value.trim().length > 0) {
+            startGameBtn.disabled = false;
+        } else {
+            startGameBtn.disabled = true;
+        }
+    });
     
     // Initialize game
     function initGame() {
