@@ -2165,11 +2165,22 @@ class ETAGame {
         `;
     }
     
+    // ENHANCED REINCARNATION MECHANICS - COMPLETED 2ND POINT
     triggerRebirth(fromHero) {
         const nextLifeIndex = this.gameData.lives.indexOf(fromHero) + 1;
         
+        // Store fragmented memories from current life
+        const currentCharacter = this.characterClasses[fromHero];
+        const lifeExperiences = this.generateLifeExperiences(fromHero);
+        
+        // Add fragmented memories with specific bonuses
+        this.addFragmentedMemories(fromHero, lifeExperiences);
+        
         if (nextLifeIndex < this.gameData.lives.length) {
             const nextHero = this.gameData.lives[nextLifeIndex];
+            
+            // Generate reincarnation bonuses based on previous life
+            const reincarnationBonuses = this.calculateReincarnationBonuses(fromHero, nextHero);
             
             const gameContainer = this.gameContainer;
             gameContainer.innerHTML = `
@@ -2177,16 +2188,51 @@ class ETAGame {
                     <div class="rebirth-transition">
                         <div class="moon-icon">🌙</div>
                         <h3>🔄 The Cycle Turns 🔄</h3>
-                        <p><strong>Chandamama narrates:</strong></p>
-                        <p>"${fromHero}'s spirit dissolves into cosmic dust, carrying forward fragments of memory and wisdom. In a distant place and time, ${nextHero} awakens with an inexplicable urge to seek something lost..."</p>
+                        <p><strong>Chandamama narrates the reincarnation:</strong></p>
+                        <p>"${fromHero}'s spirit dissolves into cosmic dust, but the soul's essence carries forward echoes of experience. In ${this.getReincarnationLocation(nextHero)}, ${nextHero} awakens with mysterious dreams and inexplicable instincts..."</p>
                         
-                        <div class="stats-transfer">
-                            <h4>Wisdom Carried Forward</h4>
-                            <p>Previous experiences influence the new life, but the journey must begin anew.</p>
+                        <div class="reincarnation-mechanics">
+                            <h4>🧠 Fragmented Memories Gained</h4>
+                            <div class="memory-echoes">
+                                ${lifeExperiences.map(exp => `
+                                    <div class="memory-fragment">
+                                        <strong>"${exp.memory}"</strong> - ${exp.mechanicalBonus}
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <h4>⚡ Reincarnation Bonuses for ${nextHero}</h4>
+                            <div class="reincarnation-bonuses">
+                                ${reincarnationBonuses.map(bonus => `
+                                    <div class="reincarnation-bonus">
+                                        <span class="bonus-type">${bonus.type}:</span> ${bonus.description}
+                                        <span class="mechanical-effect">${bonus.mechanicalEffect}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <div class="soul-progression">
+                                <h4>🌟 Soul Progression Across Lives</h4>
+                                <div class="life-progression">
+                                    <div class="lives-lived">Lives Completed: ${nextLifeIndex}/4</div>
+                                    <div class="accumulated-wisdom">Total Wisdom Echoes: ${this.gameData.fragmentedMemories.length}</div>
+                                    <div class="curse-strength">Curse Binding Strength: ${this.calculateCurseStrength()}%</div>
+                                </div>
+                            </div>
                         </div>
                         
-                        <button class="eta-choice-btn" onclick="etaGame.startLife('${nextHero}')">
-                            Begin Life as ${nextHero}
+                        <div class="character-sheet-generation">
+                            <h4>🎲 Generating New Character Sheet</h4>
+                            <button class="eta-choice-btn generate-stats-btn" onclick="etaGame.rollNewLifeStats('${nextHero}')">
+                                🎲 Roll Stats for ${nextHero} (4d6 drop lowest)
+                            </button>
+                            <button class="eta-choice-btn use-preset-btn" onclick="etaGame.usePresetStats('${nextHero}')">
+                                📋 Use Preset Character Sheet
+                            </button>
+                        </div>
+                        
+                        <button class="eta-choice-btn disabled" id="beginNextLifeBtn" onclick="etaGame.startLife('${nextHero}')" disabled>
+                            Begin Life as ${nextHero} (Generate stats first)
                         </button>
                     </div>
                 </div>
@@ -2195,6 +2241,426 @@ class ETAGame {
             // All lives exhausted without breaking curse
             this.showEternalCurse();
         }
+    }
+    
+    // Generate specific life experiences that become fragmented memories
+    generateLifeExperiences(heroName) {
+        const experiences = {
+            'Samrat': [
+                {
+                    memory: "The fury of battle courses through warrior's blood",
+                    mechanicalBonus: "+1 to Strength-based checks for next life"
+                },
+                {
+                    memory: "Leadership through fear and respect",
+                    mechanicalBonus: "+1 to Intimidation checks for next life"
+                },
+                {
+                    memory: "The weight of spear in calloused hands",
+                    mechanicalBonus: "Weapon proficiency echoes (advantage on first weapon attack)"
+                }
+            ],
+            'Mantra': [
+                {
+                    memory: "The flow of mystical energy through transformed flesh",
+                    mechanicalBonus: "+1 to Intelligence-based spellcasting checks"
+                },
+                {
+                    memory: "Understanding both masculine and feminine perspectives",
+                    mechanicalBonus: "+2 to Persuasion with any gender"
+                },
+                {
+                    memory: "The delicate balance of tantric arts",
+                    mechanicalBonus: "Advantage on first magical ritual or spell"
+                }
+            ],
+            'Fran': [
+                {
+                    memory: "Archaeological passion reveals hidden truths",
+                    mechanicalBonus: "+2 to Investigation and History checks"
+                },
+                {
+                    memory: "Methodical analysis overcomes chaos",
+                    mechanicalBonus: "Advantage on puzzle-solving and pattern recognition"
+                },
+                {
+                    memory: "Few regrets, but they cut deep",
+                    mechanicalBonus: "+1 to Wisdom saves against psychological effects"
+                }
+            ],
+            'Hero': [
+                {
+                    memory: "Perfect timing saves lives and moments",
+                    mechanicalBonus: "+3 to initiative rolls and timing-based challenges"
+                },
+                {
+                    memory: "The weight of hammer, the weight of choice",
+                    mechanicalBonus: "Critical hits on 19-20 with improvised weapons"
+                },
+                {
+                    memory: "Accumulated wisdom of four lifetimes",
+                    mechanicalBonus: "+2 to all Wisdom-based checks and saves"
+                }
+            ]
+        };
+        
+        return experiences[heroName] || [];
+    }
+    
+    // Add memories to persistent game state
+    addFragmentedMemories(heroName, experiences) {
+        experiences.forEach(exp => {
+            this.gameData.fragmentedMemories.push({
+                sourceLife: heroName,
+                memory: exp.memory,
+                mechanicalBonus: exp.mechanicalBonus,
+                unlocked: true
+            });
+        });
+    }
+    
+    // Calculate bonuses the next character receives
+    calculateReincarnationBonuses(fromHero, toHero) {
+        const bonusMap = {
+            'Samrat->Mantra': [
+                {
+                    type: "Warrior's Resolve",
+                    description: "Samrat's courage bolsters Mantra's magical confidence",
+                    mechanicalEffect: "+1 to Concentration saves while spellcasting"
+                },
+                {
+                    type: "Combat Experience",
+                    description: "Echoes of physical prowess aid magical combat",
+                    mechanicalEffect: "Advantage on first combat encounter"
+                }
+            ],
+            'Mantra->Fran': [
+                {
+                    type: "Mystical Insight",
+                    description: "Magical knowledge aids archaeological understanding",
+                    mechanicalEffect: "+2 to checks involving ancient symbols and runes"
+                },
+                {
+                    type: "Dual Perspective",
+                    description: "Gender transformation experience broadens understanding",
+                    mechanicalEffect: "+1 to Insight checks when reading people"
+                }
+            ],
+            'Fran->Hero': [
+                {
+                    type: "Accumulated Knowledge",
+                    description: "Three lifetimes of learning guide practical wisdom",
+                    mechanicalEffect: "+2 to Intelligence and Wisdom checks"
+                },
+                {
+                    type: "Pattern Recognition",
+                    description: "Archaeological training reveals life's patterns",
+                    mechanicalEffect: "Advantage on recognizing traps and understanding the curse"
+                }
+            ]
+        };
+        
+        const key = `${fromHero}->${toHero}`;
+        return bonusMap[key] || [
+            {
+                type: "Soul Memory",
+                description: "Vague echoes of past experience",
+                mechanicalEffect: "+1 to one random ability check per session"
+            }
+        ];
+    }
+    
+    // Get where each character is reborn
+    getReincarnationLocation(heroName) {
+        const locations = {
+            'Samrat': 'the dense African Amazon',
+            'Mantra': 'the mystical lands where magic flows freely', 
+            'Fran': 'the academic halls of archaeological discovery',
+            'Hero': 'the bustling streets where every moment counts'
+        };
+        
+        return locations[heroName] || 'a distant land';
+    }
+    
+    // Calculate how strong the curse is based on failures
+    calculateCurseStrength() {
+        const baseStrength = 100;
+        const reductionPerMemory = 5;
+        const strength = Math.max(25, baseStrength - (this.gameData.fragmentedMemories.length * reductionPerMemory));
+        return strength;
+    }
+    
+    // Roll new stats using D&D 4d6 drop lowest method
+    rollNewLifeStats(heroName) {
+        const newStats = {};
+        const statNames = ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'];
+        
+        statNames.forEach(stat => {
+            const rolls = [];
+            for (let i = 0; i < 4; i++) {
+                rolls.push(this.rollDice(6, 1).total);
+            }
+            rolls.sort((a, b) => b - a);
+            newStats[stat] = rolls.slice(0, 3).reduce((sum, val) => sum + val, 0);
+        });
+        
+        // Apply reincarnation bonuses
+        const bonuses = this.getStatBonusesFromMemories(heroName);
+        bonuses.forEach(bonus => {
+            if (newStats[bonus.stat]) {
+                newStats[bonus.stat] += bonus.value;
+            }
+        });
+        
+        // Update character with new stats
+        this.characterClasses[heroName].stats = newStats;
+        this.characterClasses[heroName].reincarnated = true;
+        
+        this.displayGeneratedStats(heroName, newStats, bonuses);
+    }
+    
+    // Use preset stats with minor variations
+    usePresetStats(heroName) {
+        const baseStats = this.characterClasses[heroName].stats;
+        const newStats = { ...baseStats };
+        
+        // Add small random variations (-1 to +1 to each stat)
+        Object.keys(newStats).forEach(stat => {
+            const variation = Math.floor(Math.random() * 3) - 1; // -1, 0, or +1
+            newStats[stat] = Math.max(8, Math.min(20, newStats[stat] + variation));
+        });
+        
+        // Apply reincarnation bonuses
+        const bonuses = this.getStatBonusesFromMemories(heroName);
+        bonuses.forEach(bonus => {
+            if (newStats[bonus.stat]) {
+                newStats[bonus.stat] += bonus.value;
+            }
+        });
+        
+        this.characterClasses[heroName].stats = newStats;
+        this.characterClasses[heroName].reincarnated = true;
+        
+        this.displayGeneratedStats(heroName, newStats, bonuses);
+    }
+    
+    // Get stat bonuses from fragmented memories
+    getStatBonusesFromMemories(heroName) {
+        const bonuses = [];
+        
+        // Previous life memories grant specific bonuses
+        this.gameData.fragmentedMemories.forEach(memory => {
+            if (memory.sourceLife === 'Samrat' && heroName === 'Mantra') {
+                bonuses.push({ stat: 'constitution', value: 1 });
+            } else if (memory.sourceLife === 'Mantra' && heroName === 'Fran') {
+                bonuses.push({ stat: 'intelligence', value: 1 });
+            } else if (memory.sourceLife === 'Fran' && heroName === 'Hero') {
+                bonuses.push({ stat: 'wisdom', value: 2 });
+            }
+        });
+        
+        return bonuses;
+    }
+    
+    // Display the generated stats
+    displayGeneratedStats(heroName, newStats, bonuses) {
+        const statsDisplay = document.createElement('div');
+        statsDisplay.className = 'generated-stats-display';
+        statsDisplay.innerHTML = `
+            <div class="new-character-sheet">
+                <h4>📋 ${heroName}'s Reincarnated Character Sheet</h4>
+                <div class="stat-block">
+                    ${Object.entries(newStats).map(([stat, value]) => `
+                        <div class="stat-line">
+                            <span class="stat-name">${stat.charAt(0).toUpperCase() + stat.slice(1)}:</span>
+                            <span class="stat-value">${value}</span>
+                            <span class="stat-modifier">(${Math.floor((value - 10) / 2) >= 0 ? '+' : ''}${Math.floor((value - 10) / 2)})</span>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                ${bonuses.length > 0 ? `
+                    <div class="memory-bonuses">
+                        <h5>🧠 Memory Bonuses Applied:</h5>
+                        ${bonuses.map(bonus => `
+                            <div class="bonus-applied">+${bonus.value} to ${bonus.stat}</div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+            </div>
+        `;
+        
+        // Find and replace the character sheet generation section
+        const charGenSection = document.querySelector('.character-sheet-generation');
+        if (charGenSection) {
+            charGenSection.replaceWith(statsDisplay);
+        }
+        
+        // Enable the begin next life button
+        const beginBtn = document.getElementById('beginNextLifeBtn');
+        if (beginBtn) {
+            beginBtn.disabled = false;
+            beginBtn.classList.remove('disabled');
+            beginBtn.textContent = `✨ Begin Life as ${heroName} (Stats Generated!)`;
+        }
+    }
+    
+    // Start a new life with enhanced character sheet
+    startLife(heroName) {
+        this.gameData.currentHero = heroName;
+        this.currentLife = this.gameData.lives.indexOf(heroName);
+        
+        // Show enhanced character selection with reincarnation bonuses
+        this.showEnhancedCharacterSelection(heroName);
+    }
+    
+    // Enhanced character selection showing reincarnation progression
+    showEnhancedCharacterSelection(heroName) {
+        const character = this.characterClasses[heroName];
+        const isReincarnated = character.reincarnated || false;
+        const pastLives = this.gameData.lives.slice(0, this.gameData.lives.indexOf(heroName));
+        
+        this.gameContainer.innerHTML = `
+            <div class="eta-game-screen eta-enhanced-character-selection" style="background: ${character.background};">
+                <div class="reincarnation-header">
+                    <div class="moon-icon">🌙</div>
+                    <h2>📜 Character Reincarnation: ${character.name}</h2>
+                    <div class="life-counter">Life ${this.gameData.lives.indexOf(heroName) + 1} of 4</div>
+                </div>
+                
+                <div class="character-sheet-display">
+                    <div class="character-portrait">
+                        <div class="character-class-badge">${character.class}</div>
+                        <div class="map-indicator">Map: ${character.mapType}</div>
+                        <div class="guardian-preview">Guardian: ${character.guardian}</div>
+                    </div>
+                    
+                    <div class="character-stats-reborn">
+                        <h3>📊 Character Statistics</h3>
+                        <div class="stats-grid">
+                            ${Object.entries(character.stats).map(([stat, value]) => `
+                                <div class="stat-display">
+                                    <span class="stat-name">${stat.charAt(0).toUpperCase() + stat.slice(1)}</span>
+                                    <span class="stat-value">${value}</span>
+                                    <span class="stat-modifier">(${Math.floor((value - 10) / 2) >= 0 ? '+' : ''}${Math.floor((value - 10) / 2)})</span>
+                                    ${isReincarnated ? '<span class="reborn-indicator">⭐</span>' : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="reincarnation-progression">
+                        <h3>🔄 Soul Progression</h3>
+                        <div class="past-lives-display">
+                            ${pastLives.length > 0 ? `
+                                <h4>👻 Past Lives:</h4>
+                                <div class="past-lives-list">
+                                    ${pastLives.map((pastLife, index) => `
+                                        <div class="past-life-echo">
+                                            <span class="life-number">${index + 1}.</span>
+                                            <span class="life-name">${pastLife}</span>
+                                            <span class="life-lesson">${this.getLifeLesson(pastLife)}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            ` : '<p class="first-life">🌟 First incarnation - no past memories yet</p>'}
+                        </div>
+                        
+                        <div class="active-memories">
+                            <h4>🧠 Active Fragmented Memories:</h4>
+                            <div class="memory-bonuses-display">
+                                ${this.gameData.fragmentedMemories.length > 0 ? 
+                                    this.gameData.fragmentedMemories.map(memory => `
+                                        <div class="active-memory">
+                                            <div class="memory-source">From ${memory.sourceLife}:</div>
+                                            <div class="memory-text">"${memory.memory}"</div>
+                                            <div class="memory-bonus">${memory.mechanicalBonus}</div>
+                                        </div>
+                                    `).join('') : 
+                                    '<div class="no-memories">No fragmented memories yet</div>'
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="character-abilities-enhanced">
+                        <h3>⚡ Enhanced Abilities & Traits</h3>
+                        <div class="abilities-display">
+                            <div class="skills-section">
+                                <h4>🎯 Skills:</h4>
+                                <div class="skills-list">
+                                    ${character.skills.map(skill => `
+                                        <span class="skill-tag">${skill}</span>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="traits-section">
+                                <h4>🏷️ Character Traits:</h4>
+                                <div class="traits-list">
+                                    ${character.traits.map(trait => `
+                                        <span class="trait-tag">${trait}</span>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="special-ability-section">
+                                <h4>✨ Special Ability:</h4>
+                                <div class="special-ability-display">
+                                    <strong>${character.specialAbility.split(':')[0]}:</strong>
+                                    <span>${character.specialAbility.split(':')[1] || character.specialAbility}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="adventure-module-preview-enhanced">
+                        <h3>📖 Awaiting Adventure: ${this.adventureModules[heroName].name}</h3>
+                        <p class="module-description">${this.adventureModules[heroName].description}</p>
+                        <div class="module-details">
+                            <p><strong>🌍 Environment:</strong> ${this.adventureModules[heroName].environment}</p>
+                            <p><strong>⚔️ Difficulty:</strong> ${this.adventureModules[heroName].difficulty}</p>
+                            <p><strong>👹 Guardian Challenge:</strong> ${character.guardian}</p>
+                            <p><strong>🗡️ Primary Weapon:</strong> ${character.weapon}</p>
+                        </div>
+                    </div>
+                    
+                    ${this.gameData.totalLunarEclipse ? `
+                        <div class="eclipse-blessing">
+                            <h4>🌙 Eclipse Blessing Active</h4>
+                            <p>The total lunar eclipse grants enhanced abilities and curse-breaking potential!</p>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="character-actions-enhanced">
+                        <button class="eta-choice-btn dnd-ready-btn" onclick="etaGame.handleChoice('beginAdventure', 0)">
+                            🎲 Begin ${heroName}'s Adventure (Life ${this.gameData.lives.indexOf(heroName) + 1})
+                        </button>
+                        <button class="eta-choice-btn dnd-info-btn" onclick="etaGame.handleChoice('showRulesAndLore', 0)">
+                            📚 Review Character Progression & D&D Rules
+                        </button>
+                        <button class="eta-choice-btn eclipse-trigger-btn" onclick="etaGame.handleChoice('activateLunarEclipse', 0)">
+                            🌙 Trigger Lunar Eclipse (Final Life Only)
+                        </button>
+                        <button class="eta-choice-btn dice-test-btn" onclick="etaGame.handleChoice('testDiceSystem', 0)">
+                            🎲 Test Enhanced Stats & Skills
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Get the lesson learned from each past life
+    getLifeLesson(heroName) {
+        const lessons = {
+            'Samrat': 'Learned: Strength without wisdom leads to destruction',
+            'Mantra': 'Learned: Identity is fluid, power must be balanced',
+            'Fran': 'Learned: Knowledge seeks truth, but few regrets remain',
+            'Hero': 'Learned: All lives converge in the final choice'
+        };
+        
+        return lessons[heroName] || 'Learned: Every experience teaches wisdom';
     }
     
     showEternalCurse() {
