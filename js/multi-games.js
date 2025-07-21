@@ -70,10 +70,25 @@ document.addEventListener('DOMContentLoaded', function() {
     backToMenu?.addEventListener('click', showGameSelection);
     restartGameBtn?.addEventListener('click', restartCurrentGame);
     
-    // Game selection
+    // Game selection - Handle both card and button clicks
     document.querySelectorAll('.game-card').forEach(card => {
-        card.addEventListener('click', () => {
+        card.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             const gameType = card.dataset.game;
+            console.log('Starting game:', gameType);
+            startGame(gameType);
+        });
+    });
+    
+    // Additional event listeners for the play buttons
+    document.querySelectorAll('.select-game-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const gameCard = btn.closest('.game-card');
+            const gameType = gameCard.dataset.game;
+            console.log('Starting game via button:', gameType);
             startGame(gameType);
         });
     });
@@ -83,6 +98,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (gameModal) {
             gameModal.style.display = 'block';
             document.body.style.overflow = 'hidden';
+            
+            // Ensure game container is hidden initially
+            if (gameContainer) {
+                gameContainer.style.display = 'none';
+                gameContainer.style.opacity = '0';
+                gameContainer.style.pointerEvents = 'none';
+            }
             
             // Force show game selection menu
             setTimeout(() => {
@@ -104,36 +126,81 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function showGameSelection() {
         console.log('Showing game selection menu...');
+        
+        // Stop current game first
+        stopGame();
+        
+        // Hide game container with animation
+        if (gameContainer) {
+            gameContainer.style.opacity = '0';
+            gameContainer.style.pointerEvents = 'none';
+            setTimeout(() => {
+                gameContainer.style.display = 'none';
+            }, 300);
+            console.log('Game container hidden');
+        }
+        
+        // Show game selection menu with animation
         if (gameSelection) {
             gameSelection.style.display = 'block';
+            setTimeout(() => {
+                gameSelection.style.opacity = '1';
+                gameSelection.style.pointerEvents = 'auto';
+            }, 50);
             console.log('Game selection display set to block');
         } else {
             console.error('Game selection element not found');
         }
-        if (gameContainer) {
-            gameContainer.style.display = 'none';
-            console.log('Game container hidden');
-        }
-        stopGame();
     }
     
     function startGame(gameType) {
+        console.log('Starting game:', gameType);
         currentGame = gameType;
         const config = gameConfigs[gameType];
         
-        gameSelection.style.display = 'none';
-        gameContainer.style.display = 'flex';
-        currentGameTitle.textContent = config.title;
-        gameInstructions.textContent = config.instructions;
+        // Hide game selection menu with animation
+        if (gameSelection) {
+            gameSelection.style.opacity = '0';
+            gameSelection.style.pointerEvents = 'none';
+            setTimeout(() => {
+                gameSelection.style.display = 'none';
+            }, 300);
+            console.log('Game selection menu hidden');
+        }
+        
+        // Show game container with animation
+        if (gameContainer) {
+            gameContainer.style.display = 'flex';
+            setTimeout(() => {
+                gameContainer.style.opacity = '1';
+                gameContainer.style.pointerEvents = 'auto';
+            }, 50);
+            console.log('Game container shown');
+        }
+        
+        // Update game UI
+        if (currentGameTitle) {
+            currentGameTitle.textContent = config.title;
+        }
+        if (gameInstructions) {
+            gameInstructions.textContent = config.instructions;
+        }
         
         // Reset game state
         playerScore = 0;
         updateScore();
-        gameOverMessage.style.display = 'none';
-        restartGameBtn.style.display = 'none';
         
-        // Initialize specific game
-        initializeGame(gameType);
+        if (gameOverMessage) {
+            gameOverMessage.style.display = 'none';
+        }
+        if (restartGameBtn) {
+            restartGameBtn.style.display = 'none';
+        }
+        
+        // Initialize specific game after transition
+        setTimeout(() => {
+            initializeGame(gameType);
+        }, 100);
     }
     
     function initializeGame(gameType) {
