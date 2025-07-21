@@ -12,17 +12,14 @@
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+    <link href="css/tech-games.css" rel="stylesheet">
 </head>
 
 <body>
     <div id="mobile-menu-open" class="shadow-large">
         <i class="fa fa-bars" aria-hidden="true"></i>
     </div>
-    <!-- End    <script src="js/scripts.js"></script>
-    <script src="js/multi-games.js"></script>
-    <script src="js/timeline-modal.js"></script>
-    <script src="js/chatbot.js"></script>
-</body>bile-menu-toggle -->
+    <!-- End #mobile-menu-toggle -->
     <header>
         <div id="mobile-menu-close">
             <span>Close</span> <i class="fa fa-times" aria-hidden="true"></i>
@@ -63,14 +60,35 @@
             <p style="color: #ffffff; margin-top: 10px; font-size: 1.0em; opacity: 0.9;">
                 Specializing in Machine Learning, Data Engineering & Cybersecurity
             </p>
-            <div style="margin-top: 25px;">
-                <a href="resume/Rajesh_Kodaganti_Resume.pdf" download class="btn-rounded-white" style="margin-right: 15px; padding: 18px 30px; min-width: 180px; text-align: center;">
-                    <i class="fa fa-download" aria-hidden="true"></i> Download Resume
-                </a>
-                <a href="#contact" class="btn-rounded-white" style="margin-right: 15px; padding: 18px 30px; min-width: 180px; text-align: center;">Get In Touch</a>
-                <button id="gamesButton" class="btn-rounded-white" style="background: #e74c3c; border: 2px solid #e74c3c; padding: 18px 30px; min-width: 180px; text-align: center;">
-                    <i class="fa fa-gamepad" aria-hidden="true"></i> Play Games
-                </button>
+            <div style="margin-top: 25px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                <!-- Top row: Download Resume and Get In Touch -->
+                <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <a href="resume/Rajesh_Kodaganti_Resume.pdf" download class="btn-rounded-white" style="padding: 18px 25px; min-width: 170px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                        <span>Download Resume</span>
+                    </a>
+                    <a href="#contact" class="btn-rounded-white" style="padding: 18px 25px; min-width: 170px; text-align: center; display: inline-flex; align-items: center; justify-content: center;">
+                        Get In Touch
+                    </a>
+                </div>
+                <!-- Bottom row: Game buttons side by side -->
+                <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <button id="techGamesButton" class="btn-rounded-white" style="background: #2ecc71; border: 2px solid #2ecc71; padding: 18px 25px; min-width: 170px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                        <i class="fa fa-code" aria-hidden="true"></i>
+                        <span>Tech Games</span>
+                    </button>
+                    <button id="gamesButton" class="btn-rounded-white" style="background: #e74c3c; border: 2px solid #e74c3c; padding: 18px 25px; min-width: 170px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                        <i class="fa fa-gamepad" aria-hidden="true"></i>
+                        <span>Play Games</span>
+                    </button>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <button id="kruraGamesButton" class="btn-rounded-white" style="background: #9b59b6; border: 2px solid #9b59b6; padding: 18px 25px; min-width: 170px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 8px; opacity: 0.7; cursor: not-allowed;">
+                            <i class="fa fa-flask" aria-hidden="true"></i>
+                            <span>KRURA Games</span>
+                        </button>
+                        <span style="color: #ffffff; font-size: 0.8em; margin-top: 5px; opacity: 0.8; font-style: italic;">games in test - not ready to play</span>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- End #lead-content -->
@@ -119,61 +137,131 @@
 
     <div id="experience" class="background-alt">
         <h2 class="heading">Professional Experience</h2>
-        <div class="timeline-container">
-            <div class="timeline-line"></div>
-            
-            <div class="timeline-item" data-experience="exp1">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">
-                    <div class="timeline-date">July 2025 – Present</div>
-                    <h3>Quadrant Technologies</h3>
-                    <h4>Software Intern</h4>
-                    <p class="timeline-summary">Cybersecurity & AI applications development</p>
-                    <button class="view-details-btn" data-experience="exp1">View Details</button>
+        <div class="container">
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <div class="exp-header">
+                        <div class="exp-icon">💼</div>
+                        <div class="exp-title-area">
+                            <h3>Quadrant Technologies</h3>
+                            <h4>Software Intern</h4>
+                            <span class="exp-period">July 2025 – Present</span>
+                        </div>
+                    </div>
+                    <p class="exp-description">
+                        Cybersecurity & AI applications development. Working on cutting-edge projects involving threat intelligence and machine learning integration.
+                    </p>
+                    <div class="exp-details">
+                        <div class="exp-skills">
+                            <h5>🛠️ Technologies:</h5>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Cybersecurity</span>
+                                <span class="skill-tag">AI Applications</span>
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">Machine Learning</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="timeline-item" data-experience="exp2">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">
-                    <div class="timeline-date">January 2025 – May 2025</div>
-                    <h3>QikCell by tickioT</h3>
-                    <h4>Solutions Engineer (Internship)</h4>
-                    <p class="timeline-summary">Technical demonstrations & client solutions</p>
-                    <button class="view-details-btn" data-experience="exp2">View Details</button>
+                <div class="experience-card">
+                    <div class="exp-header">
+                        <div class="exp-icon">⚡</div>
+                        <div class="exp-title-area">
+                            <h3>QikCell by tickioT</h3>
+                            <h4>Solutions Engineer (Internship)</h4>
+                            <span class="exp-period">January 2025 – May 2025</span>
+                        </div>
+                    </div>
+                    <p class="exp-description">
+                        Technical demonstrations & client solutions. Delivered comprehensive technical presentations and developed tailored solutions for enterprise clients.
+                    </p>
+                    <div class="exp-details">
+                        <div class="exp-skills">
+                            <h5>🛠️ Technologies:</h5>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Technical Sales</span>
+                                <span class="skill-tag">Client Solutions</span>
+                                <span class="skill-tag">Presentations</span>
+                                <span class="skill-tag">IoT Systems</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="timeline-item" data-experience="exp3">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">
-                    <div class="timeline-date">June 2018 – July 2022</div>
-                    <h3>ColorOS (OPPO)</h3>
-                    <h4>User Test Specialist (Freelance)</h4>
-                    <p class="timeline-summary">Beta testing & user experience optimization</p>
-                    <button class="view-details-btn" data-experience="exp3">View Details</button>
+                <div class="experience-card">
+                    <div class="exp-header">
+                        <div class="exp-icon">📱</div>
+                        <div class="exp-title-area">
+                            <h3>ColorOS (OPPO)</h3>
+                            <h4>User Test Specialist (Freelance)</h4>
+                            <span class="exp-period">June 2018 – July 2022</span>
+                        </div>
+                    </div>
+                    <p class="exp-description">
+                        Beta testing & user experience optimization. Conducted comprehensive testing cycles and provided detailed feedback for mobile OS improvements.
+                    </p>
+                    <div class="exp-details">
+                        <div class="exp-skills">
+                            <h5>🛠️ Technologies:</h5>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Mobile Testing</span>
+                                <span class="skill-tag">UX Optimization</span>
+                                <span class="skill-tag">Android</span>
+                                <span class="skill-tag">Beta Testing</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="timeline-item" data-experience="exp4">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">
-                    <div class="timeline-date">June 2020 – July 2020</div>
-                    <h3>Pantech ProEd Pvt Ltd</h3>
-                    <h4>Engineering Intern</h4>
-                    <p class="timeline-summary">64-bit binary comparator development</p>
-                    <button class="view-details-btn" data-experience="exp4">View Details</button>
+                <div class="experience-card">
+                    <div class="exp-header">
+                        <div class="exp-icon">🔧</div>
+                        <div class="exp-title-area">
+                            <h3>Pantech ProEd Pvt Ltd</h3>
+                            <h4>Engineering Intern</h4>
+                            <span class="exp-period">June 2020 – July 2020</span>
+                        </div>
+                    </div>
+                    <p class="exp-description">
+                        64-bit binary comparator development. Designed and implemented digital logic circuits with focus on performance optimization and hardware efficiency.
+                    </p>
+                    <div class="exp-details">
+                        <div class="exp-skills">
+                            <h5>🛠️ Technologies:</h5>
+                            <div class="skill-tags">
+                                <span class="skill-tag">VLSI Design</span>
+                                <span class="skill-tag">Digital Logic</span>
+                                <span class="skill-tag">Hardware Testing</span>
+                                <span class="skill-tag">Circuit Design</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="timeline-item" data-experience="exp5">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">
-                    <div class="timeline-date">June 2018 – May 2019</div>
-                    <h3>PeopleLink Unified Communications</h3>
-                    <h4>Product Tester - R&D Department</h4>
-                    <p class="timeline-summary">Product evaluation & quality assurance</p>
-                    <button class="view-details-btn" data-experience="exp5">View Details</button>
+                <div class="experience-card">
+                    <div class="exp-header">
+                        <div class="exp-icon">🔬</div>
+                        <div class="exp-title-area">
+                            <h3>PeopleLink Unified Communications</h3>
+                            <h4>Product Tester - R&D Department</h4>
+                            <span class="exp-period">June 2018 – May 2019</span>
+                        </div>
+                    </div>
+                    <p class="exp-description">
+                        Product evaluation & quality assurance. Performed systematic testing protocols and contributed to product development lifecycle improvements.
+                    </p>
+                    <div class="exp-details">
+                        <div class="exp-skills">
+                            <h5>🛠️ Technologies:</h5>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Product Testing</span>
+                                <span class="skill-tag">Quality Assurance</span>
+                                <span class="skill-tag">R&D Protocols</span>
+                                <span class="skill-tag">Communication Systems</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -182,39 +270,81 @@
 
     <div id="education">
         <h2 class="heading">Education</h2>
-        <div class="timeline-container">
-            <div class="timeline-line"></div>
-            
-            <div class="timeline-item" data-education="edu1">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">
-                    <div class="timeline-date">Aug 2022 - May 2025</div>
-                    <h3>California State University, Northridge</h3>
-                    <h4>Master of Science - Computer Engineering</h4>
-                    <p class="timeline-summary">Advanced ML, Data Engineering & Cybersecurity</p>
-                    <button class="view-details-btn" data-education="edu1">View Details</button>
+        <div class="container">
+            <div class="education-grid">
+                <div class="education-card">
+                    <div class="edu-header">
+                        <div class="edu-icon">🎓</div>
+                        <div class="edu-title-area">
+                            <h3>California State University, Northridge</h3>
+                            <h4>Master of Science - Computer Engineering</h4>
+                            <span class="edu-period">Aug 2022 - May 2025</span>
+                        </div>
+                    </div>
+                    <p class="edu-description">
+                        Advanced ML, Data Engineering & Cybersecurity. Specialized coursework in machine learning algorithms, big data systems, and security protocols.
+                    </p>
+                    <div class="edu-details">
+                        <div class="edu-focus">
+                            <h5>🎯 Focus Areas:</h5>
+                            <div class="focus-tags">
+                                <span class="focus-tag">Machine Learning</span>
+                                <span class="focus-tag">Data Engineering</span>
+                                <span class="focus-tag">Cybersecurity</span>
+                                <span class="focus-tag">AI Systems</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="timeline-item" data-education="edu2">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">
-                    <div class="timeline-date">July 2019 - June 2022</div>
-                    <h3>JB Institute Of Engineering and Technology</h3>
-                    <h4>B-Tech in ECE - Electronics & Communication</h4>
-                    <p class="timeline-summary">Grade: 7.45 - Digital Systems & Networks</p>
-                    <button class="view-details-btn" data-education="edu2">View Details</button>
+                <div class="education-card">
+                    <div class="edu-header">
+                        <div class="edu-icon">⚡</div>
+                        <div class="edu-title-area">
+                            <h3>JB Institute Of Engineering and Technology</h3>
+                            <h4>B-Tech in ECE - Electronics & Communication</h4>
+                            <span class="edu-period">July 2019 - June 2022</span>
+                        </div>
+                    </div>
+                    <p class="edu-description">
+                        Grade: 7.45 - Digital Systems & Networks. Comprehensive foundation in electronics engineering with emphasis on communication systems and digital circuit design.
+                    </p>
+                    <div class="edu-details">
+                        <div class="edu-focus">
+                            <h5>🎯 Focus Areas:</h5>
+                            <div class="focus-tags">
+                                <span class="focus-tag">Digital Systems</span>
+                                <span class="focus-tag">Communication Networks</span>
+                                <span class="focus-tag">Circuit Design</span>
+                                <span class="focus-tag">Signal Processing</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="timeline-item" data-education="edu3">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">
-                    <div class="timeline-date">June 2015 - Dec 2018</div>
-                    <h3>Government Institute of Electronics</h3>
-                    <h4>ECE (SCN) Specialization</h4>
-                    <p class="timeline-summary">Electronics, Communication & Mobile Technologies</p>
-                    <button class="view-details-btn" data-education="edu3">View Details</button>
+                <div class="education-card">
+                    <div class="edu-header">
+                        <div class="edu-icon">🔧</div>
+                        <div class="edu-title-area">
+                            <h3>Government Institute of Electronics</h3>
+                            <h4>ECE (SCN) Specialization</h4>
+                            <span class="edu-period">June 2015 - Dec 2018</span>
+                        </div>
+                    </div>
+                    <p class="edu-description">
+                        Electronics, Communication & Mobile Technologies. Foundational studies in electronics with specialization in mobile communication systems.
+                    </p>
+                    <div class="edu-details">
+                        <div class="edu-focus">
+                            <h5>🎯 Focus Areas:</h5>
+                            <div class="focus-tags">
+                                <span class="focus-tag">Electronics</span>
+                                <span class="focus-tag">Mobile Tech</span>
+                                <span class="focus-tag">Communication</span>
+                                <span class="focus-tag">Network Systems</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -328,148 +458,221 @@
     <div id="skills">
         <h2 class="heading">Skills</h2>
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Programming Languages</h3>
-                    <ul>
-                        <li>Python (Programming Language)</li>
-                        <li>R (Programming Language)</li>
-                        <li>C (Programming Language)</li>
-                        <li>Embedded C</li>
-                        <li>HTML</li>
-                        <li>SQL</li>
-                        <li>Assembly Language</li>
-                        <li>Verilog</li>
-                        <li>VHDL</li>
-                    </ul>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">🐍</div>
+                        <h3>Programming Languages</h3>
+                    </div>
+                    <div class="skill-content">
+                        <div class="skill-list">
+                            <div class="skill-item">Python (Programming Language)</div>
+                            <div class="skill-item">R (Programming Language)</div>
+                            <div class="skill-item">C (Programming Language)</div>
+                            <div class="skill-item">Embedded C</div>
+                            <div class="skill-item">HTML</div>
+                            <div class="skill-item">SQL</div>
+                            <div class="skill-item">Assembly Language</div>
+                            <div class="skill-item">Verilog</div>
+                            <div class="skill-item">VHDL</div>
+                        </div>
+                        <div class="skill-count">9 Languages</div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h3>AI & Machine Learning</h3>
-                    <ul>
-                        <li>Artificial Intelligence (AI)</li>
-                        <li>Machine Learning</li>
-                        <li>Deep Learning</li>
-                        <li>Neural Networks</li>
-                        <li>Supervised Learning</li>
-                        <li>Natural Language Processing (NLP)</li>
-                        <li>Large Language Models (LLM)</li>
-                        <li>Generative AI</li>
-                        <li>Prompt Engineering</li>
-                    </ul>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">🤖</div>
+                        <h3>AI & Machine Learning</h3>
+                    </div>
+                    <div class="skill-content">
+                        <div class="skill-list">
+                            <div class="skill-item">Artificial Intelligence (AI)</div>
+                            <div class="skill-item">Machine Learning</div>
+                            <div class="skill-item">Deep Learning</div>
+                            <div class="skill-item">Neural Networks</div>
+                            <div class="skill-item">Supervised Learning</div>
+                            <div class="skill-item">Natural Language Processing (NLP)</div>
+                            <div class="skill-item">Large Language Models (LLM)</div>
+                            <div class="skill-item">Generative AI</div>
+                            <div class="skill-item">Prompt Engineering</div>
+                        </div>
+                        <div class="skill-count">9 AI Skills</div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>ML Frameworks & Libraries</h3>
-                    <ul>
-                        <li>TensorFlow</li>
-                        <li>PyTorch</li>
-                        <li>Keras</li>
-                        <li>Scikit-Learn</li>
-                        <li>GitHub Copilot</li>
-                    </ul>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">🔧</div>
+                        <h3>ML Frameworks & Libraries</h3>
+                    </div>
+                    <div class="skill-content">
+                        <div class="skill-list">
+                            <div class="skill-item">TensorFlow</div>
+                            <div class="skill-item">PyTorch</div>
+                            <div class="skill-item">Keras</div>
+                            <div class="skill-item">Scikit-Learn</div>
+                            <div class="skill-item">GitHub Copilot</div>
+                        </div>
+                        <div class="skill-count">5 Frameworks</div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h3>Cloud & Microsoft Azure</h3>
-                    <ul>
-                        <li>Microsoft Azure</li>
-                        <li>Microsoft Fabric</li>
-                        <li>Azure AI Foundry</li>
-                        <li>Azure AI Studio</li>
-                        <li>Application Development</li>
-                    </ul>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">☁️</div>
+                        <h3>Cloud & Microsoft Azure</h3>
+                    </div>
+                    <div class="skill-content">
+                        <div class="skill-list">
+                            <div class="skill-item">Microsoft Azure</div>
+                            <div class="skill-item">Microsoft Fabric</div>
+                            <div class="skill-item">Azure AI Foundry</div>
+                            <div class="skill-item">Azure AI Studio</div>
+                            <div class="skill-item">Application Development</div>
+                        </div>
+                        <div class="skill-count">5 Cloud Skills</div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Data Science & Analytics</h3>
-                    <ul>
-                        <li>Data Mining</li>
-                        <li>Data Visualization</li>
-                        <li>Data Preparation</li>
-                        <li>Statistics</li>
-                        <li>Statistical Data Analysis</li>
-                        <li>Research</li>
-                    </ul>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">📊</div>
+                        <h3>Data Science & Analytics</h3>
+                    </div>
+                    <div class="skill-content">
+                        <div class="skill-list">
+                            <div class="skill-item">Data Mining</div>
+                            <div class="skill-item">Data Visualization</div>
+                            <div class="skill-item">Data Preparation</div>
+                            <div class="skill-item">Statistics</div>
+                            <div class="skill-item">Statistical Data Analysis</div>
+                            <div class="skill-item">Research</div>
+                        </div>
+                        <div class="skill-count">6 Data Skills</div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h3>DevOps & Development Tools</h3>
-                    <ul>
-                        <li>Docker Products</li>
-                        <li>Containerization</li>
-                        <li>GitHub</li>
-                        <li>Version Control</li>
-                        <li>Code Refactoring</li>
-                        <li>AI Software Development</li>
-                        <li>Software Development</li>
-                    </ul>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">⚡</div>
+                        <h3>DevOps & Development Tools</h3>
+                    </div>
+                    <div class="skill-content">
+                        <div class="skill-list">
+                            <div class="skill-item">Docker Products</div>
+                            <div class="skill-item">Containerization</div>
+                            <div class="skill-item">GitHub</div>
+                            <div class="skill-item">Version Control</div>
+                            <div class="skill-item">Code Refactoring</div>
+                            <div class="skill-item">AI Software Development</div>
+                            <div class="skill-item">Software Development</div>
+                        </div>
+                        <div class="skill-count">7 Dev Tools</div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Electronics & Hardware</h3>
-                    <ul>
-                        <li>RTL Design</li>
-                        <li>Very-Large-Scale Integration (VLSI)</li>
-                        <li>System on a Chip (SoC)</li>
-                        <li>Digital IC Design</li>
-                        <li>Analog Circuit Design</li>
-                        <li>Printed Circuit Board (PCB) Design</li>
-                        <li>Circuit Testing</li>
-                        <li>Internet of Things (IoT)</li>
-                        <li>Soldering Iron</li>
-                    </ul>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">🔌</div>
+                        <h3>Electronics & Hardware</h3>
+                    </div>
+                    <div class="skill-content">
+                        <div class="skill-list">
+                            <div class="skill-item">RTL Design</div>
+                            <div class="skill-item">Very-Large-Scale Integration (VLSI)</div>
+                            <div class="skill-item">System on a Chip (SoC)</div>
+                            <div class="skill-item">Digital IC Design</div>
+                            <div class="skill-item">Analog Circuit Design</div>
+                            <div class="skill-item">Printed Circuit Board (PCB) Design</div>
+                            <div class="skill-item">Circuit Testing</div>
+                            <div class="skill-item">Internet of Things (IoT)</div>
+                            <div class="skill-item">Soldering Iron</div>
+                        </div>
+                        <div class="skill-count">9 Hardware Skills</div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h3>Communication & Mobile Tech</h3>
-                    <ul>
-                        <li>Mobile Technology</li>
-                        <li>Antennas</li>
-                        <li>Field Work</li>
-                        <li>Chatbot Development</li>
-                        <li>Customer Experience</li>
-                    </ul>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">📱</div>
+                        <h3>Communication & Mobile Tech</h3>
+                    </div>
+                    <div class="skill-content">
+                        <div class="skill-list">
+                            <div class="skill-item">Mobile Technology</div>
+                            <div class="skill-item">Antennas</div>
+                            <div class="skill-item">Field Work</div>
+                            <div class="skill-item">Chatbot Development</div>
+                            <div class="skill-item">Customer Experience</div>
+                        </div>
+                        <div class="skill-count">5 Mobile Skills</div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Design & Development Tools</h3>
-                    <ul>
-                        <li>Xilinx ISE</li>
-                        <li>Xilinx Vivado</li>
-                        <li>MATLAB</li>
-                        <li>Microsoft Office</li>
-                    </ul>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">🛠️</div>
+                        <h3>Design & Development Tools</h3>
+                    </div>
+                    <div class="skill-content">
+                        <div class="skill-list">
+                            <div class="skill-item">Xilinx ISE</div>
+                            <div class="skill-item">Xilinx Vivado</div>
+                            <div class="skill-item">MATLAB</div>
+                            <div class="skill-item">Microsoft Office</div>
+                        </div>
+                        <div class="skill-count">4 Design Tools</div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h3>Interpersonal & Professional Skills</h3>
-                    <ul>
-                        <li>Teamwork</li>
-                        <li>Constructive Feedback</li>
-                        <li>Group Discussions</li>
-                        <li>Story Writing</li>
-                        <li>Debugging</li>
-                        <li>Programming Concepts</li>
-                        <li>Engineering</li>
-                        <li>AI Productivity</li>
-                    </ul>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">👥</div>
+                        <h3>Professional Skills</h3>
+                    </div>
+                    <div class="skill-content">
+                        <div class="skill-list">
+                            <div class="skill-item">Teamwork</div>
+                            <div class="skill-item">Constructive Feedback</div>
+                            <div class="skill-item">Group Discussions</div>
+                            <div class="skill-item">Story Writing</div>
+                            <div class="skill-item">Debugging</div>
+                            <div class="skill-item">Programming Concepts</div>
+                            <div class="skill-item">Engineering</div>
+                            <div class="skill-item">AI Productivity</div>
+                        </div>
+                        <div class="skill-count">8 Soft Skills</div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>Sustainability & Business</h3>
-                    <ul>
-                        <li>Sustainable Business Strategies</li>
-                        <li>Green Jobs</li>
-                        <li>Sustainable Systems</li>
-                        <li>Digital Sustainability</li>
-                    </ul>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">🌱</div>
+                        <h3>Sustainability & Business</h3>
+                    </div>
+                    <div class="skill-content">
+                        <div class="skill-list">
+                            <div class="skill-item">Sustainable Business Strategies</div>
+                            <div class="skill-item">Green Jobs</div>
+                            <div class="skill-item">Sustainable Systems</div>
+                            <div class="skill-item">Digital Sustainability</div>
+                        </div>
+                        <div class="skill-count">4 Business Skills</div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h3>Languages</h3>
-                    <ul>
-                        <li>English</li>
-                    </ul>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">🌍</div>
+                        <h3>Languages</h3>
+                    </div>
+                    <div class="skill-content">
+                        <div class="skill-list">
+                            <div class="skill-item">English (Fluent)</div>
+                        </div>
+                        <div class="skill-count">1 Language</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -848,6 +1051,18 @@
                                 <p>Shoot asteroids in space</p>
                                 <button class="select-game-btn">Play Now</button>
                             </div>
+                            <div class="game-card" data-game="snakesladders">
+                                <div class="game-icon">🐍🪜</div>
+                                <h4>Snakes & Ladders</h4>
+                                <p>Race to square 100 vs Computer</p>
+                                <button class="select-game-btn">Play Now</button>
+                            </div>
+                            <div class="game-card" data-game="ludo">
+                                <div class="game-icon">🎯</div>
+                                <h4>Ludo</h4>
+                                <p>Move all pieces home vs Computer</p>
+                                <button class="select-game-btn">Play Now</button>
+                            </div>
                         </div>
                     </div>
 
@@ -946,6 +1161,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="js/scripts.min.js"></script>
     <script src="js/multi-games.js"></script>
+    <script src="js/tech-games.js"></script>
     <script src="js/timeline-modal.js"></script>
     <script src="js/chatbot.js"></script>
 </body>
