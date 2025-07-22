@@ -255,6 +255,106 @@ class TechGamesManager {
                     explanation: "Java source files have the .java extension."
                 }
             ],
+            powershell: [
+                {
+                    question: "What is the correct command to list files and folders in PowerShell?",
+                    options: ["ls", "dir", "Get-ChildItem", "list"],
+                    correct: 2,
+                    explanation: "Get-ChildItem is the PowerShell cmdlet to list directory contents (ls and dir are aliases)."
+                },
+                {
+                    question: "Which command displays the current working directory?",
+                    options: ["pwd", "Get-Location", "whereami", "current-dir"],
+                    correct: 1,
+                    explanation: "Get-Location shows the current working directory (pwd is an alias)."
+                },
+                {
+                    question: "How do you get help for a PowerShell command?",
+                    options: ["help command", "Get-Help command", "man command", "command --help"],
+                    correct: 1,
+                    explanation: "Get-Help cmdlet provides detailed help information for PowerShell commands."
+                },
+                {
+                    question: "What symbol is used for variables in PowerShell?",
+                    options: ["#", "&", "$", "%"],
+                    correct: 2,
+                    explanation: "Variables in PowerShell are prefixed with the dollar sign ($)."
+                },
+                {
+                    question: "Which command creates a new directory?",
+                    options: ["mkdir", "New-Item -ItemType Directory", "md", "All of the above"],
+                    correct: 3,
+                    explanation: "All options work: mkdir and md are aliases for New-Item -ItemType Directory."
+                },
+                {
+                    question: "How do you pipe output from one command to another?",
+                    options: [">>", "|", "->", "=>"],
+                    correct: 1,
+                    explanation: "The pipe symbol (|) passes output from one cmdlet to another in PowerShell."
+                },
+                {
+                    question: "Which command stops a running process?",
+                    options: ["Stop-Process", "Kill-Process", "End-Process", "Terminate-Process"],
+                    correct: 0,
+                    explanation: "Stop-Process cmdlet terminates running processes in PowerShell."
+                },
+                {
+                    question: "What does 'Get-Command' do?",
+                    options: ["Shows command history", "Lists available commands", "Executes a command", "Creates a new command"],
+                    correct: 1,
+                    explanation: "Get-Command lists all available PowerShell commands and their sources."
+                }
+            ],
+            linux: [
+                {
+                    question: "Which command lists files and directories in Linux?",
+                    options: ["list", "ls", "dir", "show"],
+                    correct: 1,
+                    explanation: "The 'ls' command lists files and directories in Linux/Unix systems."
+                },
+                {
+                    question: "How do you change to the parent directory?",
+                    options: ["cd ..", "cd up", "cd parent", "cd -1"],
+                    correct: 0,
+                    explanation: "cd .. moves to the parent directory (.. represents parent directory)."
+                },
+                {
+                    question: "Which command shows the current working directory?",
+                    options: ["cwd", "pwd", "where", "current"],
+                    correct: 1,
+                    explanation: "pwd (print working directory) displays the current directory path."
+                },
+                {
+                    question: "How do you copy a file in Linux?",
+                    options: ["copy source dest", "cp source dest", "duplicate source dest", "clone source dest"],
+                    correct: 1,
+                    explanation: "The 'cp' command copies files or directories in Linux."
+                },
+                {
+                    question: "Which command removes a file?",
+                    options: ["delete", "remove", "rm", "del"],
+                    correct: 2,
+                    explanation: "The 'rm' command removes (deletes) files in Linux."
+                },
+                {
+                    question: "How do you display file contents?",
+                    options: ["show", "display", "cat", "view"],
+                    correct: 2,
+                    explanation: "The 'cat' command displays the contents of a file."
+                },
+                {
+                    question: "Which command changes file permissions?",
+                    options: ["chmod", "chown", "perm", "access"],
+                    correct: 0,
+                    explanation: "chmod (change mode) modifies file and directory permissions."
+                },
+                {
+                    question: "How do you search for text in files?",
+                    options: ["find", "search", "grep", "locate"],
+                    correct: 2,
+                    explanation: "grep searches for patterns/text within files in Linux."
+                }
+            ],
             verilog: [
                 {
                     question: "What keyword is used to define a module in Verilog?",
@@ -384,6 +484,20 @@ class TechGamesManager {
                                 <div class="difficulty-badge">Beginner</div>
                                 <button class="start-tech-game-btn">Start Learning</button>
                             </div>
+                            <div class="tech-game-card" data-game="powershell">
+                                <div class="tech-game-icon">💻</div>
+                                <h4>PowerShell Quiz</h4>
+                                <p>Master Windows PowerShell commands</p>
+                                <div class="difficulty-badge">Beginner</div>
+                                <button class="start-tech-game-btn">Start Learning</button>
+                            </div>
+                            <div class="tech-game-card" data-game="linux">
+                                <div class="tech-game-icon">🐧</div>
+                                <h4>Linux Commands</h4>
+                                <p>Learn essential Linux terminal commands</p>
+                                <div class="difficulty-badge">Beginner</div>
+                                <button class="start-tech-game-btn">Start Learning</button>
+                            </div>
                         </div>
                     </div>
                     <div id="techGamePlay" class="tech-game-play" style="display: none;">
@@ -496,7 +610,9 @@ class TechGamesManager {
             github: 'GitHub Commands Quiz',
             html: 'HTML Quiz',
             java: 'Java Quiz',
-            verilog: 'Verilog Quiz'
+            verilog: 'Verilog Quiz',
+            powershell: 'PowerShell Quiz',
+            linux: 'Linux Commands Quiz'
         };
         document.getElementById('currentGameTitle').textContent = titles[gameType];
 
