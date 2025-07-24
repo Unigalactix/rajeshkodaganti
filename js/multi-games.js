@@ -1577,7 +1577,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } else {
             document.getElementById('eta-game-container').innerHTML = `
-                <div style="text-align: center; color: #ff9800; padding: 40px;">
+                <div style="text-align: center; color: #64B5F6; padding: 40px;">
                     <h3>🔧 Game Not Ready</h3>
                     <p>Game initialization function not found.</p>
                     <button onclick="returnToKruraSelection()" style="

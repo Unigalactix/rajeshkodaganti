@@ -16,7 +16,7 @@
 
 .tech-games-modal-content {
     background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #333333 100%);
-    border: 2px solid #FF6900;
+    border: 2px solid #64B5F6;
     border-radius: 20px;
     width: 95%;
     max-width: 900px;
@@ -32,7 +32,7 @@
     backdrop-filter: blur(10px);
     border-radius: 20px 20px 0 0;
     padding: 20px 30px;
-    border-bottom: 2px solid #FF6900;
+    border-bottom: 2px solid #64B5F6;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,8 +47,8 @@
 
 .tech-games-close-btn {
     background: rgba(255, 105, 0, 0.2);
-    border: 2px solid #FF6900;
-    color: #FF6900;
+    border: 2px solid #64B5F6;
+    color: #64B5F6;
     font-size: 24px;
     width: 40px;
     height: 40px;
@@ -62,7 +62,7 @@
 }
 
 .tech-games-close-btn:hover {
-    background: #FF6900;
+    background: #64B5F6;
     color: #000000;
     transform: scale(1.1);
 }
@@ -89,7 +89,7 @@
 
 .tech-game-card {
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    border: 2px solid #FF6900;
+    border: 2px solid #64B5F6;
     border-radius: 15px;
     padding: 25px;
     text-align: center;
@@ -103,7 +103,7 @@
 .tech-game-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 40px rgba(255, 105, 0, 0.3);
-    border-color: #ff8533;
+    border-color: #42A5F5;
     background: linear-gradient(135deg, #2d2d2d 0%, #404040 100%);
 }
 
@@ -128,7 +128,7 @@
 }
 
 .difficulty-badge {
-    background: linear-gradient(45deg, #FF6900, #ff8533);
+    background: linear-gradient(45deg, #64B5F6, #42A5F5);
     color: #ffffff;
     padding: 5px 12px;
     border-radius: 20px;
@@ -140,7 +140,7 @@
 }
 
 .start-tech-game-btn {
-    background: linear-gradient(45deg, #FF6900, #ff8533);
+    background: linear-gradient(45deg, #64B5F6, #42A5F5);
     color: #ffffff;
     border: none;
     padding: 12px 25px;
@@ -156,7 +156,7 @@
 .start-tech-game-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(255, 105, 0, 0.4);
-    background: linear-gradient(45deg, #ff8533, #ffaa66);
+    background: linear-gradient(45deg, #42A5F5, #90CAF9);
 }
 
 /* Game Play Styles */
@@ -170,7 +170,7 @@
     align-items: center;
     margin-bottom: 30px;
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    border: 2px solid #FF6900;
+    border: 2px solid #64B5F6;
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 8px 32px rgba(255, 105, 0, 0.1);
@@ -190,17 +190,17 @@
 
 .game-stats span {
     background: rgba(255, 105, 0, 0.2);
-    border: 1px solid #FF6900;
+    border: 1px solid #64B5F6;
     padding: 5px 12px;
     border-radius: 20px;
     font-weight: 600;
-    color: #FF6900;
+    color: #64B5F6;
 }
 
 .back-btn {
     background: rgba(255, 105, 0, 0.2);
-    color: #FF6900;
-    border: 2px solid #FF6900;
+    color: #64B5F6;
+    border: 2px solid #64B5F6;
     padding: 10px 20px;
     border-radius: 20px;
     cursor: pointer;
@@ -210,7 +210,7 @@
 }
 
 .back-btn:hover {
-    background: #FF6900;
+    background: #64B5F6;
     color: #000000;
     transform: translateY(-2px);
 }
@@ -221,7 +221,7 @@
 
 .question-card {
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    border: 2px solid #FF6900;
+    border: 2px solid #64B5F6;
     border-radius: 15px;
     padding: 30px;
     box-shadow: 0 8px 32px rgba(255, 105, 0, 0.1);
@@ -255,7 +255,7 @@
 
 .option-btn:hover:not(:disabled) {
     background: rgba(255, 105, 0, 0.1);
-    border-color: #FF6900;
+    border-color: #64B5F6;
     transform: translateX(5px);
 }
 
@@ -280,7 +280,7 @@
     border-radius: 15px;
     padding: 20px;
     margin-top: 20px;
-    border: 2px solid #FF6900;
+    border: 2px solid #64B5F6;
     box-shadow: 0 8px 32px rgba(255, 105, 0, 0.1);
 }
 
@@ -317,7 +317,7 @@
 }
 
 .next-btn {
-    background: linear-gradient(45deg, #FF6900, #ff8533);
+    background: linear-gradient(45deg, #64B5F6, #42A5F5);
     color: #ffffff;
     border: none;
     padding: 12px 25px;
@@ -332,7 +332,7 @@
 .next-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(255, 105, 0, 0.5);
-    background: linear-gradient(45deg, #ff8533, #ffaa66);
+    background: linear-gradient(45deg, #42A5F5, #90CAF9);
 }
 
 .progress-bar {
@@ -344,7 +344,7 @@
 }
 
 .progress-fill {
-    background: linear-gradient(45deg, #FF6900, #ff8533);
+    background: linear-gradient(45deg, #64B5F6, #42A5F5);
     height: 100%;
     border-radius: 4px;
     transition: width 0.5s ease;
@@ -358,7 +358,7 @@
 
 .results-container {
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    border: 2px solid #FF6900;
+    border: 2px solid #64B5F6;
     border-radius: 20px;
     padding: 40px;
     box-shadow: 0 15px 40px rgba(255, 105, 0, 0.2);
@@ -395,7 +395,7 @@
     display: block;
     font-size: 2em;
     font-weight: 700;
-    color: #FF6900;
+    color: #64B5F6;
     margin-bottom: 5px;
 }
 
@@ -428,15 +428,15 @@
 }
 
 .play-again-btn {
-    background: linear-gradient(45deg, #FF6900, #ff8533);
+    background: linear-gradient(45deg, #64B5F6, #42A5F5);
     color: #ffffff;
     box-shadow: 0 6px 20px rgba(255, 105, 0, 0.3);
 }
 
 .back-to-games-btn {
     background: rgba(255, 105, 0, 0.1);
-    color: #FF6900;
-    border: 2px solid #FF6900;
+    color: #64B5F6;
+    border: 2px solid #64B5F6;
 }
 
 .play-again-btn:hover, .back-to-games-btn:hover {
@@ -445,11 +445,11 @@
 
 .play-again-btn:hover {
     box-shadow: 0 10px 25px rgba(255, 105, 0, 0.5);
-    background: linear-gradient(45deg, #ff8533, #ffaa66);
+    background: linear-gradient(45deg, #42A5F5, #90CAF9);
 }
 
 .back-to-games-btn:hover {
-    background: #FF6900;
+    background: #64B5F6;
     color: #000000;
     box-shadow: 0 10px 25px rgba(255, 105, 0, 0.3);
 }
