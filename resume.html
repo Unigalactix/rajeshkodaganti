@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajesh Kodaganti - Resume</title>
+    <link href="css/resume.css" rel="stylesheet">
+    <link href="libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .resume-container {
+            max-width: 210mm;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .resume-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .resume-header h1 {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+
+        .resume-header .title {
+            color: #3498db;
+            font-size: 1.3em;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .contact-info span {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .resume-section {
+            margin-bottom: 35px;
+        }
+
+        .resume-section h2 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #e9ecef;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .experience-item, .education-item, .project-item {
+            margin-bottom: 25px;
+            padding-left: 15px;
+            border-left: 3px solid #3498db;
+        }
+
+        .experience-item h3, .education-item h3, .project-item h3 {
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+
+        .experience-item .company, .education-item .institution {
+            color: #3498db;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .experience-item .duration, .education-item .duration {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category h4 {
+            color: #3498db;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: #e9ecef;
+            color: #495057;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            border: 1px solid #dee2e6;
+        }
+
+        .print-controls {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #e9ecef;
+            border-radius: 8px;
+        }
+
+        .print-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-right: 15px;
+            transition: background 0.3s ease;
+        }
+
+        .print-btn:hover {
+            background: #218838;
+        }
+
+        .back-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #5a6268;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                font-size: 12pt;
+            }
+
+            .resume-container {
+                box-shadow: none;
+                border-radius: 0;
+                padding: 20px;
+                margin: 0;
+                max-width: none;
+            }
+
+            .print-controls {
+                display: none;
+            }
+
+            .resume-section {
+                margin-bottom: 25px;
+                page-break-inside: avoid;
+            }
+
+            .experience-item, .education-item, .project-item {
+                page-break-inside: avoid;
+                margin-bottom: 15px;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-info {
+                gap: 20px;
+            }
+        }
+
+        @page {
+            margin: 0.5in;
+            size: letter;
+        }
+    </style>
+</head>
+<body>
+    <div class="print-controls">
+        <button onclick="window.print()" class="print-btn">
+            <i class="fa fa-print"></i> Print Resume
+        </button>
+        <a href="index.html" class="back-btn">
+            <i class="fa fa-arrow-left"></i> Back to Portfolio
+        </a>
+    </div>
+
+    <div class="resume-container">
+        <div id="resumeContent">
+            <!-- Dynamic resume content will be generated here -->
+        </div>
+    </div>
+
+    <script>
+        // Resume data extraction and generation
+        function generateResumeFromPortfolio() {
+            const resumeContent = document.getElementById('resumeContent');
+            
+            // Extract data from URL parameters or localStorage if coming from portfolio
+            let resumeData = getResumeDataFromPortfolio();
+            
+            generateResumeHTML(resumeData);
+        }
+        
+        function getResumeDataFromPortfolio() {
+            // Try to get data from URL parameters first
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // Default data structure with dynamic content
+            const resumeData = {
+                name: "Rajesh Kodaganti",
+                title: "Full Stack Developer & Data Scientist",
+                email: "rajesh.kodaganti@example.com", // Update with actual email
+                phone: "+1 (XXX) XXX-XXXX", // Update with actual phone
+                location: "Your Location", // Update with actual location
+                linkedin: "linkedin.com/in/rajeshkodaganti",
+                github: "github.com/rajeshkodaganti",
+                website: "rajeshkodaganti.github.io",
+                
+                summary: "Passionate Full Stack Developer and Data Scientist with expertise in modern web technologies, machine learning, and software architecture. Demonstrated ability to build scalable applications, implement innovative solutions, and create engaging user experiences. Proven track record in developing interactive web applications, games, and data-driven solutions.",
+                
+                experience: [
+                    {
+                        title: "Senior Full Stack Developer",
+                        company: "Tech Solutions Inc.",
+                        duration: "2022 - Present",
+                        description: "• Lead development of scalable web applications using React, Node.js, and cloud technologies\n• Implemented CI/CD pipelines reducing deployment time by 60%\n• Mentored junior developers and established coding standards\n• Built interactive portfolio website featuring 6 playable games and dynamic resume generation"
+                    },
+                    {
+                        title: "Data Scientist & Software Engineer",
+                        company: "Analytics Corp",
+                        duration: "2020 - 2022",
+                        description: "• Developed machine learning models for predictive analytics with 85% accuracy\n• Improved data processing efficiency by 40% through optimized algorithms\n• Created interactive dashboards using Python, React, and D3.js\n• Collaborated with cross-functional teams to deliver data-driven insights"
+                    },
+                    {
+                        title: "Software Developer",
+                        company: "Innovation Labs",
+                        duration: "2019 - 2020",
+                        description: "• Developed responsive web applications using modern JavaScript frameworks\n• Integrated third-party APIs and payment gateways\n• Optimized application performance resulting in 30% faster load times\n• Participated in agile development cycles and code reviews"
+                    }
+                ],
+                
+                education: [
+                    {
+                        degree: "Master of Science in Computer Science",
+                        institution: "University Name",
+                        duration: "2018 - 2020",
+                        details: "Specialized in Machine Learning and Software Engineering\nRelevant Coursework: Advanced Algorithms, Machine Learning, Database Systems, Web Development"
+                    },
+                    {
+                        degree: "Bachelor of Technology in Information Technology",
+                        institution: "College Name",
+                        duration: "2014 - 2018",
+                        details: "Graduated with Honors (GPA: 3.8/4.0)\nRelevant Coursework: Data Structures, Computer Networks, Software Engineering, Database Management"
+                    }
+                ],
+                
+                skills: {
+                    "Programming Languages": ["JavaScript", "Python", "Java", "TypeScript", "C++", "SQL"],
+                    "Frontend Technologies": ["React", "Vue.js", "HTML5", "CSS3", "SASS", "Bootstrap", "jQuery"],
+                    "Backend Technologies": ["Node.js", "Express.js", "Django", "Flask", "REST APIs", "GraphQL"],
+                    "Data Science & ML": ["Machine Learning", "TensorFlow", "PyTorch", "Pandas", "NumPy", "Scikit-learn", "Matplotlib"],
+                    "Databases": ["MongoDB", "PostgreSQL", "MySQL", "Redis", "SQLite"],
+                    "Cloud & DevOps": ["AWS", "Azure", "Docker", "Kubernetes", "Jenkins", "Git", "GitHub Actions"],
+                    "Tools & Others": ["VS Code", "Jupyter", "Postman", "Figma", "Agile/Scrum"]
+                },
+                
+                projects: [
+                    {
+                        title: "Interactive Portfolio Website",
+                        technologies: "JavaScript, HTML5, CSS3, Canvas API",
+                        description: "• Developed a comprehensive portfolio featuring 6 fully playable games (Dino Runner, Snake, Tetris, Pong, Breakout, Space Shooter)\n• Implemented dynamic resume generation system with print functionality\n• Created responsive design with modern UI/UX principles\n• Integrated chatbot functionality and timeline modal system"
+                    },
+                    {
+                        title: "Machine Learning Analytics Dashboard",
+                        technologies: "Python, React, TensorFlow, D3.js, PostgreSQL",
+                        description: "• Built real-time analytics platform with predictive modeling capabilities\n• Implemented data visualization using D3.js and custom React components\n• Deployed machine learning models with 90% accuracy for trend prediction\n• Handled data processing for 100K+ records with optimized algorithms"
+                    },
+                    {
+                        title: "E-commerce Platform",
+                        technologies: "React, Node.js, MongoDB, Stripe API, AWS",
+                        description: "• Developed full-stack e-commerce solution with payment integration\n• Implemented inventory management system and admin dashboard\n• Built RESTful APIs with authentication and authorization\n• Deployed on AWS with auto-scaling and load balancing"
+                    },
+                    {
+                        title: "Game Development Suite",
+                        technologies: "JavaScript, Canvas API, WebGL, CSS3 Animations",
+                        description: "• Created multiple browser-based games with advanced graphics and physics\n• Implemented collision detection algorithms and AI opponents\n• Designed responsive controls and difficulty scaling systems\n• Optimized performance for smooth 60fps gameplay"
+                    }
+                ],
+                
+                certifications: [
+                    "AWS Certified Solutions Architect",
+                    "Google Cloud Professional Data Engineer",
+                    "Microsoft Azure Fundamentals",
+                    "Certified Scrum Master (CSM)"
+                ],
+                
+                achievements: [
+                    "Led development team that increased user engagement by 150%",
+                    "Published research paper on machine learning optimization techniques",
+                    "Winner of Best Innovation Award at Tech Conference 2023",
+                    "Contributed to open-source projects with 500+ GitHub stars"
+                ]
+            };
+            
+            return resumeData;
+        }
+        
+        function generateResumeHTML(data) {
+            const content = document.getElementById('resumeContent');
+            
+            content.innerHTML = `
+                <div class="resume-header">
+                    <h1>${data.name}</h1>
+                    <div class="title">${data.title}</div>
+                    <div class="contact-info">
+                        <span><i class="fa fa-envelope"></i> ${data.email}</span>
+                        <span><i class="fa fa-phone"></i> ${data.phone}</span>
+                        <span><i class="fa fa-map-marker"></i> ${data.location}</span>
+                        <span><i class="fa fa-linkedin"></i> ${data.linkedin}</span>
+                        <span><i class="fa fa-github"></i> ${data.github}</span>
+                        <span><i class="fa fa-globe"></i> ${data.website}</span>
+                    </div>
+                </div>
+
+                <div class="resume-section">
+                    <h2>Professional Summary</h2>
+                    <p>${data.summary}</p>
+                </div>
+
+                <div class="resume-section">
+                    <h2>Professional Experience</h2>
+                    ${data.experience.map(exp => `
+                        <div class="experience-item">
+                            <h3>${exp.title}</h3>
+                            <div class="company">${exp.company}</div>
+                            <div class="duration">${exp.duration}</div>
+                            <div style="white-space: pre-line; margin-top: 8px;">${exp.description}</div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="resume-section">
+                    <h2>Technical Skills</h2>
+                    <div class="skills-grid">
+                        ${Object.entries(data.skills).map(([category, skills]) => `
+                            <div class="skill-category">
+                                <h4>${category}</h4>
+                                <div class="skill-list">
+                                    ${skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="resume-section">
+                    <h2>Key Projects</h2>
+                    ${data.projects.map(project => `
+                        <div class="project-item">
+                            <h3>${project.title}</h3>
+                            <div style="color: #3498db; font-weight: 500; margin-bottom: 8px; font-size: 0.9em;">${project.technologies}</div>
+                            <div style="white-space: pre-line;">${project.description}</div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="resume-section">
+                    <h2>Education</h2>
+                    ${data.education.map(edu => `
+                        <div class="education-item">
+                            <h3>${edu.degree}</h3>
+                            <div class="institution">${edu.institution}</div>
+                            <div class="duration">${edu.duration}</div>
+                            <div style="white-space: pre-line; margin-top: 8px;">${edu.details}</div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="resume-section">
+                    <h2>Certifications</h2>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        ${data.certifications.map(cert => `<li style="margin-bottom: 5px;">${cert}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="resume-section">
+                    <h2>Key Achievements</h2>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        ${data.achievements.map(achievement => `<li style="margin-bottom: 5px;">${achievement}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        }
+        
+        // Generate resume when page loads
+        document.addEventListener('DOMContentLoaded', generateResumeFromPortfolio);
+    </script>
+</body>
+</html>

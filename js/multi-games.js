@@ -528,18 +528,32 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // SNAKE GAME
     function initSnakeGame() {
+        const speedMultiplier = getDifficultyMultiplier();
         const gridSize = 20;
         gameData = {
             snake: [{ x: 200, y: 200 }],
             direction: { x: gridSize, y: 0 },
             food: { x: 300, y: 300 },
-            gridSize: gridSize
+            gridSize: gridSize,
+            moveTime: 0,
+            moveInterval: Math.max(80, 200 / speedMultiplier) // Faster for higher difficulty
         };
         generateFood();
     }
     
     function updateSnakeGame() {
         const { snake, direction, food, gridSize } = gameData;
+        
+        // Update movement timer
+        gameData.moveTime += 16; // Assuming 60fps
+        
+        // Only move when interval is reached
+        if (gameData.moveTime < gameData.moveInterval) {
+            return;
+        }
+        
+        gameData.moveTime = 0;
+        
         const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
         
         // Check wall collision
@@ -573,33 +587,64 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.fillStyle = config.colors.bg;
         ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
         
-        // Draw snake
+        // Draw snake body
         ctx.fillStyle = config.colors.snake;
-        snake.forEach(segment => {
-            ctx.fillRect(segment.x, segment.y, gameData.gridSize, gameData.gridSize);
+        snake.forEach((segment, index) => {
+            if (index === 0) {
+                // Draw head with different color
+                ctx.fillStyle = '#0a0'; // Brighter green for head
+                ctx.fillRect(segment.x, segment.y, gameData.gridSize, gameData.gridSize);
+                // Add eyes to the head
+                ctx.fillStyle = '#000';
+                ctx.fillRect(segment.x + 4, segment.y + 4, 3, 3);
+                ctx.fillRect(segment.x + 13, segment.y + 4, 3, 3);
+            } else {
+                // Draw body
+                ctx.fillStyle = config.colors.snake;
+                ctx.fillRect(segment.x, segment.y, gameData.gridSize, gameData.gridSize);
+                // Add border to body segments
+                ctx.strokeStyle = '#080';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(segment.x, segment.y, gameData.gridSize, gameData.gridSize);
+            }
         });
         
-        // Draw food
+        // Draw food with pulsing effect
+        const pulseSize = Math.sin(Date.now() * 0.01) * 2 + gameData.gridSize;
+        const offset = (gameData.gridSize - pulseSize) / 2;
         ctx.fillStyle = config.colors.food;
-        ctx.fillRect(food.x, food.y, gameData.gridSize, gameData.gridSize);
+        ctx.fillRect(food.x + offset, food.y + offset, pulseSize, pulseSize);
     }
     
     function generateFood() {
         const gridSize = gameData.gridSize;
-        gameData.food = {
-            x: Math.floor(Math.random() * (gameCanvas.width / gridSize)) * gridSize,
-            y: Math.floor(Math.random() * (gameCanvas.height / gridSize)) * gridSize
-        };
+        let newFood;
+        let attempts = 0;
+        
+        do {
+            newFood = {
+                x: Math.floor(Math.random() * (gameCanvas.width / gridSize)) * gridSize,
+                y: Math.floor(Math.random() * (gameCanvas.height / gridSize)) * gridSize
+            };
+            attempts++;
+        } while (
+            attempts < 100 && 
+            gameData.snake && 
+            gameData.snake.some(segment => segment.x === newFood.x && segment.y === newFood.y)
+        );
+        
+        gameData.food = newFood;
     }
     
     // TETRIS GAME
     function initTetrisGame() {
+        const speedMultiplier = getDifficultyMultiplier();
         gameData = {
             board: Array(20).fill().map(() => Array(10).fill(0)),
             currentPiece: null,
             nextPiece: null,
             dropTime: 0,
-            dropInterval: 1000
+            dropInterval: Math.max(200, 1000 / speedMultiplier) // Faster drop for higher difficulty
         };
         spawnPiece();
     }
@@ -632,26 +677,41 @@ document.addEventListener('DOMContentLoaded', function() {
         // Draw board
         const blockSize = Math.min(gameCanvas.width / 10, gameCanvas.height / 20);
         
+        // Helper function to draw a block with border
+        function drawBlock(x, y, color, alpha = 1) {
+            ctx.globalAlpha = alpha;
+            ctx.fillStyle = color;
+            ctx.fillRect(x * blockSize, y * blockSize, blockSize, blockSize);
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(x * blockSize, y * blockSize, blockSize, blockSize);
+            ctx.globalAlpha = 1;
+        }
+        
+        // Draw placed blocks
         for (let y = 0; y < board.length; y++) {
             for (let x = 0; x < board[y].length; x++) {
                 if (board[y][x]) {
-                    ctx.fillStyle = config.colors.blocks[board[y][x] - 1];
-                    ctx.fillRect(x * blockSize, y * blockSize, blockSize, blockSize);
+                    drawBlock(x, y, config.colors.blocks[board[y][x] - 1]);
                 }
             }
         }
         
-        // Draw current piece
+        // Draw current piece with slight transparency for better visibility
         if (currentPiece) {
-            ctx.fillStyle = config.colors.blocks[currentPiece.color];
             currentPiece.shape.forEach((row, y) => {
                 row.forEach((cell, x) => {
                     if (cell) {
-                        ctx.fillRect((currentPiece.x + x) * blockSize, (currentPiece.y + y) * blockSize, blockSize, blockSize);
+                        drawBlock(currentPiece.x + x, currentPiece.y + y, config.colors.blocks[currentPiece.color], 0.9);
                     }
                 });
             });
         }
+        
+        // Draw game area border
+        ctx.strokeStyle = '#666';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(0, 0, blockSize * 10, blockSize * 20);
     }
     
     // PONG GAME
@@ -662,7 +722,8 @@ document.addEventListener('DOMContentLoaded', function() {
             rightPaddle: { x: gameCanvas.width - 30, y: gameCanvas.height / 2 - 50, width: 10, height: 100, speed: 5 * speedMultiplier },
             ball: { x: gameCanvas.width / 2, y: gameCanvas.height / 2, dx: 5 * speedMultiplier, dy: 3 * speedMultiplier, radius: 8 },
             leftScore: 0,
-            rightScore: 0
+            rightScore: 0,
+            aiDifficulty: speedMultiplier // Store AI difficulty
         };
     }
     
@@ -700,12 +761,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         playerScore = gameData.leftScore * 100;
         
-        // AI for right paddle
+        // AI for right paddle with difficulty-based behavior
         const paddleCenter = rightPaddle.y + rightPaddle.height / 2;
-        if (paddleCenter < ball.y - 35) {
-            rightPaddle.y += rightPaddle.speed;
-        } else if (paddleCenter > ball.y + 35) {
-            rightPaddle.y -= rightPaddle.speed;
+        const aiReactionZone = 35 / gameData.aiDifficulty; // Smaller zone = harder AI
+        const aiSpeed = rightPaddle.speed * (0.7 + (gameData.aiDifficulty * 0.2)); // Faster on higher difficulty
+        
+        if (paddleCenter < ball.y - aiReactionZone) {
+            rightPaddle.y = Math.min(gameCanvas.height - rightPaddle.height, rightPaddle.y + aiSpeed);
+        } else if (paddleCenter > ball.y + aiReactionZone) {
+            rightPaddle.y = Math.max(0, rightPaddle.y - aiSpeed);
         }
         
         // Check win condition
@@ -957,6 +1021,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function gameLoop() {
         if (!gameRunning) return;
         
+        // Handle continuous input for smooth movement
+        handleContinuousInput();
+        
         // Update current game
         switch(currentGame) {
             case 'dino':
@@ -1067,46 +1134,70 @@ document.addEventListener('DOMContentLoaded', function() {
                 
             case 'snake':
                 const gridSize = gameData.gridSize;
+                const currentDirection = gameData.direction;
+                let newDirection = null;
+                
                 switch(e.key) {
-                    case 'ArrowUp': gameData.direction = {x: 0, y: -gridSize}; break;
-                    case 'ArrowDown': gameData.direction = {x: 0, y: gridSize}; break;
-                    case 'ArrowLeft': gameData.direction = {x: -gridSize, y: 0}; break;
-                    case 'ArrowRight': gameData.direction = {x: gridSize, y: 0}; break;
+                    case 'ArrowUp': 
+                        // Prevent reversing into self
+                        if (currentDirection.y === 0) {
+                            newDirection = {x: 0, y: -gridSize};
+                        }
+                        break;
+                    case 'ArrowDown': 
+                        if (currentDirection.y === 0) {
+                            newDirection = {x: 0, y: gridSize};
+                        }
+                        break;
+                    case 'ArrowLeft': 
+                        if (currentDirection.x === 0) {
+                            newDirection = {x: -gridSize, y: 0};
+                        }
+                        break;
+                    case 'ArrowRight': 
+                        if (currentDirection.x === 0) {
+                            newDirection = {x: gridSize, y: 0};
+                        }
+                        break;
+                }
+                
+                if (newDirection) {
+                    gameData.direction = newDirection;
+                }
+                break;
+                
+            case 'tetris':
+                switch(e.key) {
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        movePiece(-1, 0);
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        movePiece(1, 0);
+                        break;
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        movePiece(0, 1);
+                        break;
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        rotatePiece();
+                        break;
                 }
                 break;
                 
             case 'pong':
-                // Left paddle controls
-                if (e.key === 'ArrowUp') {
-                    gameData.leftPaddle.y = Math.max(0, gameData.leftPaddle.y - 20);
-                }
-                if (e.key === 'ArrowDown') {
-                    gameData.leftPaddle.y = Math.min(gameCanvas.height - gameData.leftPaddle.height, gameData.leftPaddle.y + 20);
-                }
+                // Continuous movement is now handled in handleContinuousInput()
                 break;
                 
             case 'breakout':
-                if (e.key === 'ArrowLeft') {
-                    gameData.paddle.x = Math.max(0, gameData.paddle.x - gameData.paddle.speed);
-                }
-                if (e.key === 'ArrowRight') {
-                    gameData.paddle.x = Math.min(gameCanvas.width - gameData.paddle.width, gameData.paddle.x + gameData.paddle.speed);
-                }
+                // Continuous movement is now handled in handleContinuousInput()
                 break;
                 
             case 'space':
-                if (e.key === 'ArrowLeft') {
-                    gameData.player.x = Math.max(0, gameData.player.x - gameData.player.speed);
-                }
-                if (e.key === 'ArrowRight') {
-                    gameData.player.x = Math.min(gameCanvas.width - gameData.player.width, gameData.player.x + gameData.player.speed);
-                }
-                if (e.key === 'ArrowUp') {
-                    gameData.player.y = Math.max(0, gameData.player.y - gameData.player.speed);
-                }
-                if (e.key === 'ArrowDown') {
-                    gameData.player.y = Math.min(gameCanvas.height - gameData.player.height, gameData.player.y + gameData.player.speed);
-                }
+                // Movement is now handled in handleContinuousInput()
+                // Only handle shooting here
                 if (e.key === ' ') {
                     e.preventDefault();
                     gameData.bullets.push({
@@ -1123,6 +1214,71 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('keyup', (e) => {
         keys[e.key] = false;
     });
+    
+    // MOUSE/CLICK CONTROLS
+    gameCanvas?.addEventListener('click', (e) => {
+        if (!gameRunning) return;
+        
+        switch(currentGame) {
+            case 'dino':
+                // Click to jump
+                if (!gameData.dino.jumping) {
+                    gameData.dino.jumping = true;
+                    gameData.dino.velocityY = 15;
+                }
+                break;
+                
+            case 'space':
+                // Click to shoot
+                gameData.bullets.push({
+                    x: gameData.player.x + gameData.player.width / 2 - 2,
+                    y: gameData.player.y,
+                    width: 4,
+                    height: 10
+                });
+                break;
+        }
+    });
+    
+    // CONTINUOUS KEY HANDLING for smooth movement
+    function handleContinuousInput() {
+        if (!gameRunning) return;
+        
+        switch(currentGame) {
+            case 'breakout':
+                if (keys['ArrowLeft']) {
+                    gameData.paddle.x = Math.max(0, gameData.paddle.x - gameData.paddle.speed);
+                }
+                if (keys['ArrowRight']) {
+                    gameData.paddle.x = Math.min(gameCanvas.width - gameData.paddle.width, gameData.paddle.x + gameData.paddle.speed);
+                }
+                break;
+                
+            case 'space':
+                if (keys['ArrowLeft']) {
+                    gameData.player.x = Math.max(0, gameData.player.x - gameData.player.speed);
+                }
+                if (keys['ArrowRight']) {
+                    gameData.player.x = Math.min(gameCanvas.width - gameData.player.width, gameData.player.x + gameData.player.speed);
+                }
+                if (keys['ArrowUp']) {
+                    gameData.player.y = Math.max(0, gameData.player.y - gameData.player.speed);
+                }
+                if (keys['ArrowDown']) {
+                    gameData.player.y = Math.min(gameCanvas.height - gameData.player.height, gameData.player.y + gameData.player.speed);
+                }
+                break;
+                
+            case 'pong':
+                if (keys['ArrowUp']) {
+                    gameData.leftPaddle.y = Math.max(0, gameData.leftPaddle.y - gameData.leftPaddle.speed);
+                }
+                if (keys['ArrowDown']) {
+                    gameData.leftPaddle.y = Math.min(gameCanvas.height - gameData.leftPaddle.height, gameData.leftPaddle.y + gameData.leftPaddle.speed);
+                }
+                break;
+        }
+    }
     
     // ADDITIONAL HELPER FUNCTIONS
     function resetBall() {
@@ -1163,6 +1319,30 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             gameData.currentPiece.x -= dx;
             gameData.currentPiece.y -= dy;
+            return false;
+        }
+    }
+    
+    function rotatePiece() {
+        const { currentPiece } = gameData;
+        const originalShape = currentPiece.shape;
+        
+        // Rotate the piece 90 degrees clockwise
+        const rotated = [];
+        for (let i = 0; i < originalShape[0].length; i++) {
+            rotated[i] = [];
+            for (let j = originalShape.length - 1; j >= 0; j--) {
+                rotated[i][originalShape.length - 1 - j] = originalShape[j][i];
+            }
+        }
+        
+        // Test if rotation is valid
+        currentPiece.shape = rotated;
+        if (isValidMove()) {
+            return true;
+        } else {
+            // Revert to original shape if rotation is invalid
+            currentPiece.shape = originalShape;
             return false;
         }
     }
@@ -1419,180 +1599,58 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
         
-        // Load ETA game CSS if not already loaded
-        if (!document.querySelector('link[href*="eta-game.css"]')) {
-            const cssLink = document.createElement('link');
-            cssLink.rel = 'stylesheet';
-            cssLink.href = 'css/eta-game.css';
-            document.head.appendChild(cssLink);
-        }
-        
-        // Load ETA game JS if not already loaded
-        if (!window.etaGame && !document.querySelector('script[src*="eta-game.js"]')) {
-            const script = document.createElement('script');
-            script.src = 'js/eta-game.js';
-            script.onload = function() {
-                setTimeout(initializeETAGame, 800); // Small delay for dramatic effect
-            };
-            script.onerror = function() {
-                etaContainer.innerHTML = `
-                    <div style="text-align: center; color: #ff6b6b; padding: 40px;">
-                        <h3>⚠️ Loading Error</h3>
-                        <p>Unable to load ETA game. Please try again.</p>
-                        <button onclick="returnToKruraSelection()" style="
-                            background: #9b59b6;
-                            color: white;
-                            border: none;
-                            padding: 12px 20px;
-                            border-radius: 20px;
-                            cursor: pointer;
-                            margin-top: 15px;
-                        ">← Back to Games</button>
-                    </div>
-                `;
-            };
-            document.head.appendChild(script);
-        } else if (window.etaGame) {
-            setTimeout(initializeETAGame, 500);
-        } else {
-            // Script is loading, wait for it
-            let attempts = 0;
-            const checkForGame = setInterval(() => {
-                attempts++;
-                if (window.etaGame) {
-                    clearInterval(checkForGame);
-                    setTimeout(initializeETAGame, 300);
-                } else if (attempts > 50) { // 5 seconds timeout
-                    clearInterval(checkForGame);
-                    etaContainer.innerHTML = `
-                        <div style="text-align: center; color: #ff6b6b; padding: 40px;">
-                            <h3>⏰ Timeout</h3>
-                            <p>Game loading took too long. Please try again.</p>
-                            <button onclick="returnToKruraSelection()" style="
-                                background: #9b59b6;
-                                color: white;
-                                border: none;
-                                padding: 12px 20px;
-                                border-radius: 20px;
-                                cursor: pointer;
-                                margin-top: 15px;
-                            ">← Back to Games</button>
-                        </div>
-                    `;
-                }
-            }, 100);
-        }
+        // Show simple message instead of loading ETA game files (files removed)
+        etaContainer.innerHTML = `
+            <div style="text-align: center; color: #ffd700; padding: 40px;">
+                <div style="font-size: 48px; margin-bottom: 20px;">🚧</div>
+                <h3>ETA: Echoes of Rebirth</h3>
+                <p style="color: #ccc; margin: 15px 0;">This advanced narrative RPG is currently in development.</p>
+                <p style="color: #999; font-size: 14px;">Check back soon for the full gaming experience!</p>
+                <button onclick="returnToKruraSelection()" style="
+                    background: #9b59b6;
+                    color: white;
+                    border: none;
+                    padding: 12px 20px;
+                    border-radius: 20px;
+                    cursor: pointer;
+                    margin-top: 15px;
+                ">← Back to Games</button>
+            </div>
+        `;
     };
     
-    function initializeETAGame() {
-        // Hide selection screen and show game with smooth transition
+    // ETA game is removed - show placeholder instead
+    window.startETAGame = function() {
         document.getElementById('krura-game-selection').style.display = 'none';
         document.getElementById('eta-game-container').style.display = 'block';
         document.getElementById('eta-back-controls').style.display = 'block';
         
-        // Clear loading indicator
-        document.getElementById('eta-game-container').innerHTML = '';
-        
-        // Initialize and start the game
-        if (typeof initETAGame === 'function') {
-            try {
-                initETAGame();
-                
-                // Add welcome message overlay
-                setTimeout(() => {
-                    const gameContainer = document.getElementById('eta-game-container');
-                    if (gameContainer && !gameContainer.querySelector('.eta-welcome-overlay')) {
-                        const welcomeOverlay = document.createElement('div');
-                        welcomeOverlay.className = 'eta-welcome-overlay';
-                        welcomeOverlay.innerHTML = `
-                            <div style="
-                                position: absolute;
-                                top: 20px;
-                                right: 20px;
-                                background: rgba(0, 0, 0, 0.8);
-                                color: #ffd700;
-                                padding: 15px 20px;
-                                border-radius: 15px;
-                                border: 1px solid rgba(255, 215, 0, 0.3);
-                                font-size: 14px;
-                                max-width: 300px;
-                                animation: slideInRight 1s ease-out;
-                                z-index: 1000;
-                            ">
-                                <h4 style="margin: 0 0 8px 0; color: #ffd700;">🌙 Welcome to ETA!</h4>
-                                <p style="margin: 0; line-height: 1.4; color: #e1bee7;">
-                                    Your journey through countless lives begins now. 
-                                    Make choices wisely - they echo through eternity.
-                                </p>
-                                <button onclick="this.parentElement.parentElement.remove()" style="
-                                    background: transparent;
-                                    color: #ffd700;
-                                    border: 1px solid rgba(255, 215, 0, 0.5);
-                                    padding: 8px 15px;
-                                    border-radius: 12px;
-                                    cursor: pointer;
-                                    font-size: 12px;
-                                    margin-top: 10px;
-                                    transition: all 0.2s ease;
-                                " onmouseover="this.style.background='rgba(255, 215, 0, 0.1)'" 
-                                   onmouseout="this.style.background='transparent'">
-                                    Begin Adventure ✨
-                                </button>
-                            </div>
-                            <style>
-                                @keyframes slideInRight {
-                                    from { transform: translateX(100%); opacity: 0; }
-                                    to { transform: translateX(0); opacity: 1; }
-                                }
-                            </style>
-                        `;
-                        gameContainer.appendChild(welcomeOverlay);
-                        
-                        // Auto-remove after 10 seconds
-                        setTimeout(() => {
-                            if (welcomeOverlay.parentElement) {
-                                welcomeOverlay.remove();
-                            }
-                        }, 10000);
-                    }
-                }, 1000);
-                
-            } catch (error) {
-                console.error('Error initializing ETA game:', error);
-                document.getElementById('eta-game-container').innerHTML = `
-                    <div style="text-align: center; color: #ff6b6b; padding: 40px;">
-                        <h3>🚨 Game Error</h3>
-                        <p>An error occurred while starting the game.</p>
-                        <button onclick="returnToKruraSelection()" style="
-                            background: #9b59b6;
-                            color: white;
-                            border: none;
-                            padding: 12px 20px;
-                            border-radius: 20px;
-                            cursor: pointer;
-                            margin-top: 15px;
-                        ">← Back to Games</button>
-                    </div>
-                `;
-            }
-        } else {
-            document.getElementById('eta-game-container').innerHTML = `
-                <div style="text-align: center; color: #64B5F6; padding: 40px;">
-                    <h3>🔧 Game Not Ready</h3>
-                    <p>Game initialization function not found.</p>
-                    <button onclick="returnToKruraSelection()" style="
-                        background: #9b59b6;
-                        color: white;
-                        border: none;
-                        padding: 12px 20px;
-                        border-radius: 20px;
-                        cursor: pointer;
-                        margin-top: 15px;
-                    ">← Back to Games</button>
-                </div>
-            `;
-        }
-    }
+        document.getElementById('eta-game-container').innerHTML = `
+            <div style="text-align: center; color: #ffd700; padding: 60px 40px;">
+                <div style="font-size: 64px; margin-bottom: 30px;">🚧</div>
+                <h2 style="color: #ffd700; margin-bottom: 20px;">ETA: Echoes of Rebirth</h2>
+                <p style="color: #ccc; margin: 20px 0; font-size: 18px;">This advanced narrative RPG is currently in development.</p>
+                <p style="color: #999; font-size: 16px; margin-bottom: 30px;">
+                    A mystical journey through multiple lifetimes awaits...
+                </p>
+                <button onclick="returnToKruraSelection()" style="
+                    background: linear-gradient(45deg, #9b59b6, #8e44ad);
+                    color: white;
+                    border: none;
+                    padding: 15px 30px;
+                    border-radius: 25px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    margin-top: 20px;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
+                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.4)'"
+                   onmouseout="this.style.transform=''; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.3)'">
+                    ← Back to Games
+                </button>
+            </div>
+        `;
+    };
     
     window.returnToKruraSelection = function() {
         // Smooth transition back to selection
