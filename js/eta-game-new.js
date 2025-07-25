@@ -5,7 +5,7 @@ class ETAGame {
     constructor() {
         this.canvas = null;
         this.ctx = null;
-        this.gameState = 'character-selection'; // character-selection, story-intro, gameplay, quiz, game-over
+        this.gameState = 'character-selection'; // character-selection, story-intro, gameplay, quiz, gem-matching, game-over
         this.selectedCharacter = null;
         this.currentLevel = 1;
         this.score = 0;
@@ -14,6 +14,15 @@ class ETAGame {
         this.totalDiamonds = 0;
         this.quizQuestions = [];
         this.currentQuestionIndex = 0;
+        
+        // Gem matching mini-game variables
+        this.gemGrid = [];
+        this.gemTypes = ['💎', '💙', '💚', '💛', '💜', '❤️'];
+        this.gemMatchingScore = 0;
+        this.gemMatchingTime = 30;
+        this.gemMatchingTimer = null;
+        this.selectedGems = [];
+        this.gemMatchingActive = false;
         
         // Grid-based game constants (Diamond Rush style)
         this.GRID_SIZE = 32;
@@ -232,6 +241,48 @@ class ETAGame {
                             <div>🏆 Score: <span id="score-display">0</span></div>
                             <div>🌙 Level: <span id="level-display">1</span></div>
                         </div>
+                        <button id="show-instructions-btn" style="
+                            background: rgba(255, 215, 0, 0.2);
+                            border: 1px solid #ffd700;
+                            color: #ffd700;
+                            padding: 5px 10px;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            font-size: 12px;
+                        ">❓ Controls</button>
+                    </div>
+                    
+                    <!-- Instructions Popup -->
+                    <div id="instructions-popup" style="
+                        position: absolute;
+                        top: 60px;
+                        right: 20px;
+                        background: rgba(0, 0, 0, 0.9);
+                        border: 2px solid #ffd700;
+                        border-radius: 10px;
+                        padding: 15px;
+                        color: white;
+                        font-size: 12px;
+                        max-width: 250px;
+                        z-index: 1000;
+                        display: none;
+                    ">
+                        <h4 style="color: #ffd700; margin: 0 0 10px 0;">Game Controls:</h4>
+                        <p style="margin: 5px 0;">🎮 <strong>Movement:</strong> Arrow Keys or WASD</p>
+                        <p style="margin: 5px 0;">💎 <strong>Goal:</strong> Collect all diamonds and reach the exit (X)</p>
+                        <p style="margin: 5px 0;">⚠️ <strong>Avoid:</strong> Enemies (red) and falling boulders</p>
+                        <p style="margin: 5px 0;">🎯 <strong>Challenges:</strong> Quiz every 2 levels, Gem Matching every 3 levels</p>
+                        <p style="margin: 5px 0;">🏆 <strong>Bonus:</strong> Get 500+ points in gem matching for extra score!</p>
+                        <button onclick="document.getElementById('instructions-popup').style.display='none'" style="
+                            background: #ffd700;
+                            border: none;
+                            color: black;
+                            padding: 5px 10px;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            margin-top: 10px;
+                            font-size: 11px;
+                        ">Got it!</button>
                     </div>
                     
                     <!-- Game Canvas -->
@@ -278,6 +329,77 @@ class ETAGame {
                     </div>
                 </div>
 
+                <!-- Gem Matching Mini-Game Screen -->
+                <div id="gem-matching-screen" class="eta-screen" style="
+                    background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+                    color: white;
+                    display: none;
+                ">
+                    <div style="padding: 20px; text-align: center;">
+                        <h2 style="color: #ffd700; margin-bottom: 10px;">💎 Gem Matching Challenge 💎</h2>
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; max-width: 400px; margin: 0 auto; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px;">
+                                <div>Score: <span id="gem-score">0</span></div>
+                                <div>Time: <span id="gem-timer">30</span>s</div>
+                                <div>Matches: <span id="gem-matches">0</span></div>
+                            </div>
+                        </div>
+                        
+                        <div id="gem-instructions" style="
+                            background: rgba(255,215,0,0.1);
+                            padding: 15px;
+                            border-radius: 10px;
+                            margin-bottom: 20px;
+                            max-width: 500px;
+                            margin-left: auto;
+                            margin-right: auto;
+                        ">
+                            <h4 style="color: #ffd700; margin-bottom: 10px;">How to Play:</h4>
+                            <p style="font-size: 0.9em; line-height: 1.4;">
+                                • Click on gems to select them<br>
+                                • Match 3 or more gems of the same type in a row, column, or cluster<br>
+                                • Selected gems will be highlighted with a golden border<br>
+                                • Click "Clear Selected" to deselect all gems<br>
+                                • Match as many as possible before time runs out!<br>
+                                • Get 500+ points to unlock bonus rewards!
+                            </p>
+                        </div>
+                        
+                        <div id="gem-grid-container" style="
+                            display: inline-block;
+                            background: rgba(0,0,0,0.3);
+                            padding: 20px;
+                            border-radius: 15px;
+                            border: 2px solid #ffd700;
+                        ">
+                            <div id="gem-grid" style="
+                                display: grid;
+                                grid-template-columns: repeat(6, 50px);
+                                gap: 5px;
+                                margin-bottom: 15px;
+                            "></div>
+                        </div>
+                        
+                        <div style="margin-top: 20px;">
+                            <button id="clear-gems-btn" class="eta-btn" style="margin-right: 10px;">Clear Selected</button>
+                            <button id="match-gems-btn" class="eta-btn" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">Match Gems!</button>
+                        </div>
+                        
+                        <div id="gem-result" style="
+                            margin-top: 20px;
+                            padding: 15px;
+                            border-radius: 10px;
+                            display: none;
+                        "></div>
+                        
+                        <button id="continue-from-gems" class="eta-btn" style="
+                            margin-top: 20px;
+                            background: linear-gradient(45deg, #e67e22, #f39c12);
+                            display: none;
+                        ">Continue Adventure →</button>
+                    </div>
+                </div>
+
                 <!-- Game Over Screen -->
                 <div id="game-over-screen" class="eta-screen">
                     <div style="padding: 40px; color: white; text-align: center;">
@@ -310,6 +432,10 @@ class ETAGame {
         document.getElementById('restart-game').onclick = () => this.restart();
         document.getElementById('return-to-menu').onclick = () => this.returnToMenu();
         document.getElementById('continue-game').onclick = () => this.continueFromQuiz();
+        document.getElementById('clear-gems-btn').onclick = () => this.clearSelectedGems();
+        document.getElementById('match-gems-btn').onclick = () => this.matchSelectedGems();
+        document.getElementById('continue-from-gems').onclick = () => this.continueFromGemMatching();
+        document.getElementById('show-instructions-btn').onclick = () => this.toggleInstructions();
     }
 
     showCharacterSelection() {
@@ -664,8 +790,12 @@ class ETAGame {
         this.currentLevel++;
         this.score += 1000;
         
-        // Show quiz every 2 levels
-        if (this.currentLevel % 2 === 0) {
+        // Show different challenges based on level
+        if (this.currentLevel % 3 === 0) {
+            // Every 3rd level: Gem Matching Challenge
+            this.showGemMatching();
+        } else if (this.currentLevel % 2 === 0) {
+            // Every 2nd level: Quiz
             this.showQuiz();
         } else {
             this.initializeLevel();
@@ -753,6 +883,234 @@ class ETAGame {
         
         this.initializeLevel();
         this.updateHUD();
+    }
+
+    // Gem Matching Mini-Game Methods
+    showGemMatching() {
+        this.hideAllScreens();
+        this.gameState = 'gem-matching';
+        document.getElementById('gem-matching-screen').style.display = 'block';
+        
+        // Initialize gem matching game
+        this.initGemGrid();
+        this.gemMatchingScore = 0;
+        this.gemMatchingTime = 30;
+        this.selectedGems = [];
+        this.gemMatchingActive = true;
+        
+        // Update UI
+        document.getElementById('gem-score').textContent = this.gemMatchingScore;
+        document.getElementById('gem-timer').textContent = this.gemMatchingTime;
+        document.getElementById('gem-matches').textContent = '0';
+        document.getElementById('gem-result').style.display = 'none';
+        document.getElementById('continue-from-gems').style.display = 'none';
+        
+        // Start timer
+        this.startGemTimer();
+    }
+
+    initGemGrid() {
+        this.gemGrid = [];
+        const gridElement = document.getElementById('gem-grid');
+        gridElement.innerHTML = '';
+        
+        // Create 6x6 grid of random gems
+        for (let row = 0; row < 6; row++) {
+            this.gemGrid[row] = [];
+            for (let col = 0; col < 6; col++) {
+                const gemType = this.gemTypes[Math.floor(Math.random() * this.gemTypes.length)];
+                this.gemGrid[row][col] = gemType;
+                
+                const gemElement = document.createElement('div');
+                gemElement.style.cssText = `
+                    width: 50px;
+                    height: 50px;
+                    background: linear-gradient(45deg, #3498db, #2980b9);
+                    border: 2px solid #34495e;
+                    border-radius: 8px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 1.5em;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    user-select: none;
+                `;
+                gemElement.textContent = gemType;
+                gemElement.onclick = () => this.selectGem(row, col, gemElement);
+                gemElement.dataset.row = row;
+                gemElement.dataset.col = col;
+                
+                gridElement.appendChild(gemElement);
+            }
+        }
+    }
+
+    selectGem(row, col, element) {
+        if (!this.gemMatchingActive) return;
+        
+        const gemKey = `${row}-${col}`;
+        const index = this.selectedGems.findIndex(gem => gem.key === gemKey);
+        
+        if (index > -1) {
+            // Deselect gem
+            this.selectedGems.splice(index, 1);
+            element.style.border = '2px solid #34495e';
+            element.style.boxShadow = 'none';
+        } else {
+            // Select gem
+            this.selectedGems.push({ row, col, key: gemKey, type: this.gemGrid[row][col] });
+            element.style.border = '3px solid #ffd700';
+            element.style.boxShadow = '0 0 15px rgba(255, 215, 0, 0.7)';
+        }
+    }
+
+    clearSelectedGems() {
+        this.selectedGems = [];
+        const gems = document.querySelectorAll('#gem-grid div');
+        gems.forEach(gem => {
+            gem.style.border = '2px solid #34495e';
+            gem.style.boxShadow = 'none';
+        });
+    }
+
+    matchSelectedGems() {
+        if (!this.gemMatchingActive || this.selectedGems.length < 3) {
+            alert('Select at least 3 gems to match!');
+            return;
+        }
+        
+        // Check if all selected gems are the same type
+        const firstType = this.selectedGems[0].type;
+        const allSameType = this.selectedGems.every(gem => gem.type === firstType);
+        
+        if (!allSameType) {
+            alert('All selected gems must be the same type!');
+            return;
+        }
+        
+        // Check if gems form a valid pattern (adjacent or in line)
+        if (!this.isValidPattern()) {
+            alert('Gems must be adjacent or form a line!');
+            return;
+        }
+        
+        // Valid match! Calculate points
+        const points = this.selectedGems.length * 100 + (this.selectedGems.length > 4 ? 200 : 0);
+        this.gemMatchingScore += points;
+        
+        // Remove matched gems and replace with new ones
+        this.selectedGems.forEach(gem => {
+            this.gemGrid[gem.row][gem.col] = this.gemTypes[Math.floor(Math.random() * this.gemTypes.length)];
+            const element = document.querySelector(`div[data-row="${gem.row}"][data-col="${gem.col}"]`);
+            element.textContent = this.gemGrid[gem.row][gem.col];
+            element.style.border = '2px solid #34495e';
+            element.style.boxShadow = 'none';
+        });
+        
+        this.selectedGems = [];
+        
+        // Update UI
+        document.getElementById('gem-score').textContent = this.gemMatchingScore;
+        const matches = parseInt(document.getElementById('gem-matches').textContent) + 1;
+        document.getElementById('gem-matches').textContent = matches;
+        
+        // Visual feedback
+        this.showMatchFeedback(points);
+    }
+
+    isValidPattern() {
+        if (this.selectedGems.length < 3) return false;
+        
+        // Sort gems by position
+        const sorted = [...this.selectedGems].sort((a, b) => a.row - b.row || a.col - b.col);
+        
+        // Check if all gems are adjacent (for clusters)
+        for (let i = 0; i < sorted.length; i++) {
+            let hasAdjacent = false;
+            for (let j = 0; j < sorted.length; j++) {
+                if (i === j) continue;
+                const rowDiff = Math.abs(sorted[i].row - sorted[j].row);
+                const colDiff = Math.abs(sorted[i].col - sorted[j].col);
+                if ((rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1)) {
+                    hasAdjacent = true;
+                    break;
+                }
+            }
+            if (!hasAdjacent && sorted.length > 1) return false;
+        }
+        
+        return true;
+    }
+
+    showMatchFeedback(points) {
+        const feedback = document.createElement('div');
+        feedback.style.cssText = `
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffd700;
+            font-size: 2em;
+            font-weight: bold;
+            z-index: 1000;
+            pointer-events: none;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        `;
+        feedback.textContent = `+${points}`;
+        document.getElementById('gem-matching-screen').appendChild(feedback);
+        
+        setTimeout(() => {
+            feedback.remove();
+        }, 1500);
+    }
+
+    startGemTimer() {
+        this.gemMatchingTimer = setInterval(() => {
+            this.gemMatchingTime--;
+            document.getElementById('gem-timer').textContent = this.gemMatchingTime;
+            
+            if (this.gemMatchingTime <= 0) {
+                this.endGemMatching();
+            }
+        }, 1000);
+    }
+
+    endGemMatching() {
+        this.gemMatchingActive = false;
+        clearInterval(this.gemMatchingTimer);
+        
+        // Show results
+        const resultElement = document.getElementById('gem-result');
+        const bonusScore = this.gemMatchingScore >= 500 ? 1000 : 0;
+        this.score += this.gemMatchingScore + bonusScore;
+        
+        resultElement.innerHTML = `
+            <h3 style="color: #ffd700; margin-bottom: 15px;">Challenge Complete!</h3>
+            <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px;">
+                <p>Gem Score: ${this.gemMatchingScore} points</p>
+                ${bonusScore > 0 ? `<p style="color: #2ecc71;">🎉 Bonus: ${bonusScore} points (500+ gems score!)</p>` : ''}
+                <p><strong>Total Added: ${this.gemMatchingScore + bonusScore} points</strong></p>
+            </div>
+        `;
+        resultElement.style.display = 'block';
+        resultElement.style.background = bonusScore > 0 ? 'rgba(46, 204, 113, 0.2)' : 'rgba(52, 73, 94, 0.3)';
+        
+        document.getElementById('continue-from-gems').style.display = 'inline-block';
+    }
+
+    continueFromGemMatching() {
+        this.gameState = 'gameplay';
+        this.hideAllScreens();
+        document.getElementById('eta-canvas-screen').style.display = 'block';
+        
+        this.initializeLevel();
+        this.updateHUD();
+    }
+
+    toggleInstructions() {
+        const popup = document.getElementById('instructions-popup');
+        popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
     }
 
     loseLife() {
@@ -872,7 +1230,7 @@ class ETAGame {
     }
 
     hideAllScreens() {
-        const screens = ['character-selection', 'story-intro', 'eta-canvas-screen', 'quiz-screen', 'game-over-screen'];
+        const screens = ['character-selection', 'story-intro', 'eta-canvas-screen', 'quiz-screen', 'gem-matching-screen', 'game-over-screen'];
         screens.forEach(screen => {
             const element = document.getElementById(screen);
             if (element) element.style.display = 'none';
@@ -960,6 +1318,24 @@ document.addEventListener('DOMContentLoaded', function() {
         .quiz-option:hover {
             background: rgba(255,215,0,0.2) !important;
             transform: translateY(-2px);
+        }
+        
+        .gem-cell {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .gem-cell:hover {
+            transform: translateY(-2px) scale(1.05);
+        }
+        
+        .gem-cell.selected {
+            animation: gemPulse 1s infinite;
+        }
+        
+        @keyframes gemPulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); }
+            50% { box-shadow: 0 0 25px rgba(255, 215, 0, 1); }
         }
         
         @keyframes spin {
