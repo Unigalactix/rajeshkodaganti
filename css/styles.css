@@ -5848,3 +5848,260 @@ h2.heading:after {
     50% { box-shadow: 0 8px 25px rgba(155, 89, 182, 0.6), 0 0 20px rgba(255, 255, 255, 0.2); }
     100% { box-shadow: 0 10px 25px rgba(155, 89, 182, 0.5); }
 }
+
+/* Experience and Project Card Click Hints */
+.exp-click-hint,
+.project-click-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+    padding: 10px;
+    background: var(--accent-color);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    opacity: 0.9;
+}
+
+.exp-click-hint:hover,
+.project-click-hint:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(100, 181, 246, 0.3);
+}
+
+.exp-click-hint i,
+.project-click-hint i {
+    transition: var(--transition-fast);
+}
+
+.experience-card:hover .exp-click-hint i,
+.project-card:hover .project-click-hint i {
+    transform: translateX(3px);
+}
+
+/* Make experience and project cards clickable */
+.experience-card,
+.project-card {
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.experience-card:hover,
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px var(--shadow-medium);
+}
+
+/* Modal Styles for Experience and Projects */
+.detail-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.detail-modal-content {
+    background-color: var(--background-light);
+    margin: 2% auto;
+    padding: 0;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideInUp 0.3s ease-out;
+}
+
+.detail-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    background: linear-gradient(135deg, var(--primary-color), #333);
+    color: white;
+    border-radius: 15px 15px 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 10001;
+}
+
+.detail-modal-header h2 {
+    margin: 0;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.detail-close-btn {
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    line-height: 1;
+    padding: 5px 10px;
+    border-radius: 50%;
+}
+
+.detail-close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.detail-modal-body {
+    padding: 30px;
+    line-height: 1.7;
+}
+
+.modal-section {
+    margin-bottom: 30px;
+}
+
+.modal-section h3 {
+    color: var(--primary-color);
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-section h3 i {
+    color: var(--accent-color);
+}
+
+.modal-section p {
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+.modal-tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.modal-tech-tag {
+    background: var(--background-gray);
+    color: var(--primary-color);
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+}
+
+.modal-achievements {
+    background: var(--background-gray);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid var(--accent-color);
+}
+
+.modal-achievements ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.modal-achievements li {
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+}
+
+/* Project Modal Specific Styles */
+.project-modal .modal-section {
+    border-left: 3px solid var(--accent-color);
+    padding-left: 20px;
+    margin-left: 10px;
+}
+
+/* Experience Modal Specific Styles */
+.experience-modal .detail-modal-header {
+    background: linear-gradient(135deg, #2c5530, #4a7c59);
+}
+
+.experience-modal .modal-section h3 {
+    border-bottom-color: #4a7c59;
+}
+
+.experience-modal .modal-section h3 i {
+    color: #4a7c59;
+}
+
+.experience-modal .modal-section {
+    border-left: 3px solid #4a7c59;
+    padding-left: 20px;
+    margin-left: 10px;
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Responsive Design for Modals */
+@media (max-width: 768px) {
+    .detail-modal-content {
+        width: 95%;
+        margin: 5% auto;
+        max-height: 85vh;
+    }
+    
+    .detail-modal-header {
+        padding: 15px 20px;
+    }
+    
+    .detail-modal-header h2 {
+        font-size: 1.4em;
+    }
+    
+    .detail-modal-body {
+        padding: 20px;
+    }
+    
+    .modal-section {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .detail-modal-content {
+        width: 98%;
+        margin: 2% auto;
+    }
+    
+    .detail-modal-header {
+        padding: 12px 15px;
+    }
+    
+    .detail-modal-body {
+        padding: 15px;
+    }
+}
