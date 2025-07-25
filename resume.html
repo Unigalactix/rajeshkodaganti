@@ -550,6 +550,22 @@
                 </div>
             </div>
 
+            <!-- Preset Resume Section -->
+            <div class="form-section">
+                <label>Preset Resumes for Applied Roles:</label>
+                <div style="display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;">
+                    <button type="button" onclick="loadPreset('fullstack')" style="padding: 5px 10px; background: #2196F3; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 0.8em;">Full-Stack Developer</button>
+                    <button type="button" onclick="loadPreset('frontend')" style="padding: 5px 10px; background: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 0.8em;">Frontend Developer</button>
+                    <button type="button" onclick="loadPreset('backend')" style="padding: 5px 10px; background: #FF9800; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 0.8em;">Backend Developer</button>
+                    <button type="button" onclick="loadPreset('devops')" style="padding: 5px 10px; background: #9C27B0; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 0.8em;">DevOps Engineer</button>
+                    <button type="button" onclick="loadPreset('dataanalyst')" style="padding: 5px 10px; background: #F44336; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 0.8em;">Data Analyst</button>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <input type="text" id="presetName" placeholder="Enter preset name..." style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; font-size: 0.8em;">
+                    <button type="button" onclick="saveCurrentAsPreset()" style="padding: 5px 10px; background: #607D8B; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 0.8em;">Save Current</button>
+                </div>
+            </div>
+
             <div class="form-section">
                 <label for="roleType">Target Role:</label>
                 <select id="roleType" onchange="toggleOtherRole()">
@@ -567,33 +583,33 @@
             </div>
 
             <div class="form-section">
-                <label>Experience to Include:</label>
+                <label>Work Experience (uncheck to hide):</label>
                 <div class="checkbox-group">
                     <label><input type="checkbox" value="quadrant" checked> Software Intern - Quadrant Technologies</label>
                     <label><input type="checkbox" value="qikcell" checked> Solutions Engineer - QikCell by tickioT</label>
-                    <label><input type="checkbox" value="oppo"> User Test Specialist - ColorOS (OPPO)</label>
-                    <label><input type="checkbox" value="pantech"> Engineering Intern - Pantech ProEd</label>
-                    <label><input type="checkbox" value="peoplelink"> Product Tester - PeopleLink Unified Communications</label>
+                    <label><input type="checkbox" value="oppo" checked> User Test Specialist - ColorOS (OPPO)</label>
+                    <label><input type="checkbox" value="pantech" checked> Engineering Intern - Pantech ProEd</label>
+                    <label><input type="checkbox" value="peoplelink" checked> Product Tester - PeopleLink Unified Communications</label>
                 </div>
             </div>
 
             <div class="form-section">
-                <label>Education to Include:</label>
+                <label>Education (uncheck to hide):</label>
                 <div class="checkbox-group">
                     <label><input type="checkbox" value="masters" checked> Master's - Computer Engineering (CSUN)</label>
                     <label><input type="checkbox" value="bachelors" checked> B-Tech - Electronics & Communication (JB Institute)</label>
-                    <label><input type="checkbox" value="diploma"> ECE Specialization - Government Institute of Electronics</label>
+                    <label><input type="checkbox" value="diploma" checked> ECE Specialization - Government Institute of Electronics</label>
                 </div>
             </div>
 
             <div class="form-section">
-                <label>Projects to Include (Select 2-3):</label>
+                <label>Projects (uncheck to hide):</label>
                 <div class="checkbox-group">
                     <label><input type="checkbox" value="convir" checked> Image Denoising using Deep Learning (ConvIR)</label>
                     <label><input type="checkbox" value="carpricing" checked> Pre-owned Cars Pricing Forecast</label>
-                    <label><input type="checkbox" value="router"> 1X3 Router Design and Verification</label>
-                    <label><input type="checkbox" value="raspberry"> Raspberry Pi Assistive Technologies</label>
-                    <label><input type="checkbox" value="camera"> PeopleLink "Look At Me" Controller</label>
+                    <label><input type="checkbox" value="router" checked> 1X3 Router Design and Verification</label>
+                    <label><input type="checkbox" value="raspberry" checked> Raspberry Pi Assistive Technologies</label>
+                    <label><input type="checkbox" value="camera" checked> PeopleLink "Look At Me" Controller</label>
                 </div>
             </div>
 
@@ -832,7 +848,137 @@
             }
         }
 
-                    // Personal information preset functions
+                    // Preset Resume Functionality
+        const resumePresets = {
+            fullstack: {
+                role: 'fullstack',
+                hideExperiences: ['pantech'],
+                hideEducation: [],
+                hideProjects: ['camera'],
+                showInternships: true,
+                showMiniProjects: false
+            },
+            frontend: {
+                role: 'frontend',
+                hideExperiences: ['pantech', 'oppo'],
+                hideEducation: ['diploma'],
+                hideProjects: ['router', 'raspberry'],
+                showInternships: true,
+                showMiniProjects: false
+            },
+            backend: {
+                role: 'backend',
+                hideExperiences: ['oppo'],
+                hideEducation: ['diploma'],
+                hideProjects: ['camera'],
+                showInternships: true,
+                showMiniProjects: false
+            },
+            devops: {
+                role: 'devops',
+                hideExperiences: ['oppo', 'pantech'],
+                hideEducation: ['diploma'],
+                hideProjects: ['convir', 'carpricing'],
+                showInternships: true,
+                showMiniProjects: false
+            },
+            dataanalyst: {
+                role: 'data',
+                hideExperiences: ['qikcell', 'oppo'],
+                hideEducation: [],
+                hideProjects: ['router', 'camera'],
+                showInternships: true,
+                showMiniProjects: false
+            }
+        };
+
+        function loadPreset(presetName) {
+            const preset = resumePresets[presetName];
+            if (!preset) return;
+
+            // Set role
+            document.getElementById('roleType').value = preset.role;
+
+            // Reset all checkboxes to checked (show everything by default)
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = true);
+
+            // Hide specified items
+            preset.hideExperiences.forEach(exp => {
+                const checkbox = document.querySelector(`input[value="${exp}"]`);
+                if (checkbox) checkbox.checked = false;
+            });
+
+            preset.hideEducation.forEach(edu => {
+                const checkbox = document.querySelector(`input[value="${edu}"]`);
+                if (checkbox) checkbox.checked = false;
+            });
+
+            preset.hideProjects.forEach(proj => {
+                const checkbox = document.querySelector(`input[value="${proj}"]`);
+                if (checkbox) checkbox.checked = false;
+            });
+
+            // Set additional sections
+            const internshipsCheckbox = document.querySelector('input[value="internships"]');
+            if (internshipsCheckbox) internshipsCheckbox.checked = preset.showInternships;
+
+            const miniProjectsCheckbox = document.querySelector('input[value="miniprojects"]');
+            if (miniProjectsCheckbox) miniProjectsCheckbox.checked = preset.showMiniProjects;
+
+            // Generate resume with preset
+            generateCustomResume();
+        }
+
+        function saveCurrentAsPreset() {
+            const presetName = document.getElementById('presetName').value.trim();
+            if (!presetName) {
+                alert('Please enter a preset name');
+                return;
+            }
+
+            const currentPreset = {
+                role: document.getElementById('roleType').value,
+                hideExperiences: [],
+                hideEducation: [],
+                hideProjects: [],
+                showInternships: document.querySelector('input[value="internships"]')?.checked || false,
+                showMiniProjects: document.querySelector('input[value="miniprojects"]')?.checked || false
+            };
+
+            // Collect unchecked items
+            document.querySelectorAll('input[value="quadrant"], input[value="qikcell"], input[value="oppo"], input[value="pantech"], input[value="peoplelink"]').forEach(checkbox => {
+                if (!checkbox.checked) {
+                    currentPreset.hideExperiences.push(checkbox.value);
+                }
+            });
+
+            document.querySelectorAll('input[value="masters"], input[value="bachelors"], input[value="diploma"]').forEach(checkbox => {
+                if (!checkbox.checked) {
+                    currentPreset.hideEducation.push(checkbox.value);
+                }
+            });
+
+            document.querySelectorAll('input[value="convir"], input[value="carpricing"], input[value="router"], input[value="raspberry"], input[value="camera"]').forEach(checkbox => {
+                if (!checkbox.checked) {
+                    currentPreset.hideProjects.push(checkbox.value);
+                }
+            });
+
+            // Save to localStorage
+            const savedPresets = JSON.parse(localStorage.getItem('resumePresets') || '{}');
+            savedPresets[presetName.toLowerCase().replace(/\s+/g, '')] = currentPreset;
+            localStorage.setItem('resumePresets', JSON.stringify(savedPresets));
+
+            alert(`Preset "${presetName}" saved successfully!`);
+            document.getElementById('presetName').value = '';
+        }
+
+        function loadSavedPresets() {
+            const savedPresets = JSON.parse(localStorage.getItem('resumePresets') || '{}');
+            return savedPresets;
+        }
+
+        // Personal information preset functions
             function loadCurrentInfo() {
                 document.getElementById('fullName').value = 'RAJESH KODAGANTI';
                 document.getElementById('emailAddress').value = 'kodagantir295@gmail.com';
@@ -882,60 +1028,58 @@
                 return true;
             }
 
-            function generateCustomResume() {
-                // Validate personal information first
-                if (!validatePersonalInfo()) {
-                    return;
-                }
+        function generateCustomResume() {
+            // Validate personal information first
+            if (!validatePersonalInfo()) {
+                return;
+            }
 
-                const roleType = document.getElementById('roleType').value;
+            const roleType = document.getElementById('roleType').value;
+        
+            // Get personal information from form
+            const personalInfo = {
+                name: document.getElementById('fullName').value || "RAJESH KODAGANTI",
+                email: document.getElementById('emailAddress').value || "kodagantir295@gmail.com",
+                phone: document.getElementById('phoneNumber').value || "+1 (747) 366-0793",
+                location: document.getElementById('location').value || "NORTHRIDGE, CA",
+                linkedin: document.getElementById('linkedinUrl').value || "https://www.linkedin.com/in/rajesh-kodaganti-323118215/",
+                github: document.getElementById('githubProfile').value || "github.com/rajeshkodaganti"
+            };
+
+            // Get what to HIDE (opposite of current logic)
+            const hideExperiences = [];
+            const hideEducation = [];
+            const hideProjects = [];
             
-                // Get personal information from form
-                const personalInfo = {
-                    name: document.getElementById('fullName').value || "RAJESH KODAGANTI",
-                    email: document.getElementById('emailAddress').value || "kodagantir295@gmail.com",
-                    phone: document.getElementById('phoneNumber').value || "+1 (747) 366-0793",
-                    location: document.getElementById('location').value || "NORTHRIDGE, CA",
-                    linkedin: document.getElementById('linkedinUrl').value || "https://www.linkedin.com/in/rajesh-kodaganti-323118215/",
-                    github: document.getElementById('githubProfile').value || "github.com/rajeshkodaganti"
-                };
-
-            // Get selected experiences
-            const selectedExperiences = [];
+            // Collect unchecked items (items to hide)
             document.querySelectorAll('input[value="quadrant"], input[value="qikcell"], input[value="oppo"], input[value="pantech"], input[value="peoplelink"]').forEach(checkbox => {
-                if (checkbox.checked && resumeData.experience[checkbox.value]) {
-                    selectedExperiences.push(checkbox.value);
+                if (!checkbox.checked) {
+                    hideExperiences.push(checkbox.value);
                 }
             });
 
-            // Get selected education
-            const selectedEducation = [];
             document.querySelectorAll('input[value="masters"], input[value="bachelors"], input[value="diploma"]').forEach(checkbox => {
-                if (checkbox.checked && resumeData.education[checkbox.value]) {
-                    selectedEducation.push(checkbox.value);
+                if (!checkbox.checked) {
+                    hideEducation.push(checkbox.value);
                 }
             });
 
-            // Get selected projects
-            const selectedProjects = [];
             document.querySelectorAll('input[value="convir"], input[value="carpricing"], input[value="router"], input[value="raspberry"], input[value="camera"]').forEach(checkbox => {
-                if (checkbox.checked && resumeData.projects[checkbox.value]) {
-                    selectedProjects.push(checkbox.value);
+                if (!checkbox.checked) {
+                    hideProjects.push(checkbox.value);
                 }
             });
 
-            // Get additional sections
-            const includeInternships = document.querySelector('input[value="internships"]')?.checked;
-            const includeMiniProjects = document.querySelector('input[value="miniprojects"]')?.checked;
+            // Get what sections to show
+            const showInternships = document.querySelector('input[value="internships"]')?.checked !== false;
+            const showMiniProjects = document.querySelector('input[value="miniprojects"]')?.checked !== false;
 
-            // Generate resume HTML
-            generateResumeHTML(personalInfo, roleType, selectedExperiences, selectedEducation, selectedProjects, includeInternships, includeMiniProjects);
+            // Generate resume with everything, hiding only unchecked items
+            generateResumeHTML(personalInfo, roleType, hideExperiences, hideEducation, hideProjects, showInternships, showMiniProjects);
             
             // Hide customizer after generating resume
             hideCustomizer();
-        }
-
-        function generateResumeHTML(personalInfo, roleType, experiences, education, projects, includeInternships, includeMiniProjects) {
+        }        function generateResumeHTML(personalInfo, roleType, hideExperiences, hideEducation, hideProjects, showInternships, showMiniProjects) {
             const content = document.getElementById('resumeContent');
             if (!content) {
                 console.error('resumeContent element not found!');
@@ -943,6 +1087,11 @@
             }
             
             const skillSet = resumeData.skills[roleType] || resumeData.skills.fullstack;
+            
+            // Get all experiences and filter out hidden ones
+            const allExperiences = Object.keys(resumeData.experience).filter(key => !hideExperiences.includes(key));
+            const allEducation = Object.keys(resumeData.education).filter(key => !hideEducation.includes(key));
+            const allProjects = Object.keys(resumeData.projects).filter(key => !hideProjects.includes(key));
             
             // Generate the actual resume content
             content.innerHTML = `
@@ -958,9 +1107,10 @@
                 </div>
 
                 <!-- Education Section -->
+                ${allEducation.length > 0 ? `
                 <div style="margin-bottom: 16px;">
                     <h2 style="font-size: 1em; font-weight: 600; color: #212121; margin-bottom: 6px; border-bottom: 1px solid #212121; padding-bottom: 2px;">EDUCATION</h2>
-                    ${education.slice(0, 2).map(eduKey => {
+                    ${allEducation.map(eduKey => {
                         const edu = resumeData.education[eduKey];
                         return `
                             <div style="margin-bottom: 10px;">
@@ -985,6 +1135,7 @@
                         `;
                     }).join('')}
                 </div>
+                ` : ''}
 
                 <!-- Technical Skills Section -->
                 <div style="margin-bottom: 16px;">
@@ -999,11 +1150,11 @@
                     </div>
                 </div>
 
-                <!-- Experience/Internships Section -->
-                ${(experiences.length > 0 || includeInternships) ? `
+                <!-- Experience Section -->
+                ${(allExperiences.length > 0) ? `
                 <div style="margin-bottom: 16px;">
-                    <h2 style="font-size: 1em; font-weight: 600; color: #212121; margin-bottom: 6px; border-bottom: 1px solid #212121; padding-bottom: 2px;">${includeInternships ? 'INTERNSHIPS' : 'PROFESSIONAL EXPERIENCE'}</h2>
-                    ${experiences.slice(0, 2).map(expKey => {
+                    <h2 style="font-size: 1em; font-weight: 600; color: #212121; margin-bottom: 6px; border-bottom: 1px solid #212121; padding-bottom: 2px;">PROFESSIONAL EXPERIENCE</h2>
+                    ${allExperiences.map(expKey => {
                         const exp = resumeData.experience[expKey];
                         return `
                             <div style="margin-bottom: 10px;">
@@ -1020,10 +1171,10 @@
                 ` : ''}
 
                 <!-- Projects Section -->
-                ${projects.length > 0 ? `
+                ${allProjects.length > 0 ? `
                 <div style="margin-bottom: 16px;">
                     <h2 style="font-size: 1em; font-weight: 600; color: #212121; margin-bottom: 6px; border-bottom: 1px solid #212121; padding-bottom: 2px;">PROJECTS</h2>
-                    ${projects.slice(0, 2).map(projKey => {
+                    ${allProjects.map(projKey => {
                         const proj = resumeData.projects[projKey];
                         return `
                             <div style="margin-bottom: 10px;">
@@ -1040,7 +1191,7 @@
                 ` : ''}
 
                 <!-- Mini Projects Section -->
-                ${includeMiniProjects ? `
+                ${showMiniProjects ? `
                 <div style="margin-bottom: 16px;">
                     <h2 style="font-size: 1em; font-weight: 600; color: #212121; margin-bottom: 6px; border-bottom: 1px solid #212121; padding-bottom: 2px;">MINI PROJECTS</h2>
                     ${resumeData.miniProjects.map((project, index) => `
