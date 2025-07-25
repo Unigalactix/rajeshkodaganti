@@ -1574,6 +1574,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Global functions for ETA game integration
     window.startETAGame = function() {
+        // Hide the selection screen and show ETA game container
+        document.getElementById('krura-game-selection').style.display = 'none';
+        document.getElementById('eta-game-container').style.display = 'block';
+        document.getElementById('eta-back-controls').style.display = 'block';
+        
         // Show loading indicator
         const etaContainer = document.getElementById('eta-game-container');
         etaContainer.innerHTML = `
@@ -1599,13 +1604,53 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         `;
         
-        // Show simple message instead of loading ETA game files (files removed)
+        // Load ETA game script dynamically
+        if (!window.ETAGame) {
+            const script = document.createElement('script');
+            script.src = 'js/eta-game.js';
+            script.onload = function() {
+                setTimeout(() => {
+                    initializeETAGame();
+                }, 1000);
+            };
+            script.onerror = function() {
+                showETAGameError();
+            };
+            document.head.appendChild(script);
+        } else {
+            setTimeout(() => {
+                initializeETAGame();
+            }, 1000);
+        }
+    };
+    
+    function initializeETAGame() {
+        try {
+            // Reset the ETA game container
+            const etaContainer = document.getElementById('eta-game-container');
+            etaContainer.innerHTML = ''; // Clear loading content
+            
+            if (window.ETAGame) {
+                const etaGame = new window.ETAGame();
+                console.log('ETA Game initialized successfully');
+            } else {
+                console.error('ETAGame class not found');
+                showETAGameError();
+            }
+        } catch (error) {
+            console.error('Error initializing ETA game:', error);
+            showETAGameError();
+        }
+    }
+    
+    function showETAGameError() {
+        const etaContainer = document.getElementById('eta-game-container');
         etaContainer.innerHTML = `
             <div style="text-align: center; color: #ffd700; padding: 40px;">
-                <div style="font-size: 48px; margin-bottom: 20px;">🚧</div>
+                <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
                 <h3>ETA: Echoes of Rebirth</h3>
-                <p style="color: #ccc; margin: 15px 0;">This advanced narrative RPG is currently in development.</p>
-                <p style="color: #999; font-size: 14px;">Check back soon for the full gaming experience!</p>
+                <p style="color: #ccc; margin: 15px 0;">Unable to load the game at this time.</p>
+                <p style="color: #999; font-size: 14px;">Please check your connection and try again.</p>
                 <button onclick="returnToKruraSelection()" style="
                     background: #9b59b6;
                     color: white;
@@ -1617,40 +1662,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 ">← Back to Games</button>
             </div>
         `;
-    };
+    }
     
-    // ETA game is removed - show placeholder instead
-    window.startETAGame = function() {
-        document.getElementById('krura-game-selection').style.display = 'none';
-        document.getElementById('eta-game-container').style.display = 'block';
-        document.getElementById('eta-back-controls').style.display = 'block';
-        
-        document.getElementById('eta-game-container').innerHTML = `
-            <div style="text-align: center; color: #ffd700; padding: 60px 40px;">
-                <div style="font-size: 64px; margin-bottom: 30px;">🚧</div>
-                <h2 style="color: #ffd700; margin-bottom: 20px;">ETA: Echoes of Rebirth</h2>
-                <p style="color: #ccc; margin: 20px 0; font-size: 18px;">This advanced narrative RPG is currently in development.</p>
-                <p style="color: #999; font-size: 16px; margin-bottom: 30px;">
-                    A mystical journey through multiple lifetimes awaits...
-                </p>
-                <button onclick="returnToKruraSelection()" style="
-                    background: linear-gradient(45deg, #9b59b6, #8e44ad);
-                    color: white;
-                    border: none;
-                    padding: 15px 30px;
-                    border-radius: 25px;
-                    cursor: pointer;
-                    font-size: 16px;
-                    margin-top: 20px;
-                    transition: all 0.3s ease;
-                    box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3);
-                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 89, 182, 0.4)'"
-                   onmouseout="this.style.transform=''; this.style.boxShadow='0 4px 15px rgba(155, 89, 182, 0.3)'">
-                    ← Back to Games
-                </button>
-            </div>
-        `;
-    };
+
     
     window.returnToKruraSelection = function() {
         // Smooth transition back to selection

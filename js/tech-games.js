@@ -1,10 +1,72 @@
 // Tech Games - Educational Games for Learning Programming Concepts
+// Updated: 2025-07-24 with Speed Typing Test Game
 class TechGamesManager {
     constructor() {
         this.currentGame = null;
         this.score = 0;
         this.currentLevel = 1;
+        
+        // Typing Test Game State
+        this.typingGame = {
+            currentText: '',
+            userInput: '',
+            startTime: null,
+            endTime: null,
+            errors: 0,
+            currentCharIndex: 0,
+            isActive: false,
+            timeLimit: 60, // seconds
+            mode: 'time', // 'time' or 'words'
+            difficulty: 'medium',
+            playerName: ''
+        };
+        
+        // Leaderboard System
+        this.leaderboard = this.loadLeaderboard();
+        
         this.questions = {
+            typing_test: {
+                // Programming-themed typing tests
+                easy: [
+                    "function hello() { console.log('Hello World'); }",
+                    "let x = 10; let y = 20; let sum = x + y;",
+                    "if (true) { return 'success'; } else { return 'fail'; }",
+                    "const array = [1, 2, 3, 4, 5]; array.push(6);",
+                    "for (let i = 0; i < 10; i++) { console.log(i); }",
+                    "const user = { name: 'John', age: 30, city: 'New York' };",
+                    "function add(a, b) { return a + b; } add(5, 3);",
+                    "const message = 'Hello, ' + name + '!'; alert(message);",
+                    "try { riskyFunction(); } catch (error) { console.error(error); }",
+                    "const numbers = [1, 2, 3].map(n => n * 2); console.log(numbers);"
+                ],
+                medium: [
+                    "The quick brown fox jumps over the lazy dog. This sentence contains every letter of the alphabet.",
+                    "Programming is the art of telling another human being what one wants the computer to do.",
+                    "Code is like humor. When you have to explain it, it's bad. Clean code always looks like it was written by someone who cares.",
+                    "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
+                    "First, solve the problem. Then, write the code. The best error message is the one that never shows up.",
+                    "There are only two hard things in Computer Science: cache invalidation and naming things.",
+                    "Programming isn't about what you know; it's about what you can figure out. Talk is cheap. Show me the code.",
+                    "The most important skill for a programmer is the ability to effectively communicate with other human beings.",
+                    "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
+                    "Walking on water and developing software from a specification are easy if both are frozen."
+                ],
+                hard: [
+                    "Implementation details matter. Abstractions are leaky. Performance is a feature. Premature optimization is the root of all evil, but when you need it, you really need it. The best code is no code at all.",
+                    "In the world of software development, there are two types of people: those who understand recursion, and those who don't understand recursion, and those who understand recursion.",
+                    "The fundamental problem with program testing is that testing can be used to show the presence of bugs, but never to show their absence. Every program has at least one bug and can be shortened by at least one instruction.",
+                    "Measuring programming progress by lines of code is like measuring aircraft building progress by weight. The bearing of a child takes nine months, no matter how many women are assigned.",
+                    "Computer science education cannot make anybody an expert programmer any more than studying brushes and pigment can make somebody an expert painter. The most amazing achievement of the computer software industry is its continuing cancellation of the steady and staggering gains made by the computer hardware industry.",
+                    "There are two ways of constructing a software design: One way is to make it so simple that there are obviously no deficiencies, and the other way is to make it so complicated that there are no obvious deficiencies. The first method is far more difficult."
+                ],
+                // Code snippets for programming practice
+                code_snippets: [
+                    "function quickSort(arr) {\n  if (arr.length <= 1) return arr;\n  const pivot = arr[arr.length - 1];\n  const left = arr.filter(x => x < pivot);\n  const right = arr.filter(x => x > pivot);\n  return [...quickSort(left), pivot, ...quickSort(right)];\n}",
+                    "class LinkedList {\n  constructor() {\n    this.head = null;\n    this.size = 0;\n  }\n  \n  add(data) {\n    const node = { data, next: null };\n    if (!this.head) {\n      this.head = node;\n    } else {\n      let current = this.head;\n      while (current.next) current = current.next;\n      current.next = node;\n    }\n    this.size++;\n  }\n}",
+                    "async function fetchUserData(userId) {\n  try {\n    const response = await fetch(`/api/users/${userId}`);\n    if (!response.ok) throw new Error('User not found');\n    const userData = await response.json();\n    return userData;\n  } catch (error) {\n    console.error('Error fetching user data:', error);\n    throw error;\n  }\n}",
+                    "const fibonacci = (n, memo = {}) => {\n  if (n in memo) return memo[n];\n  if (n <= 2) return 1;\n  memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo);\n  return memo[n];\n};\n\nconst result = fibonacci(40);\nconsole.log(`Fibonacci(40) = ${result}`);"
+                ]
+            },
             c_language: [
                 {
                     question: "What is the correct syntax to print 'Hello World' in C?",
@@ -409,6 +471,114 @@ class TechGamesManager {
         this.init();
     }
 
+    // Leaderboard methods
+    loadLeaderboard() {
+        try {
+            const savedLeaderboard = localStorage.getItem('typingTestLeaderboard');
+            return savedLeaderboard ? JSON.parse(savedLeaderboard) : [];
+        } catch (error) {
+            console.error('Error loading leaderboard:', error);
+            return [];
+        }
+    }
+
+    saveLeaderboard() {
+        try {
+            localStorage.setItem('typingTestLeaderboard', JSON.stringify(this.leaderboard));
+        } catch (error) {
+            console.error('Error saving leaderboard:', error);
+        }
+    }
+
+    addToLeaderboard(playerName, wpm, accuracy, errors, difficulty, mode) {
+        const score = {
+            name: playerName,
+            wpm: wpm,
+            accuracy: accuracy,
+            errors: errors,
+            difficulty: difficulty,
+            mode: mode,
+            date: new Date().toLocaleDateString(),
+            timestamp: Date.now()
+        };
+
+        this.leaderboard.push(score);
+        
+        // Sort by WPM descending, then by accuracy descending, then by errors ascending
+        this.leaderboard.sort((a, b) => {
+            if (b.wpm !== a.wpm) return b.wpm - a.wpm;
+            if (b.accuracy !== a.accuracy) return b.accuracy - a.accuracy;
+            return a.errors - b.errors;
+        });
+
+        // Keep only top 5
+        this.leaderboard = this.leaderboard.slice(0, 5);
+        
+        this.saveLeaderboard();
+        
+        // Find the rank of this score
+        const scoreIndex = this.leaderboard.findIndex(s => s.timestamp === score.timestamp);
+        return scoreIndex >= 0 ? scoreIndex + 1 : -1; // Return rank (1-based) or -1 if not found
+    }
+
+    displayLeaderboard() {
+        const leaderboardList = document.getElementById('leaderboardList');
+        
+        if (this.leaderboard.length === 0) {
+            leaderboardList.innerHTML = '<div class="empty-leaderboard">No scores yet. Be the first to play!</div>';
+            return;
+        }
+
+        leaderboardList.innerHTML = this.leaderboard.map((score, index) => {
+            const rank = index + 1;
+            const rankClass = rank <= 3 ? `rank-${rank}` : '';
+            const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
+            
+            return `
+                <div class="leaderboard-entry ${rankClass}">
+                    <div class="leaderboard-rank">${medal || rank}</div>
+                    <div class="leaderboard-name">${score.name}</div>
+                    <div class="leaderboard-stats">
+                        <div class="leaderboard-stat">
+                            <span class="leaderboard-stat-value">${score.wpm}</span>
+                            <span class="leaderboard-stat-label">WPM</span>
+                        </div>
+                        <div class="leaderboard-stat">
+                            <span class="leaderboard-stat-value">${score.accuracy}%</span>
+                            <span class="leaderboard-stat-label">Accuracy</span>
+                        </div>
+                        <div class="leaderboard-stat">
+                            <span class="leaderboard-stat-value">${score.errors}</span>
+                            <span class="leaderboard-stat-label">Errors</span>
+                        </div>
+                        <div class="leaderboard-stat">
+                            <span class="leaderboard-stat-value">${score.difficulty}</span>
+                            <span class="leaderboard-stat-label">Difficulty</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    showPlayerNameInput() {
+        document.getElementById('playerNameInput').style.display = 'block';
+        document.getElementById('playerNameField').focus();
+    }
+
+    hidePlayerNameInput() {
+        document.getElementById('playerNameInput').style.display = 'none';
+    }
+
+    showLeaderboardDisplay() {
+        this.displayLeaderboard();
+        document.getElementById('leaderboardDisplay').style.display = 'block';
+    }
+
+    hideLeaderboardDisplay() {
+        document.getElementById('leaderboardDisplay').style.display = 'none';
+    }
+
     init() {
         // Add event listener for Tech Games button
         const techGamesBtn = document.getElementById('techGamesButton');
@@ -418,20 +588,77 @@ class TechGamesManager {
     }
 
     showTechGamesModal() {
-        // Create or show tech games modal
+        // Create or show tech games modal - force recreation to ensure latest content
+        console.log('Creating Tech Games Modal with Typing Test - Version 2.0');
         let modal = document.getElementById('techGamesModal');
-        if (!modal) {
+        if (modal) {
+            console.log('Removing existing modal');
+            modal.remove(); // Remove existing modal to force recreation
+        }
+        
+        // Small delay to ensure DOM cleanup
+        setTimeout(() => {
             modal = this.createTechGamesModal();
             document.body.appendChild(modal);
+            modal.style.display = 'flex';
+            
+            // Ensure typing game card is present and visible
+            this.ensureTypingGameCard();
+            
+            this.showGameSelection();
+            
+            // Debug: Check if typing game card exists
+            setTimeout(() => {
+                const typingCard = document.querySelector('.tech-game-card.recommended[data-game="typing_test"]');
+                const allCards = document.querySelectorAll('.tech-game-card');
+                console.log('Total cards found:', allCards.length);
+                console.log('All card data-games:', Array.from(allCards).map(card => card.dataset.game));
+                console.log('Typing game card found:', typingCard);
+                if (typingCard) {
+                    console.log('Typing card classes:', typingCard.className);
+                    console.log('Typing card data-game:', typingCard.dataset.game);
+                    console.log('Typing card display:', window.getComputedStyle(typingCard).display);
+                    console.log('Typing card visibility:', window.getComputedStyle(typingCard).visibility);
+                }
+            }, 100);
+        }, 50);
+    }
+
+    ensureTypingGameCard() {
+        const grid = document.querySelector('.tech-games-grid');
+        let typingCard = document.querySelector('.tech-game-card[data-game="typing_test"]');
+        
+        if (!typingCard && grid) {
+            console.log('Typing card not found, creating it manually');
+            typingCard = document.createElement('div');
+            typingCard.className = 'tech-game-card recommended';
+            typingCard.dataset.game = 'typing_test';
+            typingCard.innerHTML = `
+                <div class="tech-game-icon">⌨️</div>
+                <div class="recommended-badge">🌟 RECOMMENDED</div>
+                <h4>Speed Typing Test</h4>
+                <p>Improve your typing speed and accuracy with MonkeyType-inspired challenges</p>
+                <div class="difficulty-badge">All Levels</div>
+                <button class="start-tech-game-btn">Start Typing</button>
+            `;
+            
+            // Add event listener
+            typingCard.querySelector('.start-tech-game-btn').addEventListener('click', () => {
+                this.startTechGame('typing_test');
+            });
+            
+            // Insert at the beginning
+            grid.insertBefore(typingCard, grid.firstChild);
+            console.log('Typing card manually added');
         }
-        modal.style.display = 'flex';
-        this.showGameSelection();
     }
 
     createTechGamesModal() {
+        console.log('Creating modal with typing test card');
         const modal = document.createElement('div');
         modal.id = 'techGamesModal';
         modal.className = 'tech-games-modal';
+        
         modal.innerHTML = `
             <div class="tech-games-modal-content">
                 <div class="tech-games-modal-header">
@@ -442,6 +669,14 @@ class TechGamesManager {
                     <div id="techGameSelection" class="tech-game-selection">
                         <h3>Choose Your Learning Adventure</h3>
                         <div class="tech-games-grid">
+                            <div class="tech-game-card recommended" data-game="typing_test">
+                                <div class="tech-game-icon">⌨️</div>
+                                <div class="recommended-badge">🌟 RECOMMENDED</div>
+                                <h4>Speed Typing Test</h4>
+                                <p>Improve your typing speed and accuracy with MonkeyType-inspired challenges</p>
+                                <div class="difficulty-badge">All Levels</div>
+                                <button class="start-tech-game-btn">Start Typing</button>
+                            </div>
                             <div class="tech-game-card" data-game="c_language">
                                 <div class="tech-game-icon">⚙️</div>
                                 <h4>C Language Quiz</h4>
@@ -515,9 +750,7 @@ class TechGamesManager {
                         <div class="question-container">
                             <div class="question-card">
                                 <h4 id="questionText">Question will appear here</h4>
-                                <div class="options-container" id="optionsContainer">
-                                    <!-- Options will be dynamically added -->
-                                </div>
+                                <div class="options-container" id="optionsContainer"></div>
                                 <div class="question-feedback" id="questionFeedback" style="display: none;">
                                     <div class="feedback-content">
                                         <div class="feedback-icon"></div>
@@ -559,9 +792,117 @@ class TechGamesManager {
                             </div>
                         </div>
                     </div>
+                    <div id="typingTestGame" class="typing-test-game" style="display: none;">
+                        <div class="typing-header">
+                            <div class="typing-info">
+                                <h3>⌨️ Speed Typing Test</h3>
+                                <div class="typing-stats">
+                                    <span class="stat-item">WPM: <span id="currentWPM">0</span></span>
+                                    <span class="stat-item">Accuracy: <span id="currentAccuracy">100%</span></span>
+                                    <span class="stat-item">Time: <span id="timeRemaining">60</span>s</span>
+                                    <span class="stat-item">Errors: <span id="errorCount">0</span></span>
+                                </div>
+                            </div>
+                            <button id="backToTypingSelection" class="back-btn">← Back to Games</button>
+                        </div>
+                        <div id="playerNameInput" class="player-name-section">
+                            <div class="name-input-container">
+                                <h3>🏆 Enter Your Name</h3>
+                                <p>Enter your name to compete on the leaderboard!</p>
+                                <div class="name-input-group">
+                                    <input type="text" id="playerNameField" placeholder="Enter your name..." maxlength="20" />
+                                    <button id="continueWithName" class="continue-btn">Continue</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="leaderboardDisplay" class="leaderboard-section">
+                            <h3>🏆 Top 5 Leaderboard</h3>
+                            <div class="leaderboard-list" id="leaderboardList"></div>
+                            <button id="closeLeaderboard" class="close-leaderboard-btn">Continue to Game</button>
+                        </div>
+                        <div class="typing-settings">
+                            <div class="setting-group">
+                                <label>Mode:</label>
+                                <select id="typingMode">
+                                    <option value="time">Time Mode (60s)</option>
+                                    <option value="words">Word Mode (50 words)</option>
+                                    <option value="quote">Quote Mode</option>
+                                </select>
+                            </div>
+                            <div class="setting-group">
+                                <label>Difficulty:</label>
+                                <select id="typingDifficulty">
+                                    <option value="easy">Easy (Simple code)</option>
+                                    <option value="medium" selected>Medium (Quotes)</option>
+                                    <option value="hard">Hard (Complex text)</option>
+                                    <option value="code">Code (Programming)</option>
+                                </select>
+                            </div>
+                            <div class="setting-group">
+                                <label>Player:</label>
+                                <span id="currentPlayerName" class="player-name-display">-</span>
+                                <button id="changePlayerName" class="change-name-btn">Change Name</button>
+                            </div>
+                            <button id="startTypingTest" class="start-typing-btn">Start Test</button>
+                            <button id="restartTypingTest" class="restart-typing-btn" style="display: none;">Restart</button>
+                            <button id="showLeaderboard" class="show-leaderboard-btn">View Leaderboard 🏆</button>
+                        </div>
+                        <div class="typing-container">
+                            <div class="text-display" id="textDisplay">
+                                <div class="typing-text" id="typingText">Click "Start Test" to begin your typing challenge...</div>
+                            </div>
+                            <div class="typing-input-container">
+                                <textarea id="typingInput" class="typing-input" placeholder="Click 'Start Test' and start typing here..." disabled spellcheck="false" autocomplete="off"></textarea>
+                            </div>
+                        </div>
+                        <div class="typing-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="typingProgressFill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="typingTestResults" class="typing-test-results" style="display: none;">
+                        <div class="results-container">
+                            <div class="results-icon">⌨️</div>
+                            <h3>Typing Test Complete!</h3>
+                            <div class="typing-results-stats">
+                                <div class="stat-card">
+                                    <span class="stat-value" id="finalWPM">0</span>
+                                    <span class="stat-label">Words Per Minute</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-value" id="finalAccuracy">0%</span>
+                                    <span class="stat-label">Accuracy</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-value" id="finalTime">0</span>
+                                    <span class="stat-label">Time (seconds)</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-value" id="finalErrors">0</span>
+                                    <span class="stat-label">Total Errors</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-value" id="finalCharacters">0</span>
+                                    <span class="stat-label">Characters Typed</span>
+                                </div>
+                                <div class="stat-card">
+                                    <span class="stat-value" id="typingRank">Beginner</span>
+                                    <span class="stat-label">Typing Rank</span>
+                                </div>
+                            </div>
+                            <div class="performance-message" id="performanceMessage"></div>
+                            <div class="results-actions">
+                                <button id="retakeTypingTest" class="play-again-btn">Take Test Again</button>
+                                <button id="backToTypingGames" class="back-to-games-btn">Choose Another Game</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
+
+        console.log('Modal HTML created successfully');
 
         // Add event listeners
         modal.querySelector('.tech-games-close-btn').addEventListener('click', () => {
@@ -598,6 +939,12 @@ class TechGamesManager {
         this.currentQuestionIndex = 0;
         this.correctAnswers = 0;
 
+        // Handle typing test game differently
+        if (gameType === 'typing_test') {
+            this.startTypingTest();
+            return;
+        }
+
         // Show game play area
         document.getElementById('techGameSelection').style.display = 'none';
         document.getElementById('techGamePlay').style.display = 'block';
@@ -605,6 +952,7 @@ class TechGamesManager {
 
         // Set game title
         const titles = {
+            typing_test: 'Speed Typing Test',
             c_language: 'C Language Quiz',
             python: 'Python Quiz',
             github: 'GitHub Commands Quiz',
@@ -757,6 +1105,409 @@ class TechGamesManager {
             resultsTitle.textContent = 'Keep Learning!';
             resultsMessage.textContent = 'Don\'t worry, everyone starts somewhere. Try again and learn from the explanations!';
         }
+    }
+
+    // Typing Test Game Methods
+    startTypingTest() {
+        // Hide other screens
+        document.getElementById('techGameSelection').style.display = 'none';
+        document.getElementById('techGamePlay').style.display = 'none';
+        document.getElementById('techGameResults').style.display = 'none';
+        document.getElementById('typingTestResults').style.display = 'none';
+        
+        // Show typing test interface
+        document.getElementById('typingTestGame').style.display = 'block';
+        
+        // Setup event listeners
+        this.setupTypingTestEventListeners();
+        
+        // Reset typing game state
+        this.resetTypingGameState();
+    }
+
+    setupTypingTestEventListeners() {
+        // Back to selection
+        document.getElementById('backToTypingSelection').addEventListener('click', () => {
+            this.showGameSelection();
+        });
+
+        // Start typing test
+        document.getElementById('startTypingTest').addEventListener('click', () => {
+            this.beginTypingTest();
+        });
+
+        // Restart typing test
+        document.getElementById('restartTypingTest').addEventListener('click', () => {
+            this.beginTypingTest();
+        });
+
+        // Typing input handler
+        const typingInput = document.getElementById('typingInput');
+        typingInput.addEventListener('input', (e) => {
+            this.handleTypingInput(e);
+        });
+
+        typingInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+            }
+        });
+
+        // Results screen handlers
+        document.getElementById('retakeTypingTest').addEventListener('click', () => {
+            this.startTypingTest();
+        });
+
+        document.getElementById('backToTypingGames').addEventListener('click', () => {
+            this.showGameSelection();
+        });
+
+        // Player name input handlers
+        document.getElementById('continueWithName').addEventListener('click', () => {
+            const playerName = document.getElementById('playerNameField').value.trim();
+            if (playerName) {
+                this.typingGame.playerName = playerName;
+                document.getElementById('currentPlayerName').textContent = playerName;
+                this.hidePlayerNameInput();
+                this.showLeaderboardDisplay();
+            } else {
+                alert('Please enter your name to continue!');
+            }
+        });
+
+        document.getElementById('playerNameField').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('continueWithName').click();
+            }
+        });
+
+        document.getElementById('changePlayerName').addEventListener('click', () => {
+            this.showPlayerNameInput();
+        });
+
+        // Leaderboard handlers
+        document.getElementById('showLeaderboard').addEventListener('click', () => {
+            this.showLeaderboardDisplay();
+        });
+
+        document.getElementById('closeLeaderboard').addEventListener('click', () => {
+            this.hideLeaderboardDisplay();
+        });
+    }
+
+    resetTypingGameState() {
+        this.typingGame = {
+            currentText: '',
+            userInput: '',
+            startTime: null,
+            endTime: null,
+            errors: 0,
+            currentCharIndex: 0,
+            isActive: false,
+            timeLimit: 60,
+            mode: 'time',
+            difficulty: 'medium',
+            totalCharacters: 0,
+            correctCharacters: 0
+        };
+
+        // Reset UI
+        document.getElementById('currentWPM').textContent = '0';
+        document.getElementById('currentAccuracy').textContent = '100%';
+        document.getElementById('timeRemaining').textContent = '60';
+        document.getElementById('errorCount').textContent = '0';
+        document.getElementById('typingInput').value = '';
+        document.getElementById('typingInput').disabled = true;
+        document.getElementById('startTypingTest').style.display = 'block';
+        document.getElementById('restartTypingTest').style.display = 'none';
+        
+        this.updateTypingProgress(0);
+    }
+
+    beginTypingTest() {
+        // Check if player name is set
+        if (!this.typingGame.playerName) {
+            this.showPlayerNameInput();
+            return;
+        }
+
+        // Get selected settings
+        const mode = document.getElementById('typingMode').value;
+        const difficulty = document.getElementById('typingDifficulty').value;
+        
+        this.typingGame.mode = mode;
+        this.typingGame.difficulty = difficulty;
+        
+        // Set time limit based on mode
+        if (mode === 'time') {
+            this.typingGame.timeLimit = 60;
+        } else if (mode === 'words') {
+            this.typingGame.timeLimit = 300; // 5 minutes max for word mode
+        } else {
+            this.typingGame.timeLimit = 120; // 2 minutes for quotes
+        }
+
+        // Select text based on difficulty
+        this.selectTypingText();
+        
+        // Setup the test
+        this.displayTypingText();
+        
+        // Enable input and start
+        const typingInput = document.getElementById('typingInput');
+        typingInput.disabled = false;
+        typingInput.value = '';
+        typingInput.focus();
+        typingInput.placeholder = 'Start typing here...';
+        
+        // Reset state
+        this.typingGame.startTime = Date.now();
+        this.typingGame.isActive = true;
+        this.typingGame.errors = 0;
+        this.typingGame.currentCharIndex = 0;
+        this.typingGame.userInput = '';
+        
+        // Update UI
+        document.getElementById('startTypingTest').style.display = 'none';
+        document.getElementById('restartTypingTest').style.display = 'block';
+        document.getElementById('timeRemaining').textContent = this.typingGame.timeLimit;
+        
+        // Start timer
+        this.startTypingTimer();
+    }
+
+    selectTypingText() {
+        const { difficulty, mode } = this.typingGame;
+        const texts = this.questions.typing_test;
+        
+        let selectedTexts;
+        if (difficulty === 'code') {
+            selectedTexts = texts.code_snippets;
+        } else {
+            selectedTexts = texts[difficulty] || texts.medium;
+        }
+        
+        // Select random text
+        const randomIndex = Math.floor(Math.random() * selectedTexts.length);
+        this.typingGame.currentText = selectedTexts[randomIndex];
+        
+        // For word mode, limit to ~50 words
+        if (mode === 'words') {
+            const words = this.typingGame.currentText.split(' ');
+            if (words.length > 50) {
+                this.typingGame.currentText = words.slice(0, 50).join(' ');
+            }
+        }
+    }
+
+    displayTypingText() {
+        const textDisplay = document.getElementById('typingText');
+        textDisplay.innerHTML = '';
+        
+        // Create spans for each character
+        for (let i = 0; i < this.typingGame.currentText.length; i++) {
+            const span = document.createElement('span');
+            span.textContent = this.typingGame.currentText[i];
+            span.id = `char-${i}`;
+            textDisplay.appendChild(span);
+        }
+    }
+
+    handleTypingInput(e) {
+        if (!this.typingGame.isActive) return;
+        
+        const input = e.target.value;
+        this.typingGame.userInput = input;
+        
+        // Update character highlighting
+        this.updateCharacterHighlighting();
+        
+        // Update stats
+        this.updateTypingStats();
+        
+        // Check completion
+        if (input.length >= this.typingGame.currentText.length) {
+            this.finishTypingTest();
+        }
+    }
+
+    updateCharacterHighlighting() {
+        const text = this.typingGame.currentText;
+        const input = this.typingGame.userInput;
+        
+        let correctCount = 0;
+        let errorCount = 0;
+        
+        for (let i = 0; i < text.length; i++) {
+            const char = document.getElementById(`char-${i}`);
+            if (!char) continue;
+            
+            if (i < input.length) {
+                if (input[i] === text[i]) {
+                    char.className = 'correct';
+                    correctCount++;
+                } else {
+                    char.className = 'incorrect';
+                    errorCount++;
+                }
+            } else if (i === input.length) {
+                char.className = 'current';
+            } else {
+                char.className = '';
+            }
+        }
+        
+        this.typingGame.correctCharacters = correctCount;
+        this.typingGame.errors = errorCount;
+        this.typingGame.currentCharIndex = input.length;
+    }
+
+    updateTypingStats() {
+        const currentTime = Date.now();
+        const timeElapsed = (currentTime - this.typingGame.startTime) / 1000;
+        const timeRemaining = Math.max(0, this.typingGame.timeLimit - timeElapsed);
+        
+        // Calculate WPM (assuming average word length of 5 characters)
+        const charactersTyped = this.typingGame.currentCharIndex;
+        const wordsTyped = charactersTyped / 5;
+        const wpm = timeElapsed > 0 ? Math.round((wordsTyped / timeElapsed) * 60) : 0;
+        
+        // Calculate accuracy
+        const totalTyped = this.typingGame.userInput.length;
+        const accuracy = totalTyped > 0 ? Math.round((this.typingGame.correctCharacters / totalTyped) * 100) : 100;
+        
+        // Update UI
+        document.getElementById('currentWPM').textContent = wpm;
+        document.getElementById('currentAccuracy').textContent = accuracy + '%';
+        document.getElementById('timeRemaining').textContent = Math.ceil(timeRemaining);
+        document.getElementById('errorCount').textContent = this.typingGame.errors;
+        
+        // Update progress
+        const progress = (charactersTyped / this.typingGame.currentText.length) * 100;
+        this.updateTypingProgress(progress);
+        
+        // Check time limit
+        if (timeRemaining <= 0 && this.typingGame.mode === 'time') {
+            this.finishTypingTest();
+        }
+    }
+
+    updateTypingProgress(percentage) {
+        const progressFill = document.getElementById('typingProgressFill');
+        progressFill.style.width = Math.min(percentage, 100) + '%';
+    }
+
+    startTypingTimer() {
+        this.typingTimer = setInterval(() => {
+            if (!this.typingGame.isActive) {
+                clearInterval(this.typingTimer);
+                return;
+            }
+            this.updateTypingStats();
+        }, 100);
+    }
+
+    finishTypingTest() {
+        this.typingGame.isActive = false;
+        this.typingGame.endTime = Date.now();
+        
+        // Clear timer
+        if (this.typingTimer) {
+            clearInterval(this.typingTimer);
+        }
+        
+        // Disable input
+        document.getElementById('typingInput').disabled = true;
+        
+        // Calculate final stats
+        this.calculateTypingResults();
+        
+        // Show results
+        setTimeout(() => {
+            this.showTypingResults();
+        }, 1000);
+    }
+
+    calculateTypingResults() {
+        const timeElapsed = (this.typingGame.endTime - this.typingGame.startTime) / 1000;
+        const totalCharacters = this.typingGame.userInput.length;
+        const correctCharacters = this.typingGame.correctCharacters;
+        const errors = this.typingGame.errors;
+        
+        // Calculate WPM
+        const wordsTyped = correctCharacters / 5;
+        const wpm = timeElapsed > 0 ? Math.round((wordsTyped / timeElapsed) * 60) : 0;
+        
+        // Calculate accuracy
+        const accuracy = totalCharacters > 0 ? Math.round((correctCharacters / totalCharacters) * 100) : 100;
+        
+        // Determine rank
+        let rank = 'Beginner';
+        if (wpm >= 80) rank = 'Expert';
+        else if (wpm >= 60) rank = 'Advanced';
+        else if (wpm >= 40) rank = 'Intermediate';
+        else if (wpm >= 20) rank = 'Beginner+';
+        
+        this.typingGame.finalStats = {
+            wpm,
+            accuracy,
+            timeElapsed: Math.round(timeElapsed),
+            totalCharacters,
+            correctCharacters,
+            errors,
+            rank
+        };
+
+        // Add to leaderboard
+        const leaderboardRank = this.addToLeaderboard(
+            this.typingGame.playerName,
+            wpm,
+            accuracy,
+            errors,
+            this.typingGame.difficulty,
+            this.typingGame.mode
+        );
+        
+        this.typingGame.finalStats.leaderboardRank = leaderboardRank;
+    }
+
+    showTypingResults() {
+        // Hide typing game
+        document.getElementById('typingTestGame').style.display = 'none';
+        
+        // Show results
+        document.getElementById('typingTestResults').style.display = 'block';
+        
+        const stats = this.typingGame.finalStats;
+        
+        // Update result values
+        document.getElementById('finalWPM').textContent = stats.wpm;
+        document.getElementById('finalAccuracy').textContent = stats.accuracy + '%';
+        document.getElementById('finalTime').textContent = stats.timeElapsed;
+        document.getElementById('finalErrors').textContent = stats.errors;
+        document.getElementById('finalCharacters').textContent = stats.totalCharacters;
+        document.getElementById('typingRank').textContent = stats.rank;
+        
+        // Performance message
+        const messageEl = document.getElementById('performanceMessage');
+        let performanceMessage = '';
+        if (stats.wpm >= 60 && stats.accuracy >= 95) {
+            performanceMessage = '🏆 Outstanding! You type like a professional programmer!';
+        } else if (stats.wpm >= 40 && stats.accuracy >= 90) {
+            performanceMessage = '🌟 Great job! Your typing skills are above average!';
+        } else if (stats.wpm >= 20 && stats.accuracy >= 80) {
+            performanceMessage = '👍 Good work! Keep practicing to improve your speed and accuracy!';
+        } else {
+            performanceMessage = '📈 Don\'t worry, everyone improves with practice. Try again!';
+        }
+        
+        // Add leaderboard rank information
+        if (stats.leaderboardRank && stats.leaderboardRank <= 5) {
+            const rankEmoji = stats.leaderboardRank === 1 ? '🥇' : stats.leaderboardRank === 2 ? '🥈' : stats.leaderboardRank === 3 ? '🥉' : '🏅';
+            performanceMessage += ` ${rankEmoji} You ranked #${stats.leaderboardRank} on the leaderboard!`;
+        }
+        
+        messageEl.textContent = performanceMessage;
     }
 }
 
