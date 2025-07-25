@@ -682,6 +682,7 @@ footer {
 #about {
     padding: 75px 15px;
     border-bottom: 1px solid var(--border);
+    text-align: center;
 }
 
 #about h2 {
@@ -692,6 +693,23 @@ footer {
 #about p {
     color: var(--text);
     margin: 0;
+}
+
+#about .col-md-8 {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#about .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#about .row {
+    width: 100%;
+    justify-content: center;
 }
 
 /*
@@ -1293,6 +1311,10 @@ footer {
 .about-content {
     margin-top: 20px;
     text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
 }
 
 .lead-paragraph {
@@ -1301,15 +1323,17 @@ footer {
     margin-bottom: 25px;
     color: var(--text);
     text-align: center;
+    max-width: 100%;
 }
 
 .highlight-box {
     background: #f8f9fa;
     border-left: 4px solid var(--base-color);
     padding: 20px;
-    margin: 20px 0;
+    margin: 20px auto;
     border-radius: 5px;
     text-align: center;
+    max-width: 100%;
 }
 
 .highlight-box h4 {
@@ -1325,6 +1349,7 @@ footer {
     text-align: left;
     display: inline-block;
     margin: 0 auto;
+    max-width: 100%;
 }
 
 .focus-list li {
@@ -1346,10 +1371,11 @@ footer {
     color: white;
     padding: 20px;
     border-radius: 10px;
-    margin-top: 25px;
+    margin: 25px auto 0;
     border-left: 4px solid var(--accent-color);
-    box-shadow: var(--shadow-medium);
     text-align: center;
+    max-width: 100%;
+    box-shadow: var(--shadow-medium);
 }
 
 .career-objective h4 {
@@ -4588,14 +4614,21 @@ h2.heading:after {
 
 .project-header {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     gap: 15px;
     margin-bottom: 15px;
+    text-align: center;
 }
 
 .project-icon {
     font-size: 2.5em;
     flex-shrink: 0;
+}
+
+.project-title-area {
+    text-align: center;
 }
 
 .project-title-area h3 {
@@ -4879,14 +4912,21 @@ h2.heading:after {
 
 .exp-header {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     gap: 12px;
     margin-bottom: 12px;
+    text-align: center;
 }
 
 .exp-icon {
     font-size: 1.8em;
     flex-shrink: 0;
+}
+
+.exp-title-area {
+    text-align: center;
 }
 
 .exp-title-area h3 {
@@ -4959,14 +4999,21 @@ h2.heading:after {
 
 .edu-header {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     gap: 15px;
     margin-bottom: 15px;
+    text-align: center;
 }
 
 .edu-icon {
     font-size: 2em;
     flex-shrink: 0;
+}
+
+.edu-title-area {
+    text-align: center;
 }
 
 .edu-title-area h3 {
@@ -6103,5 +6150,53 @@ h2.heading:after {
     
     .detail-modal-body {
         padding: 15px;
+    }
+}
+
+/* Mobile responsive styles for About section */
+@media (max-width: 768px) {
+    #about .container {
+        display: block;
+        text-align: center;
+    }
+    
+    #about .col-md-4,
+    #about .col-md-8 {
+        width: 100%;
+        text-align: center;
+        margin: 0 auto;
+    }
+    
+    .about-content {
+        max-width: 100%;
+        padding: 0 10px;
+        margin: 20px auto;
+    }
+    
+    .highlight-box,
+    .career-objective {
+        margin: 20px auto;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    #about {
+        padding: 40px 10px;
+    }
+    
+    .about-content {
+        padding: 0 5px;
+    }
+    
+    .lead-paragraph {
+        font-size: 1em;
+        line-height: 1.5;
+    }
+    
+    .highlight-box,
+    .career-objective {
+        padding: 15px;
+        margin: 15px auto;
     }
 }
