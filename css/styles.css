@@ -558,13 +558,55 @@ footer {
     height: 100vh;
     min-height: 500px;
     max-height: 1080px;
-    background: linear-gradient(135deg, #000000 0%, #333333 50%, #000000 100%);
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
     background-size: cover;
     padding: 15px;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Animated Wave Background */
+#lead::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600'%3E%3Cpath d='M0,150 C300,250 500,50 600,150 C700,250 900,50 1200,150 L1200,600 L0,600 Z' fill='%2364B5F6' fill-opacity='0.1'/%3E%3C/svg%3E") no-repeat center center;
+    background-size: cover;
+    animation: waveMove 20s ease-in-out infinite;
+    z-index: 1;
+}
+
+#lead::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600'%3E%3Cpath d='M0,200 C400,100 600,300 800,200 C1000,100 1100,250 1200,200 L1200,600 L0,600 Z' fill='%2364B5F6' fill-opacity='0.05'/%3E%3C/svg%3E") no-repeat center center;
+    background-size: cover;
+    animation: waveMove 15s ease-in-out infinite reverse;
+    z-index: 2;
+}
+
+@keyframes waveMove {
+    0%, 100% {
+        transform: translateX(0) translateY(0) scale(1);
+    }
+    25% {
+        transform: translateX(-50px) translateY(-20px) scale(1.02);
+    }
+    50% {
+        transform: translateX(30px) translateY(15px) scale(0.98);
+    }
+    75% {
+        transform: translateX(-20px) translateY(-10px) scale(1.01);
+    }
 }
 
 #lead-content {
@@ -574,6 +616,122 @@ footer {
     max-width: 800px;
     margin: 0 auto;
     animation: fadeInUp 1s ease-out 0.5s both;
+    backdrop-filter: blur(2px);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+    padding: 40px 20px;
+    border: 1px solid rgba(100, 181, 246, 0.1);
+}
+
+/* Floating Particles Effect */
+#lead .particle {
+    position: absolute;
+    background: rgba(100, 181, 246, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 3;
+    animation: float 6s ease-in-out infinite;
+}
+
+#lead .particle:nth-child(1) {
+    width: 8px;
+    height: 8px;
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 8s;
+}
+
+#lead .particle:nth-child(2) {
+    width: 12px;
+    height: 12px;
+    top: 60%;
+    left: 80%;
+    animation-delay: 2s;
+    animation-duration: 6s;
+}
+
+#lead .particle:nth-child(3) {
+    width: 6px;
+    height: 6px;
+    top: 40%;
+    left: 70%;
+    animation-delay: 4s;
+    animation-duration: 10s;
+}
+
+#lead .particle:nth-child(4) {
+    width: 10px;
+    height: 10px;
+    top: 80%;
+    left: 20%;
+    animation-delay: 1s;
+    animation-duration: 7s;
+}
+
+#lead .particle:nth-child(5) {
+    width: 14px;
+    height: 14px;
+    top: 15%;
+    left: 90%;
+    animation-delay: 3s;
+    animation-duration: 9s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) translateX(0px) scale(1);
+        opacity: 0.7;
+    }
+    25% {
+        transform: translateY(-20px) translateX(10px) scale(1.1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-40px) translateX(-10px) scale(0.9);
+        opacity: 0.8;
+    }
+    75% {
+        transform: translateY(-20px) translateX(15px) scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+/* Enhanced wave effect with CSS gradients */
+#lead .wave-layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 200px;
+    background: linear-gradient(45deg, 
+        rgba(100, 181, 246, 0.1) 0%, 
+        rgba(100, 181, 246, 0.05) 50%, 
+        transparent 100%);
+    border-radius: 50%;
+    animation: waveRotate 25s linear infinite;
+    z-index: 2;
+}
+
+#lead .wave-layer:nth-child(even) {
+    animation-direction: reverse;
+    animation-duration: 30s;
+    background: linear-gradient(-45deg, 
+        rgba(100, 181, 246, 0.08) 0%, 
+        rgba(100, 181, 246, 0.03) 50%, 
+        transparent 100%);
+}
+
+@keyframes waveRotate {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.1);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
 }
 
 #lead-content h1,
@@ -612,8 +770,8 @@ footer {
     right: 0;
     bottom: 0;
     left: 0;
-    background: linear-gradient(45deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 100%);
-    z-index: 1;
+    background: linear-gradient(45deg, rgba(15,15,35,0.3) 0%, rgba(26,26,46,0.1) 100%);
+    z-index: 5;
 }
 
 #lead-down {
