@@ -1,9 +1,16 @@
-// RajeshBot AI - Personal Portfolio Chatbot
+// PAM-Bot - Personal Portfolio Chatbot (Inspired by PAM from The Office)
+// Version 2.0 - Fixed all K-RU-RA references, now fully PAM personality
+// If you see old bot messages, clear your browser cache (Ctrl+Shift+R or Cmd+Shift+R)
 class RajeshBot {
     constructor() {
         this.initializeBot();
         this.setupEventListeners();
         this.knowledgeBase = this.createKnowledgeBase();
+        this.pamPersonality = this.createPamPersonality();
+        this.conversationCount = 0;
+        
+        // Debug: Verify PAM personality is loaded
+        console.log('PAM Bot initialized with greetings:', this.pamPersonality.greetings[0]);
     }
 
     initializeBot() {
@@ -225,6 +232,66 @@ class RajeshBot {
         };
     }
 
+    createPamPersonality() {
+        return {
+            greetings: [
+                "Hi there! I'm PAM, Rajesh's portfolio assistant. Welcome to Dunder Mifflin Scranton... I mean, Rajesh's portfolio! How can I help you today?",
+                "Oh hi! I'm PAM, and I'd be happy to tell you about Rajesh's work experience. He's actually quite impressive - not like some of the people I've worked with... *cough* Ryan *cough*",
+                "Hello! PAM here - I've organized all of Rajesh's information for you. I'm really good at organizing things, unlike my old boss Michael who once tried to file bankruptcy by just shouting 'I DECLARE BANKRUPTCY!'",
+                "Hey! I'm PAM, your friendly portfolio receptionist. Rajesh asked me to help answer questions about his work. I promise I'm more reliable than the Dunder Mifflin phone system!"
+            ],
+            
+            professionalResponses: [
+                "Well, Rajesh is actually quite accomplished! Unlike Kevin from my old office who thought M&Ms were a food group...",
+                "I've seen a lot of resumes come through reception, and Rajesh's experience really stands out. He's very detail-oriented - something I definitely appreciate!",
+                "You know, Rajesh reminds me of the good parts of working at Dunder Mifflin - professional, dedicated, and actually knows what he's doing.",
+                "From what I can see, Rajesh has excellent technical skills. Much better than the time Dwight tried to 'upgrade' our computer system with his beet-powered calculator."
+            ],
+
+            skillsResponses: [
+                "Rajesh's technical skills are quite impressive! He knows Python, R, Machine Learning... way more than Jim knew about actual sales when he was pretending to work.",
+                "His programming abilities are solid - I bet he's never accidentally deleted important files like Michael did with the company directory... multiple times.",
+                "The variety of skills Rajesh has reminds me of all the different tasks I had to handle at reception - except his are actually useful and technical!",
+                "Machine Learning, Data Science, Cybersecurity - Rajesh knows it all! Unlike Creed, who I'm pretty sure doesn't know what a computer actually does."
+            ],
+
+            projectResponses: [
+                "His projects are really interesting! The image denoising work sounds much more complex than the time Dwight tried to 'enhance' our security cameras with magnifying glasses.",
+                "I love seeing organized, well-documented projects. It's refreshing after years of dealing with Michael's 'brilliant' business ideas written on napkins.",
+                "The car pricing project shows real practical applications - unlike Ryan's failed 'WUPHF' business venture that no one understood.",
+                "These technical projects remind me why I went back to school for art - but I really respect people who can make sense of all this data stuff!"
+            ],
+
+            contactResponses: [
+                "Oh, you want to get in touch with Rajesh? That's wonderful! I'll make sure he gets your message - I'm much more reliable than our old message system at Dunder Mifflin.",
+                "Feel free to reach out to him! He's probably available and not stuck in endless meetings about whether birthday parties should have cake or ice cream... or both.",
+                "I've set up all his contact information nicely. It's organized much better than our old filing system - Stanley used to hide crossword puzzles in the client files.",
+                "Rajesh would love to hear from you! He's actually responsive to emails, unlike someone I know who shall remain nameless... *cough* Michael *cough*"
+            ],
+
+            casualResponses: [
+                "That's a great question! You know, working here is so much nicer than Scranton. No one's trying to sell me their mixtape or asking me to plan their wedding to their laptop.",
+                "I'm happy to help! It's nice to assist someone who actually appreciates organization and professionalism. Makes a change from... well, you know.",
+                "Sure thing! I love talking about Rajesh's work - it's actually interesting, unlike the time I had to listen to Michael explain why he thought he invented the concept of 'friends.'",
+                "Of course! I'm here to help, and I promise I won't transfer you to 'extension infinity' like Jim used to do to Dwight."
+            ],
+
+            encouragement: [
+                "You know what? Rajesh seems like the kind of person who would fit in anywhere - professional, skilled, and probably won't try to start a fire to teach fire safety.",
+                "I think you'll really like working with Rajesh. He has that 'gets things done' energy that was so rare at my old job.",
+                "Rajesh's portfolio really shows his dedication. It's nice to see someone who takes their work seriously - but probably still knows how to have fun!",
+                "From what I can tell, Rajesh would be a great addition to any team. He seems reliable, which is honestly a breath of fresh air."
+            ],
+
+            confused: [
+                "Hmm, I'm not sure about that one. Let me check with Rajesh... just kidding! Unlike at Dunder Mifflin, I can't just yell across the office. What else can I help you with?",
+                "I didn't quite catch that - could you rephrase? I promise I'm listening better than the time Michael asked me to 'translate' his ideas into 'business speak.'",
+                "Sorry, could you be more specific? I want to give you the right information - I learned the importance of accuracy after Michael's 'World's Best Boss' mug incident.",
+                "I'm not sure I understand. Could you ask that differently? I'm much better at helping than I was at pretending to laugh at Michael's jokes!"
+            ]
+        };
+    }
+
     setupEventListeners() {
         // Modal controls
         this.chatbotButton?.addEventListener('click', () => this.openChatbot());
@@ -257,6 +324,10 @@ class RajeshBot {
     openChatbot() {
         this.chatbotModal.style.display = 'block';
         document.body.style.overflow = 'hidden';
+        
+        // Ensure PAM greeting is shown (in case of any caching issues)
+        console.log('Chatbot opened with PAM personality active');
+        
         setTimeout(() => {
             this.chatInput?.focus();
         }, 300);
@@ -293,19 +364,31 @@ class RajeshBot {
 
     generateResponse(userMessage) {
         const message = userMessage.toLowerCase();
+        this.conversationCount++;
         
-        // Greeting responses
+        // Check if Office theme is active
+        const isOfficeTheme = document.body.classList.contains('office-theme');
+        
+        // Special Office theme responses
+        if (isOfficeTheme && this.containsAny(message, ['office', 'dunder mifflin', 'scranton', 'michael', 'dwight', 'jim'])) {
+            return this.getOfficeThemeResponse(message);
+        }
+        
+        // Greeting responses with PAM personality
         if (this.containsAny(message, ['hi', 'hello', 'hey', 'greetings', 'good morning', 'good afternoon', 'good evening'])) {
-            return this.getRandomResponse([
-                "Hello! I'm K-RU-RA BOT, your guide to learning about Rajesh Kodaganti. What would you like to know about his background, skills, or experience?",
-                "Hi there! I'm here to help you learn everything about Rajesh's portfolio. Feel free to ask about his projects, certifications, or career journey!",
-                "Greetings! I'm K-RU-RA BOT, and I know all about Rajesh's professional journey. What interests you most - his technical skills, work experience, or recent projects?"
-            ]);
+            const greeting = this.getRandomResponse(this.pamPersonality.greetings);
+            if (isOfficeTheme) {
+                return greeting + "\n\n🏢 I see you're experiencing the Dunder Mifflin theme! Feel free to ask me about Rajesh's work - it's much more interesting than sorting through Michael's expense reports!";
+            }
+            return greeting;
         }
 
-        // Background and About
+        // Background and About with PAM's touch
         if (this.containsAny(message, ['background', 'about', 'who is', 'tell me about'])) {
-            return `Rajesh Kodaganti is a dedicated Computer Engineering graduate student at California State University, Northridge, with a strong passion for technology and innovation.
+            const professionalIntro = this.getRandomResponse(this.pamPersonality.professionalResponses);
+            return `${professionalIntro}
+
+Here's what I can tell you about Rajesh:
 
 🎓 **Current Status**: ${this.knowledgeBase.personal.status} - ${this.knowledgeBase.personal.title}
 💼 **Current Role**: ${this.knowledgeBase.personal.currentRole}
@@ -313,25 +396,27 @@ class RajeshBot {
 
 🎯 **Career Objective**: ${this.knowledgeBase.personal.careerObjective}
 
-Rajesh combines strong technical expertise with practical experience, making him an ideal candidate for roles in machine learning, data science, and software development.`;
+He really knows his stuff - definitely not like the time Ryan tried to explain 'synergy' using a PowerPoint with 47 slides about nothing!`;
         }
 
-        // Skills inquiry
+        // Skills inquiry with PAM's personality
         if (this.containsAny(message, ['skills', 'technologies', 'programming', 'tech stack', 'expertise', 'abilities'])) {
+            const skillsIntro = this.getRandomResponse(this.pamPersonality.skillsResponses);
             const skillCategories = Object.keys(this.knowledgeBase.skills);
-            let response = "Rajesh has an impressive and diverse technical skill set:\n\n";
+            let response = `${skillsIntro}\n\nHere's what Rajesh is really good at:\n\n`;
             
             skillCategories.forEach(category => {
                 response += `🛠️ **${category}**:\n${this.knowledgeBase.skills[category].join(', ')}\n\n`;
             });
             
-            response += "His expertise spans from low-level electronics to cutting-edge AI technologies, making him versatile for various technical roles!";
+            response += "His expertise spans from low-level electronics to cutting-edge AI technologies - definitely more useful than Dwight's 'beet farming optimization algorithms'!";
             return response;
         }
 
-        // Projects inquiry
+        // Projects inquiry with PAM's touch
         if (this.containsAny(message, ['projects', 'work', 'portfolio', 'built', 'developed', 'created'])) {
-            let response = "Here are Rajesh's featured projects that showcase his technical expertise:\n\n";
+            const projectIntro = this.getRandomResponse(this.pamPersonality.projectResponses);
+            let response = `${projectIntro}\n\nHere are Rajesh's featured projects:\n\n`;
             
             this.knowledgeBase.projects.forEach((project, index) => {
                 response += `📂 **${project.title}**\n`;
@@ -342,12 +427,14 @@ Rajesh combines strong technical expertise with practical experience, making him
                 if (index < this.knowledgeBase.projects.length - 1) response += "---\n\n";
             });
             
+            response += "\nAll much more impressive than the time Michael tried to 'revolutionize' paper sales with his 'Michael Scott Paper Company'!";
             return response;
         }
 
         // Experience inquiry
         if (this.containsAny(message, ['experience', 'work experience', 'jobs', 'career', 'employment', 'internship'])) {
-            let response = "Rajesh has diverse professional experience across multiple domains:\n\n";
+            const pamIntro = this.pamPersonality.professionalResponses[Math.floor(Math.random() * this.pamPersonality.professionalResponses.length)];
+            let response = `${pamIntro}\n\n📂 **Rajesh's Professional Experience**:\n\n`;
             
             this.knowledgeBase.experience.forEach((exp, index) => {
                 response += `💼 **${exp.position}** at ${exp.company}\n`;
@@ -359,6 +446,7 @@ Rajesh combines strong technical expertise with practical experience, making him
                 if (index < this.knowledgeBase.experience.length - 1) response += "---\n\n";
             });
             
+            response += "\n*I've filed all his experience details properly - no crossword puzzles hidden in these files like Stanley used to do!*";
             return response;
         }
 
@@ -396,6 +484,7 @@ Rajesh combines strong technical expertise with practical experience, making him
 
         // Contact inquiry
         if (this.containsAny(message, ['contact', 'reach', 'email', 'phone', 'location', 'hire', 'available'])) {
+            const pamResponse = this.pamPersonality.contactResponses[Math.floor(Math.random() * this.pamPersonality.contactResponses.length)];
             return `📞 **Contact Information**:
 
 🌟 **Availability**: ${this.knowledgeBase.contact.availability}
@@ -404,7 +493,7 @@ Rajesh combines strong technical expertise with practical experience, making him
 💼 **LinkedIn**: ${this.knowledgeBase.contact.linkedin}
 👨‍💻 **GitHub**: ${this.knowledgeBase.contact.github}
 
-Rajesh is actively seeking opportunities in Machine Learning Engineering, Data Science, Software Development, and Cybersecurity roles. He's ready to make an immediate impact at your organization!`;
+${pamResponse}`;
         }
 
         // Unique qualities
@@ -506,15 +595,22 @@ Perfect blend of statistical knowledge and modern data engineering skills!`;
 His unique combination of AI/ML skills with cybersecurity makes him valuable for modern security challenges!`;
         }
 
-        // Default responses for unrecognized queries
-        const defaultResponses = [
-            "I'm here to help you learn about Rajesh Kodaganti's portfolio! You can ask me about his background, skills, projects, experience, education, or certifications. What would you like to know?",
-            "That's an interesting question! While I specialize in information about Rajesh's professional background, I might not have specific details on that topic. Try asking about his technical skills, work experience, or recent projects!",
-            "I'd love to help! I have comprehensive information about Rajesh's educational background, professional experience, technical skills, and career achievements. What aspect interests you most?",
-            "Let me help you discover more about Rajesh! I can share details about his machine learning projects, cybersecurity experience, certifications, or career journey. What would you like to explore?"
-        ];
+        // Default responses for unrecognized queries - PAM style
+        const pamCasualResponses = this.pamPersonality.casualResponses;
+        return this.getRandomResponse(pamCasualResponses);
+    }
 
-        return this.getRandomResponse(defaultResponses);
+    getOfficeThemeResponse(message) {
+        const officeResponses = [
+            "🏢 Welcome to the Scranton branch! Michael would be so excited to know you're interested in our... I mean, Rajesh's portfolio!",
+            "Oh, you noticed the Office theme! This is so much better than our actual office setup - we don't have bears roaming around like Dwight always warned about.",
+            "The Dunder Mifflin experience! Don't worry, there's no Kevin spilling chili or Creed being... well, Creed. Just professional portfolio information!",
+            "I love the Office theme too! It's like being back at reception, but with better technology and no one asking me to plan their birthday party.",
+            "🎉 You're getting the full Scranton experience! Jim would probably make some joke about this, but I think it's actually pretty cool.",
+            "The Office vibes are strong here! Much more organized than our actual filing system - Stanley definitely didn't hide any crosswords in these files!"
+        ];
+        
+        return this.getRandomResponse(officeResponses);
     }
 
     containsAny(text, keywords) {
@@ -531,7 +627,7 @@ His unique combination of AI/ML skills with cybersecurity makes him valuable for
         
         const avatar = document.createElement('div');
         avatar.className = 'message-avatar';
-        avatar.innerHTML = sender === 'bot' ? '<i class="fa fa-robot"></i>' : '<i class="fa fa-user"></i>';
+        avatar.innerHTML = sender === 'bot' ? '<span class="robot-emoji">👩‍💼</span>' : '<i class="fa fa-user"></i>';
         
         const messageContent = document.createElement('div');
         messageContent.className = 'message-content';
@@ -563,10 +659,10 @@ His unique combination of AI/ML skills with cybersecurity makes him valuable for
         typingDiv.className = 'message bot-message typing-indicator-message';
         typingDiv.innerHTML = `
             <div class="message-avatar">
-                <i class="fa fa-robot"></i>
+                <span class="robot-emoji">👩‍💼</span>
             </div>
             <div class="typing-indicator">
-                <span style="margin-right: 8px;">K-RU-RA BOT is typing</span>
+                <span style="margin-right: 8px;">PAM is typing</span>
                 <div class="typing-dots">
                     <span class="typing-dot"></span>
                     <span class="typing-dot"></span>
@@ -595,4 +691,23 @@ His unique combination of AI/ML skills with cybersecurity makes him valuable for
 // Initialize the chatbot when the DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     new RajeshBot();
+    
+    // Simple theme notification functionality
+    const themeBtn = document.getElementById('floatingThemeBtn');
+    if (themeBtn) {
+        themeBtn.addEventListener('click', function() {
+            alert('� Multiple Themes Available\n\nComing Soon! 🚀\n\nWe\'re working on bringing you exciting new themes including:\n\n• 🏢 The Office Theme - Full Dunder Mifflin experience\n• 🌙 Dark Mode - Sleek and modern\n• 🌈 Colorful Theme - Vibrant and creative\n• 🎮 Gaming Theme - For the tech enthusiasts\n• 🎯 Minimalist Theme - Clean and focused\n\nStay tuned for the theme switcher!');
+        });
+        
+        // Add hover effect
+        themeBtn.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.05)';
+            this.style.boxShadow = '0 6px 20px rgba(0,0,0,0.4)';
+        });
+        
+        themeBtn.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+            this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.3)';
+        });
+    }
 });

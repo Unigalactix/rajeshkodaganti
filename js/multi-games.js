@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Modal and UI elements
     const gameModal = document.getElementById('gameModal');
     const openGameBtn = document.getElementById('gamesButton');
-    const closeGameBtn = gameModal.querySelector('.game-close-btn');
+    const closeGameBtn = gameModal?.querySelector('.game-close-btn');
     const fullscreenCloseBtn = document.getElementById('fullscreenCloseBtn');
     const gameSelection = document.getElementById('gameSelection');
     const gameInstructionsScreen = document.getElementById('gameInstructionsScreen');
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Game elements
     const gameCanvas = document.getElementById('gameCanvas');
-    const ctx = gameCanvas.getContext('2d');
+    const ctx = gameCanvas?.getContext('2d');
     const gameScore = document.getElementById('gameScore');
     const gameInstructions = document.getElementById('gameInstructions');
     const gameOverOverlay = document.getElementById('gameOverOverlay');
@@ -128,13 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
     fullscreenCloseBtn?.addEventListener('click', showGameSelection);
     backToGamesBtn?.addEventListener('click', showGameSelection);
     startGameBtn?.addEventListener('click', startSelectedGame);
-    
-    // KRURA Games button handler
-    const kruraGamesBtn = document.getElementById('kruraGamesButton');
-    kruraGamesBtn?.addEventListener('click', () => {
-        // Create and show coming soon modal
-        showKruraGamesComingSoon();
-    });
     
     // Game over overlay click to dismiss
     gameOverOverlay?.addEventListener('click', (e) => {
@@ -429,54 +422,35 @@ document.addEventListener('DOMContentLoaded', function() {
     function initDinoGame() {
         const speedMultiplier = getDifficultyMultiplier();
         gameData = {
-            dino: { x: 50, y: gameCanvas.height - 100, width: 40, height: 40, velocityY: 0, jumping: false },
+            dino: { x: 50, y: gameCanvas.height - 70, width: 30, height: 30, jumping: false, velocityY: 0, speed: 4 * speedMultiplier },
             obstacles: [],
-            clouds: [],
-            speed: 3 * speedMultiplier,
-            spawnRate: 0.008 * (speedMultiplier > 1 ? speedMultiplier * 0.8 : speedMultiplier)
+            ground: gameCanvas.height - 40,
+            gameSpeed: 2 * speedMultiplier
         };
-        
-        // Add clouds
-        for (let i = 0; i < 5; i++) {
-            gameData.clouds.push({
-                x: Math.random() * gameCanvas.width,
-                y: Math.random() * (gameCanvas.height * 0.3),
-                width: 30 + Math.random() * 20,
-                height: 15 + Math.random() * 10,
-                speed: (0.5 + Math.random() * 0.5) * speedMultiplier
-            });
-        }
     }
     
     function updateDinoGame() {
-        const { dino, obstacles, clouds, speed, spawnRate } = gameData;
+        const { dino, obstacles } = gameData;
         
-        // Update dino physics
+        // Gravity
         if (dino.jumping) {
-            dino.velocityY -= 0.8;
             dino.y -= dino.velocityY;
-            
-            if (dino.y >= gameCanvas.height - 100) {
-                dino.y = gameCanvas.height - 100;
-                dino.velocityY = 0;
+            dino.velocityY -= 0.8;
+            if (dino.y >= gameData.ground - dino.height) {
+                dino.y = gameData.ground - dino.height;
                 dino.jumping = false;
+                dino.velocityY = 0;
             }
         }
         
-        // Spawn obstacles
-        if (Math.random() < spawnRate) {
-            obstacles.push({
-                x: gameCanvas.width,
-                y: gameCanvas.height - 80,
-                width: 20 + Math.random() * 20,
-                height: 40 + Math.random() * 20
-            });
+        // Add obstacles
+        if (Math.random() < 0.01 * getDifficultyMultiplier()) {
+            obstacles.push({ x: gameCanvas.width, y: gameData.ground - 20, width: 20, height: 20 });
         }
         
-        // Update obstacles and check collisions
+        // Move obstacles
         for (let i = obstacles.length - 1; i >= 0; i--) {
-            obstacles[i].x -= speed;
-            
+            obstacles[i].x -= gameData.gameSpeed;
             if (obstacles[i].x + obstacles[i].width < 0) {
                 obstacles.splice(i, 1);
                 playerScore += 10;
@@ -486,34 +460,24 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Update clouds
-        clouds.forEach(cloud => {
-            cloud.x -= cloud.speed;
-            if (cloud.x + cloud.width < 0) {
-                cloud.x = gameCanvas.width;
-            }
-        });
-        
         playerScore += 0.1;
     }
     
     function drawDinoGame() {
         const config = gameConfigs.dino;
-        const { dino, obstacles, clouds } = gameData;
+        const { dino, obstacles } = gameData;
         
-        // Clear canvas
+        // Clear canvas with sky
         ctx.fillStyle = config.colors.bg;
         ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
         
         // Draw ground
         ctx.fillStyle = config.colors.ground;
-        ctx.fillRect(0, gameCanvas.height - 60, gameCanvas.width, 60);
+        ctx.fillRect(0, gameData.ground, gameCanvas.width, gameCanvas.height - gameData.ground);
         
         // Draw clouds
-        ctx.fillStyle = '#fff';
-        clouds.forEach(cloud => {
-            drawCloud(cloud.x, cloud.y, cloud.width, cloud.height);
-        });
+        drawCloud(100, 50, 60, 30);
+        drawCloud(300, 80, 80, 40);
         
         // Draw dino
         ctx.fillStyle = config.colors.player;
@@ -533,36 +497,31 @@ document.addEventListener('DOMContentLoaded', function() {
         gameData = {
             snake: [{ x: 200, y: 200 }],
             direction: { x: gridSize, y: 0 },
-            food: { x: 300, y: 300 },
+            food: { x: 0, y: 0 },
             gridSize: gridSize,
-            moveTime: 0,
-            moveInterval: Math.max(80, 200 / speedMultiplier) // Faster for higher difficulty
+            updateInterval: Math.max(50, 150 / speedMultiplier),
+            lastUpdate: 0
         };
         generateFood();
     }
     
     function updateSnakeGame() {
-        const { snake, direction, food, gridSize } = gameData;
-        
-        // Update movement timer
-        gameData.moveTime += 16; // Assuming 60fps
-        
-        // Only move when interval is reached
-        if (gameData.moveTime < gameData.moveInterval) {
+        const currentTime = Date.now();
+        if (currentTime - gameData.lastUpdate < gameData.updateInterval) {
             return;
         }
+        gameData.lastUpdate = currentTime;
         
-        gameData.moveTime = 0;
-        
+        const { snake, direction, food, gridSize } = gameData;
         const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
         
-        // Check wall collision
+        // Wall collision
         if (head.x < 0 || head.x >= gameCanvas.width || head.y < 0 || head.y >= gameCanvas.height) {
             endGame();
             return;
         }
         
-        // Check self collision
+        // Self collision
         if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
             endGame();
             return;
@@ -570,7 +529,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         snake.unshift(head);
         
-        // Check food collision
+        // Food collision
         if (head.x === food.x && head.y === food.y) {
             playerScore += 100;
             generateFood();
@@ -587,53 +546,25 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.fillStyle = config.colors.bg;
         ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
         
-        // Draw snake body
+        // Draw snake
         ctx.fillStyle = config.colors.snake;
-        snake.forEach((segment, index) => {
-            if (index === 0) {
-                // Draw head with different color
-                ctx.fillStyle = '#0a0'; // Brighter green for head
-                ctx.fillRect(segment.x, segment.y, gameData.gridSize, gameData.gridSize);
-                // Add eyes to the head
-                ctx.fillStyle = '#000';
-                ctx.fillRect(segment.x + 4, segment.y + 4, 3, 3);
-                ctx.fillRect(segment.x + 13, segment.y + 4, 3, 3);
-            } else {
-                // Draw body
-                ctx.fillStyle = config.colors.snake;
-                ctx.fillRect(segment.x, segment.y, gameData.gridSize, gameData.gridSize);
-                // Add border to body segments
-                ctx.strokeStyle = '#080';
-                ctx.lineWidth = 1;
-                ctx.strokeRect(segment.x, segment.y, gameData.gridSize, gameData.gridSize);
-            }
+        snake.forEach(segment => {
+            ctx.fillRect(segment.x, segment.y, gameData.gridSize, gameData.gridSize);
         });
         
-        // Draw food with pulsing effect
-        const pulseSize = Math.sin(Date.now() * 0.01) * 2 + gameData.gridSize;
-        const offset = (gameData.gridSize - pulseSize) / 2;
+        // Draw food
         ctx.fillStyle = config.colors.food;
-        ctx.fillRect(food.x + offset, food.y + offset, pulseSize, pulseSize);
+        ctx.fillRect(food.x, food.y, gameData.gridSize, gameData.gridSize);
     }
     
     function generateFood() {
-        const gridSize = gameData.gridSize;
-        let newFood;
-        let attempts = 0;
-        
+        const { gridSize, snake } = gameData;
         do {
-            newFood = {
-                x: Math.floor(Math.random() * (gameCanvas.width / gridSize)) * gridSize,
-                y: Math.floor(Math.random() * (gameCanvas.height / gridSize)) * gridSize
+            gameData.food = {
+                x: Math.floor(Math.random() * gameCanvas.width / gridSize) * gridSize,
+                y: Math.floor(Math.random() * gameCanvas.height / gridSize) * gridSize
             };
-            attempts++;
-        } while (
-            attempts < 100 && 
-            gameData.snake && 
-            gameData.snake.some(segment => segment.x === newFood.x && segment.y === newFood.y)
-        );
-        
-        gameData.food = newFood;
+        } while (snake.some(segment => segment.x === gameData.food.x && segment.y === gameData.food.y));
     }
     
     // TETRIS GAME
@@ -669,49 +600,33 @@ document.addEventListener('DOMContentLoaded', function() {
     function drawTetrisGame() {
         const config = gameConfigs.tetris;
         const { board, currentPiece } = gameData;
+        const blockSize = Math.min(gameCanvas.width / 10, gameCanvas.height / 20);
         
         // Clear canvas
         ctx.fillStyle = config.colors.bg;
         ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
         
         // Draw board
-        const blockSize = Math.min(gameCanvas.width / 10, gameCanvas.height / 20);
-        
-        // Helper function to draw a block with border
-        function drawBlock(x, y, color, alpha = 1) {
-            ctx.globalAlpha = alpha;
-            ctx.fillStyle = color;
-            ctx.fillRect(x * blockSize, y * blockSize, blockSize, blockSize);
-            ctx.strokeStyle = '#333';
-            ctx.lineWidth = 1;
-            ctx.strokeRect(x * blockSize, y * blockSize, blockSize, blockSize);
-            ctx.globalAlpha = 1;
-        }
-        
-        // Draw placed blocks
         for (let y = 0; y < board.length; y++) {
             for (let x = 0; x < board[y].length; x++) {
                 if (board[y][x]) {
-                    drawBlock(x, y, config.colors.blocks[board[y][x] - 1]);
+                    ctx.fillStyle = config.colors.blocks[board[y][x] - 1];
+                    ctx.fillRect(x * blockSize, y * blockSize, blockSize - 1, blockSize - 1);
                 }
             }
         }
         
-        // Draw current piece with slight transparency for better visibility
+        // Draw current piece
         if (currentPiece) {
+            ctx.fillStyle = config.colors.blocks[currentPiece.color];
             currentPiece.shape.forEach((row, y) => {
                 row.forEach((cell, x) => {
                     if (cell) {
-                        drawBlock(currentPiece.x + x, currentPiece.y + y, config.colors.blocks[currentPiece.color], 0.9);
+                        ctx.fillRect((currentPiece.x + x) * blockSize, (currentPiece.y + y) * blockSize, blockSize - 1, blockSize - 1);
                     }
                 });
             });
         }
-        
-        // Draw game area border
-        ctx.strokeStyle = '#666';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(0, 0, blockSize * 10, blockSize * 20);
     }
     
     // PONG GAME
@@ -804,11 +719,11 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.fillText(gameData.rightScore, 3 * gameCanvas.width / 4, 40);
         
         // Draw center line
-        ctx.setLineDash([5, 5]);
-        ctx.strokeStyle = config.colors.text;
+        ctx.setLineDash([5, 15]);
         ctx.beginPath();
         ctx.moveTo(gameCanvas.width / 2, 0);
         ctx.lineTo(gameCanvas.width / 2, gameCanvas.height);
+        ctx.strokeStyle = config.colors.text;
         ctx.stroke();
         ctx.setLineDash([]);
     }
@@ -910,27 +825,21 @@ document.addEventListener('DOMContentLoaded', function() {
     function initSpaceGame() {
         const speedMultiplier = getDifficultyMultiplier();
         gameData = {
-            player: { x: gameCanvas.width / 2 - 15, y: gameCanvas.height - 50, width: 30, height: 30, speed: 6 * speedMultiplier },
+            player: { x: gameCanvas.width / 2 - 15, y: gameCanvas.height - 60, width: 30, height: 30, speed: 6 * speedMultiplier },
             bullets: [],
             enemies: [],
-            stars: [],
-            enemySpawnRate: 0.02 * (speedMultiplier > 1 ? speedMultiplier * 0.8 : speedMultiplier)
-        };
-        
-        // Generate stars
-        for (let i = 0; i < 50; i++) {
-            gameData.stars.push({
+            stars: Array(50).fill().map(() => ({
                 x: Math.random() * gameCanvas.width,
                 y: Math.random() * gameCanvas.height,
-                speed: (Math.random() * 2 + 1) * speedMultiplier
-            });
-        }
+                speed: Math.random() * 2 + 1
+            }))
+        };
     }
     
     function updateSpaceGame() {
-        const { player, bullets, enemies, stars, enemySpawnRate } = gameData;
+        const { player, bullets, enemies, stars } = gameData;
         
-        // Update bullets
+        // Move bullets
         for (let i = bullets.length - 1; i >= 0; i--) {
             bullets[i].y -= 8;
             if (bullets[i].y < 0) {
@@ -938,7 +847,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Update enemies
+        // Move enemies
         for (let i = enemies.length - 1; i >= 0; i--) {
             enemies[i].y += enemies[i].speed;
             if (enemies[i].y > gameCanvas.height) {
@@ -947,7 +856,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Spawn enemies
-        if (Math.random() < enemySpawnRate) {
+        if (Math.random() < 0.02 * getDifficultyMultiplier()) {
             enemies.push({
                 x: Math.random() * (gameCanvas.width - 30),
                 y: -30,
@@ -1016,7 +925,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
         });
     }
-
+    
     // UTILITY FUNCTIONS
     function gameLoop() {
         if (!gameRunning) return;
@@ -1057,19 +966,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function checkCollision(rect1, rect2) {
-        return rect1.x < rect2.x + (rect2.width || rect2.radius * 2) &&
-               rect1.x + (rect1.width || rect1.radius * 2) > rect2.x &&
-               rect1.y < rect2.y + (rect2.height || rect2.radius * 2) &&
-               rect1.y + (rect1.height || rect1.radius * 2) > rect2.y;
+        return rect1.x < rect2.x + rect2.width &&
+               rect1.x + rect1.width > rect2.x &&
+               rect1.y < rect2.y + rect2.height &&
+               rect1.y + rect1.height > rect2.y;
     }
     
     function drawCloud(x, y, width, height) {
+        ctx.fillStyle = '#fff';
+        ctx.globalAlpha = 0.7;
         ctx.beginPath();
-        ctx.arc(x, y, height/2, 0, Math.PI * 2);
-        ctx.arc(x + width/3, y, height/2, 0, Math.PI * 2);
-        ctx.arc(x + 2*width/3, y, height/2, 0, Math.PI * 2);
-        ctx.arc(x + width, y, height/2, 0, Math.PI * 2);
+        ctx.arc(x, y, width/3, 0, Math.PI * 2);
+        ctx.arc(x + width/3, y, width/3, 0, Math.PI * 2);
+        ctx.arc(x + 2*width/3, y, width/3, 0, Math.PI * 2);
         ctx.fill();
+        ctx.globalAlpha = 1.0;
     }
     
     function updateScore() {
@@ -1282,31 +1193,33 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // ADDITIONAL HELPER FUNCTIONS
     function resetBall() {
-        if (gameData.ball) {
-            gameData.ball.x = gameCanvas.width / 2;
-            gameData.ball.y = gameCanvas.height / 2;
-            gameData.ball.dx = gameData.ball.dx > 0 ? -5 : 5;
-            gameData.ball.dy = Math.random() * 6 - 3;
-        }
+        const speedMultiplier = getDifficultyMultiplier();
+        gameData.ball = {
+            x: gameCanvas.width / 2,
+            y: gameCanvas.height / 2,
+            dx: (Math.random() > 0.5 ? 1 : -1) * 5 * speedMultiplier,
+            dy: (Math.random() > 0.5 ? 1 : -1) * 3 * speedMultiplier,
+            radius: 8
+        };
     }
     
     function spawnPiece() {
-        // Simplified Tetris piece spawning
         const pieces = [
-            [[1,1,1,1]], // I
-            [[1,1],[1,1]], // O
-            [[0,1,0],[1,1,1]], // T
-            [[1,0,0],[1,1,1]], // L
-            [[0,0,1],[1,1,1]], // J
-            [[1,1,0],[0,1,1]], // S
-            [[0,1,1],[1,1,0]]  // Z
+            { shape: [[1,1,1,1]], color: 0 }, // I
+            { shape: [[1,1],[1,1]], color: 1 }, // O
+            { shape: [[0,1,0],[1,1,1]], color: 2 }, // T
+            { shape: [[0,1,1],[1,1,0]], color: 3 }, // S
+            { shape: [[1,1,0],[0,1,1]], color: 4 }, // Z
+            { shape: [[1,0,0],[1,1,1]], color: 5 }, // J
+            { shape: [[0,0,1],[1,1,1]], color: 6 }  // L
         ];
         
+        const piece = pieces[Math.floor(Math.random() * pieces.length)];
         gameData.currentPiece = {
-            shape: pieces[Math.floor(Math.random() * pieces.length)],
-            x: Math.floor(10 / 2) - Math.floor(pieces[0][0].length / 2),
-            y: 0,
-            color: Math.floor(Math.random() * 7)
+            shape: piece.shape,
+            color: piece.color,
+            x: Math.floor(gameData.board[0].length / 2) - Math.floor(piece.shape[0].length / 2),
+            y: 0
         };
     }
     
@@ -1314,36 +1227,23 @@ document.addEventListener('DOMContentLoaded', function() {
         gameData.currentPiece.x += dx;
         gameData.currentPiece.y += dy;
         
-        if (isValidMove()) {
-            return true;
-        } else {
+        if (!isValidMove()) {
             gameData.currentPiece.x -= dx;
             gameData.currentPiece.y -= dy;
             return false;
         }
+        return true;
     }
     
     function rotatePiece() {
-        const { currentPiece } = gameData;
-        const originalShape = currentPiece.shape;
+        const oldShape = gameData.currentPiece.shape;
+        const newShape = oldShape[0].map((_, colIndex) => 
+            oldShape.map(row => row[colIndex]).reverse()
+        );
         
-        // Rotate the piece 90 degrees clockwise
-        const rotated = [];
-        for (let i = 0; i < originalShape[0].length; i++) {
-            rotated[i] = [];
-            for (let j = originalShape.length - 1; j >= 0; j--) {
-                rotated[i][originalShape.length - 1 - j] = originalShape[j][i];
-            }
-        }
-        
-        // Test if rotation is valid
-        currentPiece.shape = rotated;
-        if (isValidMove()) {
-            return true;
-        } else {
-            // Revert to original shape if rotation is invalid
-            currentPiece.shape = originalShape;
-            return false;
+        gameData.currentPiece.shape = newShape;
+        if (!isValidMove()) {
+            gameData.currentPiece.shape = oldShape;
         }
     }
     
@@ -1356,7 +1256,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     const newX = currentPiece.x + x;
                     const newY = currentPiece.y + y;
                     
-                    if (newX < 0 || newX >= 10 || newY >= 20 || (newY >= 0 && board[newY][newX])) {
+                    if (newX < 0 || newX >= board[0].length || newY >= board.length) {
+                        return false;
+                    }
+                    
+                    if (newY >= 0 && board[newY][newX]) {
                         return false;
                     }
                 }
@@ -1395,298 +1299,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function isGameOver() {
         return gameData.board[0].some(cell => cell !== 0);
     }
-    
-    // KRURA Games Coming Soon Modal
-    function showKruraGamesComingSoon() {
-        // Create modal if it doesn't exist
-        let kruraModal = document.getElementById('kruraGamesModal');
-        if (!kruraModal) {
-            kruraModal = document.createElement('div');
-            kruraModal.id = 'kruraGamesModal';
-            kruraModal.className = 'game-modal';
-            kruraModal.style.display = 'none';
-            kruraModal.innerHTML = `
-                <div class="game-modal-content" style="max-width: 900px;">
-                    <div class="game-modal-header" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">
-                        <h2 style="color: white;">🧪 KRURA Games Lab</h2>
-                        <span class="krura-close-btn" style="color: white; cursor: pointer; font-size: 24px;">&times;</span>
-                    </div>
-                    <div class="game-modal-body" style="text-align: center; padding: 20px;">
-                        
-                        <!-- Game Selection Screen -->
-                        <div id="krura-game-selection" class="krura-selection">
-                            <div style="font-size: 60px; margin-bottom: 20px;">🚀</div>
-                            <h3 style="color: #9b59b6; margin-bottom: 15px;">Experimental Games Laboratory</h3>
-                            <p style="color: #666; font-size: 16px; margin-bottom: 30px;">
-                                Welcome to KRURA Games - where cutting-edge narratives meet interactive experiences
-                            </p>
-                            
-                            <!-- Featured Game -->
-                            <div class="featured-game-card" style="
-                                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
-                                border-radius: 15px;
-                                padding: 30px;
-                                margin: 20px 0;
-                                color: white;
-                                border: 2px solid #9b59b6;
-                                position: relative;
-                                overflow: hidden;
-                            ">
-                                <div style="position: absolute; top: 10px; right: 10px; background: #e74c3c; color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: bold;">
-                                    ✨ NEW
-                                </div>
-                                
-                                <div class="game-icon" style="font-size: 48px; margin-bottom: 15px;">🌙</div>
-                                <h3 style="color: #ffd700; margin-bottom: 10px;">ETA: Echoes of Rebirth</h3>
-                                <p style="color: #ccc; font-size: 14px; margin-bottom: 15px; font-style: italic;">
-                                    A narrative-driven adventure through cycles of reincarnation
-                                </p>
-                                <p style="color: #aaa; font-size: 13px; margin-bottom: 20px; line-height: 1.4;">
-                                    🎭 Experience four interconnected lives<br/>
-                                    🌙 Guided by the Moon as narrator<br/>
-                                    ⚔️ Face guardians and inner demons<br/>
-                                    🔄 Break the curse of eternal rebirth
-                                </p>
-                                
-                                <div style="margin-bottom: 20px;">
-                                    <span style="color: #9b59b6; font-size: 12px; font-weight: bold;">
-                                        🎮 Genre: Narrative RPG | ⏱️ Duration: 20-45 mins | 🎯 Difficulty: Medium
-                                    </span>
-                                </div>
-                                
-                                <button class="play-eta-btn" onclick="startETAGame()" style="
-                                    background: linear-gradient(45deg, #9b59b6, #8e44ad);
-                                    color: white;
-                                    border: none;
-                                    padding: 18px 35px;
-                                    border-radius: 30px;
-                                    font-size: 18px;
-                                    font-weight: bold;
-                                    cursor: pointer;
-                                    box-shadow: 0 8px 25px rgba(155, 89, 182, 0.4);
-                                    transition: all 0.3s ease;
-                                    border: 2px solid transparent;
-                                    position: relative;
-                                    overflow: hidden;
-                                " 
-                                onmouseover="this.style.background='linear-gradient(45deg, #a569bd, #9b59b6)'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 30px rgba(155, 89, 182, 0.6)'; this.style.borderColor='rgba(255, 255, 255, 0.4)';"
-                                onmouseout="this.style.background='linear-gradient(45deg, #9b59b6, #8e44ad)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(155, 89, 182, 0.4)'; this.style.borderColor='transparent';">
-                                    🌙 Enter the World of ETA
-                                </button>
-                                
-                                <!-- Quick Start Guide -->
-                                <div style="background: rgba(155, 89, 182, 0.1); border: 1px solid rgba(155, 89, 182, 0.3); border-radius: 15px; padding: 15px; margin-top: 20px;">
-                                    <h5 style="color: #9b59b6; margin-bottom: 10px; font-size: 14px;">🎯 Quick Start Guide:</h5>
-                                    <div style="font-size: 12px; color: #666; line-height: 1.4;">
-                                        • <strong>Character Creation:</strong> Roll 4d6 drop lowest for stats<br>
-                                        • <strong>Reincarnation:</strong> Keep memories across lives<br>
-                                        • <strong>D&D Mechanics:</strong> Full skill checks & combat system<br>
-                                        • <strong>Lunar Eclipse:</strong> Trigger to break the curse
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Coming Soon Section -->
-                            <div style="background: linear-gradient(45deg, #f8f9fa, #e9ecef); padding: 20px; border-radius: 15px; margin: 20px 0;">
-                                <h4 style="color: #9b59b6; margin-bottom: 15px;">🚧 More Games in Development</h4>
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
-                                    <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #ddd;">
-                                        <div style="font-size: 24px; margin-bottom: 5px;">🎯</div>
-                                        <h5 style="margin: 0; color: #666;">Quantum Chess</h5>
-                                        <p style="font-size: 12px; color: #999; margin: 5px 0;">AI-powered strategic gameplay</p>
-                                    </div>
-                                    <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #ddd;">
-                                        <div style="font-size: 24px; margin-bottom: 5px;">🌟</div>
-                                        <h5 style="margin: 0; color: #666;">Neural Networks</h5>
-                                        <p style="font-size: 12px; color: #999; margin: 5px 0;">Train your own AI models</p>
-                                    </div>
-                                    <div style="background: white; padding: 15px; border-radius: 10px; border: 1px solid #ddd;">
-                                        <div style="font-size: 24px; margin-bottom: 5px;">🏆</div>
-                                        <h5 style="margin: 0; color: #666;">Code Battles</h5>
-                                        <p style="font-size: 12px; color: #999; margin: 5px 0;">Multiplayer programming duels</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <p style="color: #999; font-size: 14px; margin-top: 20px;">
-                                🔬 KRURA Games pushes the boundaries of interactive entertainment
-                            </p>
-                        </div>
-                        
-                        <!-- ETA Game Container -->
-                        <div id="eta-game-container" class="eta-game-container" style="display: none;">
-                            <!-- Game will be loaded here -->
-                        </div>
-                        
-                        <!-- Back Button for ETA Game -->
-                        <div id="eta-back-controls" style="display: none; margin-top: 20px; text-align: center;">
-                            <button class="eta-choice-btn" onclick="returnToKruraSelection()" style="
-                                background: linear-gradient(45deg, #2c3e50, #34495e);
-                                color: white;
-                                border: none;
-                                padding: 15px 25px;
-                                border-radius: 25px;
-                                font-size: 16px;
-                                font-weight: bold;
-                                cursor: pointer;
-                                box-shadow: 0 6px 20px rgba(52, 73, 94, 0.3);
-                                transition: all 0.3s ease;
-                                border: 2px solid transparent;
-                            " 
-                            onmouseover="this.style.background='linear-gradient(45deg, #34495e, #2c3e50)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(52, 73, 94, 0.5)'; this.style.borderColor='rgba(255, 255, 255, 0.3)';"
-                            onmouseout="this.style.background='linear-gradient(45deg, #2c3e50, #34495e)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(52, 73, 94, 0.3)'; this.style.borderColor='transparent';">
-                                🎮 ← Back to KRURA Games
-                            </button>
-                            
-                            <div style="margin-top: 15px; padding: 12px; background: rgba(0, 0, 0, 0.3); border-radius: 12px; font-size: 12px; color: #bbb; max-width: 400px; margin-left: auto; margin-right: auto;">
-                                💡 <strong>Tip:</strong> Your game progress is automatically saved. You can return anytime to continue your eternal journey.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(kruraModal);
-            
-            // Add close event listeners
-            const closeButtons = kruraModal.querySelectorAll('.krura-close-btn');
-            closeButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    kruraModal.style.display = 'none';
-                });
-            });
-            
-            // Close on outside click
-            kruraModal.addEventListener('click', (e) => {
-                if (e.target === kruraModal) {
-                    kruraModal.style.display = 'none';
-                }
-            });
-        }
-        
-        // Show the modal
-        kruraModal.style.display = 'flex';
-        
-        // Reset to selection screen
-        document.getElementById('krura-game-selection').style.display = 'block';
-        document.getElementById('eta-game-container').style.display = 'none';
-        document.getElementById('eta-back-controls').style.display = 'none';
-    }
-    
-    // Global functions for ETA game integration
-    window.startETAGame = function() {
-        // Hide the selection screen and show ETA game container
-        document.getElementById('krura-game-selection').style.display = 'none';
-        document.getElementById('eta-game-container').style.display = 'block';
-        document.getElementById('eta-back-controls').style.display = 'block';
-        
-        // Show loading indicator
-        const etaContainer = document.getElementById('eta-game-container');
-        etaContainer.innerHTML = `
-            <div class="eta-loading" style="
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                height: 400px;
-                color: #ffd700;
-            ">
-                <div class="eta-spinner" style="
-                    width: 50px;
-                    height: 50px;
-                    border: 4px solid rgba(255, 215, 0, 0.3);
-                    border-top: 4px solid #ffd700;
-                    border-radius: 50%;
-                    animation: spin 1s linear infinite;
-                    margin-bottom: 20px;
-                "></div>
-                <h3>🌙 Loading ETA: Echoes of Rebirth</h3>
-                <p style="margin-top: 10px; opacity: 0.8;">Preparing the mystical realm...</p>
-            </div>
-        `;
-        
-        // Load ETA game script dynamically
-        if (!window.ETAGame) {
-            const script = document.createElement('script');
-            script.src = 'js/eta-game.js';
-            script.onload = function() {
-                setTimeout(() => {
-                    initializeETAGame();
-                }, 1000);
-            };
-            script.onerror = function() {
-                showETAGameError();
-            };
-            document.head.appendChild(script);
-        } else {
-            setTimeout(() => {
-                initializeETAGame();
-            }, 1000);
-        }
-    };
-    
-    function initializeETAGame() {
-        try {
-            // Reset the ETA game container
-            const etaContainer = document.getElementById('eta-game-container');
-            etaContainer.innerHTML = ''; // Clear loading content
-            
-            if (window.ETAGame) {
-                const etaGame = new window.ETAGame();
-                console.log('ETA Game initialized successfully');
-            } else {
-                console.error('ETAGame class not found');
-                showETAGameError();
-            }
-        } catch (error) {
-            console.error('Error initializing ETA game:', error);
-            showETAGameError();
-        }
-    }
-    
-    function showETAGameError() {
-        const etaContainer = document.getElementById('eta-game-container');
-        etaContainer.innerHTML = `
-            <div style="text-align: center; color: #ffd700; padding: 40px;">
-                <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
-                <h3>ETA: Echoes of Rebirth</h3>
-                <p style="color: #ccc; margin: 15px 0;">Unable to load the game at this time.</p>
-                <p style="color: #999; font-size: 14px;">Please check your connection and try again.</p>
-                <button onclick="returnToKruraSelection()" style="
-                    background: #9b59b6;
-                    color: white;
-                    border: none;
-                    padding: 12px 20px;
-                    border-radius: 20px;
-                    cursor: pointer;
-                    margin-top: 15px;
-                ">← Back to Games</button>
-            </div>
-        `;
-    }
-    
-
-    
-    window.returnToKruraSelection = function() {
-        // Smooth transition back to selection
-        const etaContainer = document.getElementById('eta-game-container');
-        etaContainer.style.transition = 'opacity 0.3s ease';
-        etaContainer.style.opacity = '0';
-        
-        setTimeout(() => {
-            document.getElementById('krura-game-selection').style.display = 'block';
-            etaContainer.style.display = 'none';
-            document.getElementById('eta-back-controls').style.display = 'none';
-            etaContainer.style.opacity = '1';
-            etaContainer.style.transition = '';
-        }, 300);
-    };
-    
-    window.closeKruraGames = function() {
-        const kruraModal = document.getElementById('kruraGamesModal');
-        if (kruraModal) {
-            kruraModal.style.display = 'none';
-        }
-    };
     
     // Initialize game modal on page load
     console.log('Multi-Game Center initialized successfully!');

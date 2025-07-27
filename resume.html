@@ -521,9 +521,212 @@
                 margin: 10px;
             }
         }
+
+        /* PIN Security Modal Styles */
+        .pin-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+        }
+
+        .pin-modal-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 10% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 420px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: pinModalSlide 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes pinModalSlide {
+            from {
+                transform: translateY(-50px) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .pin-modal-header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            text-align: center;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .pin-modal-header h3 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .pin-modal-header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .pin-modal-body {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .pin-input-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .pin-digit {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .pin-digit:focus {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .pin-digit::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .pin-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .pin-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pin-verify-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .pin-verify-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+        }
+
+        .pin-verify-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .pin-cancel-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .pin-cancel-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .pin-error {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            font-weight: 500;
+            animation: pinShake 0.5s ease-in-out;
+        }
+
+        @keyframes pinShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .pin-success {
+            color: #28a745;
+            background: rgba(40, 167, 69, 0.1);
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            font-weight: 500;
+        }
+
+        .security-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
+    <!-- PIN Security Modal -->
+    <div id="pinModal" class="pin-modal">
+        <div class="pin-modal-content">
+            <div class="pin-modal-header">
+                <div class="security-icon">🔐</div>
+                <h3>Secure Access Required</h3>
+                <p>Enter 4-digit PIN to access Resume Customizer</p>
+            </div>
+            <div class="pin-modal-body">
+                <div class="pin-input-container">
+                    <input type="password" class="pin-digit" maxlength="1" id="pin1" placeholder="•">
+                    <input type="password" class="pin-digit" maxlength="1" id="pin2" placeholder="•">
+                    <input type="password" class="pin-digit" maxlength="1" id="pin3" placeholder="•">
+                    <input type="password" class="pin-digit" maxlength="1" id="pin4" placeholder="•">
+                </div>
+                <div class="pin-buttons">
+                    <button class="pin-btn pin-verify-btn" onclick="verifyPIN()" id="verifyBtn">
+                        <i class="fa fa-unlock"></i> Verify
+                    </button>
+                    <button class="pin-btn pin-cancel-btn" onclick="closePINModal()">
+                        <i class="fa fa-times"></i> Cancel
+                    </button>
+                </div>
+                <div id="pinMessage"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="resume-customizer" id="resumeCustomizer">
         <div class="customizer-header">
             <h2>Customize Your Resume</h2>
@@ -631,7 +834,7 @@
     </div>
 
     <div class="print-controls">
-        <button onclick="showCustomizer()" class="control-btn">
+        <button onclick="requestSecureAccess()" class="control-btn">
             <i class="fa fa-cog"></i> Customize Resume
         </button>
         <button onclick="window.print()" class="control-btn">
@@ -835,6 +1038,99 @@
         function hideCustomizer() {
             document.getElementById('resumeCustomizer').classList.add('hidden');
         }
+
+        // PIN Security Functions
+        function requestSecureAccess() {
+            document.getElementById('pinModal').style.display = 'block';
+            // Clear previous inputs
+            document.getElementById('pin1').value = '';
+            document.getElementById('pin2').value = '';
+            document.getElementById('pin3').value = '';
+            document.getElementById('pin4').value = '';
+            document.getElementById('pinMessage').innerHTML = '';
+            // Focus on first input
+            document.getElementById('pin1').focus();
+        }
+
+        function closePINModal() {
+            document.getElementById('pinModal').style.display = 'none';
+        }
+
+        function verifyPIN() {
+            const pin1 = document.getElementById('pin1').value;
+            const pin2 = document.getElementById('pin2').value;
+            const pin3 = document.getElementById('pin3').value;
+            const pin4 = document.getElementById('pin4').value;
+            
+            const enteredPIN = pin1 + pin2 + pin3 + pin4;
+            const correctPIN = '1711'; // Encrypted access code
+            
+            const messageDiv = document.getElementById('pinMessage');
+            
+            if (enteredPIN.length !== 4) {
+                messageDiv.innerHTML = '<div class="pin-error"><i class="fa fa-exclamation-triangle"></i> Please enter all 4 digits</div>';
+                return;
+            }
+            
+            if (enteredPIN === correctPIN) {
+                messageDiv.innerHTML = '<div class="pin-success"><i class="fa fa-check-circle"></i> Access Granted! Opening Customizer...</div>';
+                
+                // Small delay for user feedback, then open customizer
+                setTimeout(() => {
+                    closePINModal();
+                    showCustomizer();
+                }, 1000);
+            } else {
+                messageDiv.innerHTML = '<div class="pin-error"><i class="fa fa-times-circle"></i> Invalid PIN. Access Denied!</div>';
+                
+                // Clear inputs after failed attempt
+                setTimeout(() => {
+                    document.getElementById('pin1').value = '';
+                    document.getElementById('pin2').value = '';
+                    document.getElementById('pin3').value = '';
+                    document.getElementById('pin4').value = '';
+                    document.getElementById('pin1').focus();
+                }, 1500);
+            }
+        }
+
+        // Auto-focus next PIN digit
+        document.addEventListener('DOMContentLoaded', function() {
+            const pinInputs = ['pin1', 'pin2', 'pin3', 'pin4'];
+            
+            pinInputs.forEach((inputId, index) => {
+                const input = document.getElementById(inputId);
+                
+                input.addEventListener('input', function() {
+                    // Only allow numeric input
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                    
+                    // Auto-focus next input
+                    if (this.value.length === 1 && index < pinInputs.length - 1) {
+                        document.getElementById(pinInputs[index + 1]).focus();
+                    }
+                });
+                
+                input.addEventListener('keydown', function(e) {
+                    // Handle backspace to go to previous input
+                    if (e.key === 'Backspace' && this.value === '' && index > 0) {
+                        document.getElementById(pinInputs[index - 1]).focus();
+                    }
+                    
+                    // Handle Enter key to verify PIN
+                    if (e.key === 'Enter') {
+                        verifyPIN();
+                    }
+                });
+            });
+            
+            // Close modal when clicking outside
+            document.getElementById('pinModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePINModal();
+                }
+            });
+        });
 
         function toggleOtherRole() {
             const roleSelect = document.getElementById('roleType');

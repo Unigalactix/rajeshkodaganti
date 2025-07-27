@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Rajesh Kodaganti - Portfolio</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
@@ -13,7 +14,6 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <link href="css/tech-games.css" rel="stylesheet">
-    <link href="css/resume.css" rel="stylesheet">
 </head>
 
 <body>
@@ -50,7 +50,6 @@
         </ul>
     </header>
     <!-- End header -->
-
     <div id="lead">
         <div id="lead-content">
             <h1>Rajesh Kodaganti</h1>
@@ -62,7 +61,6 @@
                 Specializing in Machine Learning, Data Engineering & Cybersecurity
             </p>
             <div style="margin-top: 25px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
-                <!-- Top row: Download Resume, Get In Touch, and Follow on LinkedIn -->
                 <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
                     <a href="resume.html" target="_blank" class="btn-rounded-white" style="padding: 18px 25px; min-width: 170px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>
@@ -125,80 +123,88 @@
     <div id="experience" class="background-alt">
         <h2 class="heading">Professional Experience</h2>
         <div class="container">
-            <div class="experience-grid">
-                <div class="experience-card" data-exp-id="quadrant" onclick="openExperienceModal('quadrant')">
-                    <div class="exp-header">
-                        <div class="exp-icon">💼</div>
-                        <div class="exp-title-area">
-                            <h3>Quadrant Technologies</h3>
-                            <h4>Software Intern</h4>
-                            <span class="exp-period">July 2025 – Present</span>
+            <div class="section-two-column">
+                <div class="section-content">
+                    <div class="experience-grid">
+                        <div class="experience-card" data-exp-id="quadrant" onclick="openExperienceModal('quadrant')">
+                            <div class="exp-header">
+                                <div class="exp-icon">💼</div>
+                                <div class="exp-title-area">
+                                    <h3>Quadrant Technologies</h3>
+                                    <h4>Software Intern</h4>
+                                    <span class="exp-period">July 2025 – Present</span>
+                                </div>
+                            </div>
+                            <div class="exp-click-hint">
+                                <span>Click to view details</span>
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="exp-click-hint">
-                        <span>Click to view details</span>
-                        <i class="fa fa-arrow-right"></i>
+
+                        <div class="experience-card" data-exp-id="qikcell" onclick="openExperienceModal('qikcell')">
+                            <div class="exp-header">
+                                <div class="exp-icon">⚡</div>
+                                <div class="exp-title-area">
+                                    <h3>QikCell by tickioT</h3>
+                                    <h4>Solutions Engineer (Internship)</h4>
+                                    <span class="exp-period">January 2025 – May 2025</span>
+                                </div>
+                            </div>
+                            <div class="exp-click-hint">
+                                <span>Click to view details</span>
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="experience-card" data-exp-id="coloros" onclick="openExperienceModal('coloros')">
+                            <div class="exp-header">
+                                <div class="exp-icon">📱</div>
+                                <div class="exp-title-area">
+                                    <h3>ColorOS (OPPO)</h3>
+                                    <h4>User Test Specialist (Freelance)</h4>
+                                    <span class="exp-period">June 2018 – July 2022</span>
+                                </div>
+                            </div>
+                            <div class="exp-click-hint">
+                                <span>Click to view details</span>
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="experience-card" data-exp-id="pantech" onclick="openExperienceModal('pantech')">
+                            <div class="exp-header">
+                                <div class="exp-icon">🔧</div>
+                                <div class="exp-title-area">
+                                    <h3>Pantech ProEd Pvt Ltd</h3>
+                                    <h4>Engineering Intern</h4>
+                                    <span class="exp-period">June 2020 – July 2020</span>
+                                </div>
+                            </div>
+                            <div class="exp-click-hint">
+                                <span>Click to view details</span>
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="experience-card" data-exp-id="peoplelink" onclick="openExperienceModal('peoplelink')">
+                            <div class="exp-header">
+                                <div class="exp-icon">🔬</div>
+                                <div class="exp-title-area">
+                                    <h3>PeopleLink Unified Communications</h3>
+                                    <h4>Product Tester - R&D Department</h4>
+                                    <span class="exp-period">June 2018 – May 2019</span>
+                                </div>
+                            </div>
+                            <div class="exp-click-hint">
+                                <span>Click to view details</span>
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="experience-card" data-exp-id="qikcell" onclick="openExperienceModal('qikcell')">
-                    <div class="exp-header">
-                        <div class="exp-icon">⚡</div>
-                        <div class="exp-title-area">
-                            <h3>QikCell by tickioT</h3>
-                            <h4>Solutions Engineer (Internship)</h4>
-                            <span class="exp-period">January 2025 – May 2025</span>
-                        </div>
-                    </div>
-                    <div class="exp-click-hint">
-                        <span>Click to view details</span>
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
-                </div>
-
-                <div class="experience-card" data-exp-id="coloros" onclick="openExperienceModal('coloros')">
-                    <div class="exp-header">
-                        <div class="exp-icon">📱</div>
-                        <div class="exp-title-area">
-                            <h3>ColorOS (OPPO)</h3>
-                            <h4>User Test Specialist (Freelance)</h4>
-                            <span class="exp-period">June 2018 – July 2022</span>
-                        </div>
-                    </div>
-                    <div class="exp-click-hint">
-                        <span>Click to view details</span>
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
-                </div>
-
-                <div class="experience-card" data-exp-id="pantech" onclick="openExperienceModal('pantech')">
-                    <div class="exp-header">
-                        <div class="exp-icon">🔧</div>
-                        <div class="exp-title-area">
-                            <h3>Pantech ProEd Pvt Ltd</h3>
-                            <h4>Engineering Intern</h4>
-                            <span class="exp-period">June 2020 – July 2020</span>
-                        </div>
-                    </div>
-                    <div class="exp-click-hint">
-                        <span>Click to view details</span>
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
-                </div>
-
-                <div class="experience-card" data-exp-id="peoplelink" onclick="openExperienceModal('peoplelink')">
-                    <div class="exp-header">
-                        <div class="exp-icon">🔬</div>
-                        <div class="exp-title-area">
-                            <h3>PeopleLink Unified Communications</h3>
-                            <h4>Product Tester - R&D Department</h4>
-                            <span class="exp-period">June 2018 – May 2019</span>
-                        </div>
-                    </div>
-                    <div class="exp-click-hint">
-                        <span>Click to view details</span>
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
+                
+                <div class="section-chart">
+                    <div id="experienceChart"></div>
                 </div>
             </div>
         </div>
@@ -208,80 +214,88 @@
     <div id="education">
         <h2 class="heading">Education</h2>
         <div class="container">
-            <div class="education-grid">
-                <div class="education-card">
-                    <div class="edu-header">
-                        <div class="edu-icon">🎓</div>
-                        <div class="edu-title-area">
-                            <h3>California State University, Northridge</h3>
-                            <h4>Master of Science - Computer Engineering</h4>
-                            <span class="edu-period">Aug 2022 - May 2025</span>
+            <div class="section-two-column">
+                <div class="section-content">
+                    <div class="education-grid">
+                        <div class="education-card">
+                            <div class="edu-header">
+                                <div class="edu-icon">🎓</div>
+                                <div class="edu-title-area">
+                                    <h3>California State University, Northridge</h3>
+                                    <h4>Master of Science - Computer Engineering</h4>
+                                    <span class="edu-period">Aug 2022 - May 2025</span>
+                                </div>
+                            </div>
+                            <p class="edu-description">
+                                Advanced ML, Data Engineering & Cybersecurity. Specialized coursework in machine learning algorithms, big data systems, and security protocols.
+                            </p>
+                            <div class="edu-details">
+                                <div class="edu-focus">
+                                    <h5>🎯 Focus Areas:</h5>
+                                    <div class="focus-tags">
+                                        <span class="focus-tag">Machine Learning</span>
+                                        <span class="focus-tag">Data Engineering</span>
+                                        <span class="focus-tag">Cybersecurity</span>
+                                        <span class="focus-tag">AI Systems</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <p class="edu-description">
-                        Advanced ML, Data Engineering & Cybersecurity. Specialized coursework in machine learning algorithms, big data systems, and security protocols.
-                    </p>
-                    <div class="edu-details">
-                        <div class="edu-focus">
-                            <h5>🎯 Focus Areas:</h5>
-                            <div class="focus-tags">
-                                <span class="focus-tag">Machine Learning</span>
-                                <span class="focus-tag">Data Engineering</span>
-                                <span class="focus-tag">Cybersecurity</span>
-                                <span class="focus-tag">AI Systems</span>
+
+                        <div class="education-card">
+                            <div class="edu-header">
+                                <div class="edu-icon">⚡</div>
+                                <div class="edu-title-area">
+                                    <h3>JB Institute Of Engineering and Technology</h3>
+                                    <h4>B-Tech in ECE - Electronics & Communication</h4>
+                                    <span class="edu-period">July 2019 - June 2022</span>
+                                </div>
+                            </div>
+                            <p class="edu-description">
+                                Grade: 7.45 - Digital Systems & Networks. Comprehensive foundation in electronics engineering with emphasis on communication systems and digital circuit design.
+                            </p>
+                            <div class="edu-details">
+                                <div class="edu-focus">
+                                    <h5>🎯 Focus Areas:</h5>
+                                    <div class="focus-tags">
+                                        <span class="focus-tag">Digital Systems</span>
+                                        <span class="focus-tag">Communication Networks</span>
+                                        <span class="focus-tag">Circuit Design</span>
+                                        <span class="focus-tag">Signal Processing</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="education-card">
+                            <div class="edu-header">
+                                <div class="edu-icon">🔧</div>
+                                <div class="edu-title-area">
+                                    <h3>Government Institute of Electronics</h3>
+                                    <h4>ECE (SCN) Specialization</h4>
+                                    <span class="edu-period">June 2015 - Dec 2018</span>
+                                </div>
+                            </div>
+                            <p class="edu-description">
+                                Electronics, Communication & Mobile Technologies. Foundational studies in electronics with specialization in mobile communication systems.
+                            </p>
+                            <div class="edu-details">
+                                <div class="edu-focus">
+                                    <h5>🎯 Focus Areas:</h5>
+                                    <div class="focus-tags">
+                                        <span class="focus-tag">Electronics</span>
+                                        <span class="focus-tag">Mobile Tech</span>
+                                        <span class="focus-tag">Communication</span>
+                                        <span class="focus-tag">Network Systems</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="education-card">
-                    <div class="edu-header">
-                        <div class="edu-icon">⚡</div>
-                        <div class="edu-title-area">
-                            <h3>JB Institute Of Engineering and Technology</h3>
-                            <h4>B-Tech in ECE - Electronics & Communication</h4>
-                            <span class="edu-period">July 2019 - June 2022</span>
-                        </div>
-                    </div>
-                    <p class="edu-description">
-                        Grade: 7.45 - Digital Systems & Networks. Comprehensive foundation in electronics engineering with emphasis on communication systems and digital circuit design.
-                    </p>
-                    <div class="edu-details">
-                        <div class="edu-focus">
-                            <h5>🎯 Focus Areas:</h5>
-                            <div class="focus-tags">
-                                <span class="focus-tag">Digital Systems</span>
-                                <span class="focus-tag">Communication Networks</span>
-                                <span class="focus-tag">Circuit Design</span>
-                                <span class="focus-tag">Signal Processing</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="education-card">
-                    <div class="edu-header">
-                        <div class="edu-icon">🔧</div>
-                        <div class="edu-title-area">
-                            <h3>Government Institute of Electronics</h3>
-                            <h4>ECE (SCN) Specialization</h4>
-                            <span class="edu-period">June 2015 - Dec 2018</span>
-                        </div>
-                    </div>
-                    <p class="edu-description">
-                        Electronics, Communication & Mobile Technologies. Foundational studies in electronics with specialization in mobile communication systems.
-                    </p>
-                    <div class="edu-details">
-                        <div class="edu-focus">
-                            <h5>🎯 Focus Areas:</h5>
-                            <div class="focus-tags">
-                                <span class="focus-tag">Electronics</span>
-                                <span class="focus-tag">Mobile Tech</span>
-                                <span class="focus-tag">Communication</span>
-                                <span class="focus-tag">Network Systems</span>
-                            </div>
-                        </div>
-                    </div>
+                
+                <div class="section-chart">
+                    <div id="educationChart"></div>
                 </div>
             </div>
         </div>
@@ -291,75 +305,83 @@
     <div id="projects" class="background-alt">
         <h2 class="heading">Featured Projects</h2>
         <div class="container">
-            <div class="projects-grid">
-                <div class="project-card" data-project-id="convir" onclick="openProjectModal('convir')">
-                    <div class="project-header">
-                        <div class="project-icon">🤖</div>
-                        <div class="project-title-area">
-                            <h3>Image Denoising using Deep Learning (ConvIR)</h3>
-                            <span class="project-category">Machine Learning • Computer Vision • Dec 2024 - May 2025</span>
+            <div class="section-two-column">
+                <div class="section-content">
+                    <div class="projects-grid">
+                        <div class="project-card" data-project-id="convir" onclick="openProjectModal('convir')">
+                            <div class="project-header">
+                                <div class="project-icon">🤖</div>
+                                <div class="project-title-area">
+                                    <h3>Image Denoising using Deep Learning (ConvIR)</h3>
+                                    <span class="project-category">Machine Learning • Computer Vision • Dec 2024 - May 2025</span>
+                                </div>
+                            </div>
+                            <div class="project-click-hint">
+                                <span>Click to view details</span>
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="project-click-hint">
-                        <span>Click to view details</span>
-                        <i class="fa fa-arrow-right"></i>
+
+                        <div class="project-card" data-project-id="cars" onclick="openProjectModal('cars')">
+                            <div class="project-header">
+                                <div class="project-icon">📊</div>
+                                <div class="project-title-area">
+                                    <h3>Pre-owned Cars Pricing Forecast</h3>
+                                    <span class="project-category">Data Science • Machine Learning • Aug 2022 - Dec 2022</span>
+                                </div>
+                            </div>
+                            <div class="project-click-hint">
+                                <span>Click to view details</span>
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="project-card" data-project-id="router" onclick="openProjectModal('router')">
+                            <div class="project-header">
+                                <div class="project-icon">🔧</div>
+                                <div class="project-title-area">
+                                    <h3>1X3 Router Design and Verification</h3>
+                                    <span class="project-category">VLSI Design • Hardware Verification • Dec 2021 - Jan 2022</span>
+                                </div>
+                            </div>
+                            <div class="project-click-hint">
+                                <span>Click to view details</span>
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="project-card" data-project-id="assistive" onclick="openProjectModal('assistive')">
+                            <div class="project-header">
+                                <div class="project-icon">🤖</div>
+                                <div class="project-title-area">
+                                    <h3>Raspberry Pi Assistive Technologies</h3>
+                                    <span class="project-category">IoT • Accessibility • Aug 2021 - Nov 2021</span>
+                                </div>
+                            </div>
+                            <div class="project-click-hint">
+                                <span>Click to view details</span>
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
+                        </div>
+
+                        <div class="project-card" data-project-id="camera" onclick="openProjectModal('camera')">
+                            <div class="project-header">
+                                <div class="project-icon">📹</div>
+                                <div class="project-title-area">
+                                    <h3>PeopleLink "Look At Me" Controller</h3>
+                                    <span class="project-category">Embedded Systems • PCB Design • Nov 2018 - Dec 2018</span>
+                                </div>
+                            </div>
+                            <div class="project-click-hint">
+                                <span>Click to view details</span>
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="project-card" data-project-id="cars" onclick="openProjectModal('cars')">
-                    <div class="project-header">
-                        <div class="project-icon">📊</div>
-                        <div class="project-title-area">
-                            <h3>Pre-owned Cars Pricing Forecast</h3>
-                            <span class="project-category">Data Science • Machine Learning • Aug 2022 - Dec 2022</span>
-                        </div>
-                    </div>
-                    <div class="project-click-hint">
-                        <span>Click to view details</span>
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
-                </div>
-
-                <div class="project-card" data-project-id="router" onclick="openProjectModal('router')">
-                    <div class="project-header">
-                        <div class="project-icon">🔧</div>
-                        <div class="project-title-area">
-                            <h3>1X3 Router Design and Verification</h3>
-                            <span class="project-category">VLSI Design • Hardware Verification • Dec 2021 - Jan 2022</span>
-                        </div>
-                    </div>
-                    <div class="project-click-hint">
-                        <span>Click to view details</span>
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
-                </div>
-
-                <div class="project-card" data-project-id="assistive" onclick="openProjectModal('assistive')">
-                    <div class="project-header">
-                        <div class="project-icon">🤖</div>
-                        <div class="project-title-area">
-                            <h3>Raspberry Pi Assistive Technologies</h3>
-                            <span class="project-category">IoT • Accessibility • Aug 2021 - Nov 2021</span>
-                        </div>
-                    </div>
-                    <div class="project-click-hint">
-                        <span>Click to view details</span>
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
-                </div>
-
-                <div class="project-card" data-project-id="camera" onclick="openProjectModal('camera')">
-                    <div class="project-header">
-                        <div class="project-icon">📹</div>
-                        <div class="project-title-area">
-                            <h3>PeopleLink "Look At Me" Controller</h3>
-                            <span class="project-category">Embedded Systems • PCB Design • Nov 2018 - Dec 2018</span>
-                        </div>
-                    </div>
-                    <div class="project-click-hint">
-                        <span>Click to view details</span>
-                        <i class="fa fa-arrow-right"></i>
-                    </div>
+                
+                <div class="section-chart">
+                    <div id="projectsChart"></div>
                 </div>
             </div>
         </div>
@@ -423,7 +445,7 @@
 
                 <div class="skill-card">
                     <div class="skill-header">
-                        <div class="skill-icon">�</div>
+                        <div class="skill-icon">🔒</div>
                         <h3>Cybersecurity & Systems</h3>
                     </div>
                     <div class="skill-content">
@@ -561,54 +583,17 @@
     <div id="contact">
         <div class="container">
             <div class="row">
-                <div class="col-md-8 col-md-offset-2 text-center">
+                <div class="col-12 text-center" style="max-width: 800px; margin: 0 auto; padding: 0 20px;">
                     <h2>Let's Connect! 🚀</h2>
-                    <p class="contact-intro">
+                    <p class="contact-intro" style="margin: 0 auto; max-width: 600px;">
                         I'm always open to discussing new opportunities, collaborations, or just having a chat about technology. 
                         Feel free to reach out!
                     </p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div id="contact-form">
-                        <form method="POST" action="https://formspree.io/f/kodagantir295@gmail.com">
-                            <input type="hidden" name="_subject" value="Portfolio Contact - New Message from Website" />
-                            <input type="hidden" name="_next" value="https://unigalactix.github.io/rajeshkodaganti.github.io/" />
-                            
-                            <div class="form-group">
-                                <label for="contact-name">Your Name *</label>
-                                <input type="text" id="contact-name" name="name" placeholder="Enter your full name" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="contact-email">Your Email *</label>
-                                <input type="email" id="contact-email" name="_replyto" placeholder="your.email@example.com" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="contact-subject">Subject</label>
-                                <input type="text" id="contact-subject" name="subject" placeholder="What's this about?">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="contact-message">Your Message *</label>
-                                <textarea id="contact-message" name="message" rows="6" placeholder="Tell me about your project, opportunity, or just say hello!" required></textarea>
-                            </div>
-                            
-                            <div class="form-group text-center">
-                                <button type="submit" class="btn-contact-submit">
-                                    <i class="fa fa-paper-plane" aria-hidden="true"></i> Send Message
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
             
             <div class="row contact-info">
                 <div class="col-md-12 text-center">
-                    <h3>Other Ways to Reach Me</h3>
                     <div class="contact-methods">
                         <div class="contact-method">
                             <a href="mailto:kodagantir295@gmail.com" class="contact-link">
@@ -646,20 +631,13 @@
                         Warning: May cause uncontrollable fun and temporary escape from adulting! 😄 These are my go-to stress relievers when debugging life gets too real.
                     </p>
                     <div class="games-buttons-container" style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px;">
+                        <button id="gamesButton" class="btn-rounded-white" style="background: #3498db; border: 2px solid #3498db; padding: 18px 25px; min-width: 170px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i class="fa fa-gamepad" aria-hidden="true"></i>
+                            <span>Mini Games</span>
+                        </button>
                         <button id="techGamesButton" class="btn-rounded-white" style="background: #2ecc71; border: 2px solid #2ecc71; padding: 18px 25px; min-width: 170px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
                             <i class="fa fa-code" aria-hidden="true"></i>
                             <span>Tech Games</span>
-                        </button>
-                        <button id="gamesButton" class="btn-rounded-white" style="background: #e74c3c; border: 2px solid #e74c3c; padding: 18px 25px; min-width: 170px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
-                            <i class="fa fa-gamepad" aria-hidden="true"></i>
-                            <span>Play Games</span>
-                        </button>
-                        <button id="kruraGamesButton" class="btn-rounded-white" style="background: #9b59b6; border: 2px solid #9b59b6; padding: 18px 25px; min-width: 170px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex-direction: column;">
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <i class="fa fa-flask" aria-hidden="true"></i>
-                                <span>KRURA Games</span>
-                            </div>
-                            <span style="color: #ffffff; font-size: 0.8em; opacity: 0.8; font-style: italic; margin-top: 2px;">ETA: Echoes of Rebirth - Now Available!</span>
                         </button>
                     </div>
                 </div>
@@ -671,29 +649,15 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-sm-6 copyright">
+                <div class="col-12 copyright">
                     <p>
-                        Copyright &copy; 2025 Rajesh Kodaganti
+                        Copyright © 2025 Rajesh Kodaganti
                     </p>
-                </div>
-                <div class="col-sm-6 top">
-                    <span id="to-top">
-                        <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                    </span>
                 </div>
             </div>
         </div>
     </footer>
     <!-- End footer -->
-
-    <!-- Floating Chatbot Button -->
-    <div id="floatingChatbotBtn" class="floating-chatbot-btn">
-        <div class="chatbot-icon">
-            <span class="robot-emoji">🤖</span>
-        </div>
-        <div class="chatbot-text">BOT</div>
-        <div class="chatbot-pulse"></div>
-    </div>
 
     <!-- Chatbot Modal -->
     <div id="chatbotModal" class="chatbot-modal">
@@ -701,23 +665,23 @@
             <div class="chatbot-header">
                 <div class="chatbot-avatar">
                     <div class="avatar-circle">
-                        <span class="robot-emoji">🤖</span>
+                        <span class="robot-emoji">👩‍💼</span>
                     </div>
                     <div class="chatbot-info">
-                        <h3>BOT</h3>
+                        <h3>PAM</h3>
                         <p class="chatbot-status">Online • Ask me about Rajesh's portfolio</p>
                     </div>
                 </div>
-                <span class="chatbot-close" id="closeChatbot">&times;</span>
+                <span class="chatbot-close" id="closeChatbot">×</span>
             </div>
             <div class="chatbot-body">
                 <div class="chat-messages" id="chatMessages">
                     <div class="message bot-message">
                         <div class="message-avatar">
-                            <span class="robot-emoji">🤖</span>
+                            <span class="robot-emoji">👩‍💼</span>
                         </div>
                         <div class="message-content">
-                            <p>Hi! I'm K-RU-RA BOT, your personal assistant about Rajesh Kodaganti's portfolio. Ask me anything about his:</p>
+                            <p>Hi! I'm PAM, your personal assistant about Rajesh Kodaganti's portfolio. Ask me anything about his:</p>
                             <div class="quick-actions">
                                 <button class="quick-action-btn" data-question="Tell me about Rajesh's background">👤 Background</button>
                                 <button class="quick-action-btn" data-question="What are Rajesh's skills?">🛠️ Skills</button>
@@ -883,10 +847,20 @@
                         </ul>
                     </div>
                 </div>
-
-
             </div>
         </div>
+    </div>
+
+    <!-- Floating Chatbot Button -->
+    <div id="floatingChatbotBtn" class="floating-chatbot-btn">
+        <div class="chatbot-pulse"></div>
+        <div class="chatbot-icon">👩‍💼</div>
+        <div class="chatbot-text">PAM</div>
+    </div>
+
+    <!-- Simple Theme Notification Button -->
+    <div id="floatingThemeBtn" class="floating-theme-btn" style="position: fixed; left: 20px; bottom: 20px; z-index: 1000; width: 60px; height: 60px; background: linear-gradient(135deg, #f39c12, #e67e22); color: white; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 24px;" title="Office Theme In Build">
+        �
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -895,7 +869,8 @@
     <script src="js/tech-games.js"></script>
     <script src="js/timeline-modal.js"></script>
     <script src="js/modal-manager.js"></script>
-    <script src="js/chatbot.js"></script>
+    <script src="js/chatbot.js?v=2"></script>
+    <script src="js/infographics.js"></script>
 </body>
 
 </html>
