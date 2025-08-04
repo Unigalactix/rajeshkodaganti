@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Notification Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        h1 { text-align: center; margin-bottom: 30px; }
+        .status { 
+            padding: 15px; 
+            margin: 15px 0; 
+            border-radius: 8px; 
+            font-weight: bold;
+        }
+        .success { background-color: rgba(40, 167, 69, 0.8); }
+        .error { background-color: rgba(220, 53, 69, 0.8); }
+        .info { background-color: rgba(23, 162, 184, 0.8); }
+        .test-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        #log {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📧 Portfolio Email Notification System</h1>
+        
+        <div id="status" class="status info">
+            🔄 Checking notification service status...
+        </div>
+
+        <div class="test-buttons">
+            <button onclick="testHealthCheck()">🏥 Health Check</button>
+            <button onclick="testVisitNotification()">📧 Test Visit Notification</button>
+            <button onclick="testEmailService()">✉️ Test Email Service</button>
+            <button onclick="clearLog()">🗑️ Clear Log</button>
+        </div>
+
+        <div id="log"></div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        let logContainer = document.getElementById('log');
+        let statusContainer = document.getElementById('status');
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `[${timestamp}] ${message}`;
+            logEntry.style.color = type === 'error' ? '#ff6b6b' : type === 'success' ? '#51cf66' : '#74c0fc';
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        function updateStatus(message, type) {
+            statusContainer.className = `status ${type}`;
+            statusContainer.innerHTML = message;
+        }
+
+        async function testHealthCheck() {
+            log('🏥 Testing health check endpoint...', 'info');
+            try {
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log('✅ Health check successful!', 'success');
+                    log(`📊 Status: ${data.status}`, 'success');
+                    log(`🕒 Timestamp: ${data.timestamp}`, 'info');
+                    updateStatus('✅ Notification service is running!', 'success');
+                } else {
+                    throw new Error('Health check failed');
+                }
+            } catch (error) {
+                log(`❌ Health check failed: ${error.message}`, 'error');
+                updateStatus('❌ Notification service is not responding', 'error');
+            }
+        }
+
+        async function testVisitNotification() {
+            log('📧 Testing visit notification...', 'info');
+            try {
+                const response = await fetch(`${API_URL}/notify-visit`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        page: 'test-page',
+                        section: 'notification-test',
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    if (data.rateLimited) {
+                        log('⏱️ Visit notification rate limited (this is normal)', 'info');
+                    } else {
+                        log('✅ Visit notification sent successfully!', 'success');
+                        log('📧 Check kodagantir295@gmail.com for the email', 'success');
+                    }
+                } else {
+                    throw new Error(data.message || 'Unknown error');
+                }
+            } catch (error) {
+                log(`❌ Visit notification failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testEmailService() {
+            log('✉️ Testing email service (development only)...', 'info');
+            try {
+                const response = await fetch(`${API_URL}/test-email`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    log('✅ Test email sent successfully!', 'success');
+                    log('📧 Check kodagantir295@gmail.com for the test email', 'success');
+                } else {
+                    throw new Error(data.error || 'Unknown error');
+                }
+            } catch (error) {
+                log(`❌ Test email failed: ${error.message}`, 'error');
+            }
+        }
+
+        function clearLog() {
+            logContainer.innerHTML = '';
+            log('🧹 Log cleared', 'info');
+        }
+
+        // Auto-run health check on page load
+        window.addEventListener('load', () => {
+            setTimeout(testHealthCheck, 1000);
+        });
+    </script>
+</body>
+</html>
