@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajesh Kodaganti - Loading</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            overflow: hidden;
+        }
+
+        #container netflixintro {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            animation-name: zoom-in;
+            animation-delay: 2s;
+            animation-duration: 3s;
+            animation-timing-function: ease-in;
+            animation-fill-mode: forwards;
+        }
+
+        .netflix-r {
+            font-family: Arial, sans-serif;
+            font-size: 8em;
+            font-weight: bold;
+            color: #e50914;
+            position: relative;
+            transform: skewX(-15deg);
+            opacity: 0;
+            animation: letterReveal 2s ease-out 0.5s forwards;
+        }
+
+        #container netflixintro::before {
+            content: "";
+            position: absolute;
+            display: block;
+            background-color: #000000;
+            width: 150%;
+            height: 30%;
+            left: -25%;
+            bottom: -27%;
+            border-radius: 50%;
+            z-index: 5;
+            transform-origin: left center;
+        }
+
+        /* Letter reveal animation */
+        @keyframes letterReveal {
+            0% {
+                opacity: 0;
+                transform: skewX(-15deg) scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: skewX(-15deg) scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: skewX(-15deg) scale(1);
+            }
+        }
+
+        .tagline {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-top: 40px;
+            opacity: 0;
+            animation: fadeIn 1s ease-in 4s forwards;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .loading-bar {
+            width: 300px;
+            height: 4px;
+            background: #333;
+            margin: 30px auto;
+            border-radius: 2px;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 1s ease-in 4.5s forwards;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #e40913, #ff6b35);
+            width: 0;
+            animation: loadProgress 2s ease-out 5s forwards;
+            border-radius: 2px;
+        }
+
+        .fade-out {
+            animation: fadeOut 1s ease-out forwards;
+        }
+
+        /* Keyframe animations */
+        @keyframes letterReveal {
+            0% {
+                opacity: 0;
+                transform: skewX(-15deg) scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: skewX(-15deg) scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: skewX(-15deg) scale(1);
+            }
+        }
+
+        @keyframes zoom-in {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(15);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        @keyframes loadProgress {
+            to {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #container netflixintro {
+                width: 250px;
+                height: 250px;
+            }
+            .tagline {
+                font-size: 1.2rem;
+            }
+            .loading-bar {
+                width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #container netflixintro {
+                width: 200px;
+                height: 200px;
+            }
+            .tagline {
+                font-size: 1rem;
+            }
+            .loading-bar {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <netflixintro>
+            <div class="netflix-r">R</div>
+        </netflixintro>
+
+        <div class="tagline">PORTFOLIO</div>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-redirect to main portfolio after 7 seconds
+        setTimeout(() => {
+            document.querySelector('#container').classList.add('fade-out');
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        }, 7000);
+
+        // Optional: Skip splash on click
+        document.addEventListener('click', () => {
+            document.querySelector('#container').classList.add('fade-out');
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 500);
+        });
+    </script>
+</body>
+</html>
