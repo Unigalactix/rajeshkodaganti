@@ -21,8 +21,14 @@
         // Check if this is a direct visit to the portfolio (not from splash)
         if (!sessionStorage.getItem('splashShown')) {
             // Redirect to splash screen for first-time visitors
-            window.location.href = 'netflix-splash.html';
+            window.location.replace('netflix-splash.html');
         }
+        
+        // Debug: Add manual override for testing
+        window.clearSplash = function() {
+            sessionStorage.removeItem('splashShown');
+            window.location.reload();
+        };
     </script>
     <div id="mobile-menu-open" class="shadow-large">
         <i class="fa fa-bars" aria-hidden="true"></i>
