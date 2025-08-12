@@ -223,6 +223,8 @@
             document.querySelector('#container').classList.add('fade-out');
             
             setTimeout(() => {
+                // Mark that splash has been shown
+                sessionStorage.setItem('splashShown', 'true');
                 window.location.href = 'index.html';
             }, 1000);
         }, 7000);
@@ -232,6 +234,8 @@
             document.querySelector('#container').classList.add('fade-out');
             
             setTimeout(() => {
+                // Mark that splash has been shown
+                sessionStorage.setItem('splashShown', 'true');
                 window.location.href = 'index.html';
             }, 500);
         });

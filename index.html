@@ -17,6 +17,13 @@
 </head>
 
 <body>
+    <script>
+        // Check if this is a direct visit to the portfolio (not from splash)
+        if (!sessionStorage.getItem('splashShown')) {
+            // Redirect to splash screen for first-time visitors
+            window.location.href = 'netflix-splash.html';
+        }
+    </script>
     <div id="mobile-menu-open" class="shadow-large">
         <i class="fa fa-bars" aria-hidden="true"></i>
     </div>
