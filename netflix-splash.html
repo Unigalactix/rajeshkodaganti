@@ -42,14 +42,31 @@
         }
 
         .netflix-r {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             font-size: 8em;
             font-weight: bold;
             color: #e50914;
             position: relative;
-            transform: skewX(-15deg);
+            transform: skewX(-20deg);
             opacity: 0;
             animation: letterReveal 2s ease-out 0.5s forwards;
+        }
+
+        .netflix-r::before,
+        .netflix-r::after {
+            content: "R";
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: rgba(100, 0, 0, 0.7);
+            z-index: -1;
+            transform: skewX(-20deg) translate(-2px, 2px);
+        }
+
+        .netflix-r::after {
+            color: rgba(50, 0, 0, 0.5);
+            transform: skewX(-20deg) translate(-4px, 4px);
+            z-index: -2;
         }
 
         #container netflixintro::before {
@@ -70,15 +87,15 @@
         @keyframes letterReveal {
             0% {
                 opacity: 0;
-                transform: skewX(-15deg) scale(0.5);
+                transform: skewX(-20deg) scale(0.5);
             }
             50% {
                 opacity: 1;
-                transform: skewX(-15deg) scale(1.1);
+                transform: skewX(-20deg) scale(1.1);
             }
             100% {
                 opacity: 1;
-                transform: skewX(-15deg) scale(1);
+                transform: skewX(-20deg) scale(1);
             }
         }
 
