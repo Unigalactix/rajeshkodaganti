@@ -76,10 +76,12 @@
 </head>
 <body>
     <div id="container">
-    <!-- GIF splash: use local GIF file -->
-    <img id="splashGif" class="splash-video" src="r_intro.gif" alt="Intro GIF" style="width:100%; height:100%; object-fit:cover; position:fixed; inset:0; z-index:1;" />
+        <!-- Splash container: will prefer webm/mp4 in assets/videos/, otherwise fallback to GIF -->
+        <div id="splashArea" style="position:fixed; inset:0; z-index:1; background:#000; display:flex; align-items:center; justify-content:center;">
+            <img id="splashGif" src="r_intro.gif" alt="Intro GIF" style="width:100%; height:100%; object-fit:cover; display:block;" />
+        </div>
 
-    <button id="skipBtn" aria-label="Skip splash" style="display:none; position:fixed; top:18px; right:18px; z-index:30; background:rgba(0,0,0,0.5); color:#fff; border:0; padding:8px 12px; border-radius:6px; cursor:pointer;">Skip</button>
+        <button id="skipBtn" aria-label="Skip splash" style="display:none; position:fixed; top:18px; right:18px; z-index:30; background:rgba(0,0,0,0.5); color:#fff; border:0; padding:8px 12px; border-radius:6px; cursor:pointer;">Skip</button>
     </div>
 
     <script>
@@ -97,15 +99,41 @@
             }
 
                 // Show skip button shortly after load
-                setTimeout(function(){ skip.style.display = 'block'; }, 800);
+                setTimeout(function(){ skip.style.display = 'block'; }, 600);
 
-                // Auto-finish after GIF duration (approximate) - 7s default
-                var autoTimeout = setTimeout(finish, 7000);
+                // Try to use compressed video if present (webm first, then mp4)
+                var splashArea = document.getElementById('splashArea');
+                var gif = document.getElementById('splashGif');
+                var candidates = ['assets/videos/splash.webm', 'assets/videos/splash.mp4'];
 
-                skip.addEventListener('click', function(){ clearTimeout(autoTimeout); finish(); });
+                function tryFetch(url){
+                    return fetch(url, { method: 'HEAD' }).then(function(res){ return res.ok; }).catch(function(){ return false; });
+                }
 
-                // fallback: click anywhere also skips
-                document.addEventListener('click', function(e){ if(e.target === skip) return; clearTimeout(autoTimeout); finish(); });
+                (async function(){
+                    for(var i=0;i<candidates.length;i++){
+                        var ok = await tryFetch(candidates[i]);
+                        if(ok){
+                            // create video element and play
+                            var v = document.createElement('video');
+                            v.src = candidates[i];
+                            v.autoplay = true; v.muted = true; v.playsInline = true; v.controls = false; v.style.width='100%'; v.style.height='100%'; v.style.objectFit='cover';
+                            // replace gif with video
+                            gif.style.display = 'none';
+                            splashArea.appendChild(v);
+                            // when video ends, finish
+                            v.addEventListener('ended', finish);
+                            // also show skip
+                            skip.style.display = 'block';
+                            return;
+                        }
+                    }
+
+                    // no video found — set a reasonable timeout matching GIF length
+                    var autoTimeout = setTimeout(finish, 7000);
+                    skip.addEventListener('click', function(){ clearTimeout(autoTimeout); finish(); });
+                    document.addEventListener('click', function(e){ if(e.target === skip) return; clearTimeout(autoTimeout); finish(); });
+                })();
         })();
     </script>
 </body>
