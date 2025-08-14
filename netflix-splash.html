@@ -68,45 +68,58 @@
             to { transform: scale(14); opacity:0; }
         }
 
-        /* small responsive adjustments */
-        @media (max-width:600px){ .r-wrap{ width:160px; height:200px; } .r-bowl{ width:100px; height:95px; } .r-leg{ left:68px; top:95px; width:90px; } }
+    /* Video splash styles */
+    .splash-video{ position:fixed; inset:0; width:100%; height:100%; object-fit:cover; background:#000; z-index:1; }
+    #skipBtn{ display:none; }
+    @media (max-width:600px){ .splash-video{ object-position:center top; } }
     </style>
 </head>
 <body>
     <div id="container">
-        <div class="r-wrap" aria-hidden="false">
-            <div class="r-stem" aria-hidden="true"></div>
-            <div class="r-bowl" aria-hidden="true"></div>
-            <div class="r-tail" aria-hidden="true"></div>
-            <div class="r-leg" aria-hidden="true"></div>
-            <div class="r-shine" aria-hidden="true"></div>
-        </div>
+        <!-- Video splash: uses the uploaded MP4 in repo -->
+        <video id="splashVideo" class="splash-video" autoplay muted playsinline preload="auto">
+            <source src="assets/videos/Picsart_25-08-14_15-34-13-456.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
 
-        <div class="tagline">Portfolio</div>
+        <button id="skipBtn" aria-label="Skip splash" style="display:none; position:fixed; top:18px; right:18px; z-index:30; background:rgba(0,0,0,0.5); color:#fff; border:0; padding:8px 12px; border-radius:6px; cursor:pointer;">Skip</button>
     </div>
 
     <script>
-        // Auto-redirect to main portfolio after 7 seconds
-        setTimeout(() => {
-            document.querySelector('#container').classList.add('fade-out');
-            
-            setTimeout(() => {
-                // Mark that splash has been shown
-                sessionStorage.setItem('splashShown', 'true');
-                window.location.href = 'index.html';
-            }, 1000);
-        }, 7000);
+        (function(){
+            var video = document.getElementById('splashVideo');
+            var skip = document.getElementById('skipBtn');
+            var target = 'index.html';
 
-        // Optional: Skip splash on click
-        document.addEventListener('click', () => {
-            document.querySelector('#container').classList.add('fade-out');
-            
-            setTimeout(() => {
-                // Mark that splash has been shown
-                sessionStorage.setItem('splashShown', 'true');
-                window.location.href = 'index.html';
-            }, 500);
-        });
+            function finish(){
+                document.querySelector('#container').classList.add('fade-out');
+                setTimeout(function(){
+                    sessionStorage.setItem('splashShown','true');
+                    window.location.href = target;
+                }, 600);
+            }
+
+            // Redirect when video ends
+            video.addEventListener('ended', finish);
+
+            // Show skip button if autoplay blocked or after a short delay
+            video.play().then(function(){
+                // autoplay succeeded; show skip after 1s so user can skip
+                setTimeout(function(){ skip.style.display = 'block'; }, 1000);
+            }).catch(function(){
+                // autoplay blocked; user must click to continue
+                skip.style.display = 'block';
+            });
+
+            skip.addEventListener('click', finish);
+
+            // fallback: click anywhere also skips (keeps old behavior)
+            document.addEventListener('click', function(e){
+                // ignore clicks on skip button to avoid double handling
+                if(e.target === skip) return;
+                finish();
+            });
+        })();
     </script>
 </body>
 </html>
