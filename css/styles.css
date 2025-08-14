@@ -233,6 +233,23 @@ p {
 .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
 .btn-secondary { background:#fff;color:var(--primary-color); border: 2px solid rgba(255,255,255,0.06); }
 
+/* LinkedIn-style button */
+.btn-linkedin {
+    background: #0A66C2;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 999px;
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(10,102,194,0.18);
+}
+.btn-linkedin:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(10,102,194,0.22); }
+
 /* Focus areas grid adjustment */
 .focus-areas {
     display: grid;
