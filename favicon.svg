@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="R logo">
+  <title>R logo</title>
+  <rect width="64" height="64" rx="10" fill="transparent"/>
+  <!-- four color background blobs inspired by playful multi-color logos -->
+  <g transform="translate(6,6)">
+    <circle cx="18" cy="18" r="14" fill="#1a73e8" /> <!-- blue -->
+    <circle cx="46" cy="18" r="14" fill="#ea4335" /> <!-- red -->
+    <circle cx="18" cy="46" r="14" fill="#fbbc05" /> <!-- yellow -->
+    <circle cx="46" cy="46" r="14" fill="#34a853" /> <!-- green -->
+  </g>
+  <!-- central white 'R' mask that reveals the colored blobs behind, giving a colorful R -->
+  <g>
+    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="34" fill="#ffffff">R</text>
+    <!-- subtle stroke to define the R on dark backgrounds -->
+    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="34" fill="none" stroke="#000000" stroke-opacity="0.12" stroke-width="1" paint-order="stroke"/>
+  </g>
+</svg>
