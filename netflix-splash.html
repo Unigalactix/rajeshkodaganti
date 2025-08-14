@@ -76,11 +76,10 @@
 </head>
 <body>
     <div id="container">
-        <!-- Video splash: uses the uploaded MP4 in repo -->
-        <video id="splashVideo" class="splash-video" autoplay muted playsinline preload="auto">
-            <source src="R_INTRO.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+        <!-- YouTube splash: embed via IFrame API so we can detect end event -->
+        <div id="ytContainer" class="splash-video" style="position:fixed; inset:0; z-index:1;">
+            <div id="ytPlayer" style="width:100%; height:100%;"></div>
+        </div>
 
         <button id="skipBtn" aria-label="Skip splash" style="display:none; position:fixed; top:18px; right:18px; z-index:30; background:rgba(0,0,0,0.5); color:#fff; border:0; padding:8px 12px; border-radius:6px; cursor:pointer;">Skip</button>
     </div>
@@ -99,26 +98,52 @@
                 }, 600);
             }
 
-            // Redirect when video ends
-            video.addEventListener('ended', finish);
+                // YouTube IFrame API setup
+                var tag = document.createElement('script');
+                tag.src = "https://www.youtube.com/iframe_api";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-            // Show skip button if autoplay blocked or after a short delay
-            video.play().then(function(){
-                // autoplay succeeded; show skip after 1s so user can skip
-                setTimeout(function(){ skip.style.display = 'block'; }, 1000);
-            }).catch(function(){
-                // autoplay blocked; user must click to continue
-                skip.style.display = 'block';
-            });
+                // Extract video ID from provided YouTube link
+                var ytId = 'UzlABVRPOkg'; // from https://youtu.be/UzlABVRPOkg
+                var player;
 
-            skip.addEventListener('click', finish);
+                window.onYouTubeIframeAPIReady = function() {
+                    player = new YT.Player('ytPlayer', {
+                        height: '100%',
+                        width: '100%',
+                        videoId: ytId,
+                        playerVars: {
+                            autoplay: 1,
+                            controls: 0,
+                            modestbranding: 1,
+                            rel: 0,
+                            showinfo: 0,
+                            fs: 0,
+                            mute: 1,
+                            playsinline: 1
+                        },
+                        events: {
+                            'onReady': function(e){
+                                // attempt play, show skip after short delay
+                                try{ e.target.playVideo(); }catch(ex){}
+                                setTimeout(function(){ skip.style.display = 'block'; }, 1000);
+                            },
+                            'onStateChange': function(ev){
+                                // 0 === ended
+                                if(ev.data === YT.PlayerState.ENDED){ finish(); }
+                            }
+                        }
+                    });
+                };
 
-            // fallback: click anywhere also skips (keeps old behavior)
-            document.addEventListener('click', function(e){
-                // ignore clicks on skip button to avoid double handling
-                if(e.target === skip) return;
-                finish();
-            });
+                skip.addEventListener('click', function(){
+                    try{ if(player) player.stopVideo(); }catch(e){}
+                    finish();
+                });
+
+                // fallback: click anywhere also skips
+                document.addEventListener('click', function(e){ if(e.target === skip) return; finish(); });
         })();
     </script>
 </body>
