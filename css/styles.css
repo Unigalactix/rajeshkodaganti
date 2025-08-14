@@ -201,6 +201,69 @@ p {
     margin-top: 18px;
 }
 
+/* Hero (lead) polish */
+#lead {
+        background: linear-gradient(180deg, rgba(10,10,10,0.96), rgba(6,15,30,0.9));
+        color: var(--text-light);
+        padding: 80px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+}
+#lead-content h1 { font-size: clamp(2rem, 6vw, 3rem); margin: 0 0 8px; letter-spacing: -0.02em; }
+#lead-content h2 { font-size: clamp(1rem, 2.5vw, 1.1rem); font-weight: 500; opacity: 0.9; margin: 0 0 12px; }
+
+/* Consolidated button styles */
+.btn-primary, .btn-rounded-white {
+    --btn-bg: var(--accent-color);
+    background: var(--btn-bg);
+    color: #fff;
+    border: 0;
+    padding: 12px 20px;
+    border-radius: 999px;
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+.btn-secondary { background:#fff;color:var(--primary-color); border: 2px solid rgba(255,255,255,0.06); }
+
+/* Focus areas grid adjustment */
+.focus-areas {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-top: 18px;
+}
+@media (min-width:700px){
+    .focus-areas { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+}
+
+/* Focus item card */
+.focus-item {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    text-align: left;
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+.focus-item:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.10); }
+.focus-item .focus-title { margin: 0 0 6px; font-size: 1.05rem; color: var(--heading); }
+.focus-item p { margin: 0; color: var(--text-secondary); line-height:1.45; }
+
+/* About center small utility */
+.about-content-plain { text-align: center; max-width: 920px; margin: 0 auto; }
+
+/* Entrance tweak when coming from splash */
+.from-splash-enter #lead { animation: splashArrive .7s cubic-bezier(.2,.9,.2,1); }
+@keyframes splashArrive { from { transform: translateY(18px) scale(.995); opacity:0 } to { transform:none; opacity:1 } }
+
 @media (min-width: 700px) {
     #about .focus-areas {
         grid-template-columns: repeat(2, 1fr);
