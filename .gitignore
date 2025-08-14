@@ -1,0 +1,13 @@
+# Node modules
+backend/node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+
+# Build artifacts
+dist/
+build/
