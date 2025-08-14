@@ -96,7 +96,9 @@
             function finish(){
                 document.querySelector('#container').classList.add('fade-out');
                 setTimeout(function(){
+                    // mark splash shown and that we're coming from the splash
                     sessionStorage.setItem('splashShown','true');
+                    sessionStorage.setItem('fromSplash','true');
                     window.location.href = target;
                 }, 400);
             }

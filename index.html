@@ -988,6 +988,22 @@
             });
         })();
     </script>
+    <script>
+        // If we just came from the splash page, play a subtle entrance animation
+        (function(){
+            try{
+                if(sessionStorage.getItem('fromSplash') === 'true'){
+                    // apply class to the main content container for animation
+                    document.documentElement.classList.add('from-splash-enter');
+                    // also to common top-level sections for broader effect
+                    var lead = document.getElementById('lead');
+                    if(lead) lead.classList.add('from-splash-enter');
+                    // clear the flag so future loads are normal
+                    sessionStorage.removeItem('fromSplash');
+                }
+            }catch(e){/* ignore in older browsers */}
+        })();
+    </script>
 </body>
 
 </html>

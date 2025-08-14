@@ -314,6 +314,17 @@ p {
     animation: fadeInUp 0.8s ease-out 1.2s both;
 }
 
+/* Entrance animation when arriving from the splash page */
+.from-splash-enter {
+    animation: splashIn 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes splashIn {
+    0% { opacity: 0; transform: scale(0.98) translateY(12px); }
+    60% { opacity: 1; transform: scale(1.02) translateY(-6px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
 /* Hover transitions for interactive elements */
 a, button, .btn {
     transition: var(--transition-fast);
