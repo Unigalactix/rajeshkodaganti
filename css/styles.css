@@ -1,26 +1,9 @@
-/*!
-    Title: Nike-Inspired Minimal Portfolio
-    Version: 2.0.0
-    Last Change: 07/20/2025
-    Author: Rajesh Kodaganti
-    Description: Clean, minimal portfolio with Nike-inspired aesthetics
-*/
-
-/*
-    ------------------------
-    ----- 1. Variables -----
-    ------------------------
-*/
-
-:root {
-    /* Nike-Inspired Color Palette */
-    --primary-color: #000000;          /* Deep Black */
-    --secondary-color: #FFFFFF;        /* Pure White */
-    --accent-color: #64B5F6;          /* Light Blue */
-    --text-primary: #000000;          /* Black text */
-    --text-secondary: #707070;        /* Medium gray */
-    --text-light: #FFFFFF;           /* White text */
-    --background-light: #FFFFFF;     /* White background */
+#lead {
+    position: relative;
+    min-height: 500px;
+    max-height: 1080px;
+    .heading { display: flex; align-items: center; gap: 8px; }
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
     --background-dark: #000000;      /* Black background */
     --background-gray: #F7F7F7;     /* Light gray */
     --border-color: #E5E5E5;        /* Subtle border */

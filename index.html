@@ -155,7 +155,7 @@
 
 
     <div id="experience" class="background-alt">
-    <h2 class="heading">Professional Experience <button class="add-btn" data-target="experience">+</button></h2>
+    <h2 class="heading">Professional Experience</h2>
         <div class="container">
             <div class="experience-grid">
                 <div class="experience-card" data-exp-id="quadrant" onclick="openExperienceModal('quadrant')">
@@ -238,7 +238,7 @@
     <!-- End #experience -->
 
     <div id="education">
-    <h2 class="heading">Education <button class="add-btn" data-target="education">+</button></h2>
+    <h2 class="heading">Education</h2>
         <div class="container">
             <div class="education-grid">
                 <div class="education-card">
@@ -321,7 +321,7 @@
     <!-- End #education -->
 
     <div id="projects" class="background-alt">
-    <h2 class="heading">Featured Projects <button class="add-btn" data-target="projects">+</button></h2>
+    <h2 class="heading">Featured Projects</h2>
         <div class="container">
             <div class="projects-grid">
                 <div class="project-card" data-project-id="convir" onclick="openProjectModal('convir')">
@@ -399,7 +399,7 @@
     <!-- End #projects -->
 
     <div id="skills">
-    <h2 class="heading">Core Skills <button class="add-btn" data-target="skills">+</button></h2>
+    <h2 class="heading">Core Skills</h2>
         <div class="container">
             <div class="skills-grid">
                 <div class="skill-card">
@@ -880,114 +880,7 @@
     <script src="js/timeline-modal.js"></script>
     <script src="js/modal-manager.js"></script>
     <script src="js/chatbot.js?v=2"></script>
-    <script>
-        // Lightweight add-item handler for section + buttons
-        (function(){
-            function createExperienceCard(title, role, period){
-                var card = document.createElement('div');
-                card.className = 'experience-card';
-                card.innerHTML = `
-                    <div class="exp-header">
-                        <div class="exp-icon">💼</div>
-                        <div class="exp-title-area">
-                            <h3>${title}</h3>
-                            <h4>${role}</h4>
-                            <span class="exp-period">${period}</span>
-                        </div>
-                    </div>
-                    <div class="exp-click-hint"><span>Click to view details</span><i class="fa fa-arrow-right"></i></div>
-                `;
-                return card;
-            }
-
-            function createEducationCard(title, degree, period, desc){
-                var card = document.createElement('div');
-                card.className = 'education-card';
-                card.innerHTML = `
-                    <div class="edu-header">
-                        <div class="edu-icon">🎓</div>
-                        <div class="edu-title-area">
-                            <h3>${title}</h3>
-                            <h4>${degree}</h4>
-                            <span class="edu-period">${period}</span>
-                        </div>
-                    </div>
-                    <p class="edu-description">${desc}</p>
-                `;
-                return card;
-            }
-
-            function createProjectCard(title, meta){
-                var card = document.createElement('div');
-                card.className = 'project-card';
-                card.innerHTML = `
-                    <div class="project-header">
-                        <div class="project-icon">📂</div>
-                        <div class="project-title-area">
-                            <h3>${title}</h3>
-                            <span class="project-category">${meta}</span>
-                        </div>
-                    </div>
-                    <div class="project-click-hint"><span>Click to view details</span><i class="fa fa-arrow-right"></i></div>
-                `;
-                return card;
-            }
-
-            function createSkillItem(text){
-                var item = document.createElement('div');
-                item.className = 'skill-item';
-                item.textContent = text;
-                return item;
-            }
-
-            document.querySelectorAll('.add-btn').forEach(function(btn){
-                btn.addEventListener('click', function(e){
-                    var target = btn.getAttribute('data-target');
-                    if(target === 'experience'){
-                        var title = prompt('Company / Organization name');
-                        if(!title) return;
-                        var role = prompt('Role / Title', '');
-                        var period = prompt('Period (e.g. Jan 2024 - Present)', '');
-                        var node = createExperienceCard(title, role||'', period||'');
-                        var grid = document.querySelector('#experience .experience-grid');
-                        if(grid) grid.insertBefore(node, grid.firstChild);
-                    } else if(target === 'education'){
-                        var school = prompt('School / Institution name');
-                        if(!school) return;
-                        var degree = prompt('Degree / Program', '');
-                        var period = prompt('Period (e.g. Aug 2021 - May 2024)', '');
-                        var desc = prompt('Short description / focus areas', '');
-                        var node = createEducationCard(school, degree||'', period||'', desc||'');
-                        var grid = document.querySelector('#education .education-grid');
-                        if(grid) grid.insertBefore(node, grid.firstChild);
-                    } else if(target === 'projects'){
-                        var title = prompt('Project Title');
-                        if(!title) return;
-                        var meta = prompt('Short meta (tech • date)', '');
-                        var node = createProjectCard(title, meta||'');
-                        var grid = document.querySelector('#projects .projects-grid');
-                        if(grid) grid.insertBefore(node, grid.firstChild);
-                    } else if(target === 'skills'){
-                        var text = prompt('Skill to add (e.g. Rust, Kubernetes)');
-                        if(!text) return;
-                        // append to the first skills card skill-list for simplicity
-                        var list = document.querySelector('#skills .skill-list');
-                        if(list){
-                            var node = createSkillItem(text);
-                            list.appendChild(node);
-                            // update count if present
-                            var count = list.parentElement.querySelector('.skill-count');
-                            if(count){
-                                // try to parse existing count and increment
-                                var n = (parseInt(count.textContent,10) || 0) + 1;
-                                count.textContent = n + ' Items';
-                            }
-                        }
-                    }
-                });
-            });
-        })();
-    </script>
+    
     <script>
         // If we just came from the splash page, play a subtle entrance animation
         (function(){
