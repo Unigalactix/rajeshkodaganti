@@ -1,28 +1,126 @@
-#lead {
-    position: relative;
-    min-height: 500px;
-    max-height: 1080px;
-    .heading { display: flex; align-items: center; gap: 8px; }
-    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-    --background-dark: #000000;      /* Black background */
-    --background-gray: #F7F7F7;     /* Light gray */
-    --border-color: #E5E5E5;        /* Subtle border */
-    --shadow-light: rgba(0,0,0,0.08); /* Minimal shadow */
-    --shadow-medium: rgba(0,0,0,0.15);
-    
-    /* Legacy variables for compatibility */
-    --base-color: #000000;
-    --base-color-hover: #64B5F6;
-    --background: #FFFFFF;
-    --background-alt: #F7F7F7;
-    --border: #E5E5E5;
-    --heading: #000000;
-    --text: #707070;
-    
-    /* Smooth transitions */
-    --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+/* === Material Android Minimal Theme Variables === */
+:root {
+    --md-primary: #1976d2;
+    --md-primary-dark: #1565c0;
+    --md-primary-light: #63a4ff;
+    --md-accent: #ff9800;
+    --md-bg: #fafafa;
+    --md-surface: #fff;
+    --md-border: #e0e0e0;
+    --md-text: #222;
+    --md-text-light: #fff;
+    --md-text-secondary: #757575;
+    --md-shadow: rgba(33, 33, 33, 0.08);
+    --md-radius: 12px;
+    --transition-fast: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body, html {
+    font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background: var(--md-bg);
+    color: var(--md-text);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    transition: var(--transition-smooth);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 500;
+    color: var(--md-text);
+    margin-bottom: 0.7em;
+    letter-spacing: -0.01em;
+}
+
+/* Minimal Material Card */
+.focus-item, .project-card, .education-card, .skill-card, .certification-card, .experience-card {
+    background: var(--md-surface);
+    border-radius: var(--md-radius);
+    box-shadow: 0 1px 4px var(--md-shadow);
+    border: 1px solid var(--md-border);
+    padding: 20px;
+    transition: var(--transition-fast);
+}
+.focus-item:hover, .project-card:hover, .education-card:hover, .skill-card:hover, .certification-card:hover, .experience-card:hover {
+    box-shadow: 0 4px 16px var(--md-shadow);
+    border-color: var(--md-primary);
+}
+
+/* Material Buttons */
+.btn, .btn-primary, .btn-games, .btn-rounded-white, .btn-linkedin, .btn-project, .btn-project-secondary {
+    background: var(--md-primary);
+    color: var(--md-text-light) !important;
+    border: none;
+    border-radius: 24px;
+    padding: 12px 28px;
+    font-weight: 500;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1rem;
+    box-shadow: none;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    transition: var(--transition-fast);
+    outline: none;
+}
+.btn:hover, .btn-primary:hover, .btn-games:hover, .btn-rounded-white:hover, .btn-linkedin:hover, .btn-project:hover, .btn-project-secondary:hover {
+    background: var(--md-primary-dark);
+    color: var(--md-text-light) !important;
+    box-shadow: 0 2px 8px var(--md-shadow);
+    transform: translateY(-2px);
+}
+.btn-secondary {
+    background: var(--md-accent);
+    color: var(--md-text-light) !important;
+}
+
+/* Remove gradients and heavy shadows from hero/lead */
+#lead, #lead-content {
+    background: var(--md-primary) !important;
+    color: var(--md-text-light) !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+#lead-content h1, #lead-content h2 {
+    color: var(--md-text-light) !important;
+}
+
+/* Inputs */
+input, textarea, select {
+    background: var(--md-surface);
+    border: 1px solid var(--md-border);
+    border-radius: var(--md-radius);
+    padding: 12px 16px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1rem;
+    color: var(--md-text);
+    transition: var(--transition-fast);
+}
+input:focus, textarea:focus, select:focus {
+    border-color: var(--md-primary);
+    outline: none;
+}
+
+/* Links */
+a {
+    color: var(--md-primary);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+a:hover {
+    text-decoration: underline;
+    color: var(--md-primary-dark);
+}
+
+/* Minimal section backgrounds */
+section, .background-alt {
+    background: var(--md-bg);
+    border-radius: var(--md-radius);
+    box-shadow: none;
 }
 
 /*
