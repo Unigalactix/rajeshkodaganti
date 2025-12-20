@@ -158,7 +158,7 @@ function generateResponse(query) {
         if (q.includes("michael")) return "Michael is in a meeting. It's about 'The Dundies'.";
         if (q.includes("prank")) return "I can't authorize any pranks on this website. Talk to Jim.";
         if (q.includes("project") || q.includes("work")) return "I have the project files right here in the filing cabinet. Let me pull them up.";
-        if (q.includes("contact") || q.includes("email")) return "You can fax us at... oh wait, Rajesh uses email. It's **kodagantir295@gmail.com**.";
+        if (q.includes("contact") || q.includes("email")) return "You can fax us at... oh wait, Rajesh uses email. It's **rajeshkodaganti.work@gmail.com**.";
         if (q.includes("resume") || q.includes("cv")) return "resume.pdf? I think I saw that on the fax machine. You can download it below.";
         if (q.includes("skills")) return "He has 'nunchuck skills'... wait, wrong movie. But he is great at **Python** and **Machine Learning**.";
         if (q.includes("coffee")) return "We're out of coffee. Michael tried to make some and... well, just don't ask.";

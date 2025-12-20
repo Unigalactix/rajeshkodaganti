@@ -55,8 +55,12 @@ document.addEventListener('DOMContentLoaded', function () {
             // Treat as normal link if no-scroll class
             if (this.classList.contains('no-scroll')) return;
 
-            e.preventDefault();
             const targetId = this.getAttribute('href');
+
+            // Only prevent default if it's an anchor link (starts with #)
+            if (!targetId.startsWith('#')) return;
+
+            e.preventDefault();
             const targetElement = document.querySelector(targetId);
 
             if (targetElement) {

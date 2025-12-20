@@ -126,7 +126,7 @@ Visit the live portfolio at: [https://unigalactix.github.io/rajeshkodaganti/](ht
 
 ## Contact
 
-- **Email**: kodagantir295@gmail.com
+- **Email**: rajeshkodaganti.work@gmail.com
 - **Phone**: (747) 366-0793
 - **LinkedIn**: [rajesh-kodaganti-323118215](https://www.linkedin.com/in/rajesh-kodaganti-323118215)
 
