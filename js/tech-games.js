@@ -5,7 +5,7 @@ class TechGamesManager {
         this.currentGame = null;
         this.score = 0;
         this.currentLevel = 1;
-        
+
         // Typing Test Game State
         this.typingGame = {
             currentText: '',
@@ -20,10 +20,10 @@ class TechGamesManager {
             difficulty: 'medium',
             playerName: ''
         };
-        
+
         // Leaderboard System
         this.leaderboard = this.loadLeaderboard();
-        
+
         this.questions = {
             typing_test: {
                 // Programming-themed typing tests
@@ -503,7 +503,7 @@ class TechGamesManager {
         };
 
         this.leaderboard.push(score);
-        
+
         // Sort by WPM descending, then by accuracy descending, then by errors ascending
         this.leaderboard.sort((a, b) => {
             if (b.wpm !== a.wpm) return b.wpm - a.wpm;
@@ -513,9 +513,9 @@ class TechGamesManager {
 
         // Keep only top 5
         this.leaderboard = this.leaderboard.slice(0, 5);
-        
+
         this.saveLeaderboard();
-        
+
         // Find the rank of this score
         const scoreIndex = this.leaderboard.findIndex(s => s.timestamp === score.timestamp);
         return scoreIndex >= 0 ? scoreIndex + 1 : -1; // Return rank (1-based) or -1 if not found
@@ -523,7 +523,7 @@ class TechGamesManager {
 
     displayLeaderboard() {
         const leaderboardList = document.getElementById('leaderboardList');
-        
+
         if (this.leaderboard.length === 0) {
             leaderboardList.innerHTML = '<div class="empty-leaderboard">No scores yet. Be the first to play!</div>';
             return;
@@ -533,7 +533,7 @@ class TechGamesManager {
             const rank = index + 1;
             const rankClass = rank <= 3 ? `rank-${rank}` : '';
             const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
-            
+
             return `
                 <div class="leaderboard-entry ${rankClass}">
                     <div class="leaderboard-rank">${medal || rank}</div>
@@ -588,46 +588,27 @@ class TechGamesManager {
     }
 
     showTechGamesModal() {
-        // Create or show tech games modal - force recreation to ensure latest content
-        console.log('Creating Tech Games Modal with Typing Test - Version 2.0');
+        // Create or show tech games modal
         let modal = document.getElementById('techGamesModal');
-        if (modal) {
-            console.log('Removing existing modal');
-            modal.remove(); // Remove existing modal to force recreation
-        }
-        
-        // Small delay to ensure DOM cleanup
-        setTimeout(() => {
+
+        if (!modal) {
+            console.log('Creating Tech Games Modal');
             modal = this.createTechGamesModal();
             document.body.appendChild(modal);
-            modal.style.display = 'flex';
-            
-            // Ensure typing game card is present and visible
-            this.ensureTypingGameCard();
-            
-            this.showGameSelection();
-            
-            // Debug: Check if typing game card exists
-            setTimeout(() => {
-                const typingCard = document.querySelector('.tech-game-card.recommended[data-game="typing_test"]');
-                const allCards = document.querySelectorAll('.tech-game-card');
-                console.log('Total cards found:', allCards.length);
-                console.log('All card data-games:', Array.from(allCards).map(card => card.dataset.game));
-                console.log('Typing game card found:', typingCard);
-                if (typingCard) {
-                    console.log('Typing card classes:', typingCard.className);
-                    console.log('Typing card data-game:', typingCard.dataset.game);
-                    console.log('Typing card display:', window.getComputedStyle(typingCard).display);
-                    console.log('Typing card visibility:', window.getComputedStyle(typingCard).visibility);
-                }
-            }, 100);
-        }, 50);
+        }
+
+        modal.style.display = 'flex';
+
+        // Ensure typing game card is present
+        this.ensureTypingGameCard();
+
+        this.showGameSelection();
     }
 
     ensureTypingGameCard() {
         const grid = document.querySelector('.tech-games-grid');
         let typingCard = document.querySelector('.tech-game-card[data-game="typing_test"]');
-        
+
         if (!typingCard && grid) {
             console.log('Typing card not found, creating it manually');
             typingCard = document.createElement('div');
@@ -641,12 +622,12 @@ class TechGamesManager {
                 <div class="difficulty-badge">All Levels</div>
                 <button class="start-tech-game-btn">Start Typing</button>
             `;
-            
+
             // Add event listener
             typingCard.querySelector('.start-tech-game-btn').addEventListener('click', () => {
                 this.startTechGame('typing_test');
             });
-            
+
             // Insert at the beginning
             grid.insertBefore(typingCard, grid.firstChild);
             console.log('Typing card manually added');
@@ -658,7 +639,7 @@ class TechGamesManager {
         const modal = document.createElement('div');
         modal.id = 'techGamesModal';
         modal.className = 'tech-games-modal';
-        
+
         modal.innerHTML = `
             <div class="tech-games-modal-content">
                 <div class="tech-games-modal-header">
@@ -1114,13 +1095,13 @@ class TechGamesManager {
         document.getElementById('techGamePlay').style.display = 'none';
         document.getElementById('techGameResults').style.display = 'none';
         document.getElementById('typingTestResults').style.display = 'none';
-        
+
         // Show typing test interface
         document.getElementById('typingTestGame').style.display = 'block';
-        
+
         // Setup event listeners
         this.setupTypingTestEventListeners();
-        
+
         // Reset typing game state
         this.resetTypingGameState();
     }
@@ -1220,7 +1201,7 @@ class TechGamesManager {
         document.getElementById('typingInput').disabled = true;
         document.getElementById('startTypingTest').style.display = 'block';
         document.getElementById('restartTypingTest').style.display = 'none';
-        
+
         this.updateTypingProgress(0);
     }
 
@@ -1234,10 +1215,10 @@ class TechGamesManager {
         // Get selected settings
         const mode = document.getElementById('typingMode').value;
         const difficulty = document.getElementById('typingDifficulty').value;
-        
+
         this.typingGame.mode = mode;
         this.typingGame.difficulty = difficulty;
-        
+
         // Set time limit based on mode
         if (mode === 'time') {
             this.typingGame.timeLimit = 60;
@@ -1249,29 +1230,29 @@ class TechGamesManager {
 
         // Select text based on difficulty
         this.selectTypingText();
-        
+
         // Setup the test
         this.displayTypingText();
-        
+
         // Enable input and start
         const typingInput = document.getElementById('typingInput');
         typingInput.disabled = false;
         typingInput.value = '';
         typingInput.focus();
         typingInput.placeholder = 'Start typing here...';
-        
+
         // Reset state
         this.typingGame.startTime = Date.now();
         this.typingGame.isActive = true;
         this.typingGame.errors = 0;
         this.typingGame.currentCharIndex = 0;
         this.typingGame.userInput = '';
-        
+
         // Update UI
         document.getElementById('startTypingTest').style.display = 'none';
         document.getElementById('restartTypingTest').style.display = 'block';
         document.getElementById('timeRemaining').textContent = this.typingGame.timeLimit;
-        
+
         // Start timer
         this.startTypingTimer();
     }
@@ -1279,18 +1260,18 @@ class TechGamesManager {
     selectTypingText() {
         const { difficulty, mode } = this.typingGame;
         const texts = this.questions.typing_test;
-        
+
         let selectedTexts;
         if (difficulty === 'code') {
             selectedTexts = texts.code_snippets;
         } else {
             selectedTexts = texts[difficulty] || texts.medium;
         }
-        
+
         // Select random text
         const randomIndex = Math.floor(Math.random() * selectedTexts.length);
         this.typingGame.currentText = selectedTexts[randomIndex];
-        
+
         // For word mode, limit to ~50 words
         if (mode === 'words') {
             const words = this.typingGame.currentText.split(' ');
@@ -1303,7 +1284,7 @@ class TechGamesManager {
     displayTypingText() {
         const textDisplay = document.getElementById('typingText');
         textDisplay.innerHTML = '';
-        
+
         // Create spans for each character
         for (let i = 0; i < this.typingGame.currentText.length; i++) {
             const span = document.createElement('span');
@@ -1315,16 +1296,16 @@ class TechGamesManager {
 
     handleTypingInput(e) {
         if (!this.typingGame.isActive) return;
-        
+
         const input = e.target.value;
         this.typingGame.userInput = input;
-        
+
         // Update character highlighting
         this.updateCharacterHighlighting();
-        
+
         // Update stats
         this.updateTypingStats();
-        
+
         // Check completion
         if (input.length >= this.typingGame.currentText.length) {
             this.finishTypingTest();
@@ -1334,14 +1315,14 @@ class TechGamesManager {
     updateCharacterHighlighting() {
         const text = this.typingGame.currentText;
         const input = this.typingGame.userInput;
-        
+
         let correctCount = 0;
         let errorCount = 0;
-        
+
         for (let i = 0; i < text.length; i++) {
             const char = document.getElementById(`char-${i}`);
             if (!char) continue;
-            
+
             if (i < input.length) {
                 if (input[i] === text[i]) {
                     char.className = 'correct';
@@ -1356,7 +1337,7 @@ class TechGamesManager {
                 char.className = '';
             }
         }
-        
+
         this.typingGame.correctCharacters = correctCount;
         this.typingGame.errors = errorCount;
         this.typingGame.currentCharIndex = input.length;
@@ -1366,26 +1347,26 @@ class TechGamesManager {
         const currentTime = Date.now();
         const timeElapsed = (currentTime - this.typingGame.startTime) / 1000;
         const timeRemaining = Math.max(0, this.typingGame.timeLimit - timeElapsed);
-        
+
         // Calculate WPM (assuming average word length of 5 characters)
         const charactersTyped = this.typingGame.currentCharIndex;
         const wordsTyped = charactersTyped / 5;
         const wpm = timeElapsed > 0 ? Math.round((wordsTyped / timeElapsed) * 60) : 0;
-        
+
         // Calculate accuracy
         const totalTyped = this.typingGame.userInput.length;
         const accuracy = totalTyped > 0 ? Math.round((this.typingGame.correctCharacters / totalTyped) * 100) : 100;
-        
+
         // Update UI
         document.getElementById('currentWPM').textContent = wpm;
         document.getElementById('currentAccuracy').textContent = accuracy + '%';
         document.getElementById('timeRemaining').textContent = Math.ceil(timeRemaining);
         document.getElementById('errorCount').textContent = this.typingGame.errors;
-        
+
         // Update progress
         const progress = (charactersTyped / this.typingGame.currentText.length) * 100;
         this.updateTypingProgress(progress);
-        
+
         // Check time limit
         if (timeRemaining <= 0 && this.typingGame.mode === 'time') {
             this.finishTypingTest();
@@ -1410,18 +1391,18 @@ class TechGamesManager {
     finishTypingTest() {
         this.typingGame.isActive = false;
         this.typingGame.endTime = Date.now();
-        
+
         // Clear timer
         if (this.typingTimer) {
             clearInterval(this.typingTimer);
         }
-        
+
         // Disable input
         document.getElementById('typingInput').disabled = true;
-        
+
         // Calculate final stats
         this.calculateTypingResults();
-        
+
         // Show results
         setTimeout(() => {
             this.showTypingResults();
@@ -1433,21 +1414,21 @@ class TechGamesManager {
         const totalCharacters = this.typingGame.userInput.length;
         const correctCharacters = this.typingGame.correctCharacters;
         const errors = this.typingGame.errors;
-        
+
         // Calculate WPM
         const wordsTyped = correctCharacters / 5;
         const wpm = timeElapsed > 0 ? Math.round((wordsTyped / timeElapsed) * 60) : 0;
-        
+
         // Calculate accuracy
         const accuracy = totalCharacters > 0 ? Math.round((correctCharacters / totalCharacters) * 100) : 100;
-        
+
         // Determine rank
         let rank = 'Beginner';
         if (wpm >= 80) rank = 'Expert';
         else if (wpm >= 60) rank = 'Advanced';
         else if (wpm >= 40) rank = 'Intermediate';
         else if (wpm >= 20) rank = 'Beginner+';
-        
+
         this.typingGame.finalStats = {
             wpm,
             accuracy,
@@ -1467,19 +1448,19 @@ class TechGamesManager {
             this.typingGame.difficulty,
             this.typingGame.mode
         );
-        
+
         this.typingGame.finalStats.leaderboardRank = leaderboardRank;
     }
 
     showTypingResults() {
         // Hide typing game
         document.getElementById('typingTestGame').style.display = 'none';
-        
+
         // Show results
         document.getElementById('typingTestResults').style.display = 'block';
-        
+
         const stats = this.typingGame.finalStats;
-        
+
         // Update result values
         document.getElementById('finalWPM').textContent = stats.wpm;
         document.getElementById('finalAccuracy').textContent = stats.accuracy + '%';
@@ -1487,7 +1468,7 @@ class TechGamesManager {
         document.getElementById('finalErrors').textContent = stats.errors;
         document.getElementById('finalCharacters').textContent = stats.totalCharacters;
         document.getElementById('typingRank').textContent = stats.rank;
-        
+
         // Performance message
         const messageEl = document.getElementById('performanceMessage');
         let performanceMessage = '';
@@ -1500,13 +1481,13 @@ class TechGamesManager {
         } else {
             performanceMessage = '📈 Don\'t worry, everyone improves with practice. Try again!';
         }
-        
+
         // Add leaderboard rank information
         if (stats.leaderboardRank && stats.leaderboardRank <= 5) {
             const rankEmoji = stats.leaderboardRank === 1 ? '🥇' : stats.leaderboardRank === 2 ? '🥈' : stats.leaderboardRank === 3 ? '🥉' : '🏅';
             performanceMessage += ` ${rankEmoji} You ranked #${stats.leaderboardRank} on the leaderboard!`;
         }
-        
+
         messageEl.textContent = performanceMessage;
     }
 }

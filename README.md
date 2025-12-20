@@ -1,6 +1,6 @@
 # Rajesh Kodaganti - Portfolio
 
-🌐 **Live Portfolio**: [https://unigalactix.github.io/rajeshkodaganti/](https://unigalactix.github.io/rajeshkodaganti/)
+🌐 **Live Portfolio**: [https://rajeshkodaganti.com/](https://rajeshkodaganti.com/)
 
 This is a professional portfolio website for Rajesh Kodaganti, showcasing his experience as a Software Engineer and Computer Engineering graduate student with expertise in AI, Machine Learning, and Modern Development Technologies.
 

@@ -1,0 +1,282 @@
+{
+  "basics": {
+    "name": "Rajesh Kodaganti",
+    "label": "Software Engineer @ Quadrant Technologies",
+    "email": "your.email@example.com",
+    "summary": "Software Engineer with expertise in Computer Engineering, Python, Azure AI, and Document Intelligence.",
+    "location": {
+      "city": "Redmond",
+      "region": "WA",
+      "countryCode": "US"
+    },
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "username": "rajesh-kodaganti",
+        "url": "https://www.linkedin.com/in/rajesh-kodaganti-323118215/"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Quadrant Technologies",
+      "position": "Software Engineer",
+      "location": "Redmond, Washington",
+      "startDate": "2025-08",
+      "endDate": "Present",
+      "summary": "Full-time role following internship.",
+      "highlights": [
+        "Designed and implemented ETL processes for security logs and vulnerability reports",
+        "Leveraged machine learning to analyze threat intelligence data for mitigation strategies",
+        "Developed data ingestion systems for endpoint and network security",
+        "Created monitoring dashboards for cloud security and compliance"
+      ]
+    },
+    {
+      "name": "Quadrant Technologies",
+      "position": "Software Intern",
+      "location": "Redmond, Washington",
+      "startDate": "2025-07",
+      "endDate": "2025-08",
+      "highlights": [
+        "Transitioned into full-time Software Engineer role after successful internship."
+      ]
+    },
+    {
+      "name": "QikCell by tickioT",
+      "position": "Solutions Engineer Intern",
+      "location": "Los Angeles, California",
+      "startDate": "2025-01",
+      "endDate": "2025-05",
+      "highlights": [
+        "Collaborated with sales and technical teams to align customer needs with product capabilities",
+        "Developed and customized technical demonstrations to showcase product features",
+        "Assisted in troubleshooting and documenting solutions, reducing response times by 20%"
+      ]
+    },
+    {
+      "name": "ColorOS",
+      "position": "User Test (Freelance)",
+      "location": "Remote",
+      "startDate": "2018-06",
+      "endDate": "2022-07",
+      "highlights": [
+        "Conducted user testing for ColorOS Beta and Alpha versions (5.0 to 12.1)",
+        "Identified bugs and suggested new features based on user feedback",
+        "Collaborated with cross-functional teams to improve software performance"
+      ]
+    },
+    {
+      "name": "Pantech ProEd Pvt Ltd",
+      "position": "Student Intern",
+      "location": "Hyderabad, India",
+      "startDate": "2020-06",
+      "endDate": "2020-07",
+      "highlights": [
+        "Contributed to the development of a high-speed 64-bit binary comparator",
+        "Optimized design parameters in collaboration with engineering team"
+      ]
+    },
+    {
+      "name": "PeopleLink Unified Communications Pvt. Ltd.",
+      "position": "Product Tester in R&D",
+      "location": "Hyderabad, India",
+      "startDate": "2018-06",
+      "endDate": "2019-05",
+      "highlights": [
+        "Conducted evaluations of prototypes ensuring functionality and quality",
+        "Contributed to the market release of products, reducing post-launch defects by 20%"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "California State University, Northridge",
+      "area": "Computer Engineering",
+      "studyType": "Master of Science - MS",
+      "startDate": "2022-08",
+      "endDate": "2025-05",
+      "url": "https://www.csun.edu"
+    },
+    {
+      "institution": "Jb Institute Of Engineering and Technology",
+      "area": "Electronics and Communication Engineering",
+      "studyType": "B-Tech",
+      "startDate": "2019-07",
+      "endDate": "2022-06",
+      "score": "7.45"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Cloud & DevOps",
+      "keywords": [
+        "Microsoft Azure",
+        "Microsoft DevOps",
+        "Docker",
+        "Apache Airflow",
+        "IT Service Management (ITSM)"
+      ]
+    },
+    {
+      "name": "AI & Data Engineering",
+      "keywords": [
+        "Azure AI",
+        "Microsoft Fabric",
+        "Generative AI",
+        "OpenAI API",
+        "Python",
+        "SQL"
+      ]
+    },
+    {
+      "name": "Tools",
+      "keywords": [
+        "GitHub Copilot",
+        "Microsoft 365",
+        "Atlassian Suite"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "GasOps MTR extraction",
+      "startDate": "2025-09",
+      "endDate": "Present",
+      "description": "Designed a robust system for JSON extraction and document intelligence using Azure OCR and OpenAI.",
+      "highlights": [
+        "Implemented Azure Document Intelligence OCR and AI mapping supporting Azure OpenAI",
+        "Built certificate and token-based API fetch by HeatNumber",
+        "Created robust JSON extraction from model responses and a backwards-compatible CLI shim"
+      ],
+      "keywords": [
+        "Azure Document Intelligence",
+        "OpenAI API",
+        "Python",
+        "FastAPI",
+        "API Testing"
+      ],
+      "github": "https://github.com/Unigalactix/GasOps-DI-JSON"
+    },
+    {
+      "name": "Image Denoising using Deep Learning",
+      "startDate": "2024-12",
+      "endDate": "2025-05",
+      "description": "Developed a deep learning framework for image denoising targeting additive white Gaussian noise (AWGN).",
+      "highlights": [
+        "Implemented a composite loss function incorporating pixel-wise MSE and FFT-based spectral loss",
+        "Designed a convolutional network with skip connections and frequency-aware branches",
+        "Achieved PSNR gains exceeding 12 dB at high noise levels"
+      ],
+      "keywords": [
+        "Python",
+        "TensorFlow",
+        "PyTorch"
+      ],
+      "github": "https://github.com/Unigalactix/ConvIR"
+    },
+    {
+      "name": "Pre-owned Cars pricing forecast using R language",
+      "startDate": "2022-08",
+      "endDate": "2022-12",
+      "description": "Developed a Random Forest Regression model in R for pre-owned car price forecasting.",
+      "highlights": [
+        "Achieved 85.67% accuracy on a dataset of 48,904 rows",
+        "Conducted extensive data preprocessing including handling missing values and categorical features"
+      ],
+      "keywords": [
+        "R",
+        "Data Preparation"
+      ]
+    },
+    {
+      "name": "1X3 Router Design and Verification",
+      "startDate": "2021-12",
+      "endDate": "2022-01",
+      "description": "Designed and verified a 1x3 router using Verilog HDL.",
+      "highlights": [
+        "Implemented synthesis constraints in Verilog",
+        "Performed verification using testbenches in Modelsim and synthesis in Quartus Prime"
+      ],
+      "keywords": [
+        "Verilog",
+        "RTL Design"
+      ]
+    },
+    {
+      "name": "Raspberry Pi Applications for Assistive Technologies",
+      "startDate": "2021-08",
+      "endDate": "2021-11",
+      "description": "Created reading aids for visually impaired individuals using Raspberry Pi and OCR technology.",
+      "highlights": [
+        "Utilized Tesseract library and Python to convert document images into audio format",
+        "Integrated camera modules for real-time text capture"
+      ],
+      "url": "https://www.linkedin.com/in/rajesh-kodaganti-323118215/details/projects/1638290371308/single-media-viewer?type=LINK&profileId=ACoAAEGlk0UBq7N4kH_w7J_rD9W0Xz2K5I8k3oY"
+    },
+    {
+      "name": "PeopleLink \"Look At Me\" Controller",
+      "startDate": "2018-11",
+      "endDate": "2018-12",
+      "description": "Spearheaded circuit design for a smart camera controller for conference rooms.",
+      "highlights": [
+        "Developed wired and wireless models with auto-focus capabilities on active speakers",
+        "Simplified installation and operation for collaborative environments"
+      ],
+      "keywords": [
+        "PCB Design",
+        "Embedded C"
+      ]
+    }
+  ],
+  "certificates": [
+    {
+      "name": "Microsoft Certified: Azure AI Engineer Associate",
+      "issuer": "Microsoft",
+      "date": "2025-12",
+      "credentialId": "D302F40415BFB6F6",
+      "url": "https://www.linkedin.com/in/rajesh-kodaganti-323118215/details/certifications/"
+    },
+    {
+      "name": "Atlassian IT Service Management (ITSM) Professional Certificate",
+      "issuer": "Atlassian",
+      "date": "2025-12"
+    },
+    {
+      "name": "Microsoft Copilot for Productivity",
+      "issuer": "Microsoft",
+      "date": "2025-12"
+    },
+    {
+      "name": "Microsoft Certified: Fabric Data Engineer Associate",
+      "issuer": "Microsoft",
+      "date": "2025-11",
+      "credentialId": "358771CC34AED687"
+    },
+    {
+      "name": "Designing and Implementing Microsoft DevOps Solutions",
+      "issuer": "Microsoft",
+      "date": "2025-11"
+    },
+    {
+      "name": "Apache Airflow 3 Fundamentals",
+      "issuer": "Astronomer",
+      "date": "2025-10"
+    },
+    {
+      "name": "DAG Authoring for Apache Airflow 3",
+      "issuer": "Astronomer",
+      "date": "2025-10"
+    },
+    {
+      "name": "Career Essentials in GitHub Copilot Professional Certificate",
+      "issuer": "GitHub",
+      "date": "2025-07"
+    },
+    {
+      "name": "Docker Foundations Professional Certificate",
+      "issuer": "Docker, Inc",
+      "date": "2025-07"
+    }
+  ]
+}

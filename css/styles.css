@@ -164,7 +164,7 @@ p {
 .btn-outline-fun {
     background: transparent;
     border: 2px solid var(--accent-blue);
-    color: var(--accent-blue);
+    color: #ffffff;
     box-shadow: none;
 }
 
@@ -520,4 +520,310 @@ footer {
         font-size: 2rem;
         cursor: pointer;
     }
+}
+
+/* Detail Modal Styles (Experience, Education, Projects) */
+.detail-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(41, 39, 42, 0.95);
+    /* Matches --bg-charcoal */
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease-out;
+    overflow-y: auto;
+    /* Allow scrolling if content is long */
+}
+
+.detail-modal-content {
+    background: var(--bg-card);
+    border: 2px solid var(--accent-purple);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    /* Limit height to viewport */
+    margin: 0;
+    /* Remove auto margin in favor of flex centering */
+    position: relative;
+    box-shadow: 0 0 30px rgba(189, 147, 249, 0.2);
+    animation: slideInUp 0.4s ease-out;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    /* Enable internal scrolling */
+    scrollbar-width: thin;
+    /* Firefox */
+}
+
+.detail-modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.detail-modal-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.detail-modal-content::-webkit-scrollbar-thumb {
+    background: var(--accent-purple);
+    border-radius: 4px;
+}
+
+.detail-modal-header {
+    background: rgba(29, 29, 29, 0.95);
+    /* More solid background for sticky */
+    backdrop-filter: blur(10px);
+    border-radius: 18px 18px 0 0;
+    /* Slightly less than parent to avoid aliasing */
+    padding: 20px 30px;
+    border-bottom: 2px solid var(--accent-purple);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    flex-shrink: 0;
+}
+
+.detail-modal-header h2 {
+    color: var(--text-white);
+    margin: 0;
+    font-size: 1.5rem;
+    font-family: var(--font-heading);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.detail-close-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--accent-green);
+    color: var(--accent-green);
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.detail-close-btn:hover {
+    background: var(--accent-green);
+    color: var(--bg-charcoal);
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--accent-green);
+}
+
+.detail-modal-body {
+    padding: 30px;
+    color: var(--text-white);
+}
+
+.modal-section {
+    margin-bottom: 25px;
+}
+
+.modal-section h3 {
+    color: var(--accent-blue);
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-section ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.modal-section ul li {
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+    color: var(--text-muted);
+}
+
+.modal-section ul li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: var(--accent-pink);
+}
+
+.modal-tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.modal-tech-tag {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    color: var(--accent-yellow);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* --- Dynamic Data Styles --- */
+
+/* Project Cards */
+.project-card {
+    min-height: 300px;
+    /* Taller for content */
+}
+
+.project-card h3 {
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.project-card p {
+    font-size: 0.9rem;
+    color: #ccc;
+    flex-grow: 1;
+    /* Pushes links to bottom */
+}
+
+.tech-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent-blue);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-text {
+    color: var(--accent-green);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.btn-text:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Skills Container */
+.skill-category {
+    margin-bottom: 1.5rem;
+}
+
+.skill-category h4 {
+    color: #888;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.3rem;
+    display: inline-block;
+}
+
+.skill-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* Certifications */
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.cert-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.cert-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    transform: translateY(-2px);
+}
+
+.cert-icon {
+    font-size: 1.5rem;
+    color: var(--accent-purple);
+    background: rgba(187, 134, 252, 0.1);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.cert-content h4 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.cert-issuer {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.85rem;
+    color: #aaa;
+}
+
+.cert-link {
+    font-size: 0.8rem;
+    color: var(--accent-blue);
+    text-decoration: none;
+}
+
+.cert-link:hover {
+    text-decoration: underline;
 }

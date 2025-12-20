@@ -2,6 +2,7 @@
 class ModalManager {
     constructor() {
         this.experienceData = this.getExperienceData();
+        this.educationData = this.getEducationData();
         this.projectData = this.getProjectData();
         this.init();
     }
@@ -126,7 +127,103 @@ class ModalManager {
             }
         };
     }
+    getEducationData() {
+        return {
+            csun: {
+                title: "CSUN - California State University, Northridge",
+                degree: "Master of Science in Computer Engineering",
+                period: "Aug 2022 - May 2025",
+                icon: "🎓",
+                description: "Focused on advanced Computer Engineering concepts including AI Systems, Network Security, and Embedded Systems. Maintained a high GPA of 3.8/4.0.",
+                courses: [
+                    "Advanced Computer Architecture",
+                    "Network Security & Cryptography",
+                    "Machine Learning & Data Mining",
+                    "Embedded Systems Design",
+                    "Digital Image Processing",
+                    "Software Engineering"
+                ],
+                achievements: [
+                    "GPA: 3.8/4.0",
+                    "Published research paper on 'AI in Network Security'",
+                    "Teaching Assistant for Digital Logic Design",
+                    "Lead Developer for Graduate Capstone Project"
+                ]
+            },
+            jbiet: {
+                title: "J.B. Institute of Engineering & Technology",
+                degree: "Bachelor of Technology in Electronics & Comm.",
+                period: "July 2019 - June 2022",
+                icon: "🏫",
+                description: "Comprehensive foundation in Electronics and Communication Engineering. Active participant in technical clubs and hackathons.",
+                courses: [
+                    "Digital Signal Processing",
+                    "VLSI Design",
+                    "Microprocessors & Microcontrollers",
+                    "Computer Networks",
+                    "Data Structures & Algorithms"
+                ],
+                achievements: [
+                    "Graduated with First Class with Distinction",
+                    "Winner of Intra-college Robotics Competition",
+                    "Student Coordinator for Technical Fest"
+                ]
+            }
+        };
+    }
 
+    openEducationModal(eduId) {
+        const education = this.educationData[eduId];
+        if (!education) return;
+
+        const modalHtml = `
+            <div id="educationModal" class="detail-modal education-modal">
+                <div class="detail-modal-content">
+                    <div class="detail-modal-header">
+                        <h2>${education.icon} ${education.title}</h2>
+                        <span class="detail-close-btn" onclick="modalManager.closeModal('educationModal')">&times;</span>
+                    </div>
+                    <div class="detail-modal-body">
+                        <div class="modal-section">
+                            <h3><i class="fa fa-graduation-cap"></i>Degree Details</h3>
+                            <p><strong>Degree:</strong> ${education.degree}</p>
+                            <p><strong>Duration:</strong> ${education.period}</p>
+                            <p><strong>Overview:</strong> ${education.description}</p>
+                        </div>
+                        
+                        <div class="modal-section">
+                            <h3><i class="fa fa-book"></i>Key Coursework</h3>
+                            <div class="modal-tech-tags">
+                               ${education.courses.map(course => `<span class="modal-tech-tag">${course}</span>`).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="modal-section">
+                            <div class="modal-achievements">
+                                <h3><i class="fa fa-medal"></i>Achievements</h3>
+                                <ul>
+                                    ${education.achievements.map(achievement => `<li>${achievement}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Remove existing modal if any
+        const existingModal = document.getElementById('educationModal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+
+        // Add new modal to body
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+        // Show modal
+        document.getElementById('educationModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
     getProjectData() {
         return {
             convir: {
@@ -282,9 +379,9 @@ class ModalManager {
 
         // Add new modal to body
         document.body.insertAdjacentHTML('beforeend', modalHtml);
-        
+
         // Show modal
-        document.getElementById('experienceModal').style.display = 'block';
+        document.getElementById('experienceModal').style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
 
@@ -341,9 +438,9 @@ class ModalManager {
 
         // Add new modal to body
         document.body.insertAdjacentHTML('beforeend', modalHtml);
-        
+
         // Show modal
-        document.getElementById('projectModal').style.display = 'block';
+        document.getElementById('projectModal').style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
 
@@ -378,6 +475,10 @@ function openExperienceModal(expId) {
 
 function openProjectModal(projectId) {
     modalManager.openProjectModal(projectId);
+}
+
+function openEducationModal(eduId) {
+    modalManager.openEducationModal(eduId);
 }
 
 // Initialize modal manager when DOM is loaded
