@@ -827,3 +827,224 @@ footer {
 .cert-link:hover {
     text-decoration: underline;
 }
+
+/* =========================================
+   Chatbot Pam Styles
+   ========================================= */
+#pam-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Floating Toggle Button */
+.pam-float-btn {
+    width: 60px;
+    height: 60px;
+    background: var(--accent-pink);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(255, 0, 110, 0.4);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pam-float-btn:hover {
+    transform: scale(1.1) rotate(10deg);
+}
+
+/* Chat Window */
+.pam-window {
+    width: 350px;
+    height: 500px;
+    background: var(--bg-card);
+    border: 2px solid var(--accent-blue);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    animation: pamPopup 0.3s ease-out forwards;
+}
+
+@keyframes pamPopup {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Header */
+.pam-header {
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.pam-avatar {
+    width: 40px;
+    height: 40px;
+    background: white;
+    color: var(--accent-blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+.pam-info h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.pam-info span {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+#pam-close-btn {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Messages Area */
+.pam-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: var(--bg-main);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Common Bubble Styles */
+.pam-msg {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+/* Bot Bubble */
+.pam-msg.bot {
+    align-self: flex-start;
+    background: #333;
+    color: #fff;
+    border-bottom-left-radius: 2px;
+    border: 1px solid #444;
+}
+
+/* User Bubble */
+.pam-msg.user {
+    align-self: flex-end;
+    background: var(--accent-cyan);
+    color: #000;
+    border-bottom-right-radius: 2px;
+}
+
+/* System Bubble (for errors) */
+.pam-msg.system {
+    align-self: center;
+    background: rgba(255, 0, 0, 0.1);
+    color: #ff4444;
+    font-size: 0.8rem;
+}
+
+/* Input Area */
+.pam-input-area {
+    padding: 10px;
+    background: var(--bg-card);
+    border-top: 1px solid #333;
+    display: flex;
+    gap: 10px;
+}
+
+#pam-input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #444;
+    background: #222;
+    color: white;
+    outline: none;
+}
+
+#pam-input:focus {
+    border-color: var(--accent-green);
+}
+
+#pam-send-btn {
+    background: var(--accent-green);
+    color: black;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+#pam-send-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Typing Animation */
+.typing span {
+    display: inline-block;
+    animation: typingBlink 1.4s infinite both;
+    margin: 0 1px;
+    font-size: 1.2rem;
+}
+
+.typing span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typingBlink {
+    0% {
+        opacity: 0.1;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.1;
+    }
+}
