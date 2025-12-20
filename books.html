@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rajesh Kodaganti | Books</title>
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css?v=2">
+    <link rel="stylesheet" href="css/office-theme.css?v=2">
+
+    <style>
+        .typing-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            /* Full viewport height minus header/footer approximations */
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            color: var(--accent-green);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 12px;
+            height: 1.2em;
+            background-color: var(--accent-green);
+            margin-left: 5px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar (Simplified for this page) -->
+    <header>
+        <div class="container">
+            <div class="logo"><a href="index.html">Rajesh<span> Kodaganti</span></a></div>
+            <ul id="menu">
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="typing-container">
+            <span id="typing-text"></span><span class="cursor"></span>
+        </div>
+    </div>
+
+    <!-- Theme Toggle Floating Button -->
+    <div id="themeToggleBtn" title="Switch Theme">🌙</div>
+
+    <script src="js/theme-switcher.js?v=2"></script>
+    <script>
+        const textToType = 'console.log("WORK IN PROGRESS...");';
+        const typeDelay = 100;
+        let charIndex = 0;
+        const typingElement = document.getElementById('typing-text');
+
+        function type() {
+            if (charIndex < textToType.length) {
+                typingElement.textContent += textToType.charAt(charIndex);
+                charIndex++;
+                setTimeout(type, typeDelay);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', type);
+    </script>
+</body>
+
+</html>
