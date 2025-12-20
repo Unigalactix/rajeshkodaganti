@@ -579,17 +579,16 @@ footer {
     }
 
     #mobile-menu-open {
-        display: block !important;
         /* Increase touch target size */
+        display: flex !important;
         min-width: 44px;
         min-height: 44px;
-        display: flex !important;
         align-items: center;
         justify-content: center;
     }
 
     #mobile-menu-close {
-        display: block !important;
+        display: flex !important;
         position: absolute;
         top: 2rem;
         right: 2rem;
@@ -598,7 +597,6 @@ footer {
         /* Increase touch target size */
         min-width: 44px;
         min-height: 44px;
-        display: flex !important;
         align-items: center;
         justify-content: center;
     }
