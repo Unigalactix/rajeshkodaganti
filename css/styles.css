@@ -423,6 +423,28 @@ header .container {
 }
 
 /* 8. Skills / About */
+.skill-category {
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.skill-category h4 {
+    color: #888;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.3rem;
+    display: inline-block;
+}
+
+.skill-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
 .skill-pill {
     display: inline-block;
     padding: 0.5rem 1rem;
@@ -440,6 +462,12 @@ header .container {
     background: var(--text-white);
     color: var(--bg-charcoal);
     transform: scale(1.1) rotate(-2deg);
+}
+
+#skills-toggle-btn:hover {
+    background: var(--accent-green) !important;
+    color: var(--bg-charcoal) !important;
+    transform: translateY(-2px);
 }
 
 /* 9. Footer */
@@ -897,28 +925,6 @@ footer {
 .btn-text:hover {
     color: #fff;
     text-decoration: underline;
-}
-
-/* Skills Container */
-.skill-category {
-    margin-bottom: 1.5rem;
-}
-
-.skill-category h4 {
-    color: #888;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.8rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 0.3rem;
-    display: inline-block;
-}
-
-.skill-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
 }
 
 /* Certifications */
