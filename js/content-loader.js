@@ -11,13 +11,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function renderSkills(skills) {
     const container = document.getElementById('skills-container');
+    const toggleBtn = document.getElementById('skills-toggle-btn');
     if (!container) return;
 
     container.innerHTML = ''; // Clear loading text
 
-    skills.forEach(category => {
+    let isExpanded = false;
+
+    skills.forEach((category, index) => {
         const categoryDiv = document.createElement('div');
         categoryDiv.className = 'skill-category';
+        
+        // Initially hide categories after the first one
+        if (index > 0) {
+            categoryDiv.style.display = 'none';
+            categoryDiv.classList.add('collapsible-skill');
+        }
 
         const title = document.createElement('h4');
         title.textContent = category.name;
@@ -36,6 +45,24 @@ function renderSkills(skills) {
         categoryDiv.appendChild(chipsDiv);
         container.appendChild(categoryDiv);
     });
+
+    // Show toggle button if there are more than 1 category
+    if (skills.length > 1 && toggleBtn) {
+        toggleBtn.style.display = 'inline-block';
+        
+        toggleBtn.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            const collapsibleSkills = document.querySelectorAll('.collapsible-skill');
+            
+            collapsibleSkills.forEach(skill => {
+                skill.style.display = isExpanded ? 'block' : 'none';
+            });
+            
+            toggleBtn.textContent = isExpanded ? 'Show Less' : 'Show More';
+            toggleBtn.style.background = isExpanded ? 'var(--accent-green)' : 'transparent';
+            toggleBtn.style.color = isExpanded ? 'var(--bg-charcoal)' : 'var(--accent-green)';
+        });
+    }
 }
 
 function renderProjects(projects) {
