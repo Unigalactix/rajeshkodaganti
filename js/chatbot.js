@@ -40,7 +40,11 @@ async function initPam() {
 
     // 4. Greeting
     setTimeout(() => {
-        addMessage('bot', "Dunder Mifflin, this is Pam. 👋  \nI can help you with Rajesh's portfolio. What would you like to know?");
+        const isOffice = document.body.classList.contains('office-theme');
+        const msg = isOffice
+            ? "Dunder Mifflin, this is Pam. 👋  \nI can help you with Rajesh's portfolio. Would you like to buy some paper? Or maybe see his projects?"
+            : "Hi, I'm Pam! 👋  \nI'm Rajesh's virtual assistant. Ask me about his **Skills**, **Projects**, or **Experience**!";
+        addMessage('bot', msg);
     }, 1000);
 }
 
@@ -144,6 +148,22 @@ function generateResponse(query) {
     if (!pamData) return "Oh, hold on a second, I need to find the files... (Data not loaded yet)";
 
     const q = query.toLowerCase();
+    const isOffice = document.body.classList.contains('office-theme');
+
+    // 0. Office Theme Specific Overrides
+    if (isOffice) {
+        if (q.match(/^(hi|hello|hey|yo)/)) return "Dunder Mifflin, this is Pam. Please hold... just kidding. How can I help?";
+        if (q.includes("dwight")) return "Ugh, Dwight. He's probably measuring the distance between his desk and the bathroom. Do you need security?";
+        if (q.includes("jim")) return "Jim is on a sales call. (He's actually stacking paper clips).";
+        if (q.includes("michael")) return "Michael is in a meeting. It's about 'The Dundies'.";
+        if (q.includes("prank")) return "I can't authorize any pranks on this website. Talk to Jim.";
+        if (q.includes("project") || q.includes("work")) return "I have the project files right here in the filing cabinet. Let me pull them up.";
+        if (q.includes("contact") || q.includes("email")) return "You can fax us at... oh wait, Rajesh uses email. It's **kodagantir295@gmail.com**.";
+        if (q.includes("resume") || q.includes("cv")) return "resume.pdf? I think I saw that on the fax machine. You can download it below.";
+        if (q.includes("skills")) return "He has 'nunchuck skills'... wait, wrong movie. But he is great at **Python** and **Machine Learning**.";
+        if (q.includes("coffee")) return "We're out of coffee. Michael tried to make some and... well, just don't ask.";
+    }
+
 
     // 1. The Office / Pam Persona Easter Eggs
     if (q.includes("jim")) return "Oh, Jim? He's great. He might be pranking Dwight right now. 😉";

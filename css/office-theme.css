@@ -1,0 +1,228 @@
+/* Office Theme (Dunder Mifflin Style) */
+body.office-theme {
+    /* Variables override */
+    --primary-color: #333333;
+    /* Dull Black */
+    --accent-color: #174d8a;
+    /* Dunder Mifflin Blue */
+    --bg-color: #f0f0e8;
+    /* Off-white Paper */
+    --card-bg: #ffffff;
+    /* White Paper */
+    --text-color: #222222;
+    --font-primary: 'Courier New', Courier, monospace;
+    /* Typewriter */
+    --font-secondary: 'Arial', sans-serif;
+}
+
+body.office-theme header {
+    background-color: #ffffff;
+    border-bottom: 4px solid var(--accent-color);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+body.office-theme .navbar {
+    background-color: #ffffff;
+}
+
+body.office-theme .logo {
+    font-family: 'Impact', sans-serif;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+body.office-theme .nav-links a {
+    color: #444;
+    font-weight: bold;
+    font-family: var(--font-secondary);
+}
+
+body.office-theme .nav-links a:hover,
+body.office-theme .nav-links a.active {
+    color: var(--accent-color);
+    background-color: #e6f3ff;
+    border-radius: 4px;
+}
+
+/* Hero Section - Employee of the Month Style */
+body.office-theme #hero {
+    background: radial-gradient(circle, #ffffff 0%, #f0f0e8 100%);
+    color: #333;
+}
+
+body.office-theme #hero h1 {
+    font-family: 'Times New Roman', Times, serif;
+    color: #000;
+}
+
+body.office-theme #hero p {
+    font-family: var(--font-secondary);
+}
+
+body.office-theme .hero-content .btn {
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 0;
+    /* Boxy buttons */
+    box-shadow: 2px 2px 0 #000;
+}
+
+body.office-theme .hero-content .btn:hover {
+    transform: none;
+    background-color: #103660;
+}
+
+/* Section Headings */
+body.office-theme h2 {
+    font-family: 'Arial Black', sans-serif;
+    text-decoration: underline;
+    text-decoration-color: var(--accent-color);
+    color: #333;
+}
+
+/* Cards (Performance Reviews / Employee Files) */
+body.office-theme .project-card,
+body.office-theme .browser-card,
+body.office-theme .experience-item,
+body.office-theme .education-item,
+body.office-theme .cert-card {
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+}
+
+body.office-theme .project-card:hover,
+body.office-theme .cert-card:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Skills Chips */
+body.office-theme .skill-pill,
+body.office-theme .tech-badge {
+    background-color: #eee;
+    color: #333;
+    border: 1px solid #999;
+    border-radius: 15px;
+    /* Keep pill shape but dull colors */
+}
+
+/* Game & Chatbot Overrides */
+body.office-theme .pam-float-btn {
+    background-color: #d8a0a6;
+    /* Pam's Cardigan Pink */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+body.office-theme .pam-window {
+    border: 2px solid #999;
+}
+
+body.office-theme .pam-header {
+    background: #d8a0a6;
+    color: #fff;
+}
+
+body.office-theme .user-message {
+    background-color: var(--accent-color);
+}
+
+body.office-theme .pam-message {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+/* Footer (Memo Style) */
+body.office-theme footer {
+    background-color: #e9ecef;
+    border-top: 2px solid #ccc;
+    color: #555;
+    font-family: 'Courier New', monospace;
+}
+
+/* Easter Egg Specifics */
+.dwight-fact-popup {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #ffffcc;
+    /* Sticky Note Yellow */
+    padding: 15px;
+    border: 1px solid #e0e080;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    font-family: 'Courier New', monospace;
+    max-width: 300px;
+    z-index: 10000;
+    transform: translateY(150%);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dwight-fact-popup.show {
+    transform: translateY(0);
+}
+
+.dwight-fact-popup h4 {
+    margin-top: 0;
+    color: #8b4513;
+    /* Brown */
+    font-weight: bold;
+}
+
+/* Theme Toggle Button */
+#themeToggleBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 90px;
+    /* Left of Chatbot */
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border: 2px solid #333;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+#themeToggleBtn:hover {
+    transform: scale(1.1);
+}
+
+body.office-theme #themeToggleBtn {
+    background: var(--accent-color);
+    color: white;
+    border-color: #fff;
+}
+
+/* Contact Form Overrides */
+body.office-theme .contact-form input,
+body.office-theme .contact-form textarea {
+    border: 1px solid #333;
+    border-radius: 0;
+    font-family: var(--font-primary);
+    background: #fff;
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body.office-theme .contact-form button {
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 0;
+    box-shadow: 2px 2px 0 #000;
+    font-family: var(--font-secondary);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+body.office-theme .contact-form button:hover {
+    transform: none;
+    background-color: #103660;
+}
