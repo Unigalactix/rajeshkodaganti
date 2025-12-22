@@ -345,7 +345,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const layoutContainer = document.querySelector('.game-layout-container');
         if (layoutContainer) {
             layoutContainer.classList.remove('show-instructions');
-            layoutContainer.style.display = 'none';
+            // Keep layout container visible (it contains the game canvas)
+            layoutContainer.style.display = 'flex';
         }
 
         // Ensure all previous screens are hidden
