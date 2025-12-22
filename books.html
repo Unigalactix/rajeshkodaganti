@@ -13,52 +13,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css?v=2">
-    <link rel="stylesheet" href="css/office-theme.css?v=2">
+    <!-- <link rel="stylesheet" href="css/office-theme.css?v=2"> -->
+    <link rel="stylesheet" href="css/potter-theme.css?v=1">
 
     <style>
-        .typing-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 80vh;
-            /* Full viewport height minus header/footer approximations */
-            font-family: 'Space Mono', monospace;
-            font-size: 2rem;
-            color: var(--accent-green);
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 12px;
-            height: 1.2em;
-            background-color: var(--accent-green);
-            margin-left: 5px;
-            animation: blink 1s step-end infinite;
-        }
-
-        @keyframes blink {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0;
-            }
-        }
+        /* Custom styles for books page if needed */
     </style>
 </head>
 
+
 <body>
 
-    <!-- Navbar (Simplified for this page) -->
+    <!-- Navbar -->
     <header>
         <div class="container">
             <div class="logo"><a href="index.html">Rajesh<span> Kodaganti</span></a></div>
@@ -68,9 +40,56 @@
         </div>
     </header>
 
-    <div class="container">
-        <div class="typing-container">
-            <span id="typing-text"></span><span class="cursor"></span>
+    <div class="container" style="margin-top: 100px;">
+        <h2 style="margin-bottom: 2rem;">My Library</h2>
+        <div class="row">
+            <!-- Book 1: Nishaan P1-VICTOR -->
+            <div class="col-md-4">
+                <div class="browser-card" style="margin-bottom: 2rem;">
+                    <div class="browser-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                        <div class="browser-address-bar">Nishaan_P1.pdf</div>
+                    </div>
+                    <div class="browser-content">
+                        <h3>Nishaan P1-VICTOR</h3>
+                        <p style="margin-top: 1rem; color: var(--text-muted);">Status: Available</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 2: ETA -->
+            <div class="col-md-4">
+                <div class="browser-card" style="margin-bottom: 2rem;">
+                    <div class="browser-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                        <div class="browser-address-bar">eta_guide.pdf</div>
+                    </div>
+                    <div class="browser-content">
+                        <h3>ETA</h3>
+                        <p style="margin-top: 1rem; color: var(--text-muted);">Status: Available</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 3: RECTANGELS -->
+            <div class="col-md-4">
+                <div class="browser-card" style="margin-bottom: 2rem;">
+                    <div class="browser-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                        <div class="browser-address-bar">rectangels.pdf</div>
+                    </div>
+                    <div class="browser-content">
+                        <h3>RECTANGELS</h3>
+                        <p style="margin-top: 1rem; color: var(--text-muted);">Status: Available</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -78,22 +97,6 @@
     <div id="themeToggleBtn" title="Switch Theme">🌙</div>
 
     <script src="js/theme-switcher.js?v=2"></script>
-    <script>
-        const textToType = 'console.log("WORK IN PROGRESS...");';
-        const typeDelay = 100;
-        let charIndex = 0;
-        const typingElement = document.getElementById('typing-text');
-
-        function type() {
-            if (charIndex < textToType.length) {
-                typingElement.textContent += textToType.charAt(charIndex);
-                charIndex++;
-                setTimeout(type, typeDelay);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', type);
-    </script>
 </body>
 
 </html>
