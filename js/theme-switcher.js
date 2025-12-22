@@ -2,37 +2,61 @@
 document.addEventListener('DOMContentLoaded', () => {
     const themeBtn = document.getElementById('themeToggleBtn');
     const body = document.body;
-    const STORAGE_KEY = 'rajesh_portfolio_theme';
+
+    // Detect Context
+    const isBooksPage = window.location.pathname.includes('books.html');
+
+    // Config based on context
+    const config = isBooksPage ? {
+        storageKey: 'rajesh_portfolio_theme_books',
+        themeClass: 'potter-theme',
+        activeIcon: '🧙‍♂️',
+        defaultIcon: '🌙',
+        activeValue: 'potter',
+        defaultValue: 'default',
+        soundEffect: 'magic' // conceptual
+    } : {
+        storageKey: 'rajesh_portfolio_theme',
+        themeClass: 'office-theme',
+        activeIcon: '🏢',
+        defaultIcon: '🌙',
+        activeValue: 'office',
+        defaultValue: 'default',
+        soundEffect: 'office'
+    };
 
     // 1. Load saved theme
-    const savedTheme = localStorage.getItem(STORAGE_KEY);
-    if (savedTheme === 'office') {
-        enableOfficeTheme();
+    const savedTheme = localStorage.getItem(config.storageKey);
+    if (savedTheme === config.activeValue) {
+        enableTheme();
     }
 
     // 2. Toggle Button Listener
     if (themeBtn) {
         themeBtn.addEventListener('click', () => {
-            if (body.classList.contains('office-theme')) {
-                disableOfficeTheme();
+            if (body.classList.contains(config.themeClass)) {
+                disableTheme();
             } else {
-                enableOfficeTheme();
+                enableTheme();
             }
         });
     }
 
     // 3. Functions
-    function enableOfficeTheme() {
-        body.classList.add('office-theme');
-        localStorage.setItem(STORAGE_KEY, 'office');
-        if (themeBtn) themeBtn.innerHTML = '🏢'; // Office Building
-        triggerDwightFact("Theme activated: Dunder Mifflin mode.");
+    function enableTheme() {
+        body.classList.add(config.themeClass);
+        localStorage.setItem(config.storageKey, config.activeValue);
+        if (themeBtn) themeBtn.innerHTML = config.activeIcon;
+
+        if (!isBooksPage) {
+            triggerDwightFact("Theme activated: Dunder Mifflin mode.");
+        }
     }
 
-    function disableOfficeTheme() {
-        body.classList.remove('office-theme');
-        localStorage.setItem(STORAGE_KEY, 'default');
-        if (themeBtn) themeBtn.innerHTML = '🌙'; // Default Icon (assuming dark mode default or similar)
+    function disableTheme() {
+        body.classList.remove(config.themeClass);
+        localStorage.setItem(config.storageKey, config.defaultValue);
+        if (themeBtn) themeBtn.innerHTML = config.defaultIcon;
     }
 
     // 4. Konami Code (Easter Egg)
@@ -58,12 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function activateEasterEgg() {
-        alert("CHEAT CODE ACTIVATED! WELCOME TO SCRANTON!");
-        enableOfficeTheme();
-        // Play sound or other effect could go here
+        if (isBooksPage) {
+            alert("🪄 EXPECTO PATRONUM! 🪄");
+            enableTheme();
+        } else {
+            alert("CHEAT CODE ACTIVATED! WELCOME TO SCRANTON!");
+            enableTheme();
+        }
     }
 
-    // 5. Dwight Facts (Random Popups)
+    // 5. Dwight Facts (Random Popups) - ONLY FOR OFFICE THEME
     const dwightFacts = [
         "Fact: Bears eat beets.",
         "Fact: Nothing stresses me out. Except having to seek the approval of my inferiors.",
@@ -74,7 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     function triggerDwightFact(customMessage = null) {
-        // Only show if in office theme
+        // Only show if in office theme context
+        if (isBooksPage) return;
         if (!body.classList.contains('office-theme') && !customMessage) return;
 
         const fact = customMessage || dwightFacts[Math.floor(Math.random() * dwightFacts.length)];
@@ -97,11 +126,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Randomly trigger Dwight fact every 60-120 seconds if in office mode
     setInterval(() => {
-        if (Math.random() > 0.7) { // 30% chance every check
+        if (!isBooksPage && Math.random() > 0.7) { // 30% chance every check
             triggerDwightFact();
         }
     }, 60000);
 
-    // Export for Chatbot use
-    window.isOfficeTheme = () => body.classList.contains('office-theme');
+    // Export for context use
+    window.isContextThemeActive = () => body.classList.contains(config.themeClass);
 });

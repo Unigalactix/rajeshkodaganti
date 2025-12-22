@@ -1,0 +1,119 @@
+/* Harry Potter Theme (Scoped) */
+
+body.potter-theme {
+    --hp-bg: #1a1a1a;
+    --hp-parchment: #f0e6d2;
+    --hp-text: #2c241b;
+    --hp-gold: #d4af37;
+    --hp-red: #740001;
+    --hp-green: #1a472a;
+    --hp-blue: #0e1a40;
+    --hp-font-heading: 'Cinzel', serif;
+    --hp-font-body: 'Crimson Text', serif;
+
+    background-color: var(--hp-bg);
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    /* Subtle texture */
+    color: var(--hp-parchment);
+    font-family: var(--hp-font-body);
+}
+
+body.potter-theme h1,
+body.potter-theme h2,
+body.potter-theme h3,
+body.potter-theme h4,
+body.potter-theme h5,
+body.potter-theme h6,
+body.potter-theme .logo {
+    font-family: var(--hp-font-heading);
+    color: var(--hp-gold);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
+}
+
+body.potter-theme .logo span {
+    color: var(--hp-red);
+}
+
+/* Navbar */
+body.potter-theme header {
+    background: rgba(0, 0, 0, 0.8);
+    border-bottom: 2px solid var(--hp-gold);
+}
+
+body.potter-theme #menu li a {
+    color: var(--hp-parchment);
+    font-family: var(--hp-font-heading);
+}
+
+body.potter-theme #menu li a:hover {
+    color: var(--hp-gold);
+    text-shadow: 0 0 10px var(--hp-gold);
+}
+
+/* Book Slots as Parchment/Spells */
+body.potter-theme .browser-card {
+    background: var(--hp-parchment);
+    border: 4px double var(--hp-text);
+    border-radius: 5px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    transform: rotate(-1deg);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: visible;
+}
+
+body.potter-theme .browser-card:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
+    z-index: 10;
+}
+
+/* Hide the browser dots and header styled for Office/Mac */
+body.potter-theme .browser-header {
+    display: none;
+}
+
+body.potter-theme .browser-content {
+    padding: 2rem;
+    color: var(--hp-text);
+    text-align: center;
+    background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+}
+
+body.potter-theme .browser-content h3 {
+    color: var(--hp-red);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--hp-text);
+    padding-bottom: 0.5rem;
+    text-shadow: none;
+}
+
+body.potter-theme .browser-content p {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--hp-text) !important;
+    /* Override inline styles */
+}
+
+/* Add a wax seal effect */
+body.potter-theme .browser-card::after {
+    content: '';
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: var(--hp-red);
+    border-radius: 50%;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 2px 2px 5px rgba(0, 0, 0, 0.3);
+    opacity: 0.8;
+}
+
+/* Theme Toggle */
+body.potter-theme #themeToggleBtn {
+    background: var(--hp-blue);
+    border: 2px solid var(--hp-gold);
+    color: var(--hp-gold);
+}
