@@ -87,32 +87,27 @@
                 </div>
             </div>
 
-            <!-- Book 3: RECTANGELS -->
+            <!-- Book 3: RECTANGLES -->
             <div class="col-md-4">
-                <div class="browser-card" style="margin-bottom: 8rem; opacity: 0.8; cursor: not-allowed;">
-                    <div class="browser-header">
-                        <div class="dot red"></div>
-                        <div class="dot yellow"></div>
-                        <div class="dot green"></div>
-                    </div>
-                    <div class="browser-content"
-                        style="padding: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; position: relative;">
-                        <!-- WIP Overlay/Badge -->
-                        <div
-                            style="position: absolute; top: 10px; right: 10px; background: #ff4757; color: white; padding: 5px 10px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; z-index: 2; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-                            [WIP]
+                <a href="books/RECTANGLES.pdf" target="_blank" style="text-decoration: none;">
+                    <div class="browser-card" style="margin-bottom: 8rem;">
+                        <div class="browser-header">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
                         </div>
-
-                        <img src="book_covers/RECTANGLES-COVER.webp" alt="RECTANGLES Cover"
-                            style="width: 100%; height: auto; display: block; max-height: 400px; object-fit: cover; filter: grayscale(30%);">
-
-                        <div style="padding: 1rem; width: 100%;">
-                            <h3>RECTANGLES</h3>
-                            <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">Coming Soon...
-                            </p>
+                        <div class="browser-content"
+                            style="padding: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center;">
+                            <img src="book_covers/RECTANGLES-COVER.webp" alt="RECTANGLES Cover"
+                                style="width: 100%; height: auto; display: block; max-height: 400px; object-fit: cover;">
+                            <div style="padding: 1rem; width: 100%;">
+                                <h3>RECTANGLES</h3>
+                                <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">Click to
+                                    Read</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
 
             <!-- Divider and Typing Animation -->
@@ -122,9 +117,62 @@
             <div class="col-12">
                 <hr style="margin-top: 5rem; margin-bottom: 3rem; border-color: var(--text-color); opacity: 0.3;">
                 <div class="typing-container"
-                    style="text-align: center; margin-bottom: 5rem; font-family: 'Space Mono', monospace; font-size: 1.5rem; color: var(--text-muted); min-height: 2em;">
+                    style="text-align: center; margin-bottom: 2rem; font-family: 'Space Mono', monospace; font-size: 1.5rem; color: var(--text-muted); min-height: 2em;">
                     <span id="footer-typing-text"></span><span class="cursor"
                         style="animation: blink 1s infinite;">|</span>
+                </div>
+
+                <!-- Book Format Request Footer -->
+                <div class="book-request-footer" style="
+                    text-align: center; 
+                    margin-bottom: 5rem; 
+                    padding: 2rem; 
+                    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+                    border: 1px solid rgba(255,255,255,0.1);
+                    border-radius: 12px;
+                    backdrop-filter: blur(10px);
+                    max-width: 700px;
+                    margin-left: auto;
+                    margin-right: auto;
+                ">
+                    <i class="fa fa-file-text" style="
+                        font-size: 2rem; 
+                        color: var(--accent-green); 
+                        margin-bottom: 1rem;
+                        display: block;
+                    "></i>
+                    <p style="
+                        font-size: 1.1rem; 
+                        color: var(--text-color); 
+                        margin-bottom: 0.5rem;
+                        font-weight: 500;
+                    ">
+                        Need a different format?
+                    </p>
+                    <p style="
+                        font-size: 0.95rem; 
+                        color: var(--text-muted); 
+                        margin-bottom: 1.5rem;
+                        line-height: 1.6;
+                    ">
+                        Request <strong>.epub</strong>, <strong>.doc</strong>, or other versions of these books<br>
+                        using the contact form on the <a href="index.html#contact" style="
+                            color: var(--accent-green); 
+                            text-decoration: none; 
+                            font-weight: 600;
+                            border-bottom: 2px solid transparent;
+                            transition: border-bottom 0.3s ease;
+                        " onmouseover="this.style.borderBottom='2px solid var(--accent-green)'"
+                            onmouseout="this.style.borderBottom='2px solid transparent'">home page</a>.
+                    </p>
+                    <a href="index.html#contact" class="btn-fun" style="
+                        display: inline-block;
+                        padding: 0.75rem 2rem;
+                        text-decoration: none;
+                        font-size: 0.9rem;
+                    ">
+                        <i class="fa fa-envelope"></i> Contact Rajesh
+                    </a>
                 </div>
             </div>
             <script src="js/theme-switcher.js?v=2"></script>
