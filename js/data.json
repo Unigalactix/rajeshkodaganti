@@ -140,6 +140,26 @@
   ],
   "projects": [
     {
+      "id": "sentinel",
+      "name": "🛡️ Sentinel: Autonomous DevOps Orchestrator [WIP]",
+      "startDate": "2025-11",
+      "endDate": "Present",
+      "description": "An AI-driven bridge between Jira and GitHub designed to automate the manual overhead of the DevOps lifecycle, taking tickets from 'To Do' to 'Done' autonomously.",
+      "highlights": [
+        "Autonomous Polling of Jira boards and automated AI-Powered implementation using Azure OpenAI and GitHub Copilot.",
+        "Automated PR Management including feature branching and CI/CD check flows.",
+        "Model Context Protocol (MCP) integration for agent tool interaction."
+      ],
+      "keywords": [
+        "Azure OpenAI",
+        "GitHub Copilot",
+        "MCP",
+        "DevOps"
+      ],
+      "github": "https://github.com/Unigalactix/SENTINEL"
+    },
+    {
+      "id": "gasops",
       "name": "GasOps MTR extraction",
       "startDate": "2025-09",
       "endDate": "Present",

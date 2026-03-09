@@ -36,7 +36,6 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css?v=2">
     <link rel="stylesheet" href="css/tech-games.css?v=2">
-    <link rel="stylesheet" href="css/office-theme.css?v=2">
 </head>
 
 <body>
@@ -209,7 +208,8 @@
                 </div>
 
                 <!-- Experience Item 3 -->
-                <div class="browser-card" onclick="openExperienceModal('coloros')" style="cursor: pointer;">
+                <div class="browser-card collapsible-experience" onclick="openExperienceModal('coloros')"
+                    style="cursor: pointer; display: none;">
                     <div class="browser-header">
                         <div class="dot red"></div>
                         <div class="dot yellow"></div>
@@ -227,6 +227,9 @@
                     </div>
                 </div>
 
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <button id="experience-toggle-btn" class="btn-fun btn-outline-fun">Show More</button>
             </div>
         </div>
     </section>
@@ -282,6 +285,10 @@
             <div id="projects-grid" class="game-grid">
                 <!-- Dynamic Projects Loaded Here -->
             </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <button id="projects-toggle-btn" class="btn-fun btn-outline-fun" style="display: none;">Show
+                    More</button>
+            </div>
         </div>
     </section>
 
@@ -291,6 +298,9 @@
             <h2>Certifications</h2>
             <div id="certifications-grid" class="cert-grid">
                 <!-- Dynamic Certs Loaded Here -->
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <button id="certs-toggle-btn" class="btn-fun btn-outline-fun" style="display: none;">Show More</button>
             </div>
         </div>
     </section>
@@ -345,9 +355,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Theme Toggle Floating Button -->
-    <div id="themeToggleBtn" title="Switch Theme">🌙</div>
 
     <!-- Footer -->
     <footer>
@@ -478,7 +485,6 @@
     <script src="js/tech-games.js?v=2"></script>
     <script src="js/modal-manager.js?v=2"></script>
     <script src="js/content-loader.js?v=2"></script>
-    <script src="js/theme-switcher.js?v=2"></script>
     <script src="js/chatbot.js?v=2"></script>
 
 </body>

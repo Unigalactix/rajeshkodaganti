@@ -7,6 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCertifications(data.certificates);
         })
         .catch(error => console.error('Error loading data:', error));
+
+    // Experience Static Toggle Logic
+    const expToggleBtn = document.getElementById('experience-toggle-btn');
+    if (expToggleBtn) {
+        let expExpanded = false;
+        expToggleBtn.addEventListener('click', () => {
+            expExpanded = !expExpanded;
+            const items = document.querySelectorAll('.collapsible-experience');
+            items.forEach(item => item.style.display = expExpanded ? '' : 'none');
+            expToggleBtn.textContent = expExpanded ? 'Show Less' : 'Show More';
+            expToggleBtn.style.background = expExpanded ? 'var(--accent-green)' : 'transparent';
+            expToggleBtn.style.color = expExpanded ? 'var(--bg-charcoal)' : 'var(--accent-green)';
+        });
+    }
 });
 
 function renderSkills(skills) {
@@ -21,7 +35,7 @@ function renderSkills(skills) {
     skills.forEach((category, index) => {
         const categoryDiv = document.createElement('div');
         categoryDiv.className = 'skill-category';
-        
+
         // Initially hide categories after the first one
         if (index > 0) {
             categoryDiv.style.display = 'none';
@@ -49,15 +63,15 @@ function renderSkills(skills) {
     // Show toggle button if there are more than 1 category
     if (skills.length > 1 && toggleBtn) {
         toggleBtn.style.display = 'inline-block';
-        
+
         toggleBtn.addEventListener('click', () => {
             isExpanded = !isExpanded;
             const collapsibleSkills = document.querySelectorAll('.collapsible-skill');
-            
+
             collapsibleSkills.forEach(skill => {
                 skill.style.display = isExpanded ? 'block' : 'none';
             });
-            
+
             toggleBtn.textContent = isExpanded ? 'Show Less' : 'Show More';
             toggleBtn.style.background = isExpanded ? 'var(--accent-green)' : 'transparent';
             toggleBtn.style.color = isExpanded ? 'var(--bg-charcoal)' : 'var(--accent-green)';
@@ -69,10 +83,15 @@ function renderProjects(projects) {
     const container = document.getElementById('projects-grid');
     if (!container) return;
 
-    projects.forEach(project => {
+    projects.forEach((project, index) => {
         // Create card structure
         const card = document.createElement('div');
         card.className = 'browser-card project-card';
+
+        if (index >= 3) {
+            card.style.display = 'none';
+            card.classList.add('collapsible-project');
+        }
 
         // Header
         const header = document.createElement('div');
@@ -132,6 +151,24 @@ function renderProjects(projects) {
             linksDiv.appendChild(demoLink);
         }
 
+        if (project.id) {
+            const detailsDiv = document.createElement('div');
+            detailsDiv.style.marginTop = '1rem';
+            detailsDiv.style.textAlign = 'right';
+            detailsDiv.style.color = 'var(--accent-green)';
+            detailsDiv.textContent = 'Open details() ->';
+            linksDiv.appendChild(detailsDiv);
+
+            card.style.cursor = 'pointer';
+            card.onclick = () => openProjectModal(project.id);
+
+            // Prevent link clicks from triggering modal
+            const anchors = linksDiv.querySelectorAll('a');
+            anchors.forEach(a => {
+                a.onclick = (e) => e.stopPropagation();
+            });
+        }
+
         // Append everything
         content.appendChild(title);
         content.appendChild(description);
@@ -143,15 +180,34 @@ function renderProjects(projects) {
 
         container.appendChild(card);
     });
+
+    const projToggleBtn = document.getElementById('projects-toggle-btn');
+    if (projects.length > 3 && projToggleBtn) {
+        projToggleBtn.style.display = 'inline-block';
+        let projExpanded = false;
+        projToggleBtn.addEventListener('click', () => {
+            projExpanded = !projExpanded;
+            const items = document.querySelectorAll('.collapsible-project');
+            items.forEach(item => item.style.display = projExpanded ? '' : 'none');
+            projToggleBtn.textContent = projExpanded ? 'Show Less' : 'Show More';
+            projToggleBtn.style.background = projExpanded ? 'var(--accent-green)' : 'transparent';
+            projToggleBtn.style.color = projExpanded ? 'var(--bg-charcoal)' : 'var(--accent-green)';
+        });
+    }
 }
 
 function renderCertifications(certs) {
     const container = document.getElementById('certifications-grid');
     if (!container) return;
 
-    certs.forEach(cert => {
+    certs.forEach((cert, index) => {
         const card = document.createElement('div');
         card.className = 'cert-card';
+
+        if (index >= 6) {
+            card.style.display = 'none';
+            card.classList.add('collapsible-cert');
+        }
 
         const icon = document.createElement('div');
         icon.className = 'cert-icon';
@@ -183,4 +239,18 @@ function renderCertifications(certs) {
         card.appendChild(content);
         container.appendChild(card);
     });
+
+    const certToggleBtn = document.getElementById('certs-toggle-btn');
+    if (certs.length > 6 && certToggleBtn) {
+        certToggleBtn.style.display = 'inline-block';
+        let certExpanded = false;
+        certToggleBtn.addEventListener('click', () => {
+            certExpanded = !certExpanded;
+            const items = document.querySelectorAll('.collapsible-cert');
+            items.forEach(item => item.style.display = certExpanded ? '' : 'none');
+            certToggleBtn.textContent = certExpanded ? 'Show Less' : 'Show More';
+            certToggleBtn.style.background = certExpanded ? 'var(--accent-green)' : 'transparent';
+            certToggleBtn.style.color = certExpanded ? 'var(--bg-charcoal)' : 'var(--accent-green)';
+        });
+    }
 }

@@ -240,6 +240,24 @@ class ModalManager {
     }
     getProjectData() {
         return {
+            sentinel: {
+                title: "🛡️ Sentinel: Autonomous DevOps Orchestrator [WIP]",
+                category: "DevOps • AI • Automation • Nov 2025 - Present",
+                icon: "🛡️",
+                description: "Sentinel is an AI-driven bridge between Jira and GitHub designed to automate the manual overhead of the DevOps lifecycle. Sentinel continuously monitors Jira boards for new tasks and autonomously handles the implementation process—taking tickets from \"To Do\" to \"Done\" with minimal human intervention.",
+                objectives: [
+                    "Automate manual overhead of the DevOps lifecycle",
+                    "Close the loop between project management and version control"
+                ],
+                technologies: ["Azure OpenAI", "GitHub Copilot", "Model Context Protocol (MCP)", "CI/CD", "Python"],
+                achievements: [
+                    "Autonomous Polling: Automatically scans Jira boards every 30 seconds for new tickets",
+                    "AI-Powered Implementation: Leverages Azure OpenAI and GitHub Copilot to analyze repository structures and generate context-aware code fixes",
+                    "Automated PR Management: Creates feature branches, triggers Copilot for implementation, and manages the approval/merge flow once CI/CD checks pass",
+                    "Multi-Tenant Architecture: Supports per-user GitHub OAuth, securely under individual user contexts",
+                    "MCP Integration: Includes an MCP server allowing AI agents to interact directly with the orchestration tools"
+                ]
+            },
             convir: {
                 title: "Image Denoising using Deep Learning (ConvIR)",
                 category: "Machine Learning • Computer Vision • Dec 2024 - May 2025",
