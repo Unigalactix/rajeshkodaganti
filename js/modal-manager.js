@@ -25,24 +25,38 @@ class ModalManager {
 
     getExperienceData() {
         return {
+            microsoft: {
+                title: "Microsoft",
+                role: "AI Software Engineer",
+                period: "Mar 2026 – Present",
+                icon: "🚀",
+                description: "Joining the AI Engineering team. Focusing on cutting-edge AI architectures and enterprise solutions.",
+                duties: [
+                    "Architecting and developing AI software solutions"
+                ],
+                technologies: ["AI", "Software Engineering", "Cloud Architecture"],
+                achievements: [
+                    "Joined Microsoft AI Team in Redmond"
+                ]
+            },
             quadrant: {
                 title: "Quadrant Technologies",
-                role: "Software Intern",
-                period: "July 2025 – Present",
+                role: "AI Software Engineer",
+                period: "Aug 2025 – Present",
                 icon: "💼",
-                description: "Cybersecurity & AI applications development. Working on cutting-edge projects involving threat intelligence and machine learning integration.",
+                description: "Cybersecurity & AI applications development. Architected and deployed scalable AI solutions using Azure OpenAI and Azure Cognitive Services, enhancing threat intelligence analysis and automating data-driven mitigation strategies.",
                 duties: [
-                    "Developing AI-powered cybersecurity solutions for threat detection and analysis",
-                    "Implementing machine learning models for predictive threat intelligence",
-                    "Collaborating with cross-functional teams on security automation projects",
-                    "Conducting research on emerging cybersecurity threats and mitigation strategies",
-                    "Contributing to the development of security monitoring dashboards and tools"
+                    "Architected and deployed scalable AI solutions using Azure OpenAI and Azure Cognitive Services",
+                    "Implemented Document Intelligence workflows to extract and structure unstructured data",
+                    "Developed RAG (Retrieval-Augmented Generation) architectures by integrating Azure AI Search with LLMs",
+                    "Designed and implemented ETL processes for security logs and vulnerability reports",
+                    "Created monitoring dashboards for cloud security, ensuring compliance and safeguarding sensitive information"
                 ],
-                technologies: ["Cybersecurity", "AI Applications", "Python", "Machine Learning", "Threat Intelligence", "Security Analytics"],
+                technologies: ["Azure OpenAI", "Azure Cognitive Services", "Document Intelligence", "RAG", "Python", "ETL", "Cybersecurity"],
                 achievements: [
-                    "Improved threat detection accuracy by 25% through ML model optimization",
-                    "Developed automated security monitoring system reducing manual effort by 40%",
-                    "Contributed to 3+ major security projects with positive client feedback"
+                    "Significantly reduced manual processing time and improved data reliability for downstream ML models",
+                    "Enhanced risk analysis capabilities through advanced threat intelligence",
+                    "Improved data ingestion reliability for endpoint and network security"
                 ]
             },
             qikcell: {
