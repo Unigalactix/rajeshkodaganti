@@ -1551,3 +1551,392 @@
     padding: 20px;
     font-style: italic;
 }
+
+/* =============================================================
+   GAME UI PRO POLISH OVERRIDES
+   ============================================================= */
+
+:root {
+    --game-surface-1: var(--surface-1, #181c22);
+    --game-surface-2: var(--surface-2, #10141a);
+    --game-surface-3: var(--surface-3, #0c1016);
+    --game-border: var(--border-subtle, rgba(255, 255, 255, 0.1));
+    --game-border-strong: var(--border-strong, rgba(116, 217, 255, 0.35));
+    --game-text: var(--text-primary, #ececec);
+    --game-muted: var(--text-secondary, #aab5c4);
+    --game-primary: var(--accent-green, #2dffb0);
+    --game-secondary: var(--accent-blue, #74d9ff);
+    --game-warn: var(--accent-yellow, #ffdf61);
+    --game-danger: #ff6f7b;
+}
+
+.is-hidden {
+    display: none !important;
+}
+
+body.game-modal-open {
+    overflow: hidden;
+}
+
+.tech-games-modal.is-open,
+.game-modal.is-open {
+    display: flex;
+}
+
+.tech-games-modal,
+.game-modal {
+    padding: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+}
+
+.tech-games-modal-content,
+.game-modal-content {
+    width: min(1200px, 100%);
+    max-height: min(92dvh, 920px);
+    border: 1px solid var(--game-border-strong);
+    background: linear-gradient(180deg, rgba(12, 16, 22, 0.97), rgba(10, 14, 20, 0.97));
+}
+
+.tech-games-modal-header,
+.game-modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(16, 20, 27, 0.94);
+    border-bottom: 1px solid var(--game-border-strong);
+    backdrop-filter: blur(10px);
+}
+
+.tech-games-close-btn,
+.game-close-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid var(--game-border-strong);
+    color: var(--game-secondary);
+    background: rgba(116, 217, 255, 0.08);
+}
+
+.tech-games-close-btn:hover,
+.game-close-btn:hover {
+    background: var(--game-secondary);
+    color: #07141d;
+    transform: none;
+}
+
+.tech-games-modal-body,
+.game-modal-body {
+    background: var(--game-surface-2);
+    border-radius: 0 0 18px 18px;
+}
+
+.tech-games-grid,
+.game-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.tech-game-card,
+.game-card {
+    background: linear-gradient(160deg, rgba(20, 24, 31, 0.95), rgba(16, 20, 28, 0.95));
+    border: 1px solid var(--game-border);
+    border-radius: 14px;
+    padding: 1rem;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+.tech-game-card:hover,
+.game-card:hover {
+    border-color: var(--game-border-strong);
+    transform: translateY(-3px);
+}
+
+.tech-game-card h4,
+.game-card h3 {
+    color: var(--game-text);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+.tech-game-card p,
+.game-card p {
+    color: var(--game-muted);
+    font-size: 0.9rem;
+}
+
+.start-tech-game-btn,
+.select-game-btn,
+#startGameBtn,
+.play-again-btn,
+.back-to-games-btn,
+.next-btn,
+.start-typing-btn,
+.restart-typing-btn,
+.show-leaderboard-btn,
+.continue-btn,
+.close-leaderboard-btn {
+    min-height: 42px;
+    border-radius: 12px;
+    font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+}
+
+.start-tech-game-btn,
+.select-game-btn,
+#startGameBtn,
+.play-again-btn,
+.next-btn,
+.start-typing-btn,
+.restart-typing-btn,
+.show-leaderboard-btn,
+.continue-btn,
+.close-leaderboard-btn {
+    background: linear-gradient(135deg, var(--game-primary), #7dffd2);
+    color: #07141d;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: none;
+}
+
+.back-to-games-btn,
+#backToGamesBtn,
+#backToMenu,
+.back-btn,
+.change-name-btn {
+    background: rgba(116, 217, 255, 0.08);
+    color: var(--game-secondary);
+    border: 1px solid var(--game-border-strong);
+}
+
+.start-tech-game-btn:hover,
+.select-game-btn:hover,
+#startGameBtn:hover,
+.play-again-btn:hover,
+.next-btn:hover,
+.start-typing-btn:hover,
+.restart-typing-btn:hover,
+.show-leaderboard-btn:hover,
+.continue-btn:hover,
+.close-leaderboard-btn:hover,
+.back-to-games-btn:hover,
+#backToGamesBtn:hover,
+#backToMenu:hover,
+.back-btn:hover,
+.change-name-btn:hover {
+    transform: translateY(-1px);
+}
+
+.game-header,
+.game-header-bar,
+.typing-header,
+.typing-settings,
+.question-card,
+.text-display,
+.typing-input,
+.question-feedback,
+.results-container,
+.stat-card,
+.player-name-section,
+.leaderboard-section {
+    background: var(--game-surface-1);
+    border: 1px solid var(--game-border);
+    box-shadow: none;
+}
+
+.game-header,
+.typing-header {
+    gap: 0.75rem;
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+.game-stats span,
+.stat-item,
+.difficulty-badge,
+.score-display,
+.leaderboard-stat-value {
+    color: var(--game-secondary);
+}
+
+.canvas-wrapper {
+    aspect-ratio: 16 / 10;
+    min-height: 240px;
+    max-height: min(58dvh, 620px);
+}
+
+#gameCanvas {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.typing-text,
+.typing-input {
+    font-family: var(--font-mono, 'Space Mono', monospace);
+}
+
+.player-name-section,
+.leaderboard-section {
+    width: min(92vw, 560px);
+    min-width: 0;
+    max-width: 92vw;
+}
+
+.leaderboard-entry {
+    gap: 0.65rem;
+    border-left-color: var(--game-primary);
+}
+
+.leaderboard-stats {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.game-touch-controls {
+    position: absolute;
+    inset: auto 10px 10px 10px;
+    display: none;
+    justify-content: space-between;
+    align-items: flex-end;
+    pointer-events: none;
+    z-index: 25;
+}
+
+.game-touch-controls.is-hidden {
+    display: none !important;
+}
+
+.touch-dpad,
+.touch-actions {
+    display: grid;
+    gap: 8px;
+    pointer-events: auto;
+}
+
+.touch-dpad {
+    grid-template-columns: repeat(3, 46px);
+    grid-template-areas:
+        '. up .'
+        'left down right';
+}
+
+.touch-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    border: 1px solid var(--game-border-strong);
+    background: rgba(12, 18, 26, 0.86);
+    color: var(--game-secondary);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.touch-btn.up { grid-area: up; }
+.touch-btn.left { grid-area: left; }
+.touch-btn.down { grid-area: down; }
+.touch-btn.right { grid-area: right; }
+
+.touch-btn.action {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(45, 255, 176, 0.15);
+    color: var(--game-primary);
+}
+
+@media (max-width: 1200px) {
+    .game-modal-content,
+    .tech-games-modal-content {
+        width: 100%;
+    }
+}
+
+@media (max-width: 992px) {
+    .tech-games-modal-body,
+    .game-modal-body {
+        padding: 0.85rem;
+    }
+
+    .tech-games-grid,
+    .game-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .typing-settings,
+    .results-actions,
+    .game-actions,
+    .results-stats {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-modal,
+    .tech-games-modal {
+        padding: 0;
+    }
+
+    .game-modal-content,
+    .tech-games-modal-content {
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        max-height: 100dvh;
+    }
+
+    .tech-games-grid,
+    .game-grid,
+    .typing-results-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .tech-games-modal-header h2,
+    .game-modal-header h2 {
+        font-size: clamp(1.1rem, 4vw, 1.4rem);
+    }
+
+    #gameInstructionsScreen {
+        padding: 1rem;
+    }
+
+    #instructionGameTitle {
+        font-size: clamp(1.5rem, 7vw, 2rem);
+    }
+
+    .difficulty-selection {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .difficulty-btn {
+        flex: 1;
+        min-width: 90px;
+    }
+
+    .game-touch-controls {
+        display: flex;
+    }
+}
+
+@media (max-width: 480px) {
+    .tech-games-modal-header,
+    .game-modal-header,
+    .game-header,
+    .typing-header,
+    .typing-settings,
+    .question-card,
+    .results-container {
+        padding: 0.75rem;
+    }
+
+    .typing-text,
+    .typing-input,
+    .instruction-item {
+        font-size: 0.95rem;
+    }
+
+    .touch-dpad {
+        grid-template-columns: repeat(3, 42px);
+    }
+
+    .touch-btn {
+        width: 42px;
+        height: 42px;
+    }
+}

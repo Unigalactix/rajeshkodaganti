@@ -5,6 +5,8 @@ class TechGamesManager {
         this.currentGame = null;
         this.score = 0;
         this.currentLevel = 1;
+        this.typingListenersBound = false;
+        this.quizListenersBound = false;
 
         // Typing Test Game State
         this.typingGame = {
@@ -598,6 +600,8 @@ class TechGamesManager {
         }
 
         modal.style.display = 'flex';
+        modal.classList.add('is-open');
+        document.body.classList.add('game-modal-open');
 
         // Ensure typing game card is present
         this.ensureTypingGameCard();
@@ -888,11 +892,23 @@ class TechGamesManager {
         // Add event listeners
         modal.querySelector('.tech-games-close-btn').addEventListener('click', () => {
             modal.style.display = 'none';
+            modal.classList.remove('is-open');
+            document.body.classList.remove('game-modal-open');
         });
 
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.style.display = 'none';
+                modal.classList.remove('is-open');
+                document.body.classList.remove('game-modal-open');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+                modal.classList.remove('is-open');
+                document.body.classList.remove('game-modal-open');
             }
         });
 
@@ -908,9 +924,24 @@ class TechGamesManager {
     }
 
     showGameSelection() {
-        document.getElementById('techGameSelection').style.display = 'block';
-        document.getElementById('techGamePlay').style.display = 'none';
-        document.getElementById('techGameResults').style.display = 'none';
+        this.setTechView('selection');
+    }
+
+    setTechView(view) {
+        const map = {
+            selection: ['techGameSelection'],
+            quiz: ['techGamePlay'],
+            quizResults: ['techGameResults'],
+            typing: ['typingTestGame'],
+            typingResults: ['typingTestResults']
+        };
+
+        const all = ['techGameSelection', 'techGamePlay', 'techGameResults', 'typingTestGame', 'typingTestResults'];
+        all.forEach(id => {
+            const node = document.getElementById(id);
+            if (!node) return;
+            node.style.display = (map[view] || []).includes(id) ? 'block' : 'none';
+        });
     }
 
     startTechGame(gameType) {
@@ -926,10 +957,7 @@ class TechGamesManager {
             return;
         }
 
-        // Show game play area
-        document.getElementById('techGameSelection').style.display = 'none';
-        document.getElementById('techGamePlay').style.display = 'block';
-        document.getElementById('techGameResults').style.display = 'none';
+        this.setTechView('quiz');
 
         // Set game title
         const titles = {
@@ -945,22 +973,24 @@ class TechGamesManager {
         };
         document.getElementById('currentGameTitle').textContent = titles[gameType];
 
-        // Add event listeners
-        document.getElementById('backToSelection').addEventListener('click', () => {
-            this.showGameSelection();
-        });
+        if (!this.quizListenersBound) {
+            this.quizListenersBound = true;
+            document.getElementById('backToSelection').addEventListener('click', () => {
+                this.showGameSelection();
+            });
 
-        document.getElementById('nextQuestion').addEventListener('click', () => {
-            this.nextQuestion();
-        });
+            document.getElementById('nextQuestion').addEventListener('click', () => {
+                this.nextQuestion();
+            });
 
-        document.getElementById('playAgain').addEventListener('click', () => {
-            this.startTechGame(this.currentGame);
-        });
+            document.getElementById('playAgain').addEventListener('click', () => {
+                this.startTechGame(this.currentGame);
+            });
 
-        document.getElementById('backToGames').addEventListener('click', () => {
-            this.showGameSelection();
-        });
+            document.getElementById('backToGames').addEventListener('click', () => {
+                this.showGameSelection();
+            });
+        }
 
         // Start first question
         this.loadQuestion();
@@ -1057,8 +1087,7 @@ class TechGamesManager {
     }
 
     showResults() {
-        document.getElementById('techGamePlay').style.display = 'none';
-        document.getElementById('techGameResults').style.display = 'block';
+        this.setTechView('quizResults');
 
         const totalQuestions = this.questions[this.currentGame].length;
         const accuracy = Math.round((this.correctAnswers / totalQuestions) * 100);
@@ -1090,14 +1119,7 @@ class TechGamesManager {
 
     // Typing Test Game Methods
     startTypingTest() {
-        // Hide other screens
-        document.getElementById('techGameSelection').style.display = 'none';
-        document.getElementById('techGamePlay').style.display = 'none';
-        document.getElementById('techGameResults').style.display = 'none';
-        document.getElementById('typingTestResults').style.display = 'none';
-
-        // Show typing test interface
-        document.getElementById('typingTestGame').style.display = 'block';
+        this.setTechView('typing');
 
         // Setup event listeners
         this.setupTypingTestEventListeners();
@@ -1107,6 +1129,9 @@ class TechGamesManager {
     }
 
     setupTypingTestEventListeners() {
+        if (this.typingListenersBound) return;
+        this.typingListenersBound = true;
+
         // Back to selection
         document.getElementById('backToTypingSelection').addEventListener('click', () => {
             this.showGameSelection();

@@ -1,5 +1,6 @@
 // Multi-Game Center - Complete Game Collection
 document.addEventListener('DOMContentLoaded', function () {
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
     // Modal and UI elements
     const gameModal = document.getElementById('gameModal');
     const openGameBtn = document.getElementById('gamesButton');
@@ -37,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let animationId;
     let gameData = {};
     let playerScore = 0;
+    let resizeObserver = null;
 
     // Game configurations
     const gameConfigs = {
@@ -179,29 +181,37 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.select-game-btn').forEach(btn => { ... });
     */
 
-    // Window resize handler for responsive canvas
-    window.addEventListener('resize', () => {
-        if (!gameRunning || !gameCanvas) return;
+    function resizeGameCanvas() {
+        if (!gameCanvas) return;
+        const wrapper = gameCanvas.parentElement;
+        if (!wrapper) return;
 
-        const canvasContainer = gameCanvas.parentElement;
-        if (canvasContainer) {
-            const containerWidth = canvasContainer.offsetWidth - 10;
-            const containerHeight = canvasContainer.offsetHeight - 130;
+        const width = Math.max(300, wrapper.clientWidth - 12);
+        const height = Math.max(220, Math.min(wrapper.clientHeight - 16, Math.floor(width * 0.62)));
 
-            // Just update dimensions, might distort current frame but next draw will fix if using %
-            // If we want to change resolution:
-            // gameCanvas.width = containerWidth;
-            // gameCanvas.height = containerHeight;
-            // But this resets context.
-            // Better to rely on init for resolution and let CSS scale.
+        if (gameCanvas.width !== width || gameCanvas.height !== height) {
+            gameCanvas.width = width;
+            gameCanvas.height = height;
         }
-    });
+    }
+
+    if (window.ResizeObserver && gameCanvas?.parentElement) {
+        resizeObserver = new ResizeObserver(() => {
+            if (gameModal?.classList.contains('is-open')) {
+                resizeGameCanvas();
+            }
+        });
+        resizeObserver.observe(gameCanvas.parentElement);
+    }
+
+    window.addEventListener('resize', resizeGameCanvas, { passive: true });
 
     function openGameModal() {
         console.log('Opening game modal...');
         if (gameModal) {
-            gameModal.style.display = 'flex'; // Changed to flex for centering
-            document.body.style.overflow = 'hidden';
+            gameModal.classList.add('is-open');
+            gameModal.style.display = 'flex';
+            document.body.classList.add('game-modal-open');
 
             // Ensure game container is hidden initially
             if (gameContainer) {
@@ -212,6 +222,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Force show game selection menu immediately
             showGameSelection();
+            resizeGameCanvas();
 
             console.log('Game modal opened successfully');
         } else {
@@ -221,8 +232,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function closeGameModal() {
         console.log('Closing game modal...');
+        gameModal.classList.remove('is-open');
         gameModal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        document.body.classList.remove('game-modal-open');
         stopGame();
     }
 
@@ -233,6 +245,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const modalBody = document.querySelector('.game-modal-body');
         if (modalBody) {
             modalBody.classList.remove('game-active');
+        }
+
+        if (gameModal) {
+            gameModal.dataset.view = 'selection';
         }
 
         // Stop current game first
@@ -268,6 +284,9 @@ document.addEventListener('DOMContentLoaded', function () {
         currentGame = null;
         selectedDifficulty = null;
         gameDifficulty = null; // Reset stored game difficulty
+
+        const controls = document.querySelector('.canvas-wrapper .game-touch-controls');
+        if (controls) controls.classList.add('is-hidden');
     }
 
     function showGameInstructions(gameType) {
@@ -291,6 +310,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const layoutContainer = document.querySelector('.game-layout-container');
         if (layoutContainer) {
             layoutContainer.classList.add('show-instructions');
+        }
+
+        if (gameModal) {
+            gameModal.dataset.view = 'instructions';
         }
 
         // Show instructions screen
@@ -341,6 +364,10 @@ document.addEventListener('DOMContentLoaded', function () {
             modalBody.classList.add('game-active');
         }
 
+        if (gameModal) {
+            gameModal.dataset.view = 'playing';
+        }
+
         // Remove side-by-side layout class when starting game
         const layoutContainer = document.querySelector('.game-layout-container');
         if (layoutContainer) {
@@ -364,6 +391,8 @@ document.addEventListener('DOMContentLoaded', function () {
             gameContainer.style.pointerEvents = 'auto';
             console.log('Game container shown immediately');
         }
+
+        resizeGameCanvas();
 
         // Update game UI
         if (currentGameTitle) {
@@ -393,28 +422,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function initializeGame(gameType) {
         gameRunning = true;
         gameData = {};
-
-        // Ensure proper canvas sizing after modal transition
-        setTimeout(() => {
-            if (gameCanvas) {
-                // Force recalculate canvas dimensions
-                const canvasContainer = gameCanvas.parentElement;
-                const containerWidth = canvasContainer.offsetWidth - 10; // Account for margin
-                const containerHeight = canvasContainer.offsetHeight - 130; // Account for header and controls
-
-                // Use actual container size for responsiveness
-                gameCanvas.width = containerWidth;
-                gameCanvas.height = Math.max(containerHeight, 300); // Keep reasonable min height
-
-                console.log(`Canvas resized to: ${gameCanvas.width}x${gameCanvas.height}`);
-            }
-        }, 150);
-
-        // Set initial canvas size
-        if (gameCanvas) {
-            gameCanvas.width = gameCanvas.offsetWidth || 600;
-            gameCanvas.height = gameCanvas.offsetHeight || 400;
-        }
+        resizeGameCanvas();
 
         switch (gameType) {
             case 'dino':
@@ -438,6 +446,57 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         gameLoop();
+        setupTouchControls();
+    }
+
+    function setTouchKey(key, active) {
+        keys[key] = active;
+        if (active) {
+            document.dispatchEvent(new KeyboardEvent('keydown', { key }));
+        } else {
+            document.dispatchEvent(new KeyboardEvent('keyup', { key }));
+        }
+    }
+
+    function setupTouchControls() {
+        const wrapper = document.querySelector('.canvas-wrapper');
+        if (!wrapper || !isTouchDevice) return;
+
+        let controls = wrapper.querySelector('.game-touch-controls');
+        if (!controls) {
+            controls = document.createElement('div');
+            controls.className = 'game-touch-controls';
+            controls.innerHTML = `
+                <div class="touch-dpad">
+                    <button class="touch-btn up" data-key="ArrowUp">▲</button>
+                    <button class="touch-btn left" data-key="ArrowLeft">◀</button>
+                    <button class="touch-btn down" data-key="ArrowDown">▼</button>
+                    <button class="touch-btn right" data-key="ArrowRight">▶</button>
+                </div>
+                <div class="touch-actions">
+                    <button class="touch-btn action" data-key=" ">A</button>
+                </div>
+            `;
+            wrapper.appendChild(controls);
+
+            controls.querySelectorAll('.touch-btn').forEach(btn => {
+                const key = btn.dataset.key;
+                const press = (e) => {
+                    e.preventDefault();
+                    setTouchKey(key, true);
+                };
+                const release = (e) => {
+                    e.preventDefault();
+                    setTouchKey(key, false);
+                };
+
+                btn.addEventListener('touchstart', press, { passive: false });
+                btn.addEventListener('touchend', release, { passive: false });
+                btn.addEventListener('touchcancel', release, { passive: false });
+            });
+        }
+
+        controls.classList.toggle('is-hidden', !gameRunning);
     }
 
     // DINO GAME
@@ -1038,6 +1097,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (animationId) {
             cancelAnimationFrame(animationId);
         }
+
+        const controls = document.querySelector('.canvas-wrapper .game-touch-controls');
+        if (controls) controls.classList.add('is-hidden');
     }
 
     function restartCurrentGame() {
