@@ -40,6 +40,25 @@
 
 <body>
 
+    <div id="splash-screen" aria-live="polite" role="status">
+        <div class="splash-terminal">
+            <div class="splash-head">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="splash-title">boot://rajesh-kodaganti-portfolio</span>
+            </div>
+            <div class="splash-body">
+                <p><span class="prompt">$</span> initializing portfolio session...</p>
+                <p><span class="prompt">$</span> <span id="splash-type-target"></span><span class="splash-caret">_</span></p>
+                <p class="splash-hint">Launching interface...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="scroll-progress" aria-hidden="true"></div>
+    <div class="cursor-glow" aria-hidden="true"></div>
+
     <!-- Navbar -->
     <header>
         <div class="container">
@@ -59,10 +78,18 @@
                 <!-- <li><a href="#contact">Contact</a></li> -->
             </ul>
         </div>
+        <div class="nav-runtime">
+            <div class="container nav-runtime-inner">
+                <span class="runtime-dot" aria-hidden="true"></span>
+                <span id="nav-breadcrumb">root / home</span>
+                <span class="runtime-hint">Press Cmd/Ctrl + K</span>
+            </div>
+        </div>
     </header>
 
     <!-- Hero Section -->
     <section id="lead">
+        <canvas id="hero-canvas" aria-hidden="true"></canvas>
         <div class="container">
             <div class="lead-content">
                 <div class="hero-tag">
@@ -90,12 +117,48 @@
                         <i class="fa fa-download"></i> Resume
                     </a>
                 </div>
+
+                <div class="live-console reveal" data-reveal="up">
+                    <div class="live-console-head">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                        <span class="live-console-title">/usr/rajesh/portfolio</span>
+                    </div>
+                    <div class="live-console-body">
+                        <div class="terminal-output" id="terminal-output" aria-live="polite">
+                            <p><span class="prompt">$</span> <span class="type-target" data-text="help"></span></p>
+                            <p class="console-stream"><span>Available commands: about, stack, projects, contact, clear</span></p>
+                        </div>
+                        <form id="terminal-form" class="terminal-form">
+                            <label for="terminal-input" class="sr-only">Terminal command</label>
+                            <span class="prompt">$</span>
+                            <input id="terminal-input" type="text" autocomplete="off" placeholder="Try: projects" />
+                        </form>
+                    </div>
+                </div>
             </div>
 
-            <div class="profile-container">
+            <div class="profile-container reveal" data-reveal="up">
                 <div class="blob-decoration blob-1"></div>
                 <div class="blob-decoration blob-2"></div>
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+                <div class="floating-chip chip-one">AI</div>
+                <div class="floating-chip chip-two">DATA</div>
+                <div class="floating-chip chip-three">SECURITY</div>
                 <div class="profile-blob"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="build-logs" aria-label="Build logs">
+        <div class="log-track">
+            <div class="log-marquee" id="log-marquee">
+                <span>BUILD LOG: Shipped threat scoring API with robust ETL guardrails</span>
+                <span>BUILD LOG: Reduced data sync latency with queue-based ingestion</span>
+                <span>BUILD LOG: Designed RAG pipeline for incident triage workflows</span>
+                <span>BUILD LOG: Deployed cloud monitoring alerts for compliance posture</span>
             </div>
         </div>
     </section>
@@ -103,19 +166,14 @@
     <!-- About Section -->
     <section id="about" class="section">
         <div class="container">
-            <h2>About Me</h2>
+            <h2>Who I Am In Production</h2>
             <div class="row">
                 <div class="col-md-6">
-                    <p class="intro-text">
-                        I believe technology shouldn't just function—it should <strong>delight</strong>.
-                        Currently completing my Master's at CSUN via <strong>Quadrant Technologies</strong>, I
-                        specialize in the "heavy lifting" of tech:
-                        <span class="text-highlight">Machine Learning</span>, <span class="text-highlight">Big Data
-                            Pipelines</span>, and <span class="text-highlight">Cybersecurity</span>.
+                    <p class="intro-text" id="about-summary">
+                        Loading profile summary...
                     </p>
-                    <p>
-                        When I'm not training models or securing networks, you can find me exploring new interactive web
-                        technologies (like this site!).
+                    <p id="about-focus">
+                        Loading focus areas...
                     </p>
                 </div>
                 <div class="col-md-6">
@@ -139,6 +197,76 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="coding-interests" class="section">
+        <div class="container">
+            <h2>Architecture I Enjoy Building</h2>
+            <p class="interest-intro">I enjoy building systems that are practical in production and fun to interact with. These are the coding themes I keep returning to.</p>
+            <div class="interests-grid">
+                <article class="interest-card reveal" data-reveal="up">
+                    <div class="interest-icon"><i class="fa fa-brain"></i></div>
+                    <h3>Applied AI</h3>
+                    <p>From LLM integrations to model serving, I like shipping AI features that help real users.</p>
+                    <div class="interest-tags">
+                        <span>Python</span><span>LLMs</span><span>MLOps</span>
+                    </div>
+                </article>
+                <article class="interest-card reveal" data-reveal="up">
+                    <div class="interest-icon"><i class="fa fa-database"></i></div>
+                    <h3>Data Engineering</h3>
+                    <p>I design data flows that stay reliable under scale, with clean transformations and observability.</p>
+                    <div class="interest-tags">
+                        <span>ETL</span><span>Pipelines</span><span>Cloud</span>
+                    </div>
+                </article>
+                <article class="interest-card reveal" data-reveal="up">
+                    <div class="interest-icon"><i class="fa fa-shield"></i></div>
+                    <h3>Security Mindset</h3>
+                    <p>I approach architecture with secure defaults and threat-aware decisions from day one.</p>
+                    <div class="interest-tags">
+                        <span>Threat Intel</span><span>IAM</span><span>Hardening</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="system-map" class="section">
+        <div class="container">
+            <h2>From Idea To Runtime</h2>
+            <p class="interest-intro">A simplified map of how I usually think through engineering: data in, intelligence in the loop, secure delivery out.</p>
+            <div class="system-map-wrap reveal" data-reveal="up">
+                <svg viewBox="0 0 900 280" class="system-map-svg" role="img" aria-label="System architecture flow">
+                    <defs>
+                        <linearGradient id="flowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#00ff9d" />
+                            <stop offset="100%" stop-color="#8be9fd" />
+                        </linearGradient>
+                    </defs>
+                    <rect x="30" y="80" width="210" height="110" rx="16" class="map-node" />
+                    <rect x="345" y="40" width="210" height="110" rx="16" class="map-node" />
+                    <rect x="345" y="165" width="210" height="85" rx="16" class="map-node" />
+                    <rect x="660" y="80" width="210" height="110" rx="16" class="map-node" />
+                    <text x="136" y="128" text-anchor="middle" class="map-label">Ingestion</text>
+                    <text x="136" y="153" text-anchor="middle" class="map-sub">Logs | Docs | APIs</text>
+                    <text x="450" y="88" text-anchor="middle" class="map-label">AI Layer</text>
+                    <text x="450" y="113" text-anchor="middle" class="map-sub">LLM + Retrieval</text>
+                    <text x="450" y="200" text-anchor="middle" class="map-label">Security Ops</text>
+                    <text x="450" y="225" text-anchor="middle" class="map-sub">Policies | Alerts</text>
+                    <text x="765" y="128" text-anchor="middle" class="map-label">Apps</text>
+                    <text x="765" y="153" text-anchor="middle" class="map-sub">Dashboards | APIs</text>
+                    <path d="M240 136 L345 96" class="flow-path" />
+                    <path d="M240 136 L345 208" class="flow-path" />
+                    <path d="M555 96 L660 136" class="flow-path" />
+                    <path d="M555 208 L660 136" class="flow-path" />
+                    <circle cx="292" cy="116" r="5" class="flow-dot" />
+                    <circle cx="292" cy="180" r="5" class="flow-dot" />
+                    <circle cx="608" cy="116" r="5" class="flow-dot" />
+                    <circle cx="608" cy="180" r="5" class="flow-dot" />
+                </svg>
             </div>
         </div>
     </section>
@@ -281,7 +409,7 @@
     <!-- Projects Section (Dynamic) -->
     <section id="projects" class="section">
         <div class="container">
-            <h2>Work & Projects</h2>
+            <h2>Things I Built, Broke And Fixed</h2>
             <div id="projects-grid" class="game-grid">
                 <!-- Dynamic Projects Loaded Here -->
             </div>
@@ -295,7 +423,7 @@
     <!-- Certifications Section (Dynamic) -->
     <section id="certifications" class="section" style="background: var(--bg-card);">
         <div class="container">
-            <h2>Certifications</h2>
+            <h2>Proof Of Practice</h2>
             <div id="certifications-grid" class="cert-grid">
                 <!-- Dynamic Certs Loaded Here -->
             </div>
@@ -308,7 +436,7 @@
     <!-- Fun Zone -->
     <section id="games" class="section">
         <div class="container" style="text-align:center;">
-            <h2>Need a Break?</h2>
+            <h2>Debug Break</h2>
 
             <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
                 <button id="techGamesButton" class="btn-fun">
@@ -321,10 +449,41 @@
         </div>
     </section>
 
+    <section id="coding-activity" class="section">
+        <div class="container">
+            <h2>Currently Shipping</h2>
+            <div class="activity-grid">
+                <div class="activity-metrics reveal" data-reveal="up">
+                    <div class="metric-card">
+                        <span class="metric-label">Projects Built</span>
+                        <strong id="metric-projects">0</strong>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Tech Domains</span>
+                        <strong id="metric-domains">0</strong>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Certifications</span>
+                        <strong id="metric-certs">0</strong>
+                    </div>
+                </div>
+                <div class="activity-heatmap reveal" data-reveal="up">
+                    <h3>Consistency Grid</h3>
+                    <div id="commit-heatmap" class="commit-heatmap"></div>
+                    <p>Weekly cadence simulating build consistency and learning streaks.</p>
+                </div>
+                <div class="activity-recent reveal" data-reveal="up">
+                    <h3>Recent Build Focus</h3>
+                    <ul id="recent-focus-list"></ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="section">
         <div class="container">
-            <h2>Contact</h2>
+            <h2>Let's Build Something Serious</h2>
             <div class="row">
                 <div class="col-md-6">
                     <p class="intro-text">
@@ -369,6 +528,21 @@
             </p>
         </div>
     </footer>
+
+    <div id="command-palette" aria-hidden="true">
+        <div class="palette-backdrop"></div>
+        <div class="palette-panel" role="dialog" aria-modal="true" aria-labelledby="palette-title">
+            <div class="palette-head">
+                <h3 id="palette-title"><i class="fa fa-terminal"></i> Command Palette</h3>
+                <button type="button" id="palette-close" class="palette-close-btn" aria-label="Close command palette">&times;</button>
+            </div>
+            <div class="palette-search-wrap">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input id="palette-input" type="text" placeholder="Type a command or section..." autocomplete="off" />
+            </div>
+            <ul id="palette-list" class="palette-list"></ul>
+        </div>
+    </div>
 
     <!-- Arcade Game Modal -->
     <div id="gameModal" class="game-modal" style="display: none;">

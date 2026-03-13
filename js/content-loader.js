@@ -2,9 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('js/data.json')
         .then(response => response.json())
         .then(data => {
+            renderAbout(data.basics, data.skills);
             renderSkills(data.skills);
             renderProjects(data.projects);
             renderCertifications(data.certificates);
+            renderBuildLogs(data.projects, data.work);
+            renderActivityDashboard(data);
         })
         .catch(error => console.error('Error loading data:', error));
 
@@ -22,6 +25,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+function renderAbout(basics, skills) {
+    const summaryEl = document.getElementById('about-summary');
+    const focusEl = document.getElementById('about-focus');
+    if (!summaryEl || !focusEl) return;
+
+    const label = basics && basics.label ? basics.label : 'Software Engineer';
+    const baseSummary = basics && basics.summary
+        ? basics.summary
+        : 'Software Engineer focused on building practical and reliable intelligent systems.';
+
+    const highlightedSkills = Array.isArray(skills)
+        ? skills.slice(0, 2).flatMap(cat => cat.keywords || []).slice(0, 4)
+        : [];
+
+    summaryEl.innerHTML = `I believe technology should not just function, it should <strong>delight</strong>. I am <strong>${label}</strong>, currently focused on turning complex systems into useful products.`;
+
+    if (highlightedSkills.length) {
+        const tags = highlightedSkills
+            .map(skill => `<span class="text-highlight">${skill}</span>`)
+            .join(', ');
+        focusEl.innerHTML = `${baseSummary} Current focus includes ${tags}.`;
+    } else {
+        focusEl.textContent = baseSummary;
+    }
+}
 
 function renderSkills(skills) {
     const container = document.getElementById('skills-container');
@@ -83,10 +112,14 @@ function renderProjects(projects) {
     const container = document.getElementById('projects-grid');
     if (!container) return;
 
+    container.innerHTML = '';
+
     projects.forEach((project, index) => {
-        // Create card structure
+        const caseStudy = getCaseStudyCopy(project);
+
         const card = document.createElement('div');
-        card.className = 'browser-card project-card';
+        card.className = 'browser-card project-card reveal';
+        card.setAttribute('data-reveal', 'up');
 
         if (index >= 3) {
             card.style.display = 'none';
@@ -96,26 +129,41 @@ function renderProjects(projects) {
         // Header
         const header = document.createElement('div');
         header.className = 'browser-header';
+        const isRunning = String(project.endDate || '').toLowerCase() === 'present' || /\[wip\]/i.test(project.name || '');
+        const statusClass = isRunning ? 'running' : (project.github ? 'stable' : 'experimental');
+        const statusLabel = isRunning ? 'Running' : (project.github ? 'Stable' : 'Experimental');
+        const fileLabel = (project.name || 'project').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 24) || 'module';
         header.innerHTML = `
             <div class="dot red"></div>
             <div class="dot yellow"></div>
             <div class="dot green"></div>
-            <div class="browser-address-bar" style="opacity:0.5; font-size: 10px; line-height: 10px; padding-left: 5px; color: #aaa;">${project.startDate} - ${project.endDate}</div>
+            <div class="browser-address-bar">${fileLabel}.ts</div>
+            <span class="status-chip ${statusClass}">${statusLabel}</span>
         `;
 
         // Content
         const content = document.createElement('div');
         content.className = 'browser-content';
 
-        // Title & Description
+        const kicker = document.createElement('span');
+        kicker.className = 'case-kicker';
+        kicker.textContent = 'Case Study';
+
         const title = document.createElement('h3');
         title.textContent = project.name;
 
-        const description = document.createElement('p');
-        description.textContent = project.description;
-        description.style.marginBottom = '1rem';
+        const problem = document.createElement('div');
+        problem.className = 'case-row';
+        problem.innerHTML = `<strong>Problem</strong><p>${caseStudy.problem}</p>`;
 
-        // Tech Stack
+        const approach = document.createElement('div');
+        approach.className = 'case-row';
+        approach.innerHTML = `<strong>Approach</strong><p>${caseStudy.approach}</p>`;
+
+        const impact = document.createElement('div');
+        impact.className = 'case-row';
+        impact.innerHTML = `<strong>Impact</strong><p>${caseStudy.impact}</p>`;
+
         const keywordsDiv = document.createElement('div');
         keywordsDiv.style.marginBottom = '1rem';
         if (project.keywords) {
@@ -127,10 +175,8 @@ function renderProjects(projects) {
             });
         }
 
-        // Links
         const linksDiv = document.createElement('div');
-        linksDiv.style.marginTop = 'auto';
-        linksDiv.style.textAlign = 'right';
+        linksDiv.className = 'project-links';
 
         if (project.github) {
             const githubLink = document.createElement('a');
@@ -147,7 +193,6 @@ function renderProjects(projects) {
             demoLink.target = '_blank';
             demoLink.className = 'btn-text';
             demoLink.innerHTML = '<i class="fa fa-external-link"></i> Live';
-            demoLink.style.marginLeft = '10px';
             linksDiv.appendChild(demoLink);
         }
 
@@ -169,9 +214,11 @@ function renderProjects(projects) {
             });
         }
 
-        // Append everything
+        content.appendChild(kicker);
         content.appendChild(title);
-        content.appendChild(description);
+        content.appendChild(problem);
+        content.appendChild(approach);
+        content.appendChild(impact);
         content.appendChild(keywordsDiv);
         content.appendChild(linksDiv);
 
@@ -180,6 +227,15 @@ function renderProjects(projects) {
 
         container.appendChild(card);
     });
+
+    if (typeof initRevealOnScroll === 'function') {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        initRevealOnScroll(reduced);
+    }
+
+    if (typeof initPointerReactiveGlow === 'function') {
+        initPointerReactiveGlow();
+    }
 
     const projToggleBtn = document.getElementById('projects-toggle-btn');
     if (projects.length > 3 && projToggleBtn) {
@@ -194,6 +250,105 @@ function renderProjects(projects) {
             projToggleBtn.style.color = projExpanded ? 'var(--bg-charcoal)' : 'var(--accent-green)';
         });
     }
+}
+
+function getCaseStudyCopy(project) {
+    const highlights = Array.isArray(project.highlights) ? project.highlights : [];
+    const first = highlights[0] || project.description;
+    const second = highlights[1] || project.description;
+    const third = highlights[2] || highlights[1] || 'Delivered a reliable and maintainable implementation.';
+
+    return {
+        problem: project.description || 'Solved a production-facing engineering challenge.',
+        approach: second,
+        impact: third || first
+    };
+}
+
+function renderBuildLogs(projects, work) {
+    const marquee = document.getElementById('log-marquee');
+    if (!marquee) return;
+
+    const projectLogs = (projects || [])
+        .flatMap(project => (project.highlights || []).slice(0, 1).map(item => `BUILD LOG: ${item}`))
+        .slice(0, 5);
+
+    const workLogs = (work || [])
+        .flatMap(role => (role.highlights || []).slice(0, 1).map(item => `RUNTIME NOTE: ${item}`))
+        .slice(0, 3);
+
+    const logs = [...projectLogs, ...workLogs];
+    if (!logs.length) return;
+
+    marquee.innerHTML = '';
+    const full = logs.concat(logs);
+    full.forEach(log => {
+        const span = document.createElement('span');
+        span.textContent = log;
+        marquee.appendChild(span);
+    });
+}
+
+function renderActivityDashboard(data) {
+    const projectCount = document.getElementById('metric-projects');
+    const domainCount = document.getElementById('metric-domains');
+    const certCount = document.getElementById('metric-certs');
+    const heatmap = document.getElementById('commit-heatmap');
+    const recentList = document.getElementById('recent-focus-list');
+
+    if (!projectCount || !domainCount || !certCount || !heatmap || !recentList) return;
+
+    const projects = Array.isArray(data.projects) ? data.projects : [];
+    const certs = Array.isArray(data.certificates) ? data.certificates : [];
+    const domains = new Set();
+
+    projects.forEach(project => {
+        (project.keywords || []).forEach(keyword => {
+            const root = keyword.toLowerCase().split(' ')[0];
+            domains.add(root);
+        });
+    });
+
+    animateMetric(projectCount, projects.length);
+    animateMetric(domainCount, domains.size || 0);
+    animateMetric(certCount, certs.length);
+
+    renderHeatmap(heatmap);
+    renderRecentFocus(recentList, projects);
+}
+
+function animateMetric(element, target) {
+    const duration = 900;
+    const start = performance.now();
+
+    const tick = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        element.textContent = Math.round(target * progress);
+        if (progress < 1) requestAnimationFrame(tick);
+    };
+
+    requestAnimationFrame(tick);
+}
+
+function renderHeatmap(container) {
+    container.innerHTML = '';
+    const cells = 147;
+    for (let i = 0; i < cells; i += 1) {
+        const cell = document.createElement('div');
+        const value = Math.floor(Math.random() * 5);
+        cell.className = value === 0 ? 'commit-cell' : `commit-cell lv${value}`;
+        container.appendChild(cell);
+    }
+}
+
+function renderRecentFocus(list, projects) {
+    list.innerHTML = '';
+    projects.slice(0, 5).forEach(project => {
+        const li = document.createElement('li');
+        const focus = (project.keywords && project.keywords[0]) ? project.keywords[0] : 'Software Engineering';
+        li.textContent = `${project.name.replace(/[🛡️🤖📊🔧📹🚀⚡]/g, '').trim()} - Focus: ${focus}`;
+        list.appendChild(li);
+    });
 }
 
 function renderCertifications(certs) {
