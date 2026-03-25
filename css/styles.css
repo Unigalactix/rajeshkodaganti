@@ -532,6 +532,65 @@ button:disabled {
     gap: 0.35rem;
 }
 
+.page-intro {
+    max-width: 60ch;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+}
+
+.tool-grid {
+    margin-top: 1rem;
+}
+
+.tool-card {
+    min-height: 100%;
+}
+
+.tool-card .browser-content {
+    gap: 1rem;
+}
+
+.tool-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.35rem;
+}
+
+.tool-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.24rem 0.7rem;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: rgba(45, 255, 176, 0.12);
+    border: 1px solid rgba(45, 255, 176, 0.35);
+    color: var(--accent-green);
+}
+
+.tool-title {
+    margin-bottom: 0.25rem;
+}
+
+.tool-description {
+    color: var(--text-muted);
+    flex-grow: 1;
+}
+
+.tool-actions {
+    margin-top: 0.5rem;
+}
+
+.tool-actions .btn-fun {
+    width: 100%;
+    padding: 0.85rem 1.2rem;
+    font-size: 1rem;
+}
+
 /* 5. Navigation */
 header {
     padding: 1rem 0 0;
@@ -618,6 +677,58 @@ body.site-ready .logo::after {
 #menu {
     display: flex;
     gap: 2rem;
+}
+
+#menu li {
+    position: relative;
+}
+
+.more-toggle {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--text-white);
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.more-pop-card {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    min-width: 170px;
+    background: rgba(16, 20, 28, 0.96);
+    border: 1px solid rgba(116, 217, 255, 0.24);
+    border-radius: 12px;
+    padding: 0.6rem 0;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+    z-index: 1100;
+}
+
+.more-pop-card a {
+    display: block;
+    padding: 0.55rem 1rem;
+    color: var(--text-white);
+    font-family: var(--font-mono);
+    font-size: 0.94rem;
+    text-decoration: none;
+}
+
+.more-pop-card a:hover {
+    color: var(--accent-blue);
+    background: rgba(139, 233, 253, 0.08);
+}
+
+.more-menu:hover .more-pop-card,
+.more-menu:focus-within .more-pop-card {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
 #menu li a {
