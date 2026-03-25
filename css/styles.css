@@ -684,6 +684,9 @@ body.site-ready .logo::after {
 }
 
 .more-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
     font-family: var(--font-mono);
     font-size: 1rem;
     color: var(--text-white);
@@ -691,6 +694,50 @@ body.site-ready .logo::after {
     border: 0;
     padding: 0;
     cursor: pointer;
+    list-style: none;
+    user-select: none;
+    position: relative;
+}
+
+.more-toggle::-webkit-details-marker {
+    display: none;
+}
+
+.more-toggle::before,
+#menu li a::before {
+    content: '<';
+    margin-right: 5px;
+    opacity: 0;
+    color: var(--accent-green);
+    transition: opacity 0.3s;
+}
+
+.more-toggle::after,
+#menu li a::after {
+    content: '/>';
+    margin-left: 5px;
+    opacity: 0;
+    color: var(--accent-green);
+    transition: opacity 0.3s;
+}
+
+.more-toggle:hover::before,
+.more-toggle:hover::after,
+.more-menu-dropdown[open] .more-toggle::before,
+.more-menu-dropdown[open] .more-toggle::after,
+#menu li a:hover::before,
+#menu li a:hover::after {
+    opacity: 1;
+}
+
+.more-caret {
+    font-size: 0.95rem;
+    color: var(--accent-blue);
+    transition: transform 0.18s ease;
+}
+
+.more-menu-dropdown[open] .more-caret {
+    transform: rotate(180deg);
 }
 
 .more-pop-card {
@@ -724,14 +771,14 @@ body.site-ready .logo::after {
     background: rgba(139, 233, 253, 0.08);
 }
 
-.more-menu:hover .more-pop-card,
-.more-menu:focus-within .more-pop-card {
+.more-menu-dropdown[open] .more-pop-card {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-#menu li a {
+#menu li a,
+.more-toggle {
     font-family: var(--font-mono);
     font-size: 1rem;
     color: var(--text-white);
@@ -774,27 +821,6 @@ body.site-ready .logo::after {
 .runtime-hint {
     margin-left: auto;
     color: #6c7c90;
-}
-
-#menu li a::before {
-    content: '<';
-    margin-right: 5px;
-    opacity: 0;
-    color: var(--accent-green);
-    transition: opacity 0.3s;
-}
-
-#menu li a::after {
-    content: '/>';
-    margin-left: 5px;
-    opacity: 0;
-    color: var(--accent-green);
-    transition: opacity 0.3s;
-}
-
-#menu li a:hover::before,
-#menu li a:hover::after {
-    opacity: 1;
 }
 
 /* Mobile Menu Toggle */

@@ -75,11 +75,17 @@
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#certifications">Certifications</a></li>
                 <li class="more-menu">
-                    <button class="more-toggle" type="button" aria-haspopup="true" aria-expanded="false">More</button>
-                    <div class="more-pop-card" role="menu" aria-label="More menu">
-                        <a href="books.html" role="menuitem">Books</a>
-                        <a href="tools.html" role="menuitem">Tools</a>
-                    </div>
+                    <details class="more-menu-dropdown">
+                        <summary class="more-toggle" aria-haspopup="true" aria-expanded="false">
+                            <span>More</span>
+                            <i class="fa fa-angle-down more-caret" aria-hidden="true"></i>
+                        </summary>
+                        <div class="more-pop-card" role="menu" aria-label="More menu">
+                            <a href="books.html" role="menuitem">Books</a>
+                            <a href="tools.html" role="menuitem">Tools</a>
+                            <a href="storyboards.html" role="menuitem">Story Boards</a>
+                        </div>
+                    </details>
                 </li>
                 <!-- <li><a href="#contact">Contact</a></li> -->
             </ul>
@@ -660,6 +666,7 @@
 
     <!-- Scripts -->
     <script src="js/config.js?v=2"></script>
+    <script src="js/nav-dropdown.js?v=2"></script>
     <script src="js/scripts.js?v=2"></script>
     <script src="js/multi-games.js?v=2"></script>
     <script src="js/tech-games.js?v=2"></script>
