@@ -1198,48 +1198,88 @@ body.site-ready .logo::after {
 }
 
 .system-map-wrap {
-    background: linear-gradient(160deg, rgba(16, 18, 24, 0.96), rgba(15, 25, 25, 0.92));
-    border: 1px solid rgba(139, 233, 253, 0.34);
-    border-radius: 18px;
-    padding: 1rem;
-    box-shadow: 0 24px 42px rgba(0, 0, 0, 0.34);
+    background: #0f1217;
+    border: 1px solid rgba(139, 233, 253, 0.15);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.5), 0 24px 42px rgba(0, 0, 0, 0.34);
+    position: relative;
+    overflow: hidden;
 }
 
 .system-map-svg {
     width: 100%;
     height: auto;
+    display: block;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
 }
 
-.map-node {
-    fill: rgba(255, 255, 255, 0.03);
-    stroke: rgba(139, 233, 253, 0.5);
+.map-node-rect {
+    fill: url(#nodeGrad);
+    transition: fill 0.3s ease;
+}
+
+.map-node-border {
+    fill: none;
+    stroke: rgba(139, 233, 253, 0.3);
     stroke-width: 1.5;
+    transition: stroke 0.3s ease, stroke-width 0.3s ease;
+}
+
+.map-node-group {
+    cursor: default;
+}
+
+.map-node-group:hover .map-node-border {
+    stroke: var(--accent-green);
+    stroke-width: 2;
+    filter: url(#glow);
+}
+
+.map-node-group:hover .map-node-rect {
+    fill: rgba(24, 28, 34, 1);
 }
 
 .map-label {
-    fill: #f5f5f5;
+    fill: #ffffff;
     font-size: 20px;
+    font-weight: 700;
     font-family: var(--font-heading);
+    letter-spacing: -0.02em;
 }
 
 .map-sub {
-    fill: #8fd8bd;
-    font-size: 14px;
+    fill: var(--accent-green);
+    font-size: 13px;
     font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+    opacity: 0.85;
+}
+
+.node-dot {
+    fill: var(--accent-yellow);
+    filter: url(#glow);
+    opacity: 0.9;
 }
 
 .flow-path {
     stroke: url(#flowGrad);
-    stroke-width: 2.4;
+    stroke-width: 2.5;
     fill: none;
     stroke-linecap: round;
-    stroke-dasharray: 8 10;
-    animation: path-flow 4.5s linear infinite;
+    stroke-dasharray: 6 8;
+    opacity: 0.8;
+    animation: dash-flow 30s linear infinite;
+}
+
+@keyframes dash-flow {
+    from { stroke-dashoffset: 1000; }
+    to { stroke-dashoffset: 0; }
 }
 
 .flow-dot {
-    fill: var(--accent-yellow);
-    animation: pulse-dot 2s ease-in-out infinite;
+    fill: #ffffff;
+    filter: url(#glow);
 }
 
 .project-card {
