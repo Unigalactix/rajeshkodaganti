@@ -185,11 +185,36 @@ function initTypewriter(prefersReducedMotion) {
 }
 
 function initRevealOnScroll(prefersReducedMotion) {
+    // Auto-tag static grid children so homepage sections cascade in like the subpages.
+    const autoGridSelectors = ['.experience-grid', '.education-grid', '.interests-grid'];
+    autoGridSelectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach(grid => {
+            Array.from(grid.children).forEach(child => {
+                if (child.nodeType === 1 && !child.classList.contains('reveal')) {
+                    child.classList.add('reveal');
+                    if (!child.hasAttribute('data-reveal')) child.setAttribute('data-reveal', 'up');
+                }
+            });
+        });
+    });
+
     const revealItems = document.querySelectorAll('.reveal');
     if (!revealItems.length) return;
 
+    // Stagger siblings that share a parent for a cascading entrance.
+    const countByParent = new Map();
+    revealItems.forEach(item => {
+        const parent = item.parentElement;
+        const i = countByParent.get(parent) || 0;
+        countByParent.set(parent, i + 1);
+        item.style.transitionDelay = `${Math.min(i * 55, 330)}ms`;
+    });
+
     if (prefersReducedMotion || !('IntersectionObserver' in window)) {
-        revealItems.forEach(item => item.classList.add('in-view'));
+        revealItems.forEach(item => {
+            item.style.transitionDelay = '0ms';
+            item.classList.add('in-view');
+        });
         return;
     }
 
