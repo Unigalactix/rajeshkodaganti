@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+
+    <title>404: command not found | Rajesh Kodaganti</title>
+    <meta name="description" content="404 — the page you requested could not be located on this server.">
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    <style>
+        :root {
+            --bg-charcoal: #131519;
+            --surface-2: #10141a;
+            --text-white: #ececec;
+            --text-muted: #9fa9b7;
+            --accent-green: #2dffb0;
+            --accent-blue: #74d9ff;
+            --accent-pink: #ff79c6;
+            --accent-yellow: #ffdf61;
+            --border-subtle: rgba(255, 255, 255, 0.09);
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-charcoal);
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(45, 255, 176, 0.06), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(116, 217, 255, 0.06), transparent 40%);
+            color: var(--text-white);
+            font-family: var(--font-body);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .terminal {
+            width: 100%;
+            max-width: 640px;
+            background: var(--surface-2);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+            overflow: hidden;
+        }
+
+        .terminal-head {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+
+        .terminal-title {
+            margin-left: 0.6rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .terminal-body {
+            padding: 1.75rem 1.5rem 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .line { white-space: pre-wrap; word-break: break-word; }
+        .prompt { color: var(--accent-green); }
+        .cmd { color: var(--text-white); }
+        .error { color: var(--accent-pink); }
+        .muted { color: var(--text-muted); }
+
+        .glitch-code {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: clamp(4rem, 18vw, 8rem);
+            line-height: 1;
+            letter-spacing: -0.04em;
+            margin: 0.75rem 0 0.25rem;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .caret {
+            display: inline-block;
+            width: 0.6ch;
+            background: var(--accent-green);
+            color: var(--accent-green);
+            animation: blink 1s steps(1) infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-decoration: none;
+            padding: 0.55rem 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-white);
+            background: rgba(255, 255, 255, 0.02);
+            transition: transform 0.17s ease, border-color 0.17s ease, color 0.17s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .btn.primary {
+            background: var(--accent-green);
+            color: var(--bg-charcoal);
+            border-color: var(--accent-green);
+        }
+
+        .btn.primary:hover {
+            color: var(--bg-charcoal);
+            filter: brightness(1.05);
+        }
+
+        .hint {
+            margin-top: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .caret { animation: none; }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="terminal" role="main">
+        <div class="terminal-head">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="terminal-title">zsh — rajesh-kodaganti-portfolio</span>
+        </div>
+
+        <div class="terminal-body">
+            <p class="line"><span class="prompt">$</span> <span class="cmd" id="typed-cmd"></span><span class="caret" id="caret">_</span></p>
+            <div id="output" hidden>
+                <p class="line error">zsh: command not found: <span id="bad-path">page</span></p>
+                <p class="glitch-code">404</p>
+                <p class="line muted">The route you requested isn't on this server.</p>
+                <p class="line muted">Try one of the known commands below.</p>
+
+                <div class="actions">
+                    <a class="btn primary" href="/"><i class="fa fa-home"></i> cd ~/home</a>
+                    <a class="btn" href="/books.html"><i class="fa fa-book"></i> ./books</a>
+                    <a class="btn" href="/tools.html"><i class="fa fa-wrench"></i> ./tools</a>
+                    <a class="btn" href="/if-else.html"><i class="fa fa-code-fork"></i> ./if-else</a>
+                </div>
+
+                <p class="hint">tip: press <strong>Enter</strong> or run <strong>cd ~/home</strong> to return.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        (function () {
+            var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // Show the path the visitor actually requested.
+            var rawPath = (window.location.pathname || '/').replace(/^\/+/, '') || 'page';
+            document.getElementById('bad-path').textContent = rawPath;
+
+            var command = 'open ' + (window.location.pathname || '/');
+            var target = document.getElementById('typed-cmd');
+            var output = document.getElementById('output');
+            var caret = document.getElementById('caret');
+
+            function revealOutput() {
+                output.hidden = false;
+            }
+
+            if (reduced) {
+                target.textContent = command;
+                revealOutput();
+            } else {
+                var i = 0;
+                (function type() {
+                    if (i <= command.length) {
+                        target.textContent = command.slice(0, i);
+                        i += 1;
+                        setTimeout(type, 55);
+                    } else {
+                        setTimeout(revealOutput, 350);
+                    }
+                })();
+            }
+
+            // Press Enter to go home, matching the terminal theme.
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    window.location.href = '/';
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>

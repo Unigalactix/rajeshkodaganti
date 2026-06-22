@@ -26,7 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const socialLinks = {
             'github': data.social.github,
             'linkedin': data.social.linkedin,
-            'email': data.social.email
+            'email': data.social.email,
+            'learn': data.social.learn
         };
 
         // Update all elements with data-link attribute

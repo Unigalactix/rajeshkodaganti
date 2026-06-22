@@ -11,7 +11,8 @@ const PROFILE_DATA = {
     social: {
         github: "https://github.com/Unigalactix",
         linkedin: "https://www.linkedin.com/in/rajesh-kodaganti-323118215/",
-        email: "mailto:rajeshkodaganti.work@gmail.com"
+        email: "mailto:rajeshkodaganti.work@gmail.com",
+        learn: "https://learn.microsoft.com/en-us/users/rajeshkodaganti/"
     },
 
     // Resume (Optional - add path if available)

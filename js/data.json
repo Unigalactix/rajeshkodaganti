@@ -140,20 +140,44 @@
   ],
   "projects": [
     {
+      "id": "jobpilot",
+      "name": "JobPilot: AI-Powered Job Application Co-Pilot",
+      "startDate": "2026-02",
+      "endDate": "Present",
+      "description": "A lightweight, browser-only application that streamlines the job search through AI automation. JobPilot aggregates listings from Adzuna, JSearch, and USAJobs so users can find roles and optimize their application materials in one place.",
+      "highlights": [
+        "Aggregates job listings from Adzuna, JSearch, and USAJobs into a single search experience.",
+        "Static site generated with Python and hosted on GitHub Pages, paired with a thin Cloudflare Worker proxy to eliminate a traditional backend database.",
+        "Zero-trust, client-side security model: Anthropic API keys and user resumes are encrypted with AES-GCM and stored via direct Google Drive integration for complete user privacy."
+      ],
+      "keywords": [
+        "JavaScript",
+        "Python",
+        "Cloudflare Workers",
+        "Anthropic API",
+        "AES-GCM"
+      ],
+      "github": "https://github.com/vangipuraputarunsailesh/jobpilot",
+      "url": "https://jobspilot.site/"
+    },
+    {
       "id": "sentinel",
       "name": "🛡️ Sentinel: Autonomous DevOps Orchestrator [WIP]",
       "startDate": "2025-11",
       "endDate": "Present",
-      "description": "An AI-driven bridge between Jira and GitHub designed to automate the manual overhead of the DevOps lifecycle, taking tickets from 'To Do' to 'Done' autonomously.",
+      "description": "An AI-driven bridge between Jira and GitHub designed to automate the manual overhead of the DevOps lifecycle, taking tickets from 'To Do' to 'Done' with minimal human intervention. Associated with Quadrant Technologies.",
       "highlights": [
-        "Autonomous Polling of Jira boards and automated AI-Powered implementation using Azure OpenAI and GitHub Copilot.",
-        "Automated PR Management including feature branching and CI/CD check flows.",
-        "Model Context Protocol (MCP) integration for agent tool interaction."
+        "Autonomous polling that scans Jira boards every 30 seconds for new tickets.",
+        "AI-powered implementation using Azure OpenAI and GitHub Copilot to analyze repository structures and generate context-aware code fixes.",
+        "Automated PR management: creates feature branches, triggers Copilot, and manages the approval/merge flow once CI/CD checks pass.",
+        "Multi-tenant architecture with per-user GitHub OAuth so actions run securely under individual user contexts.",
+        "Model Context Protocol (MCP) server lets AI agents like Claude or VS Code Copilot interact directly with the orchestration tools."
       ],
       "keywords": [
         "Azure OpenAI",
         "GitHub Copilot",
         "MCP",
+        "JavaScript",
         "DevOps"
       ],
       "github": "https://github.com/Unigalactix/SENTINEL"
@@ -182,11 +206,12 @@
       "name": "Image Denoising using Deep Learning",
       "startDate": "2024-12",
       "endDate": "2025-05",
-      "description": "Developed a deep learning framework for image denoising targeting additive white Gaussian noise (AWGN).",
+      "description": "Developed ConvIR, a deep learning framework for image denoising targeting additive white Gaussian noise (AWGN) using a dual-domain learning approach. Associated with California State University, Northridge.",
       "highlights": [
-        "Implemented a composite loss function incorporating pixel-wise MSE and FFT-based spectral loss",
-        "Designed a convolutional network with skip connections and frequency-aware branches",
-        "Achieved PSNR gains exceeding 12 dB at high noise levels"
+        "Implemented a composite loss function incorporating pixel-wise MSE, FFT-based spectral loss, and noise estimation regularization for spatial and frequency fidelity.",
+        "Designed a UNet-inspired convolutional network with skip connections, multi-shape attention, and frequency-aware branches, trained across noise intensities (σ=1.5 to σ=25).",
+        "Achieved PSNR gains exceeding 12 dB at high noise levels and a 95% reduction in residual noise under low-noise conditions.",
+        "Trained on Set12, BSD68, and Urban100 datasets, reaching >30 dB PSNR at σ=7.5 and ~28 dB PSNR at σ=10."
       ],
       "keywords": [
         "Python",
@@ -229,8 +254,13 @@
       "endDate": "2021-11",
       "description": "Created reading aids for visually impaired individuals using Raspberry Pi and OCR technology.",
       "highlights": [
-        "Utilized Tesseract library and Python to convert document images into audio format",
-        "Integrated camera modules for real-time text capture"
+        "Utilized Tesseract library and Python to convert document images into audio format using both online and offline OCR methods",
+        "Integrated camera modules for real-time text capture in educational settings"
+      ],
+      "keywords": [
+        "Raspberry Pi",
+        "Python",
+        "Tesseract OCR"
       ],
       "url": "https://www.linkedin.com/in/rajesh-kodaganti-323118215/details/projects/1638290371308/single-media-viewer?type=LINK&profileId=ACoAAEGlk0UBq7N4kH_w7J_rD9W0Xz2K5I8k3oY"
     },
@@ -363,6 +393,36 @@
       "issuer": "Anthropic",
       "date": "Feb 2026",
       "url": "https://verify.skilljar.com/c/yfgnxmut6gh2"
+    },
+    {
+      "name": "Career Essentials in Generative AI by Microsoft and LinkedIn",
+      "issuer": "Microsoft",
+      "date": "Mar 2026",
+      "url": "#"
+    },
+    {
+      "name": "Microsoft Certified: SQL AI Developer Associate",
+      "issuer": "Microsoft",
+      "date": "May 2026",
+      "url": "https://learn.microsoft.com/api/credentials/share/en-us/RajeshKodaganti/632A6802925D549A?sharingId"
+    },
+    {
+      "name": "AI Fluency: Framework & Foundations",
+      "issuer": "Anthropic",
+      "date": "Jun 2026",
+      "url": "#"
+    },
+    {
+      "name": "Introduction to Claude Cowork",
+      "issuer": "Anthropic",
+      "date": "Jun 2026",
+      "url": "#"
+    },
+    {
+      "name": "AI Capabilities and Limitations",
+      "issuer": "Anthropic",
+      "date": "Jun 2026",
+      "url": "#"
     }
   ]
 }

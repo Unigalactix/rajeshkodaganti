@@ -355,6 +355,16 @@ function renderCertifications(certs) {
     const container = document.getElementById('certifications-grid');
     if (!container) return;
 
+    // Map issuer name -> domain for fetching brand logos.
+    const ISSUER_LOGOS = {
+        'Microsoft': 'microsoft.com',
+        'GitHub': 'github.com',
+        'Docker': 'docker.com',
+        'Astronomer': 'astronomer.io',
+        'Atlassian': 'atlassian.com',
+        'Anthropic': 'anthropic.com'
+    };
+
     certs.forEach((cert, index) => {
         const card = document.createElement('div');
         card.className = 'cert-card';
@@ -366,7 +376,24 @@ function renderCertifications(certs) {
 
         const icon = document.createElement('div');
         icon.className = 'cert-icon';
-        icon.innerHTML = '<i class="fa fa-certificate"></i>'; // Generic icon
+
+        const logoDomain = ISSUER_LOGOS[cert.issuer];
+        if (logoDomain) {
+            icon.classList.add('has-logo');
+            const logo = document.createElement('img');
+            logo.className = 'cert-logo';
+            logo.src = `https://logo.clearbit.com/${logoDomain}`;
+            logo.alt = `${cert.issuer} logo`;
+            logo.loading = 'lazy';
+            // Fall back to the generic icon if the logo fails to load.
+            logo.onerror = () => {
+                icon.classList.remove('has-logo');
+                icon.innerHTML = '<i class="fa fa-certificate"></i>';
+            };
+            icon.appendChild(logo);
+        } else {
+            icon.innerHTML = '<i class="fa fa-certificate"></i>'; // Generic fallback icon
+        }
 
         const content = document.createElement('div');
         content.className = 'cert-content';

@@ -6,6 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Rajesh Kodaganti | Books</title>
+    <meta name="description" content="A curated bookshelf by Rajesh Kodaganti — stories, projects and reading picks presented as interactive book covers.">
+    <meta name="author" content="Rajesh Kodaganti">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Rajesh Kodaganti | Books">
+    <meta property="og:description" content="A curated bookshelf — stories, projects and reading picks.">
+    <meta property="og:image" content="images/profile.jpg">
 
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
@@ -41,7 +47,7 @@
                             <i class="fa fa-angle-down more-caret" aria-hidden="true"></i>
                         </summary>
                         <div class="more-pop-card" role="menu" aria-label="More menu">
-                            <a href="books.html" role="menuitem">Books</a>
+                            <a href="books.html" role="menuitem" class="is-active" aria-current="page">Books</a>
                             <a href="tools.html" role="menuitem">Tools</a>
                             <a href="if-else.html" role="menuitem">IF-ELSE</a>
                         </div>
@@ -52,25 +58,23 @@
     </header>
 
     <div class="container" style="margin-top: 100px;">
-        <h2 style="margin-bottom: 2rem;">My Library</h2>
-        <div class="row">
+        <h2 style="margin-bottom: 1rem;">My Library</h2>
+        <p class="page-intro">A shelf of stories and experiments I have written — click any cover to read. Looking for a different format? Request it from the contact form below.</p>
+        <div class="row book-grid">
             <!-- Book 1: Nishaan P1-VICTOR -->
             <div class="col-md-4">
                 <a href="books/Nishaan P1_VICTOR.pdf" target="_blank" style="text-decoration: none;">
-                    <div class="browser-card" style="margin-bottom: 8rem;">
+                    <div class="browser-card book-card">
                         <div class="browser-header">
                             <div class="dot red"></div>
                             <div class="dot yellow"></div>
                             <div class="dot green"></div>
                         </div>
-                        <div class="browser-content"
-                            style="padding: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center;">
-                            <img src="book_covers/Nishaan p1-victor.png" alt="Nishaan P1-VICTOR Cover"
-                                style="width: 100%; height: auto; display: block; max-height: 400px; object-fit: cover;">
-                            <div style="padding: 1rem; width: 100%;">
+                        <div class="browser-content">
+                            <img class="book-cover" loading="lazy" src="book_covers/Nishaan p1-victor.png" alt="Nishaan P1-VICTOR Cover">
+                            <div class="book-meta">
                                 <h3>NISHAAN P1 VICTOR</h3>
-                                <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">Click to
-                                    Read</p>
+                                <p>Click to Read</p>
                             </div>
                         </div>
                     </div>
@@ -80,20 +84,17 @@
             <!-- Book 2: 21-STOREY -->
             <div class="col-md-4">
                 <a href="books/21-STOREY.pdf" target="_blank" style="text-decoration: none;">
-                    <div class="browser-card" style="margin-bottom: 8rem;">
+                    <div class="browser-card book-card">
                         <div class="browser-header">
                             <div class="dot red"></div>
                             <div class="dot yellow"></div>
                             <div class="dot green"></div>
                         </div>
-                        <div class="browser-content"
-                            style="padding: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center;">
-                            <img src="book_covers/21storey-cover.png" alt="21-STOREY Cover"
-                                style="width: 100%; height: auto; display: block; max-height: 400px; object-fit: cover;">
-                            <div style="padding: 1rem; width: 100%;">
+                        <div class="browser-content">
+                            <img class="book-cover" loading="lazy" src="book_covers/21storey-cover.png" alt="21-STOREY Cover">
+                            <div class="book-meta">
                                 <h3>21-STOREY</h3>
-                                <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">Click to
-                                    Read</p>
+                                <p>Click to Read</p>
                             </div>
                         </div>
                     </div>
@@ -102,20 +103,17 @@
 
             <!-- Book 3: ETA -->
             <div class="col-md-4">
-                <div class="browser-card" style="margin-bottom: 8rem; cursor: pointer;" onclick="openETAModal()">
+                <div class="browser-card book-card is-clickable" onclick="openETAModal()">
                     <div class="browser-header">
                         <div class="dot red"></div>
                         <div class="dot yellow"></div>
                         <div class="dot green"></div>
                     </div>
-                    <div class="browser-content"
-                        style="padding: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center;">
-                        <img src="book_covers/ETA-COVER.jpg" alt="ETA Cover"
-                            style="width: 100%; height: auto; display: block; max-height: 400px; object-fit: cover;">
-                        <div style="padding: 1rem; width: 100%;">
+                    <div class="browser-content">
+                        <img class="book-cover" loading="lazy" src="book_covers/ETA-COVER.jpg" alt="ETA Cover">
+                        <div class="book-meta">
                             <h3>ETA</h3>
-                            <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">Click to Select
-                                Version</p>
+                            <p>Click to Select Version</p>
                         </div>
                     </div>
                 </div>
@@ -124,20 +122,17 @@
             <!-- Book 3: RECTANGLES -->
             <div class="col-md-4">
                 <a href="books/RECTANGLES.pdf" target="_blank" style="text-decoration: none;">
-                    <div class="browser-card" style="margin-bottom: 8rem;">
+                    <div class="browser-card book-card">
                         <div class="browser-header">
                             <div class="dot red"></div>
                             <div class="dot yellow"></div>
                             <div class="dot green"></div>
                         </div>
-                        <div class="browser-content"
-                            style="padding: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center;">
-                            <img src="book_covers/RECTANGLES-COVER.webp" alt="RECTANGLES Cover"
-                                style="width: 100%; height: auto; display: block; max-height: 400px; object-fit: cover;">
-                            <div style="padding: 1rem; width: 100%;">
+                        <div class="browser-content">
+                            <img class="book-cover" loading="lazy" src="book_covers/RECTANGLES-COVER.webp" alt="RECTANGLES Cover">
+                            <div class="book-meta">
                                 <h3>RECTANGLES</h3>
-                                <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">Click to
-                                    Read</p>
+                                <p>Click to Read</p>
                             </div>
                         </div>
                     </div>
@@ -147,20 +142,17 @@
             <!-- Book 4: Overmorrow -->
             <div class="col-md-4">
                 <a href="books/OVERMORROW.pdf" target="_blank" style="text-decoration: none;">
-                    <div class="browser-card" style="margin-bottom: 8rem;">
+                    <div class="browser-card book-card">
                         <div class="browser-header">
                             <div class="dot red"></div>
                             <div class="dot yellow"></div>
                             <div class="dot green"></div>
                         </div>
-                        <div class="browser-content"
-                            style="padding: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; position: relative;">
-                            <img src="book_covers/Overmorrow-cover.jpeg" alt="Overmorrow Cover"
-                                style="width: 100%; height: auto; display: block; max-height: 400px; object-fit: cover;">
-                            <div style="padding: 1rem; width: 100%;">
+                        <div class="browser-content">
+                            <img class="book-cover" loading="lazy" src="book_covers/Overmorrow-cover.jpeg" alt="Overmorrow Cover">
+                            <div class="book-meta">
                                 <h3>OVERMORROW</h3>
-                                <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">Click to
-                                    Read</p>
+                                <p>Click to Read</p>
                             </div>
                         </div>
                     </div>
@@ -169,25 +161,18 @@
 
             <!-- Book 5: Ripples (Coming Soon) -->
             <div class="col-md-4">
-                <div class="browser-card" style="margin-bottom: 8rem; cursor: not-allowed;">
+                <div class="browser-card book-card is-soon">
                     <div class="browser-header">
                         <div class="dot red"></div>
                         <div class="dot yellow"></div>
                         <div class="dot green"></div>
                     </div>
-                    <div class="browser-content"
-                        style="padding: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; position: relative;">
-                        <span style="position: absolute; top: 12px; right: 12px; z-index: 2;
-                            background: linear-gradient(135deg, #6dd5ed, #2193b0);
-                            color: #ffffff; font-family: 'Space Mono', monospace; font-weight: 700;
-                            font-size: 0.75rem; letter-spacing: 0.1em; padding: 0.35rem 0.75rem;
-                            border-radius: 999px; box-shadow: 0 2px 8px rgba(0,0,0,0.35);
-                            text-transform: uppercase;">Coming Soon</span>
-                        <img src="book_covers/Ripples-cover.jpeg" alt="Ripples Cover"
-                            style="width: 100%; height: auto; display: block; max-height: 400px; object-fit: cover; filter: grayscale(20%);">
-                        <div style="padding: 1rem; width: 100%;">
+                    <div class="browser-content">
+                        <span class="book-badge">Coming Soon</span>
+                        <img class="book-cover" loading="lazy" src="book_covers/Ripples-cover.jpeg" alt="Ripples Cover">
+                        <div class="book-meta">
                             <h3>RIPPLES</h3>
-                            <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">Coming Soon</p>
+                            <p>Coming Soon</p>
                         </div>
                     </div>
                 </div>
@@ -197,20 +182,17 @@
             <div class="col-md-4">
                 <a href="https://drive.google.com/drive/folders/17wW_my817Rf7dP5TSAS2rE4_3HfsnB7Y?usp=drive_link"
                     target="_blank" style="text-decoration: none;">
-                    <div class="browser-card" style="margin-bottom: 8rem;">
+                    <div class="browser-card book-card">
                         <div class="browser-header">
                             <div class="dot red"></div>
                             <div class="dot yellow"></div>
                             <div class="dot green"></div>
                         </div>
-                        <div class="browser-content"
-                            style="padding: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center;">
-                            <img src="book_covers/bunns_book_shelf.png" alt="Bunn's Book Shelf Cover"
-                                style="width: 100%; height: auto; display: block; max-height: 400px; object-fit: cover;">
-                            <div style="padding: 1rem; width: 100%;">
+                        <div class="browser-content">
+                            <img class="book-cover" loading="lazy" src="book_covers/bunns_book_shelf.png" alt="Bunn's Book Shelf Cover">
+                            <div class="book-meta">
                                 <h3>Bunn's Book Shelf</h3>
-                                <p style="margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem;">Click to
-                                    Explore</p>
+                                <p>Click to Explore</p>
                             </div>
                         </div>
                     </div>
@@ -329,6 +311,20 @@
             </style>
         </div>
     </div>
+
+    <footer>
+        <div class="container" style="text-align:center; display: flex; flex-direction: column; align-items: center;">
+            <div class="social-icons">
+                <a href="https://github.com/Unigalactix" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/rajesh-kodaganti-323118215/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa fa-linkedin"></i></a>
+                <a href="https://learn.microsoft.com/en-us/users/rajeshkodaganti/" target="_blank" rel="noopener" title="Microsoft Learn" aria-label="Microsoft Learn profile"><i class="fa fa-graduation-cap"></i></a>
+                <a href="mailto:rajeshkodaganti.work@gmail.com" aria-label="Email"><i class="fa fa-envelope"></i></a>
+            </div>
+            <p style="margin-top: 2rem; text-align: center; width: 100%;">&copy; 2025 Rajesh Kodaganti. <br> Built with
+                <span style="color:red;">&hearts;</span> and lots of console.log().
+            </p>
+        </div>
+    </footer>
 
     <!-- ETA Selection Modal -->
     <div id="etaModal" class="game-modal"
