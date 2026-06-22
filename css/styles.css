@@ -588,6 +588,9 @@ button:disabled {
 
 .tool-actions {
     margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .tool-actions .btn-fun {
