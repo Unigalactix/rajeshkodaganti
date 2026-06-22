@@ -596,13 +596,133 @@ button:disabled {
     font-size: 1rem;
 }
 
+/* Tools redesign: badge, status pill, category tag colors */
+.tool-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.4rem;
+}
+
+.tool-badge {
+    width: 46px;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(116, 217, 255, 0.12);
+    color: var(--accent-blue);
+    font-size: 1.2rem;
+    flex: none;
+}
+
+.tool-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    text-transform: lowercase;
+    color: var(--text-muted);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    padding: 0.24rem 0.6rem;
+    white-space: nowrap;
+}
+
+.tool-status .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex: none;
+}
+
+.tool-status.status-live {
+    color: var(--accent-green);
+    border-color: rgba(45, 255, 176, 0.4);
+}
+
+.tool-status.status-live .status-dot {
+    background: var(--accent-green);
+    box-shadow: 0 0 8px rgba(45, 255, 176, 0.85);
+    animation: statusPulse 1.8s ease-in-out infinite;
+}
+
+.tool-status.status-sleep .status-dot {
+    background: var(--accent-yellow);
+}
+
+@keyframes statusPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+
+.tool-tag.tag-automation {
+    background: rgba(255, 223, 97, 0.12);
+    border-color: rgba(255, 223, 97, 0.4);
+    color: var(--accent-yellow);
+}
+
+.tool-tag.tag-extraction,
+.tool-tag.tag-code {
+    background: rgba(116, 217, 255, 0.12);
+    border-color: rgba(116, 217, 255, 0.4);
+    color: var(--accent-blue);
+}
+
+.tool-tag.tag-markdown {
+    background: rgba(138, 151, 255, 0.12);
+    border-color: rgba(138, 151, 255, 0.4);
+    color: var(--accent-purple);
+}
+
+.tool-tag.tag-security {
+    background: rgba(255, 121, 198, 0.12);
+    border-color: rgba(255, 121, 198, 0.4);
+    color: var(--accent-pink);
+}
+
+.tool-tag.tag-resume,
+.tool-tag.tag-ai {
+    background: rgba(45, 255, 176, 0.12);
+    border-color: rgba(45, 255, 176, 0.35);
+    color: var(--accent-green);
+}
+
+/* IF-ELSE category tag colors */
+.tool-tag.tag-story {
+    background: rgba(116, 217, 255, 0.12);
+    border-color: rgba(116, 217, 255, 0.4);
+    color: var(--accent-blue);
+}
+
+.tool-tag.tag-epic {
+    background: rgba(255, 223, 97, 0.12);
+    border-color: rgba(255, 223, 97, 0.4);
+    color: var(--accent-yellow);
+}
+
+.tool-tag.tag-concept {
+    background: rgba(138, 151, 255, 0.12);
+    border-color: rgba(138, 151, 255, 0.4);
+    color: var(--accent-purple);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tool-status.status-live .status-dot {
+        animation: none;
+    }
+}
+
 /* Books / Library cards */
 .book-grid {
     margin-top: 1rem;
 }
 
 .book-card {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.6rem;
     transition: transform var(--motion-hover) ease, box-shadow var(--motion-hover) ease;
 }
 
@@ -662,6 +782,58 @@ a .book-card:hover,
     border-radius: 999px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
     text-transform: uppercase;
+}
+
+/* Book spine accent + hover open cue */
+.book-card .browser-content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--accent-green);
+    z-index: 3;
+}
+
+.book-grid > [class*="col-"]:nth-child(4n+2) .book-card .browser-content::before {
+    background: var(--accent-blue);
+}
+
+.book-grid > [class*="col-"]:nth-child(4n+3) .book-card .browser-content::before {
+    background: var(--accent-purple);
+}
+
+.book-grid > [class*="col-"]:nth-child(4n+4) .book-card .browser-content::before {
+    background: var(--accent-pink);
+}
+
+.book-card .browser-content::after {
+    content: "\25B6 open";
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--bg-charcoal);
+    background: var(--accent-green);
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity var(--motion-hover) ease, transform var(--motion-hover) ease;
+    z-index: 3;
+    pointer-events: none;
+}
+
+a:hover .book-card .browser-content::after,
+.book-card.is-clickable:hover .browser-content::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.book-card.is-soon .browser-content::after {
+    display: none;
 }
 
 /* 5. Navigation */
@@ -2718,4 +2890,82 @@ body.is-touch .cursor-glow {
     100% {
         opacity: 0.1;
     }
+}
+
+/* =========================================
+   Subpage Shared Layout (Books / Tools / IF-ELSE)
+   ========================================= */
+body.subpage {
+    background-image:
+        radial-gradient(circle at 15% 12%, rgba(45, 255, 176, 0.07), transparent 42%),
+        radial-gradient(circle at 85% 88%, rgba(116, 217, 255, 0.06), transparent 45%);
+    background-attachment: fixed;
+}
+
+.subpage-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: #93a5b9;
+    text-transform: lowercase;
+    margin-bottom: 1.4rem;
+}
+
+.subpage-breadcrumb .runtime-dot {
+    flex: none;
+}
+
+.page-head {
+    margin-bottom: 2.75rem;
+    max-width: 60ch;
+}
+
+.page-head .hero-tag {
+    margin-bottom: 1.1rem;
+}
+
+.page-title {
+    display: block;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.08;
+    margin-bottom: 0.9rem;
+}
+
+.page-title::after {
+    display: none;
+}
+
+.grad-text {
+    background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.back-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-decoration: none;
+    padding: 0.55rem 1.1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-white);
+    background: rgba(255, 255, 255, 0.02);
+    transition: transform var(--motion-hover) ease, border-color var(--motion-hover) ease, color var(--motion-hover) ease;
+}
+
+.back-home:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+}
+
+.back-home-wrap {
+    text-align: center;
+    margin: 1rem 0 3rem;
 }

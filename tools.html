@@ -23,10 +23,10 @@
 
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=3">
+    <link rel="stylesheet" href="css/styles.css?v=4">
 </head>
 
-<body>
+<body class="subpage">
 
     <header>
         <div class="container">
@@ -51,8 +51,15 @@
     </header>
 
     <div class="container" style="margin-top: 100px; margin-bottom: 60px;">
-        <h2 style="margin-bottom: 1rem;">Tools</h2>
-        <p class="page-intro">A small set of developer-facing tools and utilities. Most open as live Streamlit apps and may take a few seconds to wake from sleep.</p>
+        <div class="subpage-breadcrumb">
+            <span class="runtime-dot" aria-hidden="true"></span>
+            <span>root / tools</span>
+        </div>
+        <div class="page-head reveal" data-reveal="up">
+            <span class="hero-tag"><i class="fa fa-terminal" aria-hidden="true"></i> ls ./tools</span>
+            <h2 class="page-title">Dev <span class="grad-text">Tools</span></h2>
+            <p class="page-intro">A small set of developer-facing tools and utilities. Most open as live Streamlit apps and may take a few seconds to wake from sleep.</p>
+        </div>
         <div class="row tool-grid">
             <div class="col-md-4 col-sm-6">
                 <div class="browser-card tool-card">
@@ -62,15 +69,19 @@
                         <div class="dot green"></div>
                     </div>
                     <div class="browser-content">
-                        <div class="tool-meta">
-                            <span class="tool-tag">automation</span>
+                        <div class="tool-topline">
+                            <span class="tool-badge"><i class="fa fa-cogs" aria-hidden="true"></i></span>
+                            <span class="tool-status status-sleep"><span class="status-dot"></span> wakes on open</span>
                         </div>
                         <div>
-                            <h3 class="tool-title"><i class="fa fa-cogs" aria-hidden="true"></i> Cadbury Automation</h3>
+                            <h3 class="tool-title">Cadbury Automation</h3>
                             <p class="tool-description">Automation utility for operational workflows and repetitive task handling.</p>
                         </div>
+                        <div class="tool-meta">
+                            <span class="tool-tag tag-automation">automation</span>
+                        </div>
                         <div class="tool-actions">
-                            <a href="https://cadburyautomation.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun">Open Project</a>
+                            <a href="https://cadburyautomation.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
                         </div>
                     </div>
                 </div>
@@ -84,15 +95,19 @@
                         <div class="dot green"></div>
                     </div>
                     <div class="browser-content">
-                        <div class="tool-meta">
-                            <span class="tool-tag">extraction</span>
+                        <div class="tool-topline">
+                            <span class="tool-badge"><i class="fa fa-expand" aria-hidden="true"></i></span>
+                            <span class="tool-status status-sleep"><span class="status-dot"></span> wakes on open</span>
                         </div>
                         <div>
-                            <h3 class="tool-title"><i class="fa fa-expand" aria-hidden="true"></i> Dimension Extractor</h3>
+                            <h3 class="tool-title">Dimension Extractor</h3>
                             <p class="tool-description">Extracts dimensional information quickly from inputs for faster validation and review.</p>
                         </div>
+                        <div class="tool-meta">
+                            <span class="tool-tag tag-extraction">extraction</span>
+                        </div>
                         <div class="tool-actions">
-                            <a href="https://dimensionextractor.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun">Open Project</a>
+                            <a href="https://dimensionextractor.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
                         </div>
                     </div>
                 </div>
@@ -106,15 +121,19 @@
                         <div class="dot green"></div>
                     </div>
                     <div class="browser-content">
-                        <div class="tool-meta">
-                            <span class="tool-tag">code</span>
+                        <div class="tool-topline">
+                            <span class="tool-badge"><i class="fa fa-code" aria-hidden="true"></i></span>
+                            <span class="tool-status status-sleep"><span class="status-dot"></span> wakes on open</span>
                         </div>
                         <div>
-                            <h3 class="tool-title"><i class="fa fa-code" aria-hidden="true"></i> L2M Code App</h3>
+                            <h3 class="tool-title">L2M Code App</h3>
                             <p class="tool-description">Focused utility for working with L2M code workflows through a lightweight web interface.</p>
                         </div>
+                        <div class="tool-meta">
+                            <span class="tool-tag tag-code">code</span>
+                        </div>
                         <div class="tool-actions">
-                            <a href="https://unigalactix-l2m-code-app-qaj4pr.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun">Open Project</a>
+                            <a href="https://unigalactix-l2m-code-app-qaj4pr.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
                         </div>
                     </div>
                 </div>
@@ -128,15 +147,19 @@
                         <div class="dot green"></div>
                     </div>
                     <div class="browser-content">
-                        <div class="tool-meta">
-                            <span class="tool-tag">markdown</span>
+                        <div class="tool-topline">
+                            <span class="tool-badge"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+                            <span class="tool-status status-sleep"><span class="status-dot"></span> wakes on open</span>
                         </div>
                         <div>
-                            <h3 class="tool-title"><i class="fa fa-file-text-o" aria-hidden="true"></i> MD Viewer</h3>
+                            <h3 class="tool-title">MD Viewer</h3>
                             <p class="tool-description">Markdown viewing utility for quickly rendering and reading content in a cleaner format.</p>
                         </div>
+                        <div class="tool-meta">
+                            <span class="tool-tag tag-markdown">markdown</span>
+                        </div>
                         <div class="tool-actions">
-                            <a href="https://unigalactix-md-viewer-app-0ifgdy.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun">Open Project</a>
+                            <a href="https://unigalactix-md-viewer-app-0ifgdy.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
                         </div>
                     </div>
                 </div>
@@ -150,15 +173,19 @@
                         <div class="dot green"></div>
                     </div>
                     <div class="browser-content">
-                        <div class="tool-meta">
-                            <span class="tool-tag">resume</span>
+                        <div class="tool-topline">
+                            <span class="tool-badge"><i class="fa fa-id-card-o" aria-hidden="true"></i></span>
+                            <span class="tool-status status-sleep"><span class="status-dot"></span> wakes on open</span>
                         </div>
                         <div>
-                            <h3 class="tool-title"><i class="fa fa-id-card-o" aria-hidden="true"></i> Custom Resume Generator</h3>
+                            <h3 class="tool-title">Custom Resume Generator</h3>
                             <p class="tool-description">Builds tailored resume outputs from structured inputs to speed up application customization.</p>
                         </div>
+                        <div class="tool-meta">
+                            <span class="tool-tag tag-resume">resume</span>
+                        </div>
                         <div class="tool-actions">
-                            <a href="https://customresumegenerator.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun">Open Project</a>
+                            <a href="https://customresumegenerator.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
                         </div>
                     </div>
                 </div>
@@ -172,15 +199,19 @@
                         <div class="dot green"></div>
                     </div>
                     <div class="browser-content">
-                        <div class="tool-meta">
-                            <span class="tool-tag">security</span>
+                        <div class="tool-topline">
+                            <span class="tool-badge"><i class="fa fa-key" aria-hidden="true"></i></span>
+                            <span class="tool-status status-sleep"><span class="status-dot"></span> wakes on open</span>
                         </div>
                         <div>
-                            <h3 class="tool-title"><i class="fa fa-key" aria-hidden="true"></i> Token Generator Base64</h3>
+                            <h3 class="tool-title">Token Generator Base64</h3>
                             <p class="tool-description">Generates Base64-based token values for quick testing, demos, and lightweight utility workflows.</p>
                         </div>
+                        <div class="tool-meta">
+                            <span class="tool-tag tag-security">security</span>
+                        </div>
                         <div class="tool-actions">
-                            <a href="https://unigalactix-token-gen-base64-streamlit-token-app-ig3q0z.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun">Open Project</a>
+                            <a href="https://unigalactix-token-gen-base64-streamlit-token-app-ig3q0z.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
                         </div>
                     </div>
                 </div>
@@ -194,20 +225,28 @@
                         <div class="dot green"></div>
                     </div>
                     <div class="browser-content">
-                        <div class="tool-meta">
-                            <span class="tool-tag">ai agent</span>
+                        <div class="tool-topline">
+                            <span class="tool-badge"><i class="fa fa-shield" aria-hidden="true"></i></span>
+                            <span class="tool-status status-live"><span class="status-dot"></span> live</span>
                         </div>
                         <div>
-                            <h3 class="tool-title"><i class="fa fa-shield" aria-hidden="true"></i> Sentinel Dev Agent</h3>
+                            <h3 class="tool-title">Sentinel Dev Agent</h3>
                             <p class="tool-description">Developer-facing agent workspace for guided workflows, task execution, and utility operations.</p>
                         </div>
+                        <div class="tool-meta">
+                            <span class="tool-tag tag-ai">ai agent</span>
+                        </div>
                         <div class="tool-actions">
-                            <a href="https://sentineldevagent.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="btn-fun">Open Project</a>
+                            <a href="https://sentineldevagent.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="back-home-wrap">
+        <a class="back-home" href="index.html"><i class="fa fa-arrow-left" aria-hidden="true"></i> cd ~/home</a>
     </div>
 
     <footer>
@@ -225,6 +264,7 @@
     </footer>
 
     <script src="js/nav-dropdown.js?v=2"></script>
+    <script src="js/subpage.js?v=1"></script>
 </body>
 
 </html>
