@@ -1022,6 +1022,94 @@ body.site-ready .logo::after {
     transform: translateY(0);
 }
 
+/* Resume download dropdown (hero) */
+.resume-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.resume-menu > summary {
+    list-style: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.resume-menu > summary::-webkit-details-marker {
+    display: none;
+}
+
+.resume-caret {
+    font-size: 0.95rem;
+    transition: transform 0.18s ease;
+}
+
+.resume-menu[open] .resume-caret {
+    transform: rotate(180deg);
+}
+
+.resume-pop-card {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    min-width: 210px;
+    background: rgba(16, 20, 28, 0.96);
+    border: 1px solid rgba(45, 255, 176, 0.24);
+    border-radius: 12px;
+    padding: 0.5rem 0;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+    z-index: 1100;
+}
+
+.resume-menu[open] .resume-pop-card {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.resume-pop-card a {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.55rem 1rem;
+    color: var(--text-white);
+    font-family: var(--font-mono);
+    font-size: 0.94rem;
+    text-decoration: none;
+    transition: color 0.16s ease, background 0.16s ease;
+}
+
+.resume-pop-card a i {
+    color: var(--accent-green);
+    width: 1rem;
+    text-align: center;
+}
+
+.resume-pop-card a:hover {
+    color: var(--accent-green);
+    background: rgba(45, 255, 176, 0.08);
+}
+
+.resume-opt {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+}
+
+.resume-opt small {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.resume-pop-card a:hover .resume-opt small {
+    color: var(--accent-green);
+}
+
 #menu li a,
 .more-toggle {
     font-family: var(--font-mono);

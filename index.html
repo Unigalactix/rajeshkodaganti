@@ -34,7 +34,7 @@
 
     <!-- Styles -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=4">
+    <link rel="stylesheet" href="css/styles.css?v=5">
     <link rel="stylesheet" href="css/tech-games.css?v=2">
 </head>
 
@@ -124,10 +124,28 @@
                         <i class="fa fa-linkedin"></i> LinkedIn
                     </a>
 
-                    <a href="resume.pdf" download class="btn-fun btn-outline-fun"
-                        style="border-color: var(--accent-green); color: var(--accent-green);">
-                        <i class="fa fa-download"></i> Resume
-                    </a>
+                    <details class="resume-menu">
+                        <summary class="btn-fun btn-outline-fun resume-toggle"
+                            style="border-color: var(--accent-green); color: var(--accent-green);"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-download"></i> Resume
+                            <i class="fa fa-angle-down resume-caret" aria-hidden="true"></i>
+                        </summary>
+                        <div class="resume-pop-card" role="menu" aria-label="Download resume">
+                            <a href="resume-1page.pdf" download role="menuitem">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                <span class="resume-opt">1-Page<small>Concise</small></span>
+                            </a>
+                            <a href="resume-2page.pdf" download role="menuitem">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                <span class="resume-opt">2-Page<small>Standard</small></span>
+                            </a>
+                            <a href="resume-3page.pdf" download role="menuitem">
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                <span class="resume-opt">3-Page<small>Detailed</small></span>
+                            </a>
+                        </div>
+                    </details>
                 </div>
 
                 <div class="live-console reveal" data-reveal="up">
