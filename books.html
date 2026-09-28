@@ -22,20 +22,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Cinzel:wght@400;500;600&amp;display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css?v=6">
-
-    <style>
-        /* Custom styles for books page if needed */
-    </style>
+    <link rel="stylesheet" href="css/celestial.css?v=1">
 </head>
 
 
-<body class="subpage">
+<body class="subpage celestial-theme">
 
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
@@ -65,12 +62,12 @@
     <main id="main-content" class="container" style="margin-top: 100px;">
         <div class="subpage-breadcrumb">
             <span class="runtime-dot" aria-hidden="true"></span>
-            <span>root / books</span>
+            <span>Observatory / Books</span>
         </div>
         <div class="page-head reveal" data-reveal="up">
-            <span class="hero-tag"><i class="fa fa-terminal" aria-hidden="true"></i> cat ./library.md</span>
-            <h2 class="page-title">My <span class="grad-text">Library</span></h2>
-            <p class="page-intro">A shelf of stories and experiments I have written — click any cover to read. Looking for a different format? Request it from the contact form below.</p>
+            <span class="hero-tag"><i class="fa fa-star-o" aria-hidden="true"></i> The celestial library</span>
+            <h1 class="page-title">Books for <span class="grad-text">Other Worlds</span></h1>
+            <p class="page-intro">Stories and experiments gathered beneath one sky. Open a cover to wander into another world, or request a different reading format through the contact link below.</p>
         </div>
         <div class="row book-grid">
             <!-- Book 1: Nishaan P1-VICTOR -->
@@ -78,9 +75,7 @@
                 <a href="books/Nishaan P1_VICTOR.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                     <div class="browser-card book-card">
                         <div class="browser-header">
-                            <div class="dot red"></div>
-                            <div class="dot yellow"></div>
-                            <div class="dot green"></div>
+                            <span class="card-label">BOOK</span>
                         </div>
                         <div class="browser-content">
                             <img class="book-cover" loading="lazy" src="book_covers/Nishaan p1-victor.png" alt="Nishaan P1-VICTOR Cover">
@@ -98,9 +93,7 @@
                 <a href="books/21-STOREY.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                     <div class="browser-card book-card">
                         <div class="browser-header">
-                            <div class="dot red"></div>
-                            <div class="dot yellow"></div>
-                            <div class="dot green"></div>
+                            <span class="card-label">BOOK</span>
                         </div>
                         <div class="browser-content">
                             <img class="book-cover" loading="lazy" src="book_covers/21storey-cover.png" alt="21-STOREY Cover">
@@ -117,9 +110,7 @@
             <div class="col-md-4">
                 <div class="browser-card book-card is-clickable" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="etaModal" onclick="openETAModal()" onkeydown="if(event.key === 'Enter' || event.key === ' '){event.preventDefault();openETAModal();}">
                     <div class="browser-header">
-                        <div class="dot red"></div>
-                        <div class="dot yellow"></div>
-                        <div class="dot green"></div>
+                        <span class="card-label">BOOK</span>
                     </div>
                     <div class="browser-content">
                         <img class="book-cover" loading="lazy" src="book_covers/ETA-COVER.jpg" alt="ETA Cover">
@@ -136,9 +127,7 @@
                 <a href="books/RECTANGLES.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                     <div class="browser-card book-card">
                         <div class="browser-header">
-                            <div class="dot red"></div>
-                            <div class="dot yellow"></div>
-                            <div class="dot green"></div>
+                            <span class="card-label">BOOK</span>
                         </div>
                         <div class="browser-content">
                             <img class="book-cover" loading="lazy" src="book_covers/RECTANGLES-COVER.webp" alt="RECTANGLES Cover">
@@ -156,9 +145,7 @@
                 <a href="books/OVERMORROW.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                     <div class="browser-card book-card">
                         <div class="browser-header">
-                            <div class="dot red"></div>
-                            <div class="dot yellow"></div>
-                            <div class="dot green"></div>
+                            <span class="card-label">BOOK</span>
                         </div>
                         <div class="browser-content">
                             <img class="book-cover" loading="lazy" src="book_covers/Overmorrow-cover.jpeg" alt="Overmorrow Cover">
@@ -175,9 +162,7 @@
             <div class="col-md-4">
                 <div class="browser-card book-card is-soon">
                     <div class="browser-header">
-                        <div class="dot red"></div>
-                        <div class="dot yellow"></div>
-                        <div class="dot green"></div>
+                        <span class="card-label">FORTHCOMING</span>
                     </div>
                     <div class="browser-content">
                         <span class="book-badge">Coming Soon</span>
@@ -196,9 +181,7 @@
                     target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
                     <div class="browser-card book-card">
                         <div class="browser-header">
-                            <div class="dot red"></div>
-                            <div class="dot yellow"></div>
-                            <div class="dot green"></div>
+                            <span class="card-label">COLLECTION</span>
                         </div>
                         <div class="browser-content">
                             <img class="book-cover" loading="lazy" src="book_covers/bunns_book_shelf.png" alt="Bunn's Book Shelf Cover">
@@ -218,7 +201,7 @@
             <div class="col-12">
                 <hr style="margin-top: 5rem; margin-bottom: 3rem; border-color: var(--text-color); opacity: 0.3;">
                 <div class="typing-container"
-                    style="text-align: center; margin-bottom: 2rem; font-family: 'Space Mono', monospace; font-size: 1.5rem; color: var(--text-muted); min-height: 2em;">
+                    style="text-align: center; margin-bottom: 2rem; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; color: var(--text-muted); min-height: 2em;">
                     <span id="footer-typing-text"></span><span class="cursor"
                         style="animation: blink 1s infinite;">|</span>
                 </div>
@@ -280,7 +263,7 @@
             <!-- Footer Typing Script -->
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
-                    const text = "<writing more....>";
+                    const text = "More worlds are taking shape...";
                     const delay = 150;
                     const element = document.getElementById('footer-typing-text');
                     let index = 0;
@@ -325,7 +308,7 @@
     </main>
 
     <div class="back-home-wrap">
-        <a class="back-home" href="index.html"><i class="fa fa-arrow-left" aria-hidden="true"></i> cd ~/home</a>
+        <a class="back-home" href="index.html"><i class="fa fa-arrow-left" aria-hidden="true"></i> Return to the Observatory</a>
     </div>
 
     <footer>
@@ -337,7 +320,7 @@
                 <a href="mailto:rajeshkodaganti.work@gmail.com" aria-label="Email"><i class="fa fa-envelope"></i></a>
             </div>
             <p style="margin-top: 2rem; text-align: center; width: 100%;">&copy; <span data-current-year>2026</span> Rajesh Kodaganti. <br> Built with
-                <span style="color:red;">&hearts;</span> and lots of console.log().
+                <span style="color:red;">&hearts;</span> and a little starlight.
             </p>
         </div>
     </footer>
@@ -347,10 +330,8 @@
         style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center;">
         <div class="browser-card" style="width: 90%; max-width: 500px; background: var(--bg-card); position: relative;">
             <div class="browser-header">
-                <button type="button" class="dot red" onclick="closeETAModal()" aria-label="Close version selector" style="cursor: pointer; border: 0; padding: 0;"></button>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
-                <div class="browser-address-bar">Select Version</div>
+                <span class="browser-address-bar">Choose your edition</span>
+                <button type="button" class="btn-text" onclick="closeETAModal()" aria-label="Close version selector">Close</button>
             </div>
             <div class="browser-content" style="text-align: center; padding: 2rem;">
                 <h3 id="eta-modal-title" style="margin-bottom: 2rem;">Select ETA Version</h3>

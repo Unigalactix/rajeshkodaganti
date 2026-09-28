@@ -62,8 +62,8 @@ function renderExperience(work) {
 
         card.innerHTML = `
             <div class="browser-header" aria-hidden="true">
-                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-                <div class="browser-address-bar"></div>
+                <span>Flight path / ${String(index + 1).padStart(2, '0')}</span>
+                <span class="status-chip ${job.endDate === 'Present' ? 'running' : 'stable'}">${job.endDate === 'Present' ? 'Current' : 'Previous'}</span>
             </div>
             <div class="browser-content">
                 <span class="card-role">${job.position}</span>
@@ -71,7 +71,7 @@ function renderExperience(work) {
                 <span class="card-date">${formatPeriod(job.startDate, job.endDate)}</span>
                 ${job.project ? `<p class="experience-project"><strong>Project:</strong> ${job.project}</p>` : ''}
                 <p>${job.summary}</p>
-                <span class="card-open">Open details() -&gt;</span>
+                <span class="card-open">Explore this chapter &#8599;</span>
             </div>`;
 
         const open = () => openExperienceModal(job.id);
@@ -188,13 +188,9 @@ function renderProjects(projects) {
         header.className = 'browser-header';
         const isRunning = String(project.endDate || '').toLowerCase() === 'present' || /\[wip\]/i.test(project.name || '');
         const statusClass = isRunning ? 'running' : (project.github ? 'stable' : 'experimental');
-        const statusLabel = isRunning ? 'Running' : (project.github ? 'Stable' : 'Experimental');
-        const fileLabel = (project.name || 'project').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 24) || 'module';
+        const statusLabel = isRunning ? 'In progress' : 'Completed';
         header.innerHTML = `
-            <div class="dot red"></div>
-            <div class="dot yellow"></div>
-            <div class="dot green"></div>
-            <div class="browser-address-bar">${fileLabel}.ts</div>
+            <span>Mission / ${String(index + 1).padStart(2, '0')}</span>
             <span class="status-chip ${statusClass}">${statusLabel}</span>
         `;
 
@@ -350,19 +346,18 @@ function renderBuildLogs(projects, work) {
     if (!marquee) return;
 
     const projectLogs = (projects || [])
-        .flatMap(project => (project.highlights || []).slice(0, 1).map(item => `BUILD LOG: ${item}`))
-        .slice(0, 5);
+        .slice(0, 4)
+        .map(project => project.name.replace(/\[WIP\]/gi, '').trim());
 
     const workLogs = (work || [])
-        .flatMap(role => (role.highlights || []).slice(0, 1).map(item => `RUNTIME NOTE: ${item}`))
-        .slice(0, 3);
+        .slice(0, 4)
+        .map(role => `${role.position} at ${role.name}`);
 
-    const logs = [...projectLogs, ...workLogs];
+    const logs = projectLogs.length ? projectLogs : workLogs;
     if (!logs.length) return;
 
     marquee.innerHTML = '';
-    const full = logs.concat(logs);
-    full.forEach(log => {
+    logs.forEach(log => {
         const span = document.createElement('span');
         span.textContent = log;
         marquee.appendChild(span);
