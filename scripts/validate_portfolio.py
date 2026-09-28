@@ -83,6 +83,17 @@ def validate_data():
     if not microsoft or microsoft.get("startDate") != "2025-10":
         errors.append("js/data.json: Microsoft start date must be 2025-10")
 
+    verified_roles = {
+        "quadrant-intern": ("Artificial Intelligence Trainee", "2025-07", "2025-08"),
+        "qikcell": ("Assistant to Solutions Engineer", "2025-01", "2025-05"),
+        "peoplelink": ("IoT Engineer in R&D", "2018-06", "2019-05"),
+    }
+    for role_id, expected in verified_roles.items():
+        job = next((job for job in data["work"] if job.get("id") == role_id), {})
+        actual = tuple(job.get(field) for field in ("position", "startDate", "endDate"))
+        if actual != expected:
+            errors.append(f"js/data.json: {role_id} must match the verified master resume role and dates")
+
     for project in data["projects"]:
         if project.get("image") and not project.get("imageAlt"):
             errors.append(f"js/data.json: project image missing imageAlt: {project.get('id')}")
@@ -115,6 +126,7 @@ def validate_resumes():
         "resume-2page.pdf": 2,
         "resume-3page.pdf": 3,
         "resume.pdf": 2,
+        "Resume - Rajesh Kodaganti (Master).pdf": 2,
     }
     extracted = {}
     for name, expected in expected_pages.items():
@@ -128,14 +140,26 @@ def validate_resumes():
         extracted[name] = "\n".join(page.extract_text() or "" for page in reader.pages)
 
     default = extracted.get("resume.pdf", "")
-    for required in ("AI Software Engineer", "Oct 2025", "70+ Microsoft Identity services"):
+    for required in ("Software Development Engineer", "AI Software Engineer", "Oct 2025",
+                     "70+ Microsoft Identity services", "Artificial Intelligence Trainee",
+                     "PeopleLink Unified Communications", "Sentinel"):
         if required not in default:
             errors.append(f"resume.pdf: missing verified text: {required}")
-    for stale in ("Mar 2026 – Present", "PeopleLink Unified Communications"):
+    for stale in ("Mar 2026 – Present", "Artificial Intelligence Intern",
+                  "Assistant to Solutions Engineer (Freelance)"):
         if stale in default:
             errors.append(f"resume.pdf: contains stale employment text: {stale}")
-    if (ROOT / "resume.pdf").read_bytes() != (ROOT / "resume-2page.pdf").read_bytes():
-        errors.append("resume.pdf: must match resume-2page.pdf")
+    for name in ("resume-2page.pdf", "resume-3page.pdf"):
+        for required in ("Software Development Engineer", "Artificial Intelligence Trainee",
+                         "PeopleLink Unified Communications", "IoT Engineer in R&D"):
+            if required not in extracted.get(name, ""):
+                errors.append(f"{name}: missing updated resume text: {required}")
+        if "R&D;" in extracted.get(name, ""):
+            errors.append(f"{name}: contains a malformed ampersand in the PeopleLink role")
+    master = ROOT / "Resume - Rajesh Kodaganti (Master).pdf"
+    default_path = ROOT / "resume.pdf"
+    if master.exists() and default_path.exists() and default_path.read_bytes() != master.read_bytes():
+        errors.append("resume.pdf: must exactly match the supplied master resume")
 
 
 def check_external_url(url):

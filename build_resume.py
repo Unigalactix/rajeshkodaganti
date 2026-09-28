@@ -1,8 +1,9 @@
-"""Generate 1-, 2-, and 3-page resume PDFs for Rajesh Kodaganti from portfolio data."""
+"""Generate resume variants from portfolio data and publish the supplied master PDF."""
 import json
 import os
 import shutil
 from datetime import datetime
+from xml.sax.saxutils import escape
 
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
@@ -61,7 +62,7 @@ def make_styles(density):
     # density: "tight" (1pg), "normal" (2pg), "loose" (3pg)
     f = {"tight": -0.6, "normal": 0.0, "loose": 0.4}[density]
     section_before = {"tight": 4, "normal": 6, "loose": 9}[density]
-    bullet_lead = {"tight": 11.0, "normal": 11.8, "loose": 12.8}[density]
+    bullet_lead = {"tight": 11.0, "normal": 11.8, "loose": 12.0}[density]
     s = {}
     s["name"] = ParagraphStyle("name", fontName="Helvetica-Bold", fontSize=22 + f,
                                leading=25 + f, textColor=ACCENT, spaceAfter=2)
@@ -109,7 +110,7 @@ def build(cfg):
     def bullets(items, limit=None):
         items = items[:limit] if limit else items
         for it in items:
-            story.append(Paragraph(it, s["bullet"], bulletText="\u2022"))
+            story.append(Paragraph(escape(it), s["bullet"], bulletText="\u2022"))
 
     def two_col_header(left_html, right_html):
         t = Table([[Paragraph(left_html, s["role"]),
@@ -126,7 +127,7 @@ def build(cfg):
 
     # header
     story.append(Paragraph(basics["name"], s["name"]))
-    story.append(Paragraph("AI Software Engineer | Developer", s["subtitle"]))
+    story.append(Paragraph("Software Development Engineer", s["subtitle"]))
     loc = basics.get("location", {})
     loc_str = ", ".join(x for x in [loc.get("city"), loc.get("region")] if x)
     email = basics["email"]
@@ -148,7 +149,7 @@ def build(cfg):
     # skills
     section("Technical Skills")
     for cat in data["skills"]:
-        story.append(Paragraph(f'<b>{cat["name"]}:</b> {", ".join(cat["keywords"])}', s["skill"]))
+        story.append(Paragraph(f'<b>{escape(cat["name"])}:</b> {escape(", ".join(cat["keywords"]))}', s["skill"]))
 
     # experience
     section("Experience")
@@ -156,7 +157,7 @@ def build(cfg):
     gap = {"tight": 2, "normal": 3, "loose": 5}[cfg["density"]]
     for i, e in enumerate(exp):
         two_col_header(e["company"], e["dates"])
-        story.append(Paragraph(f'{e["role"]} &nbsp;|&nbsp; {e["loc"]}', s["sub"]))
+        story.append(Paragraph(f'{escape(e["role"])} &nbsp;|&nbsp; {escape(e["loc"])}', s["sub"]))
         bullets(e["points"], limit=cfg["exp_bullets"])
         if i != len(exp) - 1:
             story.append(Spacer(1, gap))
@@ -246,6 +247,7 @@ VARIANTS = [
 for cfg in VARIANTS:
     build(cfg)
 
-# keep resume.pdf as the default (2-page) for backward compatibility
-shutil.copyfile(os.path.join(ROOT, "resume-2page.pdf"), os.path.join(ROOT, "resume.pdf"))
-print("Copied resume-2page.pdf -> resume.pdf")
+# Preserve the supplied master, including its original formatting, as the default.
+shutil.copyfile(os.path.join(ROOT, "Resume - Rajesh Kodaganti (Master).pdf"),
+                os.path.join(ROOT, "resume.pdf"))
+print("Copied Resume - Rajesh Kodaganti (Master).pdf -> resume.pdf")

@@ -1,10 +1,10 @@
 {
   "basics": {
     "name": "Rajesh Kodaganti",
-    "label": "an AI Software Engineer and Developer",
+    "label": "a Software Development Engineer",
     "email": "rajeshkodaganti.work@gmail.com",
     "phone": "(747) 366-0793",
-    "summary": "AI Software Engineer and Developer with a Master of Science in Computer Engineering and hands-on experience building Python cloud automation, backend workflows, data pipelines, and AI-powered systems on Azure.",
+    "summary": "Software Development Engineer with a Master of Science in Computer Engineering and hands-on experience designing and building scalable, distributed, cloud-native systems in Python. Skilled in object-oriented design, microservices, REST API orchestration, CI/CD, production monitoring and troubleshooting, RAG, document processing, and secure infrastructure as code.",
     "impact": "Delivered a six-phase outage-management pipeline supporting Severity 0-2 incidents across 70+ Microsoft Identity services.",
     "location": {
       "city": "Redmond",
@@ -31,10 +31,10 @@
       "summary": "Developing cloud automation and AI-powered outage-management systems for Microsoft Identity LiveSite operations.",
       "technologies": ["Python", "Azure Functions", "KQL", "Azure OpenAI", "Logic Apps", "Bicep", "Service Bus", "Key Vault", "Application Insights"],
       "highlights": [
-        "Designed and developed a six-phase outage-management pipeline for Severity 0-2 incidents across 70+ Microsoft Identity services",
-        "Built Python Azure Functions and KQL workflows for IcM data processing and integrated Azure OpenAI for root-cause classification",
+        "Designed and developed a scalable, six-phase outage-management pipeline automating incident ingestion, enrichment, classification, validation, and reporting for Severity 0-2 incidents across 70+ Microsoft Identity services",
+        "Built Python Azure Functions and KQL workflows for IcM data processing and integrated Azure OpenAI to classify root causes and recurring outage patterns",
         "Automated DRI notifications, escalation workflows, and Excel and Word reporting through Logic Apps",
-        "Provisioned secure Azure infrastructure using Bicep, managed identity, Key Vault, Blob Storage, Service Bus, Application Insights, and Entra ID"
+        "Provisioned secure Azure infrastructure using Bicep, managed identity, Key Vault, Blob Storage, Service Bus, Application Insights, and Entra ID; delivered a monitoring dashboard, runbooks, troubleshooting guidance, and knowledge-transfer documentation"
       ]
     },
     {
@@ -45,46 +45,47 @@
       "startDate": "2025-08",
       "endDate": "Present",
       "summary": "Architecting Azure AI solutions for threat intelligence, document processing, and secure retrieval workflows.",
-      "technologies": ["Python", "Azure OpenAI", "Azure Document Intelligence", "Azure AI Search", "RAG", "Cybersecurity"],
+      "technologies": ["Python", "Azure OpenAI", "Azure Document Intelligence", "Azure AI Search", "RAG", "Cybersecurity", "GitHub Copilot", "MCP"],
       "highlights": [
         "Architected and deployed scalable AI solutions with Azure OpenAI and Azure Cognitive Services for threat intelligence and automated mitigation workflows",
         "Implemented Azure Document Intelligence workflows to extract and structure unstructured data",
-        "Developed RAG architectures integrating Azure AI Search with LLMs for security vulnerability reports"
+        "Developed RAG architectures integrating Azure AI Search with LLMs for accurate, low-latency retrieval across security vulnerability reports",
+        "Built Sentinel, an autonomous DevOps orchestrator bridging Jira and GitHub with Azure OpenAI, GitHub Copilot, and MCP to take tickets from To Do to Done with minimal human intervention"
       ]
     },
     {
       "id": "quadrant-intern",
       "name": "Quadrant Technologies",
-      "position": "Artificial Intelligence Intern",
+      "position": "Artificial Intelligence Trainee",
       "location": "Redmond, Washington",
       "startDate": "2025-07",
       "endDate": "2025-08",
       "summary": "Built data foundations and monitoring views for security-focused AI workflows.",
       "technologies": ["Python", "ETL", "Data Pipelines", "Threat Intelligence", "Cloud Security"],
       "highlights": [
-        "Designed ETL and data-ingestion pipelines for endpoint, network-security, and vulnerability data",
-        "Analyzed threat intelligence and created cloud-security monitoring dashboards"
+        "Designed ETL processes for security logs and vulnerability reports and developed endpoint and network-security data-ingestion systems to enhance risk analysis",
+        "Applied machine learning to threat-intelligence data and created cloud-security monitoring dashboards supporting compliance and data integrity"
       ]
     },
     {
       "id": "qikcell",
       "name": "QikCell by tickioT",
-      "position": "Assistant to Solutions Engineer (Freelance)",
+      "position": "Assistant to Solutions Engineer",
       "location": "Los Angeles, California",
       "startDate": "2025-01",
       "endDate": "2025-05",
       "summary": "Supported client field trials and developed Python-based IoT demonstrations for AI-enhanced engineering use cases.",
       "technologies": ["Python", "IoT", "Signal Processing", "Predictive Maintenance"],
       "highlights": [
-        "Served as technical liaison for client field trials",
-        "Developed Python-based IoT demonstrations for AI-enhanced signal processing and predictive-maintenance use cases"
+        "Served as the primary technical liaison for client field trials, bridging antenna and PCB hardware constraints with AI software requirements",
+        "Customized IoT demonstrations using Python to simulate client use cases and showcase AI-enhanced signal processing, predictive maintenance, and operational efficiency"
       ]
     },
     {
       "id": "coloros",
       "name": "ColorOS",
       "position": "User Tester (Freelance)",
-      "location": "Remote",
+      "location": "India (Remote)",
       "startDate": "2018-06",
       "endDate": "2022-07",
       "summary": "Tested ColorOS Beta and Alpha releases and provided structured feedback for mobile OS improvements.",
@@ -107,6 +108,20 @@
         "Contributed to the development of a high-speed 64-bit binary comparator",
         "Optimized design parameters using Verilog and VHDL"
       ]
+    },
+    {
+      "id": "peoplelink",
+      "name": "PeopleLink Unified Communications Pvt. Ltd.",
+      "position": "IoT Engineer in R&D",
+      "location": "Hyderabad, India",
+      "startDate": "2018-06",
+      "endDate": "2019-05",
+      "summary": "Tested connected embedded devices and automated Python testing for real-time communication systems.",
+      "technologies": ["Python", "IoT", "Embedded Systems", "TCP/IP", "UDP", "Test Automation"],
+      "highlights": [
+        "Executed end-to-end testing of connected embedded devices and developed automated Python test scripts that reduced manual testing time by 20%",
+        "Analyzed TCP/IP and UDP communication protocols to troubleshoot real-time latency issues; collaboration with R&D cut post-launch defects by 20%"
+      ]
     }
   ],
   "education": [
@@ -121,9 +136,9 @@
     },
     {
       "id": "jbiet",
-      "institution": "Jb Institute Of Engineering and Technology",
+      "institution": "JB Institute of Engineering and Technology",
       "area": "Electronics and Communication Engineering",
-      "studyType": "B-Tech",
+      "studyType": "Bachelor of Technology",
       "startDate": "2019-07",
       "endDate": "2022-06",
       "score": "7.45"
@@ -131,15 +146,19 @@
   ],
   "skills": [
     {
+      "name": "Languages",
+      "keywords": ["Python", "JavaScript", "SQL", "R", "C", "Embedded C", "HTML"]
+    },
+    {
       "name": "Software Engineering",
       "keywords": [
-        "Python",
-        "JavaScript",
         "FastAPI",
-        "REST APIs",
+        "REST API Orchestration",
         "Microservices",
+        "Object-Oriented Design",
+        "Event-Driven Architecture",
         "ETL & Data Pipelines",
-        "SQL",
+        "Git/GitHub",
         "Testing & Troubleshooting"
       ]
     },
@@ -154,7 +173,9 @@
         "Application Insights",
         "Entra ID",
         "Bicep",
-        "CI/CD"
+        "CI/CD",
+        "Docker",
+        "Apache Airflow"
       ]
     },
     {
@@ -166,6 +187,7 @@
         "RAG",
         "LLMs",
         "NLP",
+        "Prompt Engineering",
         "PyTorch",
         "TensorFlow",
         "Model Context Protocol"
@@ -225,7 +247,7 @@
       "featured": true,
       "image": "images/jobpilot-dashboard.png",
       "imageAlt": "JobPilot job-search dashboard showing role search and application tools",
-      "description": "A lightweight, browser-only application that streamlines the job search through AI automation. JobPilot aggregates listings from Adzuna, JSearch, and USAJobs so users can find roles and optimize their application materials in one place.",
+      "description": "An AI-powered job application co-pilot built with JavaScript, Python, and FastAPI. JobPilot aggregates listings from Adzuna, JSearch, and USAJobs and supports AI-assisted application tailoring, GitHub Pages deployment, a Cloudflare Worker proxy, and client-side AES-GCM encryption.",
       "problem": "Job seekers must move between fragmented job boards and repeatedly tailor application materials while protecting sensitive resumes and API credentials.",
       "approach": "Built a browser-first JavaScript and Python experience with a Cloudflare Worker proxy, multi-source job aggregation, AI-assisted tailoring, and client-side AES-GCM encryption.",
       "impact": "Combined search, resume tailoring, and privacy-preserving storage into one deployable workflow without a traditional application database.",
@@ -237,6 +259,7 @@
       "keywords": [
         "JavaScript",
         "Python",
+        "FastAPI",
         "Cloudflare Workers",
         "Anthropic API",
         "AES-GCM"
@@ -277,7 +300,8 @@
       "startDate": "2025-09",
       "endDate": "Present",
       "visualType": "architecture",
-      "description": "Designed a robust system for JSON extraction and document intelligence using Azure OCR and OpenAI.",
+      "description": "Built a JSON extraction pipeline at Quadrant Technologies using Azure Document Intelligence and the OpenAI API for AI/OCR orchestration and structured downstream processing.",
+      "github": "https://github.com/Unigalactix/GasOps-DI-JSON",
       "problem": "Material test reports contain unstructured certificate data that must be retrieved and normalized reliably for downstream processing.",
       "approach": "Combined Azure Document Intelligence OCR, OpenAI mapping, certificate-based API retrieval, and defensive JSON parsing behind Python and FastAPI workflows.",
       "impact": "Produced structured JSON by HeatNumber with a backwards-compatible command-line workflow for existing consumers.",
@@ -347,7 +371,8 @@
       "description": "Created reading aids for visually impaired individuals using Raspberry Pi and OCR technology.",
       "highlights": [
         "Utilized Tesseract library and Python to convert document images into audio format using both online and offline OCR methods",
-        "Integrated camera modules for real-time text capture in educational settings"
+        "Integrated camera modules for real-time text capture in educational settings",
+        "Published \"Readers for the Visually Impaired Using Raspberry Pi\" in IJRAR, May 2022"
       ],
       "keywords": [
         "Raspberry Pi",

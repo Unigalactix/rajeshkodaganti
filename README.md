@@ -2,7 +2,7 @@
 
 Live Portfolio: [https://rajeshkodaganti.com/](https://rajeshkodaganti.com/)
 
-This repository contains Rajesh Kodaganti's AI Software Engineer and Developer portfolio, with production-focused case studies, accessible interactions, and data-driven content rendering.
+This repository contains Rajesh Kodaganti's Software Development Engineer portfolio, with production-focused case studies, accessible interactions, and data-driven content rendering.
 
 ## Highlights
 
@@ -83,7 +83,11 @@ python3 -m http.server 8000
 
 ### Content and resume workflow
 
-`js/data.json` is the source of truth for profile, experience, education, skills, projects, and certifications. After changing professional content, regenerate and validate the site:
+`js/data.json` is the source of truth for the site's profile, experience, education, skills, projects, certifications, and generated resume variants. Professional content was reconciled with the supplied master resume and LinkedIn experience on September 28, 2026.
+
+[`Resume - Rajesh Kodaganti (Master).pdf`](<Resume - Rajesh Kodaganti (Master).pdf>) is the supplied two-page master resume. The build copies it unchanged to `resume.pdf`, used by the recommended download, command palette, and portfolio assistant. Keep this source PDF in the repository so deployment does not replace the master with a generated variant. The one-, two-, and three-page generated alternatives remain available separately.
+
+After changing professional content, regenerate and validate the site:
 
 ```bash
 python -m pip install -r requirements.txt
@@ -100,7 +104,7 @@ Set `CHECK_EXTERNAL_LINKS=1` to include concurrent external-link checks. GitHub 
 - `js/scripts.js`: Navigation telemetry, command palette, splash logic, interactive effects.
 - `js/content-loader.js`: Data-driven section rendering.
 - `js/data.json`: Content source for profile, projects, and certifications.
-- `build_resume.py`: Generates the one-, two-, and three-page PDF resumes from `js/data.json`.
+- `build_resume.py`: Generates the one-, two-, and three-page PDF resumes from `js/data.json` and copies the supplied master to `resume.pdf`.
 - `scripts/validate_portfolio.py`: Validates content consistency, assets, metadata, JavaScript, accessibility basics, links, and generated PDFs.
 
 ## Accessibility and Performance Notes
