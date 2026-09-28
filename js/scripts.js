@@ -44,20 +44,44 @@ document.addEventListener('DOMContentLoaded', function () {
     const header = document.querySelector('header');
     const mobileMenuOpen = document.getElementById('mobile-menu-open');
     const mobileMenuClose = document.getElementById('mobile-menu-close');
+    const setMobileMenu = (open) => {
+        header.classList.toggle('active', open);
+        document.body.classList.toggle('active', open);
+        mobileMenuOpen?.setAttribute('aria-expanded', String(open));
+        if (open) mobileMenuClose?.querySelector('button')?.focus();
+        else mobileMenuOpen?.focus();
+    };
 
     if (mobileMenuOpen) {
         mobileMenuOpen.addEventListener('click', () => {
-            header.classList.add('active');
-            document.body.classList.add('active');
+            setMobileMenu(true);
         });
     }
 
     if (mobileMenuClose) {
         mobileMenuClose.addEventListener('click', () => {
-            header.classList.remove('active');
-            document.body.classList.remove('active');
+            setMobileMenu(false);
         });
     }
+
+    document.addEventListener('keydown', event => {
+        if (!header.classList.contains('active')) return;
+        if (event.key === 'Escape') {
+            setMobileMenu(false);
+        } else if (event.key === 'Tab') {
+            const focusable = Array.from(header.querySelectorAll('#menu a, #menu button, #menu summary'))
+                .filter(element => element.getClientRects().length && getComputedStyle(element).visibility !== 'hidden');
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last?.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first?.focus();
+            }
+        }
+    });
 
     // Smooth Scrolling for Anchor Links
     document.querySelectorAll('header a').forEach(anchor => {
@@ -84,8 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Hide the menu once clicked if mobile
                 if (header.classList.contains('active')) {
-                    header.classList.remove('active');
-                    document.body.classList.remove('active');
+                    setMobileMenu(false);
                 }
             }
         });
@@ -93,16 +116,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     initTypewriter(prefersReducedMotion);
     initRevealOnScroll(prefersReducedMotion);
-    initCursorGlow(prefersReducedMotion, isCoarsePointer);
-    initInterestCardTilt(prefersReducedMotion, isCoarsePointer);
     initConsolePulse(prefersReducedMotion, isSmallScreen);
     initHeroCanvas(prefersReducedMotion, isSmallScreen, isCoarsePointer);
     initTerminalCommandCenter();
     initScrollProgress();
 
     const initDesktopEffects = () => {
-        initMagneticButtons(prefersReducedMotion, isCoarsePointer);
-        initPointerReactiveGlow(isCoarsePointer);
+        if (!document.body.classList.contains('celestial-theme')) {
+            initMagneticButtons(prefersReducedMotion, isCoarsePointer);
+            initPointerReactiveGlow(isCoarsePointer);
+        }
     };
 
     if ('requestIdleCallback' in window) {
@@ -114,7 +137,6 @@ document.addEventListener('DOMContentLoaded', function () {
     initLogoEntrance(prefersReducedMotion);
     initNavigationTelemetry();
     initCommandPalette();
-    initCardChromeNormalization();
 });
 
 function initStaticAccessibility() {
@@ -547,7 +569,7 @@ function initHeroCanvas(prefersReducedMotion, isSmallScreen, isCoarsePointer) {
 
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(139, 233, 253, 0.65)';
+            ctx.fillStyle = 'rgba(222, 209, 244, 0.75)';
             ctx.fill();
 
             for (let j = i + 1; j < particles.length; j += 1) {
@@ -560,7 +582,7 @@ function initHeroCanvas(prefersReducedMotion, isSmallScreen, isCoarsePointer) {
                     ctx.beginPath();
                     ctx.moveTo(p.x, p.y);
                     ctx.lineTo(q.x, q.y);
-                    ctx.strokeStyle = `rgba(0, 255, 157, ${(1 - dist / 125) * 0.24})`;
+                    ctx.strokeStyle = `rgba(202, 183, 226, ${(1 - dist / 125) * 0.13})`;
                     ctx.lineWidth = 1;
                     ctx.stroke();
                 }
@@ -636,7 +658,7 @@ function initNavigationTelemetry() {
 
         if (breadcrumb) {
             const label = id.replace(/-/g, ' ');
-            breadcrumb.textContent = `root / ${label}`;
+            breadcrumb.textContent = `Observatory / ${label}`;
         }
     };
 
@@ -669,13 +691,17 @@ function initCommandPalette() {
         { id: 'go-projects', label: 'Go to Projects', shortcut: 'P', run: () => scrollToId('projects') },
         { id: 'go-contact', label: 'Go to Contact', shortcut: 'C', run: () => scrollToId('contact') },
         { id: 'open-resume', label: 'Open Resume', shortcut: 'R', run: () => window.open('resume.pdf', '_blank', 'noopener') },
-        { id: 'open-books', label: 'Open Books', shortcut: 'B', run: () => { window.location.href = 'books.html'; } }
+        { id: 'open-books', label: 'Open Books', shortcut: 'B', run: () => { window.location.href = 'books.html'; } },
+        { id: 'open-tools', label: 'Open Tools', shortcut: 'T', run: () => { window.location.href = 'tools.html'; } },
+        { id: 'open-stories', label: 'Open IF-ELSE', shortcut: 'I', run: () => { window.location.href = 'if-else.html'; } }
     ];
 
     let filtered = commands.slice();
     let activeIndex = 0;
+    let returnFocus = null;
 
     const open = () => {
+        returnFocus = document.activeElement;
         palette.classList.add('open');
         palette.setAttribute('aria-hidden', 'false');
         document.body.classList.add('splash-active');
@@ -690,6 +716,7 @@ function initCommandPalette() {
         palette.classList.remove('open');
         palette.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('splash-active');
+        returnFocus?.focus({ preventScroll: true });
     };
 
     const render = () => {
@@ -750,9 +777,21 @@ function initCommandPalette() {
         if (event.key === 'Escape' && palette.classList.contains('open')) {
             close();
         }
+        if (event.key === 'Tab' && palette.classList.contains('open')) {
+            const first = closeBtn;
+            const last = input;
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        }
     });
 
     closeBtn.addEventListener('click', close);
+    document.getElementById('palette-trigger')?.addEventListener('click', open);
     palette.querySelector('.palette-backdrop')?.addEventListener('click', close);
 }
 
@@ -770,31 +809,4 @@ function getHeaderOffset() {
     const headerEl = document.querySelector('header');
     if (!headerEl) return 0;
     return headerEl.offsetHeight + 8;
-}
-
-function initCardChromeNormalization() {
-    const normalize = () => {
-        const cards = document.querySelectorAll('.browser-card');
-        cards.forEach((card, idx) => {
-            const header = card.querySelector('.browser-header');
-            const title = card.querySelector('h3');
-            if (!header || !title) return;
-
-            const bar = header.querySelector('.browser-address-bar');
-            if (bar && !bar.textContent.trim()) {
-                const file = title.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 24) || `module-${idx + 1}`;
-                bar.textContent = `${file}.ts`;
-            }
-
-            if (!header.querySelector('.status-chip')) {
-                const chip = document.createElement('span');
-                chip.className = 'status-chip stable';
-                chip.textContent = 'Stable';
-                header.appendChild(chip);
-            }
-        });
-    };
-
-    normalize();
-    setTimeout(normalize, 450);
 }

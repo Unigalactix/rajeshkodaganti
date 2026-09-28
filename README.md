@@ -6,45 +6,47 @@ This repository contains Rajesh Kodaganti's Software Development Engineer portfo
 
 ## Highlights
 
-- Terminal-style splash screen with a random welcome message on every fresh visit.
-- Professional developer UI system with semantic design tokens.
-- Sticky glass navigation with active section tracking and runtime breadcrumb.
+- Celestial Material theme: midnight blue, lavender light, warm metallic accents, and layered material cards.
+- Full-size profile picture framed by CSS orbital rings and a lightweight constellation canvas, without external artwork or WebGL.
+- Sticky observatory navigation with active section tracking and keyboard-accessible mobile navigation.
 - Command Palette (Cmd/Ctrl + K) for quick navigation.
 - Dynamic About, Skills, Experience, Projects, Certifications, modals, and resume content sourced from `js/data.json`.
-- Case-study project cards with file-tab chrome and project status chips.
+- Mission-style project cards and chronological experience chapters with status chips.
 - Animated architecture/system-map section and verified project milestone timeline.
-- Build logs marquee generated from live project/work data.
+- Static engineering-highlight strip generated from live project/work data.
 - Interactive detail modals for Experience, Education, and Projects.
 - Professional portfolio assistant and an on-demand Creative Lab.
 - Responsive layout with mobile-first polish and reduced-motion support.
 
 ## Core UI Features
 
-### 1. Terminal Splash Boot
-- Full-screen boot terminal UI before main portfolio render.
-- Randomized welcome line.
-- Typewriter effect with motion-safe fallback.
+### 1. Celestial Observatory
+- Immediate, non-blocking hero with a prominent 400px desktop profile picture, orbital rings, and explorer card (320px tablet and 250px mobile).
+- Books, Tools, IF-ELSE, and the 404 page share the same theme.
+- Dedicated creative-realm navigation and an optional ship's console in the playground.
 
-### 2. Pro Coder Visual System
+### 2. Celestial Material Visual System
 - Semantic tokens for surfaces, text, accents, borders, and statuses.
-- Consistent card chrome, interactive states, and transition timings.
-- Section separators and subtle grid/noise atmosphere.
+- Soft material surfaces, rounded controls, diffuse shadows, and metallic rims.
+- Cinzel display typography paired with Inter and Space Grotesk for readable content.
+- Subtle starfield, constellation details, and reduced-motion support.
 
 ### 3. Command Palette
 - Shortcut: Cmd/Ctrl + K.
 - Search commands.
 - Keyboard navigation (Arrow Up/Down + Enter).
-- Quick actions to jump to sections and open resume/books.
+- Quick actions to jump to sections and open the resume, Books, Tools, or IF-ELSE.
+- An Explore button provides a visible alternative to the keyboard shortcut.
 
 ### 4. Data-Driven Rendering
 - About section auto-generates summary/focus from profile + skills data.
 - Projects and certifications render from JSON.
-- Build logs and activity widgets derive values from the same data source.
+- Engineering highlights and activity widgets derive values from the same data source.
 
 ## Sections
 
-1. Hero + Terminal Intro
-2. Build Logs
+1. Celestial Hero + Explorer Card
+2. Engineering Highlights
 3. About
 4. Coding Interests
 5. System Map
@@ -52,10 +54,11 @@ This repository contains Rajesh Kodaganti's Software Development Engineer portfo
 7. Education
 8. Selected Engineering Case Studies
 9. Certifications
-10. Creative Lab
-11. Verified Project Activity
-12. Contact
-13. Footer + Socials
+10. Creative Realms (Books / Tools / IF-ELSE)
+11. Playground + Optional Ship's Console
+12. Verified Project Activity
+13. Contact
+14. Footer + Socials
 
 ## Tech Stack
 
@@ -101,6 +104,7 @@ Set `CHECK_EXTERNAL_LINKS=1` to include concurrent external-link checks. GitHub 
 
 - `index.html`: Page structure and global UI shell.
 - `css/styles.css`: Full visual system, responsive styling, states, motion.
+- `css/celestial.css`: Shared Celestial Material visual layer and responsive layouts. Loaded after the base and game styles.
 - `js/scripts.js`: Navigation telemetry, command palette, splash logic, interactive effects.
 - `js/content-loader.js`: Data-driven section rendering.
 - `js/data.json`: Content source for profile, projects, and certifications.
@@ -112,7 +116,13 @@ Set `CHECK_EXTERNAL_LINKS=1` to include concurrent external-link checks. GitHub 
 - Honors `prefers-reduced-motion`.
 - Coarse pointer and small-screen interaction optimizations.
 - Deferred non-critical desktop effects.
-- Content visibility optimization for faster perceived rendering.
+- No blocking splash screen; games load on demand, and the starfield pauses when inactive.
+
+### Testing the theme branch
+
+The redesign is isolated on `theme/celestial-material`; it is not merged into `main`. Check out that branch and start the local server above to review all five pages. Automatic production deployment is triggered only by pushes to `main`; pushing the theme branch does not deploy the redesign.
+
+Check desktop and mobile navigation, resume downloads, expandable content, detail dialogs, command-palette keyboard controls, the optional console, and the on-demand games. Reduced-motion mode preserves the static portrait and orbital illustration while disabling animated effects.
 
 ## Contact
 
