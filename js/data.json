@@ -301,7 +301,6 @@
       "endDate": "Present",
       "visualType": "architecture",
       "description": "Built a JSON extraction pipeline at Quadrant Technologies using Azure Document Intelligence and the OpenAI API for AI/OCR orchestration and structured downstream processing.",
-      "github": "https://github.com/Unigalactix/GasOps-DI-JSON",
       "problem": "Material test reports contain unstructured certificate data that must be retrieved and normalized reliably for downstream processing.",
       "approach": "Combined Azure Document Intelligence OCR, OpenAI mapping, certificate-based API retrieval, and defensive JSON parsing behind Python and FastAPI workflows.",
       "impact": "Produced structured JSON by HeatNumber with a backwards-compatible command-line workflow for existing consumers.",
