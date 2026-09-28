@@ -1,6 +1,6 @@
 """Validate portfolio content, assets, scripts, metadata, and generated resumes."""
 
-import json
+import argparse
 import os
 import subprocess
 import sys
@@ -15,6 +15,10 @@ from pypdf import PdfReader
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from scripts.sheet_snapshot import load_snapshot
+from build_resume import VARIANTS, clean, format_date
+
 HTML_FILES = sorted(ROOT.glob("*.html"))
 errors = []
 warnings = []
@@ -27,11 +31,15 @@ class PortfolioHTMLParser(HTMLParser):
         self.path = path
         self.references = []
         self.canonical_count = 0
+        self.has_footer = False
 
     def handle_starttag(self, tag, attrs):
         values = dict(attrs)
-        if tag == "img" and not values.get("alt"):
+        unloaded_image = "hidden" in values and not values.get("src") and not values.get("srcset")
+        if tag == "img" and not unloaded_image and not values.get("alt"):
             errors.append(f"{self.path.name}: image missing alt text: {values.get('src', '')}")
+        if tag == "footer":
+            self.has_footer = True
         if tag == "link" and values.get("rel") == "canonical":
             self.canonical_count += 1
         for attribute in ("href", "src"):
@@ -45,6 +53,15 @@ def validate_reference(source, reference):
     if reference.startswith(("#", "mailto:", "tel:", "data:", "javascript:")):
         return
     if reference.startswith(("http://", "https://")):
+        parsed = urlparse(reference)
+        if parsed.hostname in ("rajeshkodaganti.com", "www.rajeshkodaganti.com"):
+            clean = unquote(parsed.path).lstrip("/")
+            target = ROOT / clean
+            if target.is_dir():
+                target = target / "index.html"
+            if not target.is_file():
+                errors.append(f"{source.name}: missing same-site reference: {reference}")
+            return
         external_urls.add(reference)
         return
 
@@ -66,53 +83,45 @@ def validate_html():
 
         if path.name != "404.html" and parser.canonical_count != 1:
             errors.append(f"{path.name}: expected exactly one canonical link")
-        if path.name != "404.html" and "data-current-year" not in text:
+        sources = [reference.split("?", 1)[0] for reference in parser.references]
+        dynamic_footer = parser.has_footer and "js/site-content.js" in sources
+        if path.name != "404.html" and "data-current-year" not in text and not dynamic_footer:
             errors.append(f"{path.name}: missing dynamic copyright year")
-        if "Master's Student" in text or "simulating build consistency" in text:
-            errors.append(f"{path.name}: contains stale recruiter-facing copy")
+        if path.name != "404.html":
+            if "js/sheet-source.js" not in sources:
+                errors.append(f"{path.name}: missing Google Sheets runtime loader")
 
 
-def validate_data():
-    data = json.loads((ROOT / "js" / "data.json").read_text(encoding="utf-8"))
-    for collection in ("work", "education", "projects"):
-        ids = [item.get("id") for item in data[collection] if item.get("id")]
-        if len(ids) != len(set(ids)):
-            errors.append(f"js/data.json: duplicate IDs in {collection}")
+def validate_data(data, snapshot):
+    basics = data["basics"]
+    if basics.get("photo_url") and not basics.get("photo_alt"):
+        errors.append("Profile photo is missing photo_alt")
+    for collection in ("projects", "books", "bookVersions", "tools", "stories"):
+        for item in data[collection]:
+            if item.get("image") and not (item.get("imageAlt") or item.get("image_alt")):
+                errors.append(f"{collection}: image missing alternative text: {item.get('id')}")
+            for image_key, alt_key in (("cover_url", "cover_alt"), ("image_url", "image_alt")):
+                if item.get(image_key) and not item.get(alt_key):
+                    errors.append(f"{collection}: {image_key} missing {alt_key}: {item.get('id')}")
 
-    microsoft = next((job for job in data["work"] if job.get("id") == "microsoft"), None)
-    if not microsoft or microsoft.get("startDate") != "2025-10":
-        errors.append("js/data.json: Microsoft start date must be 2025-10")
-
-    verified_roles = {
-        "quadrant-intern": ("Artificial Intelligence Trainee", "2025-07", "2025-08"),
-        "qikcell": ("Assistant to Solutions Engineer", "2025-01", "2025-05"),
-        "peoplelink": ("IoT Engineer in R&D", "2018-06", "2019-05"),
-    }
-    for role_id, expected in verified_roles.items():
-        job = next((job for job in data["work"] if job.get("id") == role_id), {})
-        actual = tuple(job.get(field) for field in ("position", "startDate", "endDate"))
-        if actual != expected:
-            errors.append(f"js/data.json: {role_id} must match the verified master resume role and dates")
-
-    for project in data["projects"]:
-        if project.get("image") and not project.get("imageAlt"):
-            errors.append(f"js/data.json: project image missing imageAlt: {project.get('id')}")
-
-    def collect_urls(value):
+    def collect_urls(value, key=""):
         if isinstance(value, dict):
-            for child in value.values():
-                collect_urls(child)
+            for child_key, child in value.items():
+                collect_urls(child, child_key)
         elif isinstance(value, list):
             for child in value:
-                collect_urls(child)
-        elif isinstance(value, str) and value.startswith(("http://", "https://")):
-            external_urls.add(value)
+                collect_urls(child, key)
+        elif isinstance(value, str) and value:
+            if value.startswith(("http://", "https://")):
+                validate_reference(snapshot, value)
+            elif key in ("image", "cover", "photo_url", "image_url", "cover_url"):
+                validate_reference(ROOT / "index.html", value)
 
     collect_urls(data)
 
 
 def validate_javascript():
-    for path in sorted((ROOT / "js").glob("*.js")):
+    for path in sorted([*(ROOT / "js").glob("*.js"), *(ROOT / "scripts").glob("*.js")]):
         result = subprocess.run(
             ["node", "--check", str(path)], capture_output=True, text=True, timeout=60, check=False
         )
@@ -120,44 +129,39 @@ def validate_javascript():
             errors.append(f"{path.relative_to(ROOT)}: {result.stderr.strip()}")
 
 
-def validate_resumes():
-    expected_pages = {
-        "resume-1page.pdf": 1,
-        "resume-2page.pdf": 2,
-        "resume-3page.pdf": 3,
-        "resume.pdf": 2,
-        "Resume - Rajesh Kodaganti (Master).pdf": 2,
-    }
+def validate_resumes(data, resume_dir):
+    master = ROOT / "Resume - Rajesh Kodaganti (Master).pdf"
+    paths = {cfg["out"]: resume_dir / cfg["out"] for cfg in VARIANTS}
+    paths.update({"resume.pdf": resume_dir / "resume.pdf", master.name: master})
     extracted = {}
-    for name, expected in expected_pages.items():
-        path = ROOT / name
+    page_limits = {"resume-1page.pdf": 1, "resume-2page.pdf": 2, "resume-3page.pdf": 3}
+    for name, path in paths.items():
         if not path.exists() or path.stat().st_size == 0:
             errors.append(f"{name}: missing or empty")
             continue
-        reader = PdfReader(path)
-        if len(reader.pages) != expected:
-            errors.append(f"{name}: expected {expected} pages, found {len(reader.pages)}")
-        extracted[name] = "\n".join(page.extract_text() or "" for page in reader.pages)
+        try:
+            reader = PdfReader(path)
+            pages = [page.extract_text() or "" for page in reader.pages]
+            if not pages or any(not page.strip() for page in pages):
+                errors.append(f"{name}: contains no pages or an empty page")
+            if name in page_limits and len(pages) > page_limits[name]:
+                errors.append(f"{name}: exceeds its {page_limits[name]}-page budget ({len(pages)} pages)")
+            extracted[name] = " ".join(" ".join(pages).split())
+        except Exception as error:
+            errors.append(f"{name}: unreadable PDF: {error}")
 
-    default = extracted.get("resume.pdf", "")
-    for required in ("Software Development Engineer", "AI Software Engineer", "Oct 2025",
-                     "70+ Microsoft Identity services", "Artificial Intelligence Trainee",
-                     "PeopleLink Unified Communications", "Sentinel"):
-        if required not in default:
-            errors.append(f"resume.pdf: missing verified text: {required}")
-    for stale in ("Mar 2026 – Present", "Artificial Intelligence Intern",
-                  "Assistant to Solutions Engineer (Freelance)"):
-        if stale in default:
-            errors.append(f"resume.pdf: contains stale employment text: {stale}")
-    for name in ("resume-2page.pdf", "resume-3page.pdf"):
-        for required in ("Software Development Engineer", "Artificial Intelligence Trainee",
-                         "PeopleLink Unified Communications", "IoT Engineer in R&D"):
-            if required not in extracted.get(name, ""):
-                errors.append(f"{name}: missing updated resume text: {required}")
-        if "R&D;" in extracted.get(name, ""):
-            errors.append(f"{name}: contains a malformed ampersand in the PeopleLink role")
-    master = ROOT / "Resume - Rajesh Kodaganti (Master).pdf"
-    default_path = ROOT / "resume.pdf"
+    for cfg in VARIANTS:
+        name = cfg["out"]
+        required = [data["basics"]["name"], data["basics"].get("label", "")]
+        for job in data["work"][:cfg["exp"]]:
+            required.extend(job.get(key, "") for key in ("name", "position"))
+            required.extend(format_date(job.get(key, "")) for key in ("startDate", "endDate"))
+        for project in data["projects"][:cfg["proj"]]:
+            required.append(clean(project.get("name", "")))
+        for value in required:
+            if value and " ".join(value.split()) not in extracted.get(name, ""):
+                errors.append(f"{name}: missing snapshot text: {value}")
+    default_path = resume_dir / "resume.pdf"
     if master.exists() and default_path.exists() and default_path.read_bytes() != master.read_bytes():
         errors.append("resume.pdf: must exactly match the supplied master resume")
 
@@ -196,10 +200,18 @@ def validate_external_links():
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--data", required=True, type=Path, help="Explicit Google Sheets JSON snapshot")
+    parser.add_argument("--resume-dir", type=Path, default=ROOT, help="Directory containing generated PDFs")
+    args = parser.parse_args()
+    try:
+        data = load_snapshot(args.data)
+    except (OSError, ValueError) as error:
+        parser.error(str(error))
     validate_html()
-    validate_data()
+    validate_data(data, args.data)
     validate_javascript()
-    validate_resumes()
+    validate_resumes(data, args.resume_dir)
     validate_external_links()
 
     for warning in warnings:

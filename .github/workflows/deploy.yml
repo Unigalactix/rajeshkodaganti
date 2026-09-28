@@ -29,16 +29,34 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
       - name: Install validation dependencies
         run: pip install -r requirements.txt
 
+      - name: Snapshot published Google Sheets
+        run: node scripts/export-sheet-data.js --output .sheet-build/data.json
+
+      - name: Test Google Sheets loader
+        run: node --test scripts/sheet-source.test.js
+
+      - name: Test resume and validation helpers
+        run: python -m unittest discover -s tests -p "test_sheet_build.py"
+
       - name: Generate resumes
-        run: python build_resume.py
+        run: python build_resume.py --data .sheet-build/data.json
 
       - name: Validate portfolio
         env:
           CHECK_EXTERNAL_LINKS: "1"
-        run: python scripts/validate_portfolio.py
+        run: python scripts/validate_portfolio.py --data .sheet-build/data.json
+
+      - name: Remove ephemeral spreadsheet snapshot
+        if: always()
+        run: rm -rf .sheet-build
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

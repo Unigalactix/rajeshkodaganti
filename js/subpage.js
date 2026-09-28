@@ -1,5 +1,5 @@
 // Shared subpage enhancements: staggered scroll-reveal for Books / Tools / IF-ELSE grids.
-(function () {
+function enhanceSubpage() {
     'use strict';
 
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -39,4 +39,6 @@
     }, { threshold: 0.12 });
 
     items.forEach(function (el) { observer.observe(el); });
-})();
+}
+enhanceSubpage();
+document.addEventListener('portfolio:ready', enhanceSubpage);

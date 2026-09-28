@@ -1,392 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Rajesh Kodaganti | Books</title>
-    <meta name="description" content="A curated bookshelf by Rajesh Kodaganti — stories, projects and reading picks presented as interactive book covers.">
-    <meta name="author" content="Rajesh Kodaganti">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Rajesh Kodaganti | Books">
-    <meta property="og:description" content="A curated bookshelf — stories, projects and reading picks.">
-    <meta property="og:url" content="https://rajeshkodaganti.com/books.html">
-    <meta property="og:image" content="https://rajeshkodaganti.com/images/profile.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="canonical" href="https://rajeshkodaganti.com/books.html">
-
+    <title>Books</title>
+    <meta name="description" content="Books loaded from the published portfolio sheet.">
+    <link rel="canonical" href="">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Cinzel:wght@400;500;600&amp;display=swap"
-        rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Cinzel:wght@400;500;600&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css?v=6">
     <link rel="stylesheet" href="css/celestial.css?v=1">
+    <link rel="stylesheet" href="css/sheet-content.css?v=3">
 </head>
-
-
 <body class="subpage celestial-theme">
-
     <a class="skip-link" href="#main-content">Skip to main content</a>
-
-    <!-- Navbar -->
     <header>
         <div class="container">
-            <div class="logo"><a href="index.html">Rajesh<span> Kodaganti</span></a></div>
+            <div class="logo"><a href="index.html">Portfolio</a></div>
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
-                <li class="more-menu">
-                    <details class="more-menu-dropdown">
-                        <summary class="more-toggle" aria-haspopup="true" aria-expanded="false">
-                            <span>More</span>
-                            <i class="fa fa-angle-down more-caret" aria-hidden="true"></i>
-                        </summary>
-                        <div class="more-pop-card" role="menu" aria-label="More menu">
-                            <a href="books.html" role="menuitem" class="is-active" aria-current="page">Books</a>
-                            <a href="tools.html" role="menuitem">Tools</a>
-                            <a href="if-else.html" role="menuitem">IF-ELSE</a>
-                        </div>
-                    </details>
-                </li>
+                <li class="more-menu"><details class="more-menu-dropdown">
+                    <summary class="more-toggle" aria-haspopup="true" aria-expanded="false"><span>More</span><i class="fa fa-angle-down more-caret" aria-hidden="true"></i></summary>
+                    <div class="more-pop-card" role="menu" aria-label="More menu">
+                        <a href="books.html" role="menuitem" class="is-active" aria-current="page">Books</a>
+                        <a href="tools.html" role="menuitem">Tools</a>
+                        <a href="if-else.html" role="menuitem">IF-ELSE</a>
+                    </div>
+                </details></li>
             </ul>
         </div>
     </header>
-
-    <main id="main-content" class="container" style="margin-top: 100px;">
-        <div class="subpage-breadcrumb">
-            <span class="runtime-dot" aria-hidden="true"></span>
-            <span>Observatory / Books</span>
-        </div>
+    <main id="main-content" class="container sheet-subpage">
+        <div id="content-status" class="content-status" role="status" aria-live="polite">Loading published content...</div>
+        <noscript><p>Enable JavaScript to load the published bookshelf.</p></noscript>
+        <div class="subpage-breadcrumb"><span class="runtime-dot" aria-hidden="true"></span></div>
         <div class="page-head reveal" data-reveal="up">
-            <span class="hero-tag"><i class="fa fa-star-o" aria-hidden="true"></i> The celestial library</span>
-            <h1 class="page-title">Books for <span class="grad-text">Other Worlds</span></h1>
-            <p class="page-intro">Stories and experiments gathered beneath one sky. Open a cover to wander into another world, or request a different reading format through the contact link below.</p>
+            <span class="hero-tag"><i class="fa fa-star-o" aria-hidden="true"></i></span>
+            <h1 class="page-title" data-content-loading>Loading books...</h1>
+            <p class="page-intro"></p>
         </div>
-        <div class="row book-grid">
-            <!-- Book 1: Nishaan P1-VICTOR -->
-            <div class="col-md-4">
-                <a href="books/Nishaan P1_VICTOR.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
-                    <div class="browser-card book-card">
-                        <div class="browser-header">
-                            <span class="card-label">BOOK</span>
-                        </div>
-                        <div class="browser-content">
-                            <img class="book-cover" loading="lazy" src="book_covers/Nishaan p1-victor.png" alt="Nishaan P1-VICTOR Cover">
-                            <div class="book-meta">
-                                <h3>NISHAAN P1 VICTOR</h3>
-                                <p>Click to Read</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Book 2: 21-STOREY -->
-            <div class="col-md-4">
-                <a href="books/21-STOREY.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
-                    <div class="browser-card book-card">
-                        <div class="browser-header">
-                            <span class="card-label">BOOK</span>
-                        </div>
-                        <div class="browser-content">
-                            <img class="book-cover" loading="lazy" src="book_covers/21storey-cover.png" alt="21-STOREY Cover">
-                            <div class="book-meta">
-                                <h3>21-STOREY</h3>
-                                <p>Click to Read</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Book 3: ETA -->
-            <div class="col-md-4">
-                <div class="browser-card book-card is-clickable" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="etaModal" onclick="openETAModal()" onkeydown="if(event.key === 'Enter' || event.key === ' '){event.preventDefault();openETAModal();}">
-                    <div class="browser-header">
-                        <span class="card-label">BOOK</span>
-                    </div>
-                    <div class="browser-content">
-                        <img class="book-cover" loading="lazy" src="book_covers/ETA-COVER.jpg" alt="ETA Cover">
-                        <div class="book-meta">
-                            <h3>ETA</h3>
-                            <p>Click to Select Version</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Book 3: RECTANGLES -->
-            <div class="col-md-4">
-                <a href="books/RECTANGLES.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
-                    <div class="browser-card book-card">
-                        <div class="browser-header">
-                            <span class="card-label">BOOK</span>
-                        </div>
-                        <div class="browser-content">
-                            <img class="book-cover" loading="lazy" src="book_covers/RECTANGLES-COVER.webp" alt="RECTANGLES Cover">
-                            <div class="book-meta">
-                                <h3>RECTANGLES</h3>
-                                <p>Click to Read</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Book 4: Overmorrow -->
-            <div class="col-md-4">
-                <a href="books/OVERMORROW.pdf" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
-                    <div class="browser-card book-card">
-                        <div class="browser-header">
-                            <span class="card-label">BOOK</span>
-                        </div>
-                        <div class="browser-content">
-                            <img class="book-cover" loading="lazy" src="book_covers/Overmorrow-cover.jpeg" alt="Overmorrow Cover">
-                            <div class="book-meta">
-                                <h3>OVERMORROW</h3>
-                                <p>Click to Read</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Book 5: Ripples (Coming Soon) -->
-            <div class="col-md-4">
-                <div class="browser-card book-card is-soon">
-                    <div class="browser-header">
-                        <span class="card-label">FORTHCOMING</span>
-                    </div>
-                    <div class="browser-content">
-                        <span class="book-badge">Coming Soon</span>
-                        <img class="book-cover" loading="lazy" src="book_covers/Ripples-cover.jpeg" alt="Ripples Cover">
-                        <div class="book-meta">
-                            <h3>RIPPLES</h3>
-                            <p>Coming Soon</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Book 6: Bunn's Book Shelf -->
-            <div class="col-md-4">
-                <a href="https://drive.google.com/drive/folders/17wW_my817Rf7dP5TSAS2rE4_3HfsnB7Y?usp=drive_link"
-                    target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
-                    <div class="browser-card book-card">
-                        <div class="browser-header">
-                            <span class="card-label">COLLECTION</span>
-                        </div>
-                        <div class="browser-content">
-                            <img class="book-cover" loading="lazy" src="book_covers/bunns_book_shelf.png" alt="Bunn's Book Shelf Cover">
-                            <div class="book-meta">
-                                <h3>Bunn's Book Shelf</h3>
-                                <p>Click to Explore</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Divider and Typing Animation -->
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                <hr style="margin-top: 5rem; margin-bottom: 3rem; border-color: var(--text-color); opacity: 0.3;">
-                <div class="typing-container"
-                    style="text-align: center; margin-bottom: 2rem; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; color: var(--text-muted); min-height: 2em;">
-                    <span id="footer-typing-text"></span><span class="cursor"
-                        style="animation: blink 1s infinite;">|</span>
-                </div>
-
-                <!-- Book Format Request Footer -->
-                <div class="book-request-footer" style="
-                    text-align: center; 
-                    margin-bottom: 5rem; 
-                    padding: 2rem; 
-                    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-                    border: 1px solid rgba(255,255,255,0.1);
-                    border-radius: 12px;
-                    backdrop-filter: blur(10px);
-                    max-width: 700px;
-                    margin-left: auto;
-                    margin-right: auto;
-                ">
-                    <i class="fa fa-file-text" style="
-                        font-size: 2rem; 
-                        color: var(--accent-green); 
-                        margin-bottom: 1rem;
-                        display: block;
-                    "></i>
-                    <p style="
-                        font-size: 1.1rem; 
-                        color: var(--text-color); 
-                        margin-bottom: 0.5rem;
-                        font-weight: 500;
-                    ">
-                        Need a different format?
-                    </p>
-                    <p style="
-                        font-size: 0.95rem; 
-                        color: var(--text-muted); 
-                        margin-bottom: 1.5rem;
-                        line-height: 1.6;
-                    ">
-                        Request <strong>.epub</strong>, <strong>.doc</strong>, or other versions of these books<br>
-                        using the contact form on the <a href="index.html#contact" style="
-                            color: var(--accent-green); 
-                            text-decoration: none; 
-                            font-weight: 600;
-                            border-bottom: 2px solid transparent;
-                            transition: border-bottom 0.3s ease;
-                        " onmouseover="this.style.borderBottom='2px solid var(--accent-green)'"
-                            onmouseout="this.style.borderBottom='2px solid transparent'">home page</a>.
-                    </p>
-                    <a href="index.html#contact" class="btn-fun" style="
-                        display: inline-block;
-                        padding: 0.75rem 2rem;
-                        text-decoration: none;
-                        font-size: 0.9rem;
-                    ">
-                        <i class="fa fa-envelope"></i> Contact Rajesh
-                    </a>
-                </div>
-            </div>
-
-            <!-- Footer Typing Script -->
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    const text = "More worlds are taking shape...";
-                    const delay = 150;
-                    const element = document.getElementById('footer-typing-text');
-                    let index = 0;
-
-                    function typeWriter() {
-                        if (index < text.length) {
-                            element.innerHTML += text.charAt(index);
-                            index++;
-                            setTimeout(typeWriter, delay);
-                        }
-                    }
-
-                    // Start typing when scrolled into view
-                    const observer = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                typeWriter();
-                                observer.disconnect();
-                            }
-                        });
-                    });
-
-                    const container = document.querySelector('.typing-container');
-                    if (container) observer.observe(container);
-                });
-            </script>
-
-            <style>
-                @keyframes blink {
-
-                    0%,
-                    100% {
-                        opacity: 1;
-                    }
-
-                    50% {
-                        opacity: 0;
-                    }
-                }
-            </style>
+        <div class="row book-grid"></div>
+        <div class="book-request-footer">
+            <p class="typing-container" data-site-copy="footer_typing_text"></p>
+            <i class="fa fa-file-text" aria-hidden="true"></i>
+            <p data-site-copy="format_request.1"></p>
+            <p data-site-copy="format_request.2"></p>
+            <a href="index.html#contact" class="btn-fun" data-site-copy="format_request.3"></a>
         </div>
     </main>
-
-    <div class="back-home-wrap">
-        <a class="back-home" href="index.html"><i class="fa fa-arrow-left" aria-hidden="true"></i> Return to the Observatory</a>
-    </div>
-
-    <footer>
-        <div class="container" style="text-align:center; display: flex; flex-direction: column; align-items: center;">
-            <div class="social-icons">
-                <a href="https://github.com/Unigalactix" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/rajesh-kodaganti-323118215/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa fa-linkedin"></i></a>
-                <a href="https://learn.microsoft.com/en-us/users/rajeshkodaganti/" target="_blank" rel="noopener" title="Microsoft Learn" aria-label="Microsoft Learn profile"><i class="fa fa-graduation-cap"></i></a>
-                <a href="mailto:rajeshkodaganti.work@gmail.com" aria-label="Email"><i class="fa fa-envelope"></i></a>
-            </div>
-            <p style="margin-top: 2rem; text-align: center; width: 100%;">&copy; <span data-current-year>2026</span> Rajesh Kodaganti. <br> Built with
-                <span style="color:red;">&hearts;</span> and a little starlight.
-            </p>
+    <div class="back-home-wrap"><a class="back-home" href="index.html"><i class="fa fa-arrow-left" aria-hidden="true"></i> Return to the Observatory</a></div>
+    <footer><div class="container sheet-footer"><div class="social-icons"></div><p></p></div></footer>
+    <dialog id="book-editions" aria-labelledby="edition-title">
+        <div class="browser-card">
+            <div class="browser-header"><span>Choose your edition</span><button type="button" class="btn-text" aria-label="Close version selector">Close</button></div>
+            <div class="browser-content"><h3 id="edition-title"></h3><div class="edition-links"></div></div>
         </div>
-    </footer>
-
-    <!-- ETA Selection Modal -->
-    <div id="etaModal" class="game-modal" role="dialog" aria-modal="true" aria-labelledby="eta-modal-title"
-        style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center;">
-        <div class="browser-card" style="width: 90%; max-width: 500px; background: var(--bg-card); position: relative;">
-            <div class="browser-header">
-                <span class="browser-address-bar">Choose your edition</span>
-                <button type="button" class="btn-text" onclick="closeETAModal()" aria-label="Close version selector">Close</button>
-            </div>
-            <div class="browser-content" style="text-align: center; padding: 2rem;">
-                <h3 id="eta-modal-title" style="margin-bottom: 2rem;">Select ETA Version</h3>
-
-                <a href="books/ETA(Eng version).pdf" target="_blank" rel="noopener noreferrer" class="btn-fun"
-                    style="display: block; margin-bottom: 1rem; text-decoration: none;">
-                    <i class="fa fa-book"></i> English Version
-                </a>
-
-                <a href="books/ETA(Original).pdf" target="_blank" rel="noopener noreferrer" class="btn-fun btn-outline-fun"
-                    style="display: block; text-decoration: none;">
-                    <i class="fa fa-file-text-o"></i> Original (Tinglish)
-                </a>
-
-                <button type="button" class="btn-text" style="margin-top: 1.5rem; background: transparent; cursor: pointer;"
-                    onclick="closeETAModal()">
-                    Cancel
-                </button>
-            </div>
-        </div>
-    </div>
-
+    </dialog>
+    <script src="js/sheet-source.js?v=3" defer></script>
+    <script src="js/site-content.js?v=3" defer></script>
     <script src="js/nav-dropdown.js?v=6" defer></script>
-    <script src="js/subpage.js?v=6" defer></script>
-    <script>
-        let etaReturnFocus = null;
-
-        function openETAModal() {
-            const modal = document.getElementById('etaModal');
-            etaReturnFocus = document.activeElement;
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            modal.querySelector('button').focus();
-        }
-
-        function closeETAModal() {
-            const modal = document.getElementById('etaModal');
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            if (etaReturnFocus) etaReturnFocus.focus();
-        }
-
-        window.addEventListener('click', function (event) {
-            const modal = document.getElementById('etaModal');
-            if (event.target == modal) {
-                closeETAModal();
-            }
-        });
-
-        document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape' && document.getElementById('etaModal').style.display === 'flex') {
-                closeETAModal();
-            }
-        });
-    </script>
+    <script src="js/subpage.js?v=7" defer></script>
 </body>
-
 </html>

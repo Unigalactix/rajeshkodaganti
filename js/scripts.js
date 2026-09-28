@@ -20,26 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
     initStaticAccessibility();
     initLazyCreativeLab();
 
-    // 1. Load Profile Data from config.js
-    if (window.PROFILE_DATA) {
-        const data = window.PROFILE_DATA;
-
-        // Social Links (using data-link attribute)
-        const socialLinks = {
-            'github': data.social.github,
-            'linkedin': data.social.linkedin,
-            'email': data.social.email,
-            'learn': data.social.learn
-        };
-
-        // Update all elements with data-link attribute
-        for (const [key, url] of Object.entries(socialLinks)) {
-            document.querySelectorAll(`[data-link="${key}"]`).forEach(el => {
-                el.href = url;
-            });
-        }
-    }
-
     // Mobile Menu Logic
     const header = document.querySelector('header');
     const mobileMenuOpen = document.getElementById('mobile-menu-open');
@@ -405,21 +385,10 @@ function initTerminalCommandCenter() {
     const output = document.getElementById('terminal-output');
     if (!form || !input || !output) return;
 
-    const commandMap = {
-        help: 'Commands: about, stack, projects, contact, clear',
-        about: 'Software Engineer focused on AI systems, data pipelines, and secure architecture.',
-        stack: 'Python, Azure OpenAI, ETL, RAG, FastAPI, Cloud Security, DevOps.',
-        projects: 'Featured: Sentinel orchestrator, GasOps extraction, ConvIR denoiser.',
-        contact: 'Email: rajeshkodaganti.work@gmail.com | LinkedIn and GitHub links above.',
-        clear: '__clear__'
-    };
-
     const appendLine = (text, type = 'stream') => {
         const p = document.createElement('p');
         p.className = type === 'command' ? '' : 'console-stream';
-        p.innerHTML = type === 'command'
-            ? `<span class="prompt">$</span> ${text}`
-            : `<span>${text}</span>`;
+        p.textContent = type === 'command' ? `$ ${text}` : text;
         output.appendChild(p);
         output.scrollTop = output.scrollHeight;
     };
@@ -431,11 +400,21 @@ function initTerminalCommandCenter() {
 
         const cmd = raw.toLowerCase();
         appendLine(raw, 'command');
+        const data = window.PORTFOLIO_DATA;
+        const commandMap = {
+            help: 'Commands: about, stack, projects, contact, clear',
+            about: data?.basics.summary || 'No profile summary available.',
+            stack: data?.skills.flatMap(row => row.keywords).join(', ') || 'No skills published.',
+            projects: data?.projects.map(row => row.name).join(', ') || 'No projects published.',
+            contact: data?.basics.email || 'No contact email published.',
+            clear: '__clear__'
+        };
 
         if (commandMap[cmd] === '__clear__') {
             output.innerHTML = '';
         } else {
-            const response = commandMap[cmd] || `Unknown command: ${raw}. Try 'help'.`;
+            const response = !data && cmd !== 'help' ? 'Published content is loading or unavailable; check the page status.'
+                : commandMap[cmd] || `Unknown command: ${raw}. Try 'help'.`;
             appendLine(response);
         }
 
@@ -690,13 +669,16 @@ function initCommandPalette() {
         { id: 'go-experience', label: 'Go to Experience', shortcut: 'E', run: () => scrollToId('experience') },
         { id: 'go-projects', label: 'Go to Projects', shortcut: 'P', run: () => scrollToId('projects') },
         { id: 'go-contact', label: 'Go to Contact', shortcut: 'C', run: () => scrollToId('contact') },
-        { id: 'open-resume', label: 'Open Resume', shortcut: 'R', run: () => window.open('resume.pdf', '_blank', 'noopener') },
+        { id: 'open-resume', label: 'Open Resume', shortcut: 'R', available: () => Boolean(window.PORTFOLIO_DATA?.resumeLinks[0]?.url),
+            run: () => window.open(window.PORTFOLIO_DATA.resumeLinks[0].url, '_blank', 'noopener') },
         { id: 'open-books', label: 'Open Books', shortcut: 'B', run: () => { window.location.href = 'books.html'; } },
         { id: 'open-tools', label: 'Open Tools', shortcut: 'T', run: () => { window.location.href = 'tools.html'; } },
         { id: 'open-stories', label: 'Open IF-ELSE', shortcut: 'I', run: () => { window.location.href = 'if-else.html'; } }
     ];
 
-    let filtered = commands.slice();
+    const availableCommands = () => commands.filter(item => item.available ? item.available()
+        : !item.id.startsWith('go-') || !document.getElementById(item.id.slice(3))?.hidden);
+    let filtered = availableCommands();
     let activeIndex = 0;
     let returnFocus = null;
 
@@ -706,7 +688,7 @@ function initCommandPalette() {
         palette.setAttribute('aria-hidden', 'false');
         document.body.classList.add('splash-active');
         input.value = '';
-        filtered = commands.slice();
+        filtered = availableCommands();
         activeIndex = 0;
         render();
         setTimeout(() => input.focus(), 10);
@@ -735,7 +717,7 @@ function initCommandPalette() {
 
     input.addEventListener('input', () => {
         const q = input.value.trim().toLowerCase();
-        filtered = commands.filter(item => item.label.toLowerCase().includes(q));
+        filtered = availableCommands().filter(item => item.label.toLowerCase().includes(q));
         activeIndex = 0;
         render();
     });

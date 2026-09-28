@@ -1,337 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Rajesh Kodaganti | Tools</title>
-    <meta name="description" content="Developer-facing tools and utilities by Rajesh Kodaganti — automation, extraction, code and AI agent apps, many running as live Streamlit apps.">
-    <meta name="author" content="Rajesh Kodaganti">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Rajesh Kodaganti | Tools">
-    <meta property="og:description" content="Developer-facing tools and utilities — automation, extraction, code and AI agent apps.">
-    <meta property="og:url" content="https://rajeshkodaganti.com/tools.html">
-    <meta property="og:image" content="https://rajeshkodaganti.com/images/profile.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="canonical" href="https://rajeshkodaganti.com/tools.html">
-
+    <title>Tools</title>
+    <meta name="description" content="Tools loaded from the published portfolio sheet.">
+    <link rel="canonical" href="">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Cinzel:wght@400;500;600&amp;display=swap"
-        rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Cinzel:wght@400;500;600&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css?v=6">
     <link rel="stylesheet" href="css/celestial.css?v=1">
+    <link rel="stylesheet" href="css/sheet-content.css?v=3">
 </head>
-
 <body class="subpage celestial-theme">
-
     <a class="skip-link" href="#main-content">Skip to main content</a>
-
     <header>
         <div class="container">
-            <div class="logo"><a href="index.html">Rajesh<span> Kodaganti</span></a></div>
+            <div class="logo"><a href="index.html">Portfolio</a></div>
             <ul id="menu">
                 <li><a href="index.html">Home</a></li>
-                <li class="more-menu">
-                    <details class="more-menu-dropdown">
-                        <summary class="more-toggle" aria-haspopup="true" aria-expanded="false">
-                            <span>More</span>
-                            <i class="fa fa-angle-down more-caret" aria-hidden="true"></i>
-                        </summary>
-                        <div class="more-pop-card" role="menu" aria-label="More menu">
-                            <a href="books.html" role="menuitem">Books</a>
-                            <a href="tools.html" role="menuitem" class="is-active" aria-current="page">Tools</a>
-                            <a href="if-else.html" role="menuitem">IF-ELSE</a>
-                        </div>
-                    </details>
-                </li>
+                <li class="more-menu"><details class="more-menu-dropdown">
+                    <summary class="more-toggle" aria-haspopup="true" aria-expanded="false"><span>More</span><i class="fa fa-angle-down more-caret" aria-hidden="true"></i></summary>
+                    <div class="more-pop-card" role="menu" aria-label="More menu">
+                        <a href="books.html" role="menuitem">Books</a>
+                        <a href="tools.html" role="menuitem" class="is-active" aria-current="page">Tools</a>
+                        <a href="if-else.html" role="menuitem">IF-ELSE</a>
+                    </div>
+                </details></li>
             </ul>
         </div>
     </header>
-
-    <main id="main-content" class="container" style="margin-top: 100px; margin-bottom: 60px;">
-        <div class="subpage-breadcrumb">
-            <span class="runtime-dot" aria-hidden="true"></span>
-            <span>Observatory / Tools</span>
-        </div>
+    <main id="main-content" class="container sheet-subpage">
+        <div id="content-status" class="content-status" role="status" aria-live="polite">Loading published content...</div>
+        <noscript><p>Enable JavaScript to load the published tools.</p></noscript>
+        <div class="subpage-breadcrumb"><span class="runtime-dot" aria-hidden="true"></span></div>
         <div class="page-head reveal" data-reveal="up">
-            <span class="hero-tag"><i class="fa fa-star-o" aria-hidden="true"></i> The orbital workshop</span>
-            <h1 class="page-title">Tools for <span class="grad-text">New Horizons</span></h1>
-            <p class="page-intro">Useful instruments for curious builders — small experiments that turn an idea into something tangible. Most open as live Streamlit apps and may take a few seconds to wake from sleep.</p>
+            <span class="hero-tag"><i class="fa fa-star-o" aria-hidden="true"></i></span>
+            <h1 class="page-title" data-content-loading>Loading tools...</h1>
+            <p class="page-intro"></p>
         </div>
-        <div class="row tool-grid">
-            <div class="col-md-4 col-sm-6">
-                <div class="browser-card tool-card">
-                    <div class="browser-header">
-                        <span class="card-label">TOOL</span>
-                    </div>
-                    <div class="browser-content">
-                        <div class="tool-topline">
-                            <span class="tool-badge"><i class="fa fa-cogs" aria-hidden="true"></i></span>
-                            <span class="tool-status status-sleep"><span class="status-dot"></span> wakes on open</span>
-                        </div>
-                        <div>
-                            <h3 class="tool-title">Cadbury Automation</h3>
-                            <p class="tool-description">Automation utility for operational workflows and repetitive task handling.</p>
-                        </div>
-                        <div class="tool-meta">
-                            <span class="tool-tag tag-automation">automation</span>
-                        </div>
-                        <div class="tool-actions">
-                            <a href="https://cadburyautomation.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="browser-card tool-card">
-                    <div class="browser-header">
-                        <span class="card-label">TOOL</span>
-                    </div>
-                    <div class="browser-content">
-                        <div class="tool-topline">
-                            <span class="tool-badge"><i class="fa fa-expand" aria-hidden="true"></i></span>
-                            <span class="tool-status status-sleep"><span class="status-dot"></span> wakes on open</span>
-                        </div>
-                        <div>
-                            <h3 class="tool-title">Dimension Extractor</h3>
-                            <p class="tool-description">Extracts dimensional information quickly from inputs for faster validation and review.</p>
-                        </div>
-                        <div class="tool-meta">
-                            <span class="tool-tag tag-extraction">extraction</span>
-                        </div>
-                        <div class="tool-actions">
-                            <a href="https://dimensionextractor.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="browser-card tool-card">
-                    <div class="browser-header">
-                        <span class="card-label">TOOL</span>
-                    </div>
-                    <div class="browser-content">
-                        <div class="tool-topline">
-                            <span class="tool-badge"><i class="fa fa-code" aria-hidden="true"></i></span>
-                            <span class="tool-status status-sleep"><span class="status-dot"></span> wakes on open</span>
-                        </div>
-                        <div>
-                            <h3 class="tool-title">L2M Code App</h3>
-                            <p class="tool-description">Focused utility for working with L2M code workflows through a lightweight web interface.</p>
-                        </div>
-                        <div class="tool-meta">
-                            <span class="tool-tag tag-code">code</span>
-                        </div>
-                        <div class="tool-actions">
-                            <a href="https://unigalactix-l2m-code-app-qaj4pr.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="browser-card tool-card">
-                    <div class="browser-header">
-                        <span class="card-label">TOOL</span>
-                    </div>
-                    <div class="browser-content">
-                        <div class="tool-topline">
-                            <span class="tool-badge"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
-                            <span class="tool-status status-sleep"><span class="status-dot"></span> wakes on open</span>
-                        </div>
-                        <div>
-                            <h3 class="tool-title">MD Viewer</h3>
-                            <p class="tool-description">Markdown viewing utility for quickly rendering and reading content in a cleaner format.</p>
-                        </div>
-                        <div class="tool-meta">
-                            <span class="tool-tag tag-markdown">markdown</span>
-                        </div>
-                        <div class="tool-actions">
-                            <a href="https://mdviewer.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="browser-card tool-card">
-                    <div class="browser-header">
-                        <span class="card-label">TOOL</span>
-                    </div>
-                    <div class="browser-content">
-                        <div class="tool-topline">
-                            <span class="tool-badge"><i class="fa fa-font" aria-hidden="true"></i></span>
-                            <span class="tool-status status-sleep"><span class="status-dot"></span> wakes on open</span>
-                        </div>
-                        <div>
-                            <h3 class="tool-title">ARKFONT</h3>
-                            <p class="tool-description">Font-focused utility for exploring and working with typography through a lightweight web interface.</p>
-                        </div>
-                        <div class="tool-meta">
-                            <span class="tool-tag tag-code">typography</span>
-                        </div>
-                        <div class="tool-actions">
-                            <a href="https://arkfont.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="browser-card tool-card">
-                    <div class="browser-header">
-                        <span class="card-label">TOOL</span>
-                    </div>
-                    <div class="browser-content">
-                        <div class="tool-topline">
-                            <span class="tool-badge"><i class="fa fa-id-card-o" aria-hidden="true"></i></span>
-                            <span class="tool-status status-sleep"><span class="status-dot"></span> wakes on open</span>
-                        </div>
-                        <div>
-                            <h3 class="tool-title">Custom Resume Generator</h3>
-                            <p class="tool-description">Builds tailored resume outputs from structured inputs to speed up application customization.</p>
-                        </div>
-                        <div class="tool-meta">
-                            <span class="tool-tag tag-resume">resume</span>
-                        </div>
-                        <div class="tool-actions">
-                            <a href="https://customresumegenerator.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="browser-card tool-card">
-                    <div class="browser-header">
-                        <span class="card-label">TOOL</span>
-                    </div>
-                    <div class="browser-content">
-                        <div class="tool-topline">
-                            <span class="tool-badge"><i class="fa fa-key" aria-hidden="true"></i></span>
-                            <span class="tool-status status-sleep"><span class="status-dot"></span> wakes on open</span>
-                        </div>
-                        <div>
-                            <h3 class="tool-title">Token Generator Base64</h3>
-                            <p class="tool-description">Generates Base64-based token values for quick testing, demos, and lightweight utility workflows.</p>
-                        </div>
-                        <div class="tool-meta">
-                            <span class="tool-tag tag-security">security</span>
-                        </div>
-                        <div class="tool-actions">
-                            <a href="https://unigalactix-token-gen-base64-streamlit-token-app-ig3q0z.streamlit.app/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="browser-card tool-card">
-                    <div class="browser-header">
-                        <span class="card-label">TOOL</span>
-                    </div>
-                    <div class="browser-content">
-                        <div class="tool-topline">
-                            <span class="tool-badge"><i class="fa fa-shield" aria-hidden="true"></i></span>
-                            <span class="tool-status status-live"><span class="status-dot"></span> live</span>
-                        </div>
-                        <div>
-                            <h3 class="tool-title">Sentinel Dev Agent</h3>
-                            <p class="tool-description">Developer-facing agent workspace for guided workflows, task execution, and utility operations.</p>
-                        </div>
-                        <div class="tool-meta">
-                            <span class="tool-tag tag-ai">ai agent</span>
-                        </div>
-                        <div class="tool-actions">
-                            <a href="https://sentineldevagent.azurewebsites.net/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Open Project</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="browser-card tool-card">
-                    <div class="browser-header">
-                        <span class="card-label">TOOL</span>
-                    </div>
-                    <div class="browser-content">
-                        <div class="tool-topline">
-                            <span class="tool-badge"><i class="fa fa-paper-plane" aria-hidden="true"></i></span>
-                            <span class="tool-status status-live"><span class="status-dot"></span> live</span>
-                        </div>
-                        <div>
-                            <h3 class="tool-title">JobPilot</h3>
-                            <p class="tool-description">Browser-only job-search and resume-tailoring co-pilot. Aggregates multiple job boards and tailors resumes with AI — no backend, your keys stay local.</p>
-                        </div>
-                        <div class="tool-meta">
-                            <span class="tool-tag tag-ai">ai co-pilot</span>
-                            <span class="tool-tag tag-code">job search</span>
-                        </div>
-                        <div class="tool-actions">
-                            <a href="https://jobspilot.site/" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Live Demo</a>
-                            <a href="https://github.com/vangipuraputarunsailesh/jobpilot" target="_blank" rel="noopener noreferrer" class="btn-fun btn-outline-fun"><i class="fa fa-github" aria-hidden="true"></i> Repo</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 col-sm-6">
-                <div class="browser-card tool-card">
-                    <div class="browser-header">
-                        <span class="card-label">TOOL</span>
-                    </div>
-                    <div class="browser-content">
-                        <div class="tool-topline">
-                            <span class="tool-badge"><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
-                            <span class="tool-status status-live"><span class="status-dot"></span> live</span>
-                        </div>
-                        <div>
-                            <h3 class="tool-title">AI·EDU</h3>
-                            <p class="tool-description">A hands-on AI engineering curriculum that teaches RAG, agentic RAG, multi-agent systems and the 14 pillars of agentic AI through small, runnable browser projects — no API keys, nothing to install.</p>
-                        </div>
-                        <div class="tool-meta">
-                            <span class="tool-tag tag-ai">ai learning</span>
-                            <span class="tool-tag tag-code">rag</span>
-                        </div>
-                        <div class="tool-actions">
-                            <a href="https://unigalactix.github.io/AI-EDU" target="_blank" rel="noopener noreferrer" class="btn-fun"><i class="fa fa-external-link" aria-hidden="true"></i> Live Demo</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="row tool-grid"></div>
     </main>
-
-    <div class="back-home-wrap">
-        <a class="back-home" href="index.html"><i class="fa fa-arrow-left" aria-hidden="true"></i> Return to the Observatory</a>
-    </div>
-
-    <footer>
-        <div class="container" style="text-align:center; display: flex; flex-direction: column; align-items: center;">
-            <div class="social-icons">
-                <a href="https://github.com/Unigalactix" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/rajesh-kodaganti-323118215/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa fa-linkedin"></i></a>
-                <a href="https://learn.microsoft.com/en-us/users/rajeshkodaganti/" target="_blank" rel="noopener" title="Microsoft Learn" aria-label="Microsoft Learn profile"><i class="fa fa-graduation-cap"></i></a>
-                <a href="mailto:rajeshkodaganti.work@gmail.com" aria-label="Email"><i class="fa fa-envelope"></i></a>
-            </div>
-            <p style="margin-top: 2rem; text-align: center; width: 100%;">&copy; <span data-current-year>2026</span> Rajesh Kodaganti. <br> Built with
-                <span style="color:red;">&hearts;</span> and a little starlight.
-            </p>
-        </div>
-    </footer>
-
+    <div class="back-home-wrap"><a class="back-home" href="index.html"><i class="fa fa-arrow-left" aria-hidden="true"></i> Return to the Observatory</a></div>
+    <footer><div class="container sheet-footer"><div class="social-icons"></div><p></p></div></footer>
+    <script src="js/sheet-source.js?v=3" defer></script>
+    <script src="js/site-content.js?v=3" defer></script>
     <script src="js/nav-dropdown.js?v=6" defer></script>
-    <script src="js/subpage.js?v=6" defer></script>
+    <script src="js/subpage.js?v=7" defer></script>
 </body>
-
 </html>

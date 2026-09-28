@@ -1,4 +1,4 @@
-// Accessible detail dialogs backed by js/data.json.
+// Accessible detail dialogs backed by the shared published-sheet data.
 class ModalManager {
     constructor() {
         this.data = window.PORTFOLIO_DATA || null;
@@ -51,7 +51,7 @@ class ModalManager {
             body: `
                 <section class="modal-section">
                     <h3><i class="fa fa-graduation-cap" aria-hidden="true"></i> Degree</h3>
-                    <p><strong>${this.escape(education.studyType)}</strong> in ${this.escape(education.area)}</p>
+                    ${education.studyType || education.area ? `<p>${this.escape([education.studyType, education.area].filter(Boolean).join(' - '))}</p>` : ''}
                     <p><strong>Duration:</strong> ${this.formatPeriod(education.startDate, education.endDate)}</p>
                     ${education.score ? `<p><strong>Score:</strong> ${this.escape(education.score)}</p>` : ''}
                     ${education.url ? `<p><a class="btn-text" href="${this.escape(education.url)}" target="_blank" rel="noopener noreferrer"><i class="fa fa-external-link" aria-hidden="true"></i> Institution website</a></p>` : ''}

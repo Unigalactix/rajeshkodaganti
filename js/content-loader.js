@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('js/data.json')
-        .then(response => response.json())
+    window.portfolioReady
         .then(data => {
             window.PORTFOLIO_DATA = data;
             if (window.modalManager) window.modalManager.setData(data);
@@ -12,30 +11,27 @@ document.addEventListener('DOMContentLoaded', () => {
             renderBuildLogs(data.projects, data.work);
             renderActivityDashboard(data);
         })
-        .catch(error => console.error('Error loading data:', error));
+        .catch(showContentError);
 });
+
+const contentEscape = value => SheetSource.escapeHTML(value);
 
 function renderAbout(basics, skills) {
     const summaryEl = document.getElementById('about-summary');
     const focusEl = document.getElementById('about-focus');
     if (!summaryEl || !focusEl) return;
 
-    const label = basics && basics.label ? basics.label : 'Software Engineer';
-    const baseSummary = basics && basics.summary
-        ? basics.summary
-        : 'Software Engineer focused on building practical and reliable intelligent systems.';
+    const baseSummary = basics.summary || '';
 
     const highlightedSkills = Array.isArray(skills)
         ? skills.slice(0, 2).flatMap(cat => cat.keywords || []).slice(0, 4)
         : [];
 
-    summaryEl.innerHTML = `I believe technology should not just function, it should <strong>delight</strong>. I am <strong>${label}</strong>, currently focused on turning complex systems into useful products.`;
+    const template = window.PORTFOLIO_DATA.siteContent.find(row => row.page === 'index.html' && row.key === 'about_intro_template');
+    summaryEl.textContent = template ? template.value.replaceAll('{label}', basics.label || '') : '';
 
     if (highlightedSkills.length) {
-        const tags = highlightedSkills
-            .map(skill => `<span class="text-highlight">${skill}</span>`)
-            .join(', ');
-        focusEl.innerHTML = `${baseSummary} Current focus includes ${tags}.`;
+        focusEl.textContent = `${baseSummary} Current focus includes ${highlightedSkills.join(', ')}.`;
     } else {
         focusEl.textContent = baseSummary;
     }
@@ -66,11 +62,11 @@ function renderExperience(work) {
                 <span class="status-chip ${job.endDate === 'Present' ? 'running' : 'stable'}">${job.endDate === 'Present' ? 'Current' : 'Previous'}</span>
             </div>
             <div class="browser-content">
-                <span class="card-role">${job.position}</span>
-                <h3>${job.name}</h3>
-                <span class="card-date">${formatPeriod(job.startDate, job.endDate)}</span>
-                ${job.project ? `<p class="experience-project"><strong>Project:</strong> ${job.project}</p>` : ''}
-                <p>${job.summary}</p>
+                <span class="card-role">${contentEscape(job.position)}</span>
+                <h3>${contentEscape(job.name)}</h3>
+                <span class="card-date">${contentEscape(formatPeriod(job.startDate, job.endDate))}</span>
+                ${job.project ? `<p class="experience-project"><strong>Project:</strong> ${contentEscape(job.project)}</p>` : ''}
+                <p>${contentEscape(job.summary)}</p>
                 <span class="card-open">Explore this chapter &#8599;</span>
             </div>`;
 
@@ -85,6 +81,7 @@ function renderExperience(work) {
         container.appendChild(card);
     });
 
+    if (!work.length) container.append(contentElement('p', 'empty-content', 'No work experience published yet.'));
     if (work.length > visibleCount && toggleBtn) {
         toggleBtn.hidden = false;
         let expanded = false;
@@ -146,6 +143,7 @@ function renderSkills(skills) {
         container.appendChild(categoryDiv);
     });
 
+    if (!skills.length) container.append(contentElement('p', 'empty-content', 'No skills published yet.'));
     // Show toggle button if there are more than 1 category
     if (skills.length > 1 && toggleBtn) {
         toggleBtn.style.display = 'inline-block';
@@ -209,15 +207,15 @@ function renderProjects(projects) {
 
         const problem = document.createElement('div');
         problem.className = 'case-row';
-        problem.innerHTML = `<strong>Problem</strong><p>${caseStudy.problem}</p>`;
+        problem.innerHTML = `<strong>Problem</strong><p>${contentEscape(caseStudy.problem)}</p>`;
 
         const approach = document.createElement('div');
         approach.className = 'case-row';
-        approach.innerHTML = `<strong>Approach</strong><p>${caseStudy.approach}</p>`;
+        approach.innerHTML = `<strong>Approach</strong><p>${contentEscape(caseStudy.approach)}</p>`;
 
         const impact = document.createElement('div');
         impact.className = 'case-row';
-        impact.innerHTML = `<strong>Impact</strong><p>${caseStudy.impact}</p>`;
+        impact.innerHTML = `<strong>Impact</strong><p>${contentEscape(caseStudy.impact)}</p>`;
 
         const keywordsDiv = document.createElement('div');
         keywordsDiv.style.marginBottom = '1rem';
@@ -277,6 +275,7 @@ function renderProjects(projects) {
         container.appendChild(card);
     });
 
+    if (!projects.length) container.append(contentElement('p', 'empty-content', 'No projects published yet.'));
     if (typeof initRevealOnScroll === 'function') {
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         initRevealOnScroll(reduced);
@@ -306,11 +305,9 @@ function createProjectVisual(project) {
         const figure = document.createElement('figure');
         figure.className = 'project-visual';
         const image = document.createElement('img');
-        image.src = project.image;
-        image.alt = project.imageAlt || `${project.name} interface`;
-        image.loading = 'lazy';
         image.decoding = 'async';
         figure.appendChild(image);
+        setContentImage(image, project.image, project.imageAlt || `${project.name} interface`);
         return figure;
     }
 
@@ -320,7 +317,7 @@ function createProjectVisual(project) {
         figure.setAttribute('aria-label', `${project.name} architecture overview`);
         const labels = (project.keywords || []).slice(0, 4);
         figure.innerHTML = labels.map((label, index) =>
-            `<span class="architecture-node">${label}</span>${index < labels.length - 1 ? '<i class="fa fa-long-arrow-right" aria-hidden="true"></i>' : ''}`
+            `<span class="architecture-node">${contentEscape(label)}</span>${index < labels.length - 1 ? '<i class="fa fa-long-arrow-right" aria-hidden="true"></i>' : ''}`
         ).join('');
         return figure;
     }
@@ -332,12 +329,12 @@ function getCaseStudyCopy(project) {
     const highlights = Array.isArray(project.highlights) ? project.highlights : [];
     const first = highlights[0] || project.description;
     const second = highlights[1] || project.description;
-    const third = highlights[2] || highlights[1] || 'Delivered a reliable and maintainable implementation.';
+    const third = highlights[2] || highlights[1] || project.description;
 
     return {
-        problem: project.description || 'Solved a production-facing engineering challenge.',
-        approach: second,
-        impact: third || first
+        problem: project.problem || project.description || '',
+        approach: project.approach || second || '',
+        impact: project.impact || third || first || ''
     };
 }
 
@@ -354,8 +351,6 @@ function renderBuildLogs(projects, work) {
         .map(role => `${role.position} at ${role.name}`);
 
     const logs = projectLogs.length ? projectLogs : workLogs;
-    if (!logs.length) return;
-
     marquee.innerHTML = '';
     logs.forEach(log => {
         const span = document.createElement('span');
@@ -409,7 +404,7 @@ function renderMilestones(container, projects) {
     container.innerHTML = '';
     projects.slice(0, 5).forEach(project => {
         const item = document.createElement('li');
-        item.innerHTML = `<time datetime="${project.startDate}">${formatPeriod(project.startDate, project.endDate)}</time><strong>${project.name.replace(/\[WIP\]/gi, '').trim()}</strong>`;
+        item.innerHTML = `<time datetime="${contentEscape(project.startDate)}">${contentEscape(formatPeriod(project.startDate, project.endDate))}</time><strong>${contentEscape(project.name.replace(/\[WIP\]/gi, '').trim())}</strong>`;
         container.appendChild(item);
     });
 }
@@ -437,29 +432,16 @@ function renderCertifications(certs) {
         'Anthropic': 'fa-code'
     };
 
-    const priorities = [
-        'Microsoft Certified: SQL AI Developer Associate',
-        'Microsoft Certified: Azure AI Engineer Associate',
-        'Microsoft Certified: DevOps Engineer Expert',
-        'Microsoft Certified: Fabric Data Engineer Associate',
-        'Career Essentials in GitHub Copilot Professional Certificate',
-        'Docker Foundations Professional Certificate',
-        'DAG Authoring for Apache Airflow 3',
-        'Model Context Protocol: Advanced Topics'
-    ];
-    const priority = new Map(priorities.map((name, index) => [name, index]));
-    const ordered = [...certs].sort((a, b) => {
-        const aRank = priority.has(a.name) ? priority.get(a.name) : 100;
-        const bRank = priority.has(b.name) ? priority.get(b.name) : 100;
-        return aRank - bRank || a.issuer.localeCompare(b.issuer) || b.date.localeCompare(a.date);
-    });
+    const visibleCount = 8;
+    const ordered = certs;
+    container.replaceChildren();
 
     ordered.forEach((cert, index) => {
         const card = document.createElement('div');
         card.className = 'cert-card';
-        if (priority.has(cert.name)) card.classList.add('featured-cert');
+        if (index < visibleCount) card.classList.add('featured-cert');
 
-        if (index >= priorities.length) {
+        if (index >= visibleCount) {
             card.style.display = 'none';
             card.classList.add('collapsible-cert');
         }
@@ -499,7 +481,8 @@ function renderCertifications(certs) {
     });
 
     const certToggleBtn = document.getElementById('certs-toggle-btn');
-    if (ordered.length > priorities.length && certToggleBtn) {
+    if (!certs.length) container.append(contentElement('p', 'empty-content', 'No certificates published yet.'));
+    if (ordered.length > visibleCount && certToggleBtn) {
         certToggleBtn.style.display = 'inline-block';
         let certExpanded = false;
         certToggleBtn.addEventListener('click', () => {

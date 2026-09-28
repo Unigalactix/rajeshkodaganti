@@ -1,9 +1,12 @@
 """Generate resume variants from portfolio data and publish the supplied master PDF."""
-import json
+import argparse
 import os
 import shutil
 from datetime import datetime
-from xml.sax.saxutils import escape
+from urllib.parse import urlparse
+from xml.sax.saxutils import escape, quoteattr
+
+from scripts.sheet_snapshot import load_snapshot
 
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
@@ -20,31 +23,25 @@ ACCENT = HexColor("#0F6E4F")     # deep brand green (print friendly)
 DARK = HexColor("#1d2530")       # near-black slate
 MUTE = HexColor("#55606e")       # muted gray
 
-with open(os.path.join(ROOT, "js", "data.json"), "r", encoding="utf-8") as f:
-    data = json.load(f)
-
-basics = data["basics"]
-
-SUMMARY_SHORT = basics["summary"]
-SUMMARY_FULL = f'{basics["summary"]} {basics["impact"]}'
-
-
 def format_date(value):
-    if not value or value == "Present":
+    if not value or value.lower() == "present":
         return value or ""
-    return datetime.strptime(value, "%Y-%m").strftime("%b %Y")
+    for pattern in ("%Y-%m", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(value, pattern).strftime("%b %Y")
+        except ValueError:
+            pass
+    return value
 
 
-EXPERIENCE = [
-    {
-        "company": job["name"],
-        "role": job["position"],
-        "loc": job["location"],
-        "dates": f'{format_date(job["startDate"])} – {format_date(job["endDate"])}',
-        "points": job.get("highlights", []),
-    }
-    for job in data["work"]
-]
+def text(value):
+    return escape(str(value or ""))
+
+
+def link_markup(label, url):
+    if urlparse(url).scheme.lower() not in ("https", "http", "mailto", "tel"):
+        return text(label)
+    return f'<a href={quoteattr(url)} color="#0F6E4F">{text(label)}</a>'
 
 
 def clean(name):
@@ -97,8 +94,9 @@ def make_styles(density):
     return s
 
 
-def build(cfg):
-    out = os.path.join(ROOT, cfg["out"])
+def build(cfg, data, output_dir=ROOT):
+    out = os.path.join(output_dir, cfg["out"])
+    basics = data["basics"]
     s = make_styles(cfg["density"])
     story = []
 
@@ -113,8 +111,8 @@ def build(cfg):
             story.append(Paragraph(escape(it), s["bullet"], bulletText="\u2022"))
 
     def two_col_header(left_html, right_html):
-        t = Table([[Paragraph(left_html, s["role"]),
-                    Paragraph(right_html, s["roleRight"])]],
+        t = Table([[Paragraph(text(left_html), s["role"]),
+                    Paragraph(text(right_html), s["roleRight"])]],
                   colWidths=[4.55 * inch, 2.65 * inch])
         t.setStyle(TableStyle([
             ("LEFTPADDING", (0, 0), (-1, -1), 0),
@@ -126,88 +124,94 @@ def build(cfg):
         story.append(t)
 
     # header
-    story.append(Paragraph(basics["name"], s["name"]))
-    story.append(Paragraph("Software Development Engineer", s["subtitle"]))
+    story.append(Paragraph(text(basics["name"]), s["name"]))
+    if basics.get("label"):
+        story.append(Paragraph(text(basics["label"]), s["subtitle"]))
     loc = basics.get("location", {})
     loc_str = ", ".join(x for x in [loc.get("city"), loc.get("region")] if x)
-    email = basics["email"]
-    contact = (
-        f'{loc_str} &nbsp;&bull;&nbsp; {basics.get("phone", "")} &nbsp;&bull;&nbsp; '
-        f'<a href="mailto:{email}" color="#0F6E4F">{email}</a> &nbsp;&bull;&nbsp; '
-        f'<a href="https://www.linkedin.com/in/rajesh-kodaganti-323118215/" color="#0F6E4F">LinkedIn</a> &nbsp;&bull;&nbsp; '
-        f'<a href="https://github.com/Unigalactix" color="#0F6E4F">GitHub</a> &nbsp;&bull;&nbsp; '
-        f'<a href="https://learn.microsoft.com/en-us/users/rajeshkodaganti/" color="#0F6E4F">Microsoft Learn</a>'
-    )
-    story.append(Paragraph(contact, s["contact"]))
+    contact = [text(value) for value in (loc_str, basics.get("phone")) if value]
+    if basics.get("email"):
+        contact.append(link_markup(basics["email"], f'mailto:{basics["email"]}'))
+    for profile in basics.get("profiles", []):
+        if profile.get("url"):
+            contact.append(link_markup(profile.get("network") or profile.get("username") or "Profile", profile["url"]))
+    if basics.get("website_url"):
+        contact.append(link_markup("Website", basics["website_url"]))
+    if contact:
+        story.append(Paragraph(" &nbsp;&bull;&nbsp; ".join(contact), s["contact"]))
     story.append(Spacer(1, 4))
     story.append(HRFlowable(width="100%", thickness=1.4, color=ACCENT, spaceAfter=2))
 
     # summary
-    section("Summary")
-    story.append(Paragraph(SUMMARY_SHORT if cfg["summary"] == "short" else SUMMARY_FULL, s["summary"]))
+    summary = basics.get("summary", "")
+    if cfg["summary"] != "short":
+        summary = " ".join(value for value in (summary, basics.get("impact", "")) if value)
+    if summary:
+        section("Summary")
+        story.append(Paragraph(text(summary), s["summary"]))
 
     # skills
-    section("Technical Skills")
+    if data["skills"]:
+        section("Technical Skills")
     for cat in data["skills"]:
-        story.append(Paragraph(f'<b>{escape(cat["name"])}:</b> {escape(", ".join(cat["keywords"]))}', s["skill"]))
+        story.append(Paragraph(f'<b>{text(cat.get("name"))}:</b> {text(", ".join(cat.get("keywords", [])))}', s["skill"]))
 
     # experience
-    section("Experience")
-    exp = EXPERIENCE[:cfg["exp"]] if cfg["exp"] else EXPERIENCE
+    if data["work"]:
+        section("Experience")
+    exp = data["work"][:cfg["exp"]]
     gap = {"tight": 2, "normal": 3, "loose": 5}[cfg["density"]]
     for i, e in enumerate(exp):
-        two_col_header(e["company"], e["dates"])
-        story.append(Paragraph(f'{escape(e["role"])} &nbsp;|&nbsp; {escape(e["loc"])}', s["sub"]))
-        bullets(e["points"], limit=cfg["exp_bullets"])
+        dates = " – ".join(format_date(e.get(key, "")) for key in ("startDate", "endDate") if e.get(key))
+        two_col_header(e.get("name", ""), dates)
+        story.append(Paragraph(" &nbsp;|&nbsp; ".join(text(e[key]) for key in ("position", "location") if e.get(key)), s["sub"]))
+        bullets(e.get("highlights", []), limit=cfg["exp_bullets"])
         if i != len(exp) - 1:
             story.append(Spacer(1, gap))
 
     # education
-    section("Education")
+    if data["education"]:
+        section("Education")
     for ed in data["education"]:
         sy = format_date(ed.get("startDate", ""))
         ey = format_date(ed.get("endDate", ""))
-        two_col_header(ed["institution"], f'{sy} – {ey}')
-        deg = f'{ed.get("studyType", "")}, {ed.get("area", "")}'
+        two_col_header(ed.get("institution", ""), " – ".join(value for value in (sy, ey) if value))
+        deg = ", ".join(text(ed[key]) for key in ("studyType", "area") if ed.get(key))
         if ed.get("score"):
-            deg += f' &nbsp;|&nbsp; Score: {ed["score"]}'
+            deg += f' &nbsp;|&nbsp; Score: {text(ed["score"])}'
         story.append(Paragraph(deg, s["sub"]))
         story.append(Spacer(1, 3))
 
     # projects
-    section("Projects" if cfg["proj"] is None else "Selected Projects")
+    if data["projects"]:
+        section("Projects" if cfg["proj"] is None else "Selected Projects")
     projects = data["projects"][:cfg["proj"]] if cfg["proj"] else data["projects"]
     pgap = {"tight": 2, "normal": 2.5, "loose": 4}[cfg["density"]]
     for p in projects:
-        name = clean(p["name"])
-        tech = ", ".join(p.get("keywords", []))
+        name = text(clean(p.get("name", "")))
+        tech = text(", ".join(p.get("keywords", []) or p.get("technologies", [])))
         link = p.get("url") or p.get("github") or ""
-        link_html = f' &nbsp;|&nbsp; <a href="{link}" color="#0F6E4F">link</a>' if link and link != "#" else ""
+        link_html = f' &nbsp;|&nbsp; {link_markup("link", link)}' if link and link != "#" else ""
         story.append(Paragraph(f'{name}{link_html}', s["proj"]))
         if tech:
             story.append(Paragraph(tech, s["projMeta"]))
         if cfg["proj_desc"]:
-            story.append(Paragraph(p["description"], s["bullet"]))
+            story.append(Paragraph(text(p.get("description")), s["bullet"]))
         if cfg["proj_bullets"]:
             bullets(p.get("highlights", []), limit=cfg["proj_bullets"])
         story.append(Spacer(1, pgap))
 
     # certifications
     certs = data["certificates"]
-    if cfg["certs"] == "select":
+    if certs and cfg["certs"] == "select":
         section("Selected Certifications")
-        picked = [c for c in certs if "Microsoft Certified:" in c["name"]]
-        extra_names = ["Career Essentials in GitHub Copilot", "Docker Foundations",
-                       "Azure AI Essentials", "Fabric Data Engineer"]
-        for c in certs:
-            if any(x in c["name"] for x in extra_names) and c not in picked:
-                picked.append(c)
-        names = [short_cert(c["name"]) for c in picked]
+        picked = [c for c in certs if c.get("featured")] or certs
+        names = [text(short_cert(c.get("name", ""))) for c in picked[:8]]
         story.append(Paragraph(" &nbsp;&bull;&nbsp; ".join(names), s["certInline"]))
-    else:
+    elif certs:
         section("Certifications")
         cells = [Paragraph(
-            f'\u2022 {short_cert(c["name"])} <font color="#55606e">— {c["issuer"]}, {c["date"]}</font>',
+            f'\u2022 {text(short_cert(c.get("name", "")))} <font color="#55606e">— {text(c.get("issuer"))}, {text(c.get("date"))}</font>',
             s["cert"]) for c in certs]
         half = (len(cells) + 1) // 2
         left, right = cells[:half], cells[half:]
@@ -229,7 +233,7 @@ def build(cfg):
         out, pagesize=letter,
         leftMargin=0.6 * inch, rightMargin=0.6 * inch,
         topMargin=0.5 * inch, bottomMargin=0.5 * inch,
-        title="Rajesh Kodaganti — Resume", author="Rajesh Kodaganti",
+        title=f'{basics["name"]} — Resume', author=basics["name"],
     )
     doc.build(story)
     print("Wrote", cfg["out"])
@@ -244,10 +248,20 @@ VARIANTS = [
          exp=None, exp_bullets=None, proj=None, proj_desc=True, proj_bullets=3, certs="all"),
 ]
 
-for cfg in VARIANTS:
-    build(cfg)
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--data", required=True, help="Explicit Google Sheets JSON snapshot")
+    parser.add_argument("--output-dir", default=ROOT, help="Directory for generated PDFs")
+    args = parser.parse_args()
+    data = load_snapshot(args.data)
+    os.makedirs(args.output_dir, exist_ok=True)
+    for cfg in VARIANTS:
+        build(cfg, data, args.output_dir)
+    # Preserve the supplied master, including its original formatting, as the default.
+    shutil.copyfile(os.path.join(ROOT, "Resume - Rajesh Kodaganti (Master).pdf"),
+                    os.path.join(args.output_dir, "resume.pdf"))
+    print("Copied Resume - Rajesh Kodaganti (Master).pdf -> resume.pdf")
 
-# Preserve the supplied master, including its original formatting, as the default.
-shutil.copyfile(os.path.join(ROOT, "Resume - Rajesh Kodaganti (Master).pdf"),
-                os.path.join(ROOT, "resume.pdf"))
-print("Copied Resume - Rajesh Kodaganti (Master).pdf -> resume.pdf")
+
+if __name__ == "__main__":
+    main()
