@@ -57,7 +57,7 @@
             },
             {
                 "@type": "SoftwareApplication",
-                "name": "JobPilot",
+                "name": "JobsPilot",
                 "applicationCategory": "BusinessApplication",
                 "operatingSystem": "Web",
                 "url": "https://jobspilot.site/",
@@ -114,9 +114,9 @@
                             <i class="fa fa-angle-down more-caret" aria-hidden="true"></i>
                         </summary>
                         <div class="more-pop-card" role="menu" aria-label="More menu">
-                            <a href="books.html" role="menuitem">Books</a>
-                            <a href="tools.html" role="menuitem">Tools</a>
-                            <a href="if-else.html" role="menuitem">IF-ELSE</a>
+                            <a href="pages/books.html" role="menuitem">Books</a>
+                            <a href="pages/tools.html" role="menuitem">Tools</a>
+                            <a href="pages/if-else.html" role="menuitem">IF-ELSE</a>
                         </div>
                     </details>
                 </li>
@@ -167,19 +167,19 @@
                             <i class="fa fa-angle-down resume-caret" aria-hidden="true"></i>
                         </summary>
                         <div class="resume-pop-card" role="menu" aria-label="Download resume">
-                            <a href="resume.pdf" download role="menuitem">
+                            <a href="resumes/resume.pdf" download role="menuitem">
                                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                 <span class="resume-opt">Master Resume<small>Recommended · 2 pages</small></span>
                             </a>
-                            <a href="resume-1page.pdf" download role="menuitem">
+                            <a href="resumes/resume-1page.pdf" download role="menuitem">
                                 <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                 <span class="resume-opt">1-Page<small>Concise</small></span>
                             </a>
-                            <a href="resume-2page.pdf" download role="menuitem">
+                            <a href="resumes/resume-2page.pdf" download role="menuitem">
                                 <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                 <span class="resume-opt">2-Page<small>Generated overview</small></span>
                             </a>
-                            <a href="resume-3page.pdf" download role="menuitem">
+                            <a href="resumes/resume-3page.pdf" download role="menuitem">
                                 <i class="fa fa-file-text-o" aria-hidden="true"></i>
                                 <span class="resume-opt">3-Page<small>Detailed</small></span>
                             </a>
@@ -398,16 +398,15 @@
         <div class="container">
             <span class="section-eyebrow">05 / Foundations</span>
             <h2>Every journey starts somewhere.</h2>
-            <div class="education-grid">
+            <div id="education-grid" class="education-grid">
                 <div class="browser-card accessible-card" role="button" tabindex="0" data-education-id="csun" aria-label="View California State University education details">
                     <div class="browser-header">
                         <span>EDUCATION / 01</span>
                     </div>
                     <div class="browser-content">
-                        <h3>CSUN</h3>
+                        <h3>California State University, Northridge</h3>
                         <span class="card-role">M.S. Computer Engineering</span>
                         <span class="card-date">Aug 2022 - May 2025</span>
-                        <p>Advanced work in AI Systems and Network Security.</p>
                         <div style="margin-top: auto; text-align: right; color: var(--accent-green);">
                             Explore education &#8599;
                         </div>
@@ -419,15 +418,44 @@
                         <span>EDUCATION / 02</span>
                     </div>
                     <div class="browser-content">
-                        <h3>JBIET</h3>
-                        <span class="card-role">B.Tech Electronics & Comm</span>
+                        <h3>JB Institute of Engineering and Technology (JBIET)</h3>
+                        <span class="card-role">B.Tech Electronics and Communication Engineering</span>
                         <span class="card-date">July 2019 - June 2022</span>
-                        <p>Foundational Engineering & Digital Systems.</p>
                         <div style="margin-top: auto; text-align: right; color: var(--accent-green);">
                             Explore education &#8599;
                         </div>
                     </div>
                 </div>
+                <div class="browser-card accessible-card collapsible-education" role="button" tabindex="0" data-education-id="gie" aria-label="View Government Institute of Electronics education details" hidden>
+                    <div class="browser-header">
+                        <span>EDUCATION / 03</span>
+                    </div>
+                    <div class="browser-content">
+                        <h3>Government Institute of Electronics</h3>
+                        <span class="card-role">Specialization in ECE (SCN)</span>
+                        <span class="card-date">June 2015 - Dec 2018</span>
+                        <p>Electrical, Electronics and Communications Engineering</p>
+                        <div style="margin-top: auto; text-align: right; color: var(--accent-green);">
+                            Explore education &#8599;
+                        </div>
+                    </div>
+                </div>
+                <div class="browser-card accessible-card collapsible-education" role="button" tabindex="0" data-education-id="little-flowers" aria-label="View Little Flowers High School education details" hidden>
+                    <div class="browser-header">
+                        <span>EDUCATION / 04</span>
+                    </div>
+                    <div class="browser-content">
+                        <h3>Little Flowers High School, Bhadrachalam</h3>
+                        <span class="card-role">Secondary School Certificate</span>
+                        <span class="card-date">June 2014 - Apr 2015</span>
+                        <div style="margin-top: auto; text-align: right; color: var(--accent-green);">
+                            Explore education &#8599;
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <button type="button" id="education-toggle-btn" class="btn-fun btn-outline-fun" aria-expanded="false" aria-controls="education-grid">Show More</button>
             </div>
         </div>
     </section>
@@ -453,7 +481,7 @@
         <div class="container">
             <span class="section-eyebrow">07 / Field credentials</span>
             <h2>Learning without a horizon.</h2>
-            <p class="section-intro">Role-relevant credentials appear first; additional credentials remain available by issuer.</p>
+            <p class="section-intro">Independent and professional credentials appear first; LinkedIn course certificates are kept out of view.</p>
             <div id="certifications-grid" class="cert-grid">
                 <!-- Dynamic Certs Loaded Here -->
             </div>
@@ -469,17 +497,17 @@
             <h2>There are other worlds here.</h2>
             <p class="section-intro">Stories to get lost in. Tools to get things done. A few ideas that refuse to fit in a box.</p>
             <div class="realm-grid">
-                <a href="books.html" class="realm-card realm-library">
+                <a href="pages/books.html" class="realm-card realm-library">
                     <span class="realm-symbol" aria-hidden="true"><i class="fa fa-book"></i></span>
                     <span class="section-eyebrow">The celestial library</span>
                     <h3>Books</h3><p>Step into worlds built with words.</p><span class="realm-link">Browse the shelves &#8599;</span>
                 </a>
-                <a href="tools.html" class="realm-card realm-workshop">
+                <a href="pages/tools.html" class="realm-card realm-workshop">
                     <span class="realm-symbol" aria-hidden="true"><i class="fa fa-cubes"></i></span>
                     <span class="section-eyebrow">The inventor's workshop</span>
                     <h3>Tools</h3><p>Small inventions. Practical possibilities.</p><span class="realm-link">Explore the workshop &#8599;</span>
                 </a>
-                <a href="if-else.html" class="realm-card realm-stories">
+                <a href="pages/if-else.html" class="realm-card realm-stories">
                     <span class="realm-symbol" aria-hidden="true"><i class="fa fa-moon-o"></i></span>
                     <span class="section-eyebrow">The realm of what if</span>
                     <h3>IF-ELSE</h3><p>Visual stories at the edge of imagination.</p><span class="realm-link">Enter the story realms &#8599;</span>

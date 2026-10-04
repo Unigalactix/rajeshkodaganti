@@ -148,7 +148,7 @@ function generateResponse(query) {
     if (q.includes("contact") || q.includes("email") || q.includes("hire") || q.includes("phone")) {
         return `You can contact Rajesh at <strong>${pamData.basics.email}</strong> or ${pamData.basics.phone}.`;
     }
-    if (q.includes("resume") || q.includes("cv")) return '<a href="resume.pdf" target="_blank" rel="noopener">Open the recommended two-page master resume</a>.';
+    if (q.includes("resume") || q.includes("cv")) return '<a href="resumes/resume.pdf" target="_blank" rel="noopener">Open the recommended two-page master resume</a>.';
     if (q.includes("who are you")) return "I'm a local search assistant for Rajesh's portfolio data.";
 
     // 3. Search Skills

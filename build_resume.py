@@ -15,6 +15,7 @@ from reportlab.platypus import (
 )
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+RESUMES = os.path.join(ROOT, "resumes")
 
 ACCENT = HexColor("#0F6E4F")     # deep brand green (print friendly)
 DARK = HexColor("#1d2530")       # near-black slate
@@ -98,7 +99,8 @@ def make_styles(density):
 
 
 def build(cfg):
-    out = os.path.join(ROOT, cfg["out"])
+    os.makedirs(RESUMES, exist_ok=True)
+    out = os.path.join(RESUMES, cfg["out"])
     s = make_styles(cfg["density"])
     story = []
 
@@ -164,7 +166,7 @@ def build(cfg):
 
     # education
     section("Education")
-    for ed in data["education"]:
+    for ed in data["education"][:2]:
         sy = format_date(ed.get("startDate", ""))
         ey = format_date(ed.get("endDate", ""))
         two_col_header(ed["institution"], f'{sy} – {ey}')
@@ -241,13 +243,13 @@ VARIANTS = [
     dict(out="resume-2page.pdf", density="normal", summary="full",
         exp=None, exp_bullets=2, proj=5, proj_desc=True, proj_bullets=0, certs="select"),
     dict(out="resume-3page.pdf", density="loose", summary="full",
-         exp=None, exp_bullets=None, proj=None, proj_desc=True, proj_bullets=3, certs="all"),
+         exp=None, exp_bullets=None, proj=None, proj_desc=True, proj_bullets=3, certs="select"),
 ]
 
 for cfg in VARIANTS:
     build(cfg)
 
 # Preserve the supplied master, including its original formatting, as the default.
-shutil.copyfile(os.path.join(ROOT, "Resume - Rajesh Kodaganti (Master).pdf"),
-                os.path.join(ROOT, "resume.pdf"))
-print("Copied Resume - Rajesh Kodaganti (Master).pdf -> resume.pdf")
+shutil.copyfile(os.path.join(RESUMES, "Resume - Rajesh Kodaganti (Master).pdf"),
+                os.path.join(RESUMES, "resume.pdf"))
+print("Copied resumes/Resume - Rajesh Kodaganti (Master).pdf -> resumes/resume.pdf")

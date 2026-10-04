@@ -140,6 +140,18 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function initStaticAccessibility() {
+    const educationToggle = document.getElementById('education-toggle-btn');
+    if (educationToggle) {
+        educationToggle.addEventListener('click', () => {
+            const expanded = educationToggle.getAttribute('aria-expanded') !== 'true';
+            document.querySelectorAll('#education-grid .collapsible-education').forEach(card => {
+                card.hidden = !expanded;
+            });
+            educationToggle.textContent = expanded ? 'Show Less' : 'Show More';
+            educationToggle.setAttribute('aria-expanded', String(expanded));
+        });
+    }
+
     document.querySelectorAll('[data-current-year]').forEach(element => {
         element.textContent = String(new Date().getFullYear());
     });
@@ -690,10 +702,10 @@ function initCommandPalette() {
         { id: 'go-experience', label: 'Go to Experience', shortcut: 'E', run: () => scrollToId('experience') },
         { id: 'go-projects', label: 'Go to Projects', shortcut: 'P', run: () => scrollToId('projects') },
         { id: 'go-contact', label: 'Go to Contact', shortcut: 'C', run: () => scrollToId('contact') },
-        { id: 'open-resume', label: 'Open Resume', shortcut: 'R', run: () => window.open('resume.pdf', '_blank', 'noopener') },
-        { id: 'open-books', label: 'Open Books', shortcut: 'B', run: () => { window.location.href = 'books.html'; } },
-        { id: 'open-tools', label: 'Open Tools', shortcut: 'T', run: () => { window.location.href = 'tools.html'; } },
-        { id: 'open-stories', label: 'Open IF-ELSE', shortcut: 'I', run: () => { window.location.href = 'if-else.html'; } }
+        { id: 'open-resume', label: 'Open Resume', shortcut: 'R', run: () => window.open('resumes/resume.pdf', '_blank', 'noopener') },
+        { id: 'open-books', label: 'Open Books', shortcut: 'B', run: () => { window.location.href = 'pages/books.html'; } },
+        { id: 'open-tools', label: 'Open Tools', shortcut: 'T', run: () => { window.location.href = 'pages/tools.html'; } },
+        { id: 'open-stories', label: 'Open IF-ELSE', shortcut: 'I', run: () => { window.location.href = 'pages/if-else.html'; } }
     ];
 
     let filtered = commands.slice();

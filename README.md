@@ -88,7 +88,9 @@ python3 -m http.server 8000
 
 `js/data.json` is the source of truth for the site's profile, experience, education, skills, projects, certifications, and generated resume variants. Professional content was reconciled with the supplied master resume and LinkedIn experience on September 28, 2026.
 
-[`Resume - Rajesh Kodaganti (Master).pdf`](<Resume - Rajesh Kodaganti (Master).pdf>) is the supplied two-page master resume. The build copies it unchanged to `resume.pdf`, used by the recommended download, command palette, and portfolio assistant. Keep this source PDF in the repository so deployment does not replace the master with a generated variant. The one-, two-, and three-page generated alternatives remain available separately.
+The education section lists four institutions, with the two most recent visible initially and the remaining two available through Show More. Keep its cards in `index.html` aligned with the education records in `js/data.json`; cards and detail dialogs omit grades and education-specific skills. Keep education records newest first: generated resumes include only the first two to preserve their page limits.
+
+[`resumes/Resume - Rajesh Kodaganti (Master).pdf`](<resumes/Resume - Rajesh Kodaganti (Master).pdf>) is the supplied two-page master resume. The build copies it unchanged to `resumes/resume.pdf`, used by the recommended download, command palette, and portfolio assistant. Keep this source PDF in the repository so deployment does not replace the master with a generated variant. The one-, two-, and three-page generated alternatives remain available separately.
 
 After changing professional content, regenerate and validate the site:
 
@@ -103,12 +105,14 @@ Set `CHECK_EXTERNAL_LINKS=1` to include concurrent external-link checks. GitHub 
 ## Main Files
 
 - `index.html`: Page structure and global UI shell.
+- `pages/`: Secondary HTML pages for books, tools, and IF-ELSE.
+- `resumes/`: Source, default, and generated resume PDFs.
 - `css/styles.css`: Full visual system, responsive styling, states, motion.
 - `css/celestial.css`: Shared Celestial Material visual layer and responsive layouts. Loaded after the base and game styles.
 - `js/scripts.js`: Navigation telemetry, command palette, splash logic, interactive effects.
 - `js/content-loader.js`: Data-driven section rendering.
 - `js/data.json`: Content source for profile, projects, and certifications.
-- `build_resume.py`: Generates the one-, two-, and three-page PDF resumes from `js/data.json` and copies the supplied master to `resume.pdf`.
+- `build_resume.py`: Generates the one-, two-, and three-page PDF resumes from `js/data.json` and copies the supplied master to `resumes/resume.pdf`.
 - `scripts/validate_portfolio.py`: Validates content consistency, assets, metadata, JavaScript, accessibility basics, links, and generated PDFs.
 
 ## Accessibility and Performance Notes

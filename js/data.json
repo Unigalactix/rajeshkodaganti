@@ -29,7 +29,17 @@
       "endDate": "Present",
       "project": "IcM Outage Automation - Microsoft Identity LiveSite",
       "summary": "Developing cloud automation and AI-powered outage-management systems for Microsoft Identity LiveSite operations.",
-      "technologies": ["Python", "Azure Functions", "KQL", "Azure OpenAI", "Logic Apps", "Bicep", "Service Bus", "Key Vault", "Application Insights"],
+      "technologies": [
+        "Python",
+        "Azure Functions",
+        "KQL",
+        "Azure OpenAI",
+        "Logic Apps",
+        "Bicep",
+        "Service Bus",
+        "Key Vault",
+        "Application Insights"
+      ],
       "highlights": [
         "Designed and developed a scalable, six-phase outage-management pipeline automating incident ingestion, enrichment, classification, validation, and reporting for Severity 0-2 incidents across 70+ Microsoft Identity services",
         "Built Python Azure Functions and KQL workflows for IcM data processing and integrated Azure OpenAI to classify root causes and recurring outage patterns",
@@ -45,7 +55,16 @@
       "startDate": "2025-08",
       "endDate": "Present",
       "summary": "Architecting Azure AI solutions for threat intelligence, document processing, and secure retrieval workflows.",
-      "technologies": ["Python", "Azure OpenAI", "Azure Document Intelligence", "Azure AI Search", "RAG", "Cybersecurity", "GitHub Copilot", "MCP"],
+      "technologies": [
+        "Python",
+        "Azure OpenAI",
+        "Azure Document Intelligence",
+        "Azure AI Search",
+        "RAG",
+        "Cybersecurity",
+        "GitHub Copilot",
+        "MCP"
+      ],
       "highlights": [
         "Architected and deployed scalable AI solutions with Azure OpenAI and Azure Cognitive Services for threat intelligence and automated mitigation workflows",
         "Implemented Azure Document Intelligence workflows to extract and structure unstructured data",
@@ -61,7 +80,13 @@
       "startDate": "2025-07",
       "endDate": "2025-08",
       "summary": "Built data foundations and monitoring views for security-focused AI workflows.",
-      "technologies": ["Python", "ETL", "Data Pipelines", "Threat Intelligence", "Cloud Security"],
+      "technologies": [
+        "Python",
+        "ETL",
+        "Data Pipelines",
+        "Threat Intelligence",
+        "Cloud Security"
+      ],
       "highlights": [
         "Designed ETL processes for security logs and vulnerability reports and developed endpoint and network-security data-ingestion systems to enhance risk analysis",
         "Applied machine learning to threat-intelligence data and created cloud-security monitoring dashboards supporting compliance and data integrity"
@@ -75,7 +100,12 @@
       "startDate": "2025-01",
       "endDate": "2025-05",
       "summary": "Supported client field trials and developed Python-based IoT demonstrations for AI-enhanced engineering use cases.",
-      "technologies": ["Python", "IoT", "Signal Processing", "Predictive Maintenance"],
+      "technologies": [
+        "Python",
+        "IoT",
+        "Signal Processing",
+        "Predictive Maintenance"
+      ],
       "highlights": [
         "Served as the primary technical liaison for client field trials, bridging antenna and PCB hardware constraints with AI software requirements",
         "Customized IoT demonstrations using Python to simulate client use cases and showcase AI-enhanced signal processing, predictive maintenance, and operational efficiency"
@@ -89,7 +119,13 @@
       "startDate": "2018-06",
       "endDate": "2022-07",
       "summary": "Tested ColorOS Beta and Alpha releases and provided structured feedback for mobile OS improvements.",
-      "technologies": ["Mobile Testing", "Android", "Beta Testing", "Bug Tracking", "Quality Assurance"],
+      "technologies": [
+        "Mobile Testing",
+        "Android",
+        "Beta Testing",
+        "Bug Tracking",
+        "Quality Assurance"
+      ],
       "highlights": [
         "Conducted user testing for ColorOS Beta and Alpha versions (5.0 to 12.1)",
         "Documented defects and proposed product improvements in collaboration with cross-functional teams"
@@ -103,7 +139,12 @@
       "startDate": "2020-06",
       "endDate": "2020-07",
       "summary": "Contributed to a high-speed 64-bit binary comparator and optimized its design parameters.",
-      "technologies": ["Verilog", "VHDL", "Digital Logic", "Hardware Design"],
+      "technologies": [
+        "Verilog",
+        "VHDL",
+        "Digital Logic",
+        "Hardware Design"
+      ],
       "highlights": [
         "Contributed to the development of a high-speed 64-bit binary comparator",
         "Optimized design parameters using Verilog and VHDL"
@@ -117,7 +158,14 @@
       "startDate": "2018-06",
       "endDate": "2019-05",
       "summary": "Tested connected embedded devices and automated Python testing for real-time communication systems.",
-      "technologies": ["Python", "IoT", "Embedded Systems", "TCP/IP", "UDP", "Test Automation"],
+      "technologies": [
+        "Python",
+        "IoT",
+        "Embedded Systems",
+        "TCP/IP",
+        "UDP",
+        "Test Automation"
+      ],
       "highlights": [
         "Executed end-to-end testing of connected embedded devices and developed automated Python test scripts that reduced manual testing time by 20%",
         "Analyzed TCP/IP and UDP communication protocols to troubleshoot real-time latency issues; collaboration with R&D cut post-launch defects by 20%"
@@ -140,14 +188,36 @@
       "area": "Electronics and Communication Engineering",
       "studyType": "Bachelor of Technology",
       "startDate": "2019-07",
-      "endDate": "2022-06",
-      "score": "7.45"
+      "endDate": "2022-06"
+    },
+    {
+      "id": "gie",
+      "institution": "Government Institute of Electronics",
+      "area": "Electrical, Electronics and Communications Engineering",
+      "studyType": "Specialization in ECE (SCN)",
+      "startDate": "2015-06",
+      "endDate": "2018-12"
+    },
+    {
+      "id": "little-flowers",
+      "institution": "Little Flowers High School, Bhadrachalam",
+      "studyType": "Secondary School Certificate",
+      "startDate": "2014-06",
+      "endDate": "2015-04"
     }
   ],
   "skills": [
     {
       "name": "Languages",
-      "keywords": ["Python", "JavaScript", "SQL", "R", "C", "Embedded C", "HTML"]
+      "keywords": [
+        "Python",
+        "JavaScript",
+        "SQL",
+        "R",
+        "C",
+        "Embedded C",
+        "HTML"
+      ]
     },
     {
       "name": "Software Engineering",
@@ -237,17 +307,24 @@
         "Automated DRI notifications and generated Excel and Word reports for incident review.",
         "Provisioned Key Vault, Blob Storage, Service Bus, Application Insights, and Entra ID integrations through Bicep."
       ],
-      "keywords": ["Python", "Azure Functions", "KQL", "Azure OpenAI", "Logic Apps", "Bicep"]
+      "keywords": [
+        "Python",
+        "Azure Functions",
+        "KQL",
+        "Azure OpenAI",
+        "Logic Apps",
+        "Bicep"
+      ]
     },
     {
       "id": "jobpilot",
-      "name": "JobPilot: AI-Powered Job Application Co-Pilot",
+      "name": "JobsPilot: AI-Powered Job Application Co-Pilot",
       "startDate": "2026-02",
       "endDate": "Present",
       "featured": true,
       "image": "images/jobpilot-dashboard.png",
-      "imageAlt": "JobPilot job-search dashboard showing role search and application tools",
-      "description": "An AI-powered job application co-pilot built with JavaScript, Python, and FastAPI. JobPilot aggregates listings from Adzuna, JSearch, and USAJobs and supports AI-assisted application tailoring, GitHub Pages deployment, a Cloudflare Worker proxy, and client-side AES-GCM encryption.",
+      "imageAlt": "JobsPilot job-search dashboard showing role search and application tools",
+      "description": "An AI-powered job application co-pilot built with JavaScript, Python, and FastAPI. JobsPilot aggregates listings from Adzuna, JSearch, and USAJobs and supports AI-assisted application tailoring, GitHub Pages deployment, a Cloudflare Worker proxy, and client-side AES-GCM encryption.",
       "problem": "Job seekers must move between fragmented job boards and repeatedly tailor application materials while protecting sensitive resumes and API credentials.",
       "approach": "Built a browser-first JavaScript and Python experience with a Cloudflare Worker proxy, multi-source job aggregation, AI-assisted tailoring, and client-side AES-GCM encryption.",
       "impact": "Combined search, resume tailoring, and privacy-preserving storage into one deployable workflow without a traditional application database.",
@@ -397,148 +474,705 @@
   ],
   "certificates": [
     {
-      "name": "Career Essentials in Sustainable Tech by Microsoft and LinkedIn",
-      "issuer": "Microsoft",
-      "date": "Sep 2024",
-      "url": "https://www.linkedin.com/learning/certificates/8cffc1495f17c8cf6755ef694dbbb36eaf4e5938ba345a904b43c30c3eee8426"
+      "name": "Generative AI Professional Certificate by Snowflake",
+      "issuer": "Snowflake",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/9ee1fed6368990755e5af1babd076a1deac7730717bf0e4e85bd1580fd3b29b3/",
+      "source": "nonLinkedIn"
     },
     {
-      "name": "Microsoft Azure AI Essentials Professional Certificate by Microsoft and LinkedIn",
-      "issuer": "Microsoft",
-      "date": "Jul 2025",
-      "url": "https://www.linkedin.com/learning/certificates/0603cb1c8cfa79794168484c0ac326bbef4822627946588664137e99fef23cc2"
+      "name": "Data Engineering Professional Certificate by Snowflake",
+      "issuer": "Snowflake",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/541359448d91ff83b048d1e3e270fba765bc6b931c99eaa8e810aba0d6e2c5c3/",
+      "source": "nonLinkedIn"
     },
     {
-      "name": "Career Essentials in GitHub Copilot Professional Certificate",
+      "name": "Build Your Generative AI Productivity Skills with Microsoft and LinkedIn",
+      "issuer": "Microsoft",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/70f8236f4b9aa2fafee7572323bf7fcedcbe60735d1e1980d2a7e58a9ed94245/",
+      "source": "nonLinkedIn"
+    },
+    {
+      "name": "Responsible AI in a Global Context Professional Certificate by the United Nations University",
+      "issuer": "United Nations University",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/3e4c473b241897e8a7e4d84af063856c79839b5ab47f0f687dda2d0c65590c80/",
+      "source": "nonLinkedIn"
+    },
+    {
+      "name": "Career Essentials in GitHub Professional Certificate",
       "issuer": "GitHub",
-      "date": "Jul 2025",
-      "url": "https://www.linkedin.com/learning/certificates/5a8a15af20393328a5516fd5e9f0fa74151c8474c213869f7a473e0b3a4d391e"
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/582adfc18a0629aa00c489068cc3328de20412f603182918c5f3b0557967be47/",
+      "source": "nonLinkedIn"
     },
     {
-      "name": "Docker Foundations Professional Certificate",
-      "issuer": "Docker",
-      "date": "Jul 2025",
-      "url": "https://www.linkedin.com/learning/certificates/14681be8ec4fbde458929c879ee596ae4176b5757a40e4800a74051e146a4d9e"
-    },
-    {
-      "name": "Apache Airflow 3 Fundamentals",
-      "issuer": "Astronomer",
-      "date": "Oct 2025",
-      "url": "#"
-    },
-    {
-      "name": "DAG Authoring for Apache Airflow 3",
-      "issuer": "Astronomer",
-      "date": "Oct 2025",
-      "url": "https://www.credly.com/badges/3a3f1c9c-1803-463e-b09a-7d9adecbbc27/public_url"
-    },
-    {
-      "name": "Microsoft Certified: Fabric Data Engineer Associate",
+      "name": "Microsoft Azure Essentials Professional Certificate by Microsoft and LinkedIn",
       "issuer": "Microsoft",
-      "date": "Nov 2025",
-      "url": "https://learn.microsoft.com/api/credentials/share/en-us/RajeshKodaganti/358771CC34AED687?sharingId=3FB9837E0B42F855"
-    },
-    {
-      "name": "Microsoft Certified: Azure AI Engineer Associate",
-      "issuer": "Microsoft",
-      "date": "Dec 2025",
-      "url": "https://learn.microsoft.com/api/credentials/share/en-us/RajeshKodaganti/D302F40415BFB6F6?sharingId"
-    },
-    {
-      "name": "Microsoft Copilot for Productivity by Microsoft and LinkedIn",
-      "issuer": "Microsoft",
-      "date": "Dec 2025",
-      "url": "https://www.linkedin.com/learning/certificates/dbd2cd29908d0a0225fdca564e17c77b7e5718de33a4fb3232ce218d1eb0c10e"
-    },
-    {
-      "name": "Atlassian IT Service Management (ITSM) Professional Certificate",
-      "issuer": "Atlassian",
-      "date": "Dec 2025",
-      "url": "https://www.linkedin.com/learning/certificates/fe9caac6f726610fc4ea35fa4a6536e7df544a324451fe6fc4b87ea0091d3def"
-    },
-    {
-      "name": "Microsoft Certified: DevOps Engineer Expert",
-      "issuer": "Microsoft",
-      "date": "Jan 2026",
-      "url": "https://learn.microsoft.com/api/credentials/share/en-us/RajeshKodaganti/86AE7E208C191748?sharingId"
-    },
-    {
-      "name": "Microsoft Certified: Azure Administrator Associate",
-      "issuer": "Microsoft",
-      "date": "Jan 2026",
-      "url": "https://learn.microsoft.com/api/credentials/share/en-us/RajeshKodaganti/8A5CD6D9564647D8?sharingId"
-    },
-    {
-      "name": "Microsoft Certified: Azure Data Scientist Associate",
-      "issuer": "Microsoft",
-      "date": "Feb 2026",
-      "url": "https://learn.microsoft.com/api/credentials/share/en-us/RajeshKodaganti/888574E674DE4489?sharingId=3FB9837E0B42F855"
-    },
-    {
-      "name": "Claude Code in Action",
-      "issuer": "Anthropic",
-      "date": "Feb 2026",
-      "url": "https://verify.skilljar.com/c/s2s36yqgxyen"
-    },
-    {
-      "name": "Introduction to Model Context Protocol",
-      "issuer": "Anthropic",
-      "date": "Feb 2026",
-      "url": "https://verify.skilljar.com/c/w4mmfyrxw2qp"
-    },
-    {
-      "name": "Model Context Protocol: Advanced Topics",
-      "issuer": "Anthropic",
-      "date": "Feb 2026",
-      "url": "https://verify.skilljar.com/c/t9xzh8owvjdk"
-    },
-    {
-      "name": "Claude in Amazon Bedrock",
-      "issuer": "Anthropic",
-      "date": "Feb 2026",
-      "url": "https://verify.skilljar.com/c/93pxvjwggtyx"
-    },
-    {
-      "name": "Building with the Claude API",
-      "issuer": "Anthropic",
-      "date": "Feb 2026",
-      "url": "https://verify.skilljar.com/c/a69anyv5om9a"
-    },
-    {
-      "name": "Claude with Google Cloud's Vertex AI",
-      "issuer": "Anthropic",
-      "date": "Feb 2026",
-      "url": "https://verify.skilljar.com/c/yfgnxmut6gh2"
-    },
-    {
-      "name": "Career Essentials in Generative AI by Microsoft and LinkedIn",
-      "issuer": "Microsoft",
-      "date": "Mar 2026",
-      "url": "#"
-    },
-    {
-      "name": "Microsoft Certified: SQL AI Developer Associate",
-      "issuer": "Microsoft",
-      "date": "May 2026",
-      "url": "https://learn.microsoft.com/api/credentials/share/en-us/RajeshKodaganti/632A6802925D549A?sharingId"
-    },
-    {
-      "name": "AI Fluency: Framework & Foundations",
-      "issuer": "Anthropic",
-      "date": "Jun 2026",
-      "url": "#"
-    },
-    {
-      "name": "Introduction to Claude Cowork",
-      "issuer": "Anthropic",
-      "date": "Jun 2026",
-      "url": "#"
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/9fbbeff2c9616d98d1aa0815b9f497f722334c9cd5f7b1d97be6eecbf8d10354/",
+      "source": "nonLinkedIn"
     },
     {
       "name": "AI Capabilities and Limitations",
       "issuer": "Anthropic",
       "date": "Jun 2026",
-      "url": "#"
+      "url": "https://verify.skilljar.com/c/y5uv335htsdm",
+      "source": "nonLinkedIn"
+    },
+    {
+      "name": "Introduction to Claude Cowork",
+      "issuer": "Anthropic",
+      "date": "Jun 2026",
+      "url": "https://verify.skilljar.com/c/efk8vn2kwem9",
+      "source": "nonLinkedIn"
+    },
+    {
+      "name": "AI Fluency: Framework & Foundations",
+      "issuer": "Anthropic",
+      "date": "Jun 2026",
+      "url": "https://verify.skilljar.com/c/o8wzwoq2azr5",
+      "source": "nonLinkedIn"
+    },
+    {
+      "name": "Microsoft Certified: SQL AI Developer Associate",
+      "issuer": "Microsoft",
+      "date": "May 2026",
+      "url": "https://learn.microsoft.com/api/credentials/share/en-us/RajeshKodaganti/632A6802925D549A?sharingId",
+      "source": "nonLinkedIn",
+      "credentialId": "632A6802925D549A"
+    },
+    {
+      "name": "Career Essentials in Generative AI by Microsoft and LinkedIn",
+      "issuer": "Microsoft",
+      "date": "Mar 2026",
+      "url": "https://www.linkedin.com/learning/certificates/dc90e2e208f5a5dcf54134b1b33d738e28ec5fef5db6dcaac01056a6df7b4723/",
+      "source": "nonLinkedIn"
+    },
+    {
+      "name": "Claude with Google Cloud's Vertex AI",
+      "issuer": "Anthropic",
+      "date": "Feb 2026",
+      "url": "https://verify.skilljar.com/c/yfgnxmut6gh2",
+      "source": "nonLinkedIn",
+      "credentialId": "yfgnxmut6gh2"
+    },
+    {
+      "name": "Building with the Claude API",
+      "issuer": "Anthropic",
+      "date": "Feb 2026",
+      "url": "https://verify.skilljar.com/c/a69anyv5om9a",
+      "source": "nonLinkedIn",
+      "credentialId": "a69anyv5om9a"
+    },
+    {
+      "name": "Claude in Amazon Bedrock",
+      "issuer": "Anthropic",
+      "date": "Feb 2026",
+      "url": "https://verify.skilljar.com/c/93pxvjwggtyx",
+      "source": "nonLinkedIn",
+      "credentialId": "93pxvjwggtyx"
+    },
+    {
+      "name": "Model Context Protocol: Advanced Topics",
+      "issuer": "Anthropic",
+      "date": "Feb 2026",
+      "url": "https://verify.skilljar.com/c/t9xzh8owvjdk",
+      "source": "nonLinkedIn",
+      "credentialId": "t9xzh8owvjdk"
+    },
+    {
+      "name": "Introduction to Model Context Protocol",
+      "issuer": "Anthropic",
+      "date": "Feb 2026",
+      "url": "https://verify.skilljar.com/c/w4mmfyrxw2qp",
+      "source": "nonLinkedIn",
+      "credentialId": "w4mmfyrxw2qp"
+    },
+    {
+      "name": "Claude Code in Action",
+      "issuer": "Anthropic",
+      "date": "Feb 2026",
+      "url": "https://verify.skilljar.com/c/s2s36yqgxyen",
+      "source": "nonLinkedIn",
+      "credentialId": "s2s36yqgxyen"
+    },
+    {
+      "name": "Microsoft Certified: Azure Data Scientist Associate",
+      "issuer": "Microsoft",
+      "date": "Feb 2026",
+      "url": "https://learn.microsoft.com/api/credentials/share/en-us/RajeshKodaganti/888574E674DE4489?sharingId=3FB9837E0B42F855",
+      "source": "nonLinkedIn",
+      "expires": "Feb 2027",
+      "credentialId": "888574E674DE4489"
+    },
+    {
+      "name": "Microsoft Certified: Azure Administrator Associate",
+      "issuer": "Microsoft",
+      "date": "Jan 2026",
+      "url": "https://learn.microsoft.com/api/credentials/share/en-us/RajeshKodaganti/8A5CD6D9564647D8?sharingId",
+      "source": "nonLinkedIn",
+      "expires": "Jan 2027",
+      "credentialId": "8A5CD6D9564647D8"
+    },
+    {
+      "name": "Microsoft Certified: DevOps Engineer Expert",
+      "issuer": "Microsoft",
+      "date": "Jan 2026",
+      "url": "https://learn.microsoft.com/api/credentials/share/en-us/RajeshKodaganti/86AE7E208C191748?sharingId",
+      "source": "nonLinkedIn",
+      "expires": "Jan 2027",
+      "credentialId": "86AE7E208C191748"
+    },
+    {
+      "name": "Atlassian IT Service Management (ITSM) Professional Certificate",
+      "issuer": "Atlassian",
+      "date": "Dec 2025",
+      "url": "https://www.linkedin.com/learning/certificates/fe9caac6f726610fc4ea35fa4a6536e7df544a324451fe6fc4b87ea0091d3def/",
+      "source": "nonLinkedIn"
+    },
+    {
+      "name": "Microsoft Copilot for Productivity by Microsoft and LinkedIn",
+      "issuer": "Microsoft",
+      "date": "Dec 2025",
+      "url": "https://www.linkedin.com/learning/certificates/dbd2cd29908d0a0225fdca564e17c77b7e5718de33a4fb3232ce218d1eb0c10e/",
+      "source": "nonLinkedIn"
+    },
+    {
+      "name": "Microsoft Certified: Azure AI Engineer Associate",
+      "issuer": "Microsoft",
+      "date": "Dec 2025",
+      "url": "https://learn.microsoft.com/api/credentials/share/en-us/RajeshKodaganti/D302F40415BFB6F6?sharingId",
+      "source": "nonLinkedIn",
+      "credentialId": "D302F40415BFB6F6"
+    },
+    {
+      "name": "Microsoft Certified: Fabric Data Engineer Associate",
+      "issuer": "Microsoft",
+      "date": "Nov 2025",
+      "url": "https://learn.microsoft.com/api/credentials/share/en-us/RajeshKodaganti/358771CC34AED687?sharingId=3FB9837E0B42F855",
+      "source": "nonLinkedIn",
+      "credentialId": "358771CC34AED687"
+    },
+    {
+      "name": "DAG Authoring for Apache Airflow 3",
+      "issuer": "Astronomer",
+      "date": "Oct 2025",
+      "url": "https://www.credly.com/badges/3a3f1c9c-1803-463e-b09a-7d9adecbbc27/public_url",
+      "source": "nonLinkedIn"
+    },
+    {
+      "name": "Apache Airflow 3 Fundamentals",
+      "issuer": "Astronomer",
+      "date": "Oct 2025",
+      "url": "https://www.credly.com/badges/7c2b6936-35cb-4014-88fd-f44c7fa0a0f5",
+      "source": "nonLinkedIn"
+    },
+    {
+      "name": "Docker Foundations Professional Certificate",
+      "issuer": "Docker, Inc",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/14681be8ec4fbde458929c879ee596ae4176b5757a40e4800a74051e146a4d9e/",
+      "source": "nonLinkedIn"
+    },
+    {
+      "name": "Career Essentials in GitHub Copilot Professional Certificate",
+      "issuer": "GitHub",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/5a8a15af20393328a5516fd5e9f0fa74151c8474c213869f7a473e0b3a4d391e/",
+      "source": "nonLinkedIn"
+    },
+    {
+      "name": "Microsoft Azure AI Essentials Professional Certificate by Microsoft and LinkedIn",
+      "issuer": "Microsoft",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/0603cb1c8cfa79794168484c0ac326bbef4822627946588664137e99fef23cc2/",
+      "source": "nonLinkedIn"
+    },
+    {
+      "name": "Career Essentials in Sustainable Tech by Microsoft and LinkedIn",
+      "issuer": "Microsoft",
+      "date": "Sep 2024",
+      "url": "https://www.linkedin.com/learning/certificates/8cffc1495f17c8cf6755ef694dbbb36eaf4e5938ba345a904b43c30c3eee8426/",
+      "source": "nonLinkedIn"
+    },
+    {
+      "name": "Building AI Agents with Snowflake",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/b0b91f8245a474b68d2b54a87a4d2df108067be45ac89606e8d75e93075bd3cc/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Building Generative AI Apps to Talk to Your Data",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/6b9192311c734ecf840de15824c6f447c0b57000a52852e4753455da9bf8b091/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Introduction to Gen AI with Snowflake",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/e46a13822e7c2fea9beb35ad621900c1cdee3fbf0993b1db905751f6770d41a3/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Intro to Snowflake for Devs, Data Scientists, Data Engineers",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/1e81f5ae1353bc4e44cff5e287d991b84d7877b23e5d04a7b7fb4f905308bf53/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Introduction to Modern Data Engineering with Snowflake",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/1564dbf463a439a45c3b9c755fdd93e714b5eeaaf684b2f1dc7b63a167027992/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Advanced Data Engineering with Snowflake",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/965451fb8895f83038480c1cc9ea51eb4cdc4224b018948ac8392b1e1a1323b7/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Integrating Generative AI into the Creative Process",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/7c92752c67142b00a591afd7c0b0d86321276f2cb8c262dab6967fbc8c865561/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Microsoft Copilot: The Art of Prompting",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/5d924597709dce6c344921d5954fbdaf8c18ea5a4d13e17d184b0ead60749f0d/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Copilot in PowerPoint: From Prompt to Presentation",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/6508210e61ea847cc4a0493a3f3af217c2b878222f7990a12ad231c6b235fd14/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "AI Productivity Hacks to Reimagine Your Workday and Career",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/fe0fea22a9e693203b0a121cffa853734333ff574e45d3325c2c0f45c65251a3/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "AI in Action: Global Case Studies from Public Institutions",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/535be54380724475bbc9308b4ec35243b809eb146c8b059c79654238d66a49ff/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Responsible AI: Global Risks, Governance, and Human Oversight",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/242cc17cb153cb15f925d2bdfbe5a6a90f009f62db6f7cdb32250b6647eebcbf/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Understanding AI's Global Impact: Governance, Equity, and Responsibility",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/a4ae35f4f17021c7e87969d1e145a789e8080faa3913e3cd0c64c16193f4ff8d/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Practical GitHub Code Search",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/1068d676011d2ae0ffe6824b1ba97d47800e25f4df4a8d9c80a89cd88d80e6d6/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Practical GitHub Copilot",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/057937bbd61c86127d182fd880fdf722d9feade15e097231b5da3ca6d85b9b5b/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Practical GitHub Actions",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/2ce02dbee19057d57a70e8b51bcd4ab4122deb3878009e195b9eae98ab1eed7d/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Practical GitHub Project Management and Collaboration",
+      "issuer": "LinkedIn",
+      "date": "Oct 2026",
+      "url": "https://www.linkedin.com/learning/certificates/300dc4fb70ca281f801becac929895d09b1e7898bcf56029dd83dc9068b57547/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Managing Project Stakeholders",
+      "issuer": "LinkedIn",
+      "date": "May 2026",
+      "url": "https://www.linkedin.com/learning/certificates/af33aad97cb373dfc68b43aabab1b1d69aa232f7945cad1eebdc8654a65c3c95/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Communication for Product Managers",
+      "issuer": "LinkedIn",
+      "date": "May 2026",
+      "url": "https://www.linkedin.com/learning/certificates/2e2b9cb5689d24a3f7496ec85f025fa249ba7c07490db8bca0d1cfc0fc267c2c/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Software Project Management Foundations",
+      "issuer": "LinkedIn",
+      "date": "May 2026",
+      "url": "https://www.linkedin.com/learning/certificates/0818e195d59e23941356adf683c4b1123303113cca96ff55d7d5989336abbac2/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Tech Talk for Nontechnical Professionals",
+      "issuer": "LinkedIn",
+      "date": "May 2026",
+      "url": "https://www.linkedin.com/learning/certificates/2d3620225d593a23a6491d3964e9c77ae6f73a2a4b9e3e356b77e26d3f693fac/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Python Data Structures and Algorithms",
+      "issuer": "LinkedIn",
+      "date": "Jan 2026",
+      "url": "https://www.linkedin.com/learning/certificates/51892d4e0092895fbc897299d8579737d7aa1479ec5820388cd713d43e313c0e/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Getting Started with Python Object Oriented Programming: A Hands-On Approach",
+      "issuer": "LinkedIn",
+      "date": "Jan 2026",
+      "url": "https://www.linkedin.com/learning/certificates/b37c92c26c326ce7e180e0722bbc3e0def2eccf11ce99e56bbab4c821045058e/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "IT Service Management Foundations: Change Management",
+      "issuer": "LinkedIn",
+      "date": "Dec 2025",
+      "url": "https://www.linkedin.com/learning/certificates/5e3e023f21ce0ce5055bad87f5650a031a2fb650243987002b513f6f42f90921/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "IT Service Desk: Monitoring and Metrics Fundamentals",
+      "issuer": "LinkedIn",
+      "date": "Dec 2025",
+      "url": "https://www.linkedin.com/learning/certificates/6f08aee16a6ab0828c6115b0d99b1945692bebd18a1fb2382005faef141d465b/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "IT Service Management Foundations: Problem Management",
+      "issuer": "LinkedIn",
+      "date": "Dec 2025",
+      "url": "https://www.linkedin.com/learning/certificates/df1039366239b2c7991c7e8f451faf8f0c6f6f5b52ae9fa20be490e80e5f4387/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "IT Service Desk: Service Management",
+      "issuer": "LinkedIn",
+      "date": "Dec 2025",
+      "url": "https://www.linkedin.com/learning/certificates/82affa9d2e674778299cd02f40b47c0b914d951aedaf7b94af6e99f514487072/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Hands-On AI: Building AI Agents with Model Context Protocol (MCP) and Agent2Agent (A2A)",
+      "issuer": "LinkedIn",
+      "date": "Dec 2025",
+      "url": "https://www.linkedin.com/learning/certificates/6d57a0af32efe359091fe5026d0404012c07b61e6ce9545cb667785b111527bf/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Advanced SQL for Query Tuning and Performance Optimization",
+      "issuer": "LinkedIn",
+      "date": "Dec 2025",
+      "url": "https://www.linkedin.com/learning/certificates/ef147a67f0246e5605ef0dc2da4713a9fc728062a07a8ca0d32b513200f88053/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Copilot in PowerPoint: From Prompt to Presentation",
+      "issuer": "LinkedIn",
+      "date": "Dec 2025",
+      "url": "https://www.linkedin.com/learning/certificates/518cc40e9cbe2c026fd01711888e5cae736553b4f1e19b7a928138f8e006b527/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Excel with Copilot: AI-Driven Data Analysis",
+      "issuer": "LinkedIn",
+      "date": "Dec 2025",
+      "url": "https://www.linkedin.com/learning/certificates/722788fbbe482308c3926b354b2eb150bad711945fbcbfce786aff5bbc10b8e7/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Microsoft Copilot: The Art of Prompt Writing",
+      "issuer": "LinkedIn",
+      "date": "Dec 2025",
+      "url": "https://www.linkedin.com/learning/certificates/97af5d023faf3de38df0dacf72b068818074858c23621fdecec9b3a9ee9a49c0/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Copilot in Word: Create and Refine Documents with AI",
+      "issuer": "LinkedIn",
+      "date": "Dec 2025",
+      "url": "https://www.linkedin.com/learning/certificates/71d365e5d8d2d0c864023d2c13b4d77383d1d421b1a321ed79eb232dc768754f/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Copilot in Outlook: Maximize Your Workday Efficiency",
+      "issuer": "LinkedIn",
+      "date": "Aug 2025",
+      "url": "https://www.linkedin.com/learning/certificates/f2155b91918399e74379a16c84979c9b0dd9a4450ee9c36f067bffa84c47e535/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Copilot in Teams: AI-Powered Collaboration",
+      "issuer": "LinkedIn",
+      "date": "Aug 2025",
+      "url": "https://www.linkedin.com/learning/certificates/37a6a073d6666b4ec71853e75e6562dfa138c20ab102b0c8e797dd42f2f16731/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Learning Microsoft 365 Copilot for Work",
+      "issuer": "LinkedIn",
+      "date": "Aug 2025",
+      "url": "https://www.linkedin.com/learning/certificates/6326a47ca21879c4c809a959d631c4ee41dba0e9ecbdbf3306f5df509e8d0888/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Train Your Brain to Develop Better Habits",
+      "issuer": "LinkedIn",
+      "date": "Aug 2025",
+      "url": "https://www.linkedin.com/learning/certificates/346c639daf885418dbc94866c2095bc5b10b7ad6b67cb848e9049ee875b38334/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Practice It: Python Data Structures",
+      "issuer": "LinkedIn",
+      "date": "Aug 2025",
+      "url": "https://www.linkedin.com/learning/certificates/24b0114f1a1192906d36283ec326c3d19cb953965090cb652bbbd26fc9d75039/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Learning Python (2021)",
+      "issuer": "LinkedIn",
+      "date": "Aug 2025",
+      "url": "https://www.linkedin.com/learning/certificates/c079037f17afa2c34cca165cca0d6d558eabed2bc6443441c5873b2991f9ada5/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Data Engineering Foundations",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/6254e8f5a8a17e615924d76b2e9a642d9cefd9aebe405d275c75e095182675d1/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Database Foundations: Database Management",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/dd107cdb5ad6b4debe0bf189b5566e259c32db24a135304c3384d0e84758986f/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Fundamentals of Data Transformation for Data Engineering",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/57f2accbf148338bbe8324973ca5f009b3b6fd57e5d1e9e194667caeea937b48/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Learning Docker Compose",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/9bc6d9d9a9233fad10b85a541b28e29c500bdf3827de0c666164a8e42774c31c/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Docker: Your First Project",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/63cb419fbb3c7b419989042a028baf20ff7d4e8e864c91f1ecc79990afcbad68/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Learning Docker",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/7a0bda17708abee60f8474f178960a5dc838810327045525e461595eadd9a788/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Responsible GitHub Copilot: Creating Reliable Code Ethically",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/87b053cdbc1d0d8ef05695bedcf369e47c95621f3dd6627e0d9ed01b7e20ca76/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Refactoring with GitHub Copilot",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/0db7afd387ba33471e2682c43ab5ffd66dbef22401a2cea4066849a9a1f78c94/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Supercharge the Development Process with GitHub Extensions for Copilot Chat",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/80411081351976a294099245bf35ee164091b7e9cc595703c59e3b48e244f8f4/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "AI Pair Programming with GitHub Copilot",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/be01528734180f8391911aabda6828cc4773f093b2223ac6d5c9d16e00732415/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Microsoft Azure AI Essentials: Workloads and Machine Learning on Azure",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/7be2217ce18b11d1baa2bdc91c359d503c5aae458e5c26eed396e9f5c4cdd053/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Learning Microsoft Fabric",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/dcf511e7df700a68d4b7175d6418d1ac2cffe5da95a3aa6dbea7a6df99c580e0/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Learning Azure SQL Querying",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/8f54bc90126f6c9d2d2d39246f1c7f2d793b58ef53fb90e63c3e75b1163b2ce7/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Foundations of Azure Artificial Intelligence: Concepts, Capabilities, and Implementation",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/323872d2a1e3970cdd85bbac0bb4c5792c05e2ece49089832505850c5bd67068/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Building AI-Ready Applications with Azure Databases and AI",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/8f2896b44720986afec4ac87423badcf2cae8922b7495c9d51116dc67ffea742/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Introduction to Microsoft Fabric by Microsoft Press",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/fc78be0bf18832c0bacb48027921e231ebdd06e3cf5d244da812f3664f6521b0/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Building Deep Learning Applications with Keras",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/3e931d3ce640e5586bf6999d011de459af87da498d16bc589c763f4c18a869a7/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Neural Networks and Convolutional Neural Networks Essential Training",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/080a1db8316fc618f9f35607f9363b580719145738e94338255fe1e46d32b816/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Learning Data Visualization",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/c00cdf307ced6d221cf402bd1d3989870bde338428a3bdda01c1c842c93092b8/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "TensorFlow: Practical Skills in Constructing, Training, and Optimizing Models",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/c4a203ad8338ce9a9c4692a411087d4c30d6854d9d5cd6833ba33320c6b0306c/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "PyTorch Essential Training: Deep Learning",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/456ad23f6ecbad92bd7387107127b21371cd3f043c3281efde177164527ad3d2/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Programming Concepts for Python",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/ac614d93625e7bae7f5ba6c5e8cef87bc920a0ec1593a86d74c99b2b02794d9b/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Machine Learning with Scikit-Learn",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/f6df441948580911e7d1c73a3837a46920f9d6d6e2f463965e764f3f1ce6995a/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Artificial Intelligence Foundations: Machine Learning",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/7994b8c893a0ab9820f5f8c9a1a2b08f386414f5a4bef5856eb46480f7403897/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Statistics Foundations 3: Using Data Sets",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/b3250e66b91f96f16692a0f9458cffa3978c23dc4ea7adf482306cb7e01f322d/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Supervised Learning Essential Training",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/7a5b352443bad0c8d8d605d5d7fd81bd15ad18658f4d532eb7ed6c28c9cadb3d/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Advanced Prompt Engineering Techniques",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/a03140447822334df0bd82eb9176232da8e8e87c27c1f2e5b7b2d9569cab80f1/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Intermediate Python for Non-Programmers",
+      "issuer": "LinkedIn",
+      "date": "Jul 2025",
+      "url": "https://www.linkedin.com/learning/certificates/fcc95b866df3091524178226b35cccab3310e5dced61fcb6ca4c0fe7baa4b981/",
+      "source": "linkedIn"
+    },
+    {
+      "name": "Python for Non-Programmers",
+      "issuer": "LinkedIn",
+      "date": "Jun 2025",
+      "url": "https://www.linkedin.com/learning/certificates/8d460621f56a8c851f4e5e15a7b0eda5952ecab6c1733e6f9658eb88fa2e3826/",
+      "source": "linkedIn"
     }
   ]
 }

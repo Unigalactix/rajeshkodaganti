@@ -428,38 +428,25 @@ function renderCertifications(certs) {
     const container = document.getElementById('certifications-grid');
     if (!container) return;
 
+    const visibleCount = 8;
     const ISSUER_ICONS = {
         'Microsoft': 'fa-windows',
         'GitHub': 'fa-github',
         'Docker': 'fa-cube',
+        'Docker, Inc': 'fa-cube',
         'Astronomer': 'fa-star',
         'Atlassian': 'fa-tasks',
         'Anthropic': 'fa-code'
     };
 
-    const priorities = [
-        'Microsoft Certified: SQL AI Developer Associate',
-        'Microsoft Certified: Azure AI Engineer Associate',
-        'Microsoft Certified: DevOps Engineer Expert',
-        'Microsoft Certified: Fabric Data Engineer Associate',
-        'Career Essentials in GitHub Copilot Professional Certificate',
-        'Docker Foundations Professional Certificate',
-        'DAG Authoring for Apache Airflow 3',
-        'Model Context Protocol: Advanced Topics'
-    ];
-    const priority = new Map(priorities.map((name, index) => [name, index]));
-    const ordered = [...certs].sort((a, b) => {
-        const aRank = priority.has(a.name) ? priority.get(a.name) : 100;
-        const bRank = priority.has(b.name) ? priority.get(b.name) : 100;
-        return aRank - bRank || a.issuer.localeCompare(b.issuer) || b.date.localeCompare(a.date);
-    });
+    const ordered = certs.filter(cert => cert.source !== 'linkedIn');
 
     ordered.forEach((cert, index) => {
         const card = document.createElement('div');
         card.className = 'cert-card';
-        if (priority.has(cert.name)) card.classList.add('featured-cert');
+        if (index < visibleCount) card.classList.add('featured-cert');
 
-        if (index >= priorities.length) {
+        if (index >= visibleCount) {
             card.style.display = 'none';
             card.classList.add('collapsible-cert');
         }
@@ -478,7 +465,8 @@ function renderCertifications(certs) {
 
         const issuer = document.createElement('p');
         issuer.className = 'cert-issuer';
-        issuer.textContent = `${cert.issuer} • ${cert.date}`;
+        const expiration = cert.expires ? ` • Expires ${cert.expires}` : '';
+        issuer.textContent = `${cert.issuer} • ${cert.date}${expiration}`;
 
         content.appendChild(title);
         content.appendChild(issuer);
@@ -499,7 +487,7 @@ function renderCertifications(certs) {
     });
 
     const certToggleBtn = document.getElementById('certs-toggle-btn');
-    if (ordered.length > priorities.length && certToggleBtn) {
+    if (ordered.length > visibleCount && certToggleBtn) {
         certToggleBtn.style.display = 'inline-block';
         let certExpanded = false;
         certToggleBtn.addEventListener('click', () => {

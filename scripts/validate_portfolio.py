@@ -15,7 +15,8 @@ from pypdf import PdfReader
 
 
 ROOT = Path(__file__).resolve().parents[1]
-HTML_FILES = sorted(ROOT.glob("*.html"))
+HTML_FILES = sorted((*ROOT.glob("*.html"), *(ROOT / "pages").glob("*.html")))
+RESUMES = ROOT / "resumes"
 errors = []
 warnings = []
 external_urls = set()
@@ -130,7 +131,7 @@ def validate_resumes():
     }
     extracted = {}
     for name, expected in expected_pages.items():
-        path = ROOT / name
+        path = RESUMES / name
         if not path.exists() or path.stat().st_size == 0:
             errors.append(f"{name}: missing or empty")
             continue
@@ -156,8 +157,8 @@ def validate_resumes():
                 errors.append(f"{name}: missing updated resume text: {required}")
         if "R&D;" in extracted.get(name, ""):
             errors.append(f"{name}: contains a malformed ampersand in the PeopleLink role")
-    master = ROOT / "Resume - Rajesh Kodaganti (Master).pdf"
-    default_path = ROOT / "resume.pdf"
+    master = RESUMES / "Resume - Rajesh Kodaganti (Master).pdf"
+    default_path = RESUMES / "resume.pdf"
     if master.exists() and default_path.exists() and default_path.read_bytes() != master.read_bytes():
         errors.append("resume.pdf: must exactly match the supplied master resume")
 
