@@ -720,6 +720,12 @@ button:disabled {
     color: var(--accent-blue);
 }
 
+.tool-tag.tag-game {
+    background: rgba(45, 255, 176, 0.12);
+    border-color: rgba(45, 255, 176, 0.35);
+    color: var(--accent-green);
+}
+
 .tool-tag.tag-epic {
     background: rgba(255, 223, 97, 0.12);
     border-color: rgba(255, 223, 97, 0.4);
